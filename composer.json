@@ -1,0 +1,41 @@
+{
+  "name":        "lugnsk/microphp",
+  "type":        "library",
+  "license":     "MIT",
+  "homepage":    "http://micro.linpax.org/",
+  "description": "Very small framework written on php to create HL-apps using hierarchical MVC pattern",
+  "keywords":    [
+    "microphp",
+    "framework"
+  ],
+
+  "support": {
+    "email":  "testuser@mail.linpax.org",
+    "issues": "https://trello.com/b/Zqwf5gYP/microphp",
+    "forum":  "http://forum.micro.linpax.org/",
+    "wiki":   "http://wiki.micro.linpax.org/",
+    "source": "https://github.com/lugnsk/micro"
+  },
+  "authors":     [
+    {
+      "name":     "Oleg Lunegov",
+      "email":    "antivir88@mail.ru",
+      "homepage": "http://linpax.org/",
+      "role":     "Founder and project lead"
+    }
+  ],
+
+  "minimum-stability": "dev",
+  "suggest": {
+    "ext-curl": "required",
+    "ext-pdo": "required",
+    "ext-pdo_mysql": "required"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "ext-mbstring": "*",
+    "lib-pcre": ">=8.31"
+  },
+  "require-dev": {
+  }
+}
