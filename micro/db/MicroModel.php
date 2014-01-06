@@ -22,7 +22,6 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
 /**
  * MicroModel class file.
  *
@@ -65,13 +64,12 @@ class MicroModel
 	 *
 	 * @access public
 	 * @param MicroQuery $query
-	 * @param string $className
 	 * @param bolean $single
 	 * @return mixed One or more data
 	 */
-	public static function finder($query = null, $className, $single = false) {
-		$query = ($query) ? $query : new MicroQuery;
-		$query->table = $className;
+	public static function finder($query = null, $single = false) {
+		$query = ($query instanceof MicroQuery) ? $query : new MicroQuery;
+		$query->table = static::tableName();
 		$query->single = $single;
 		return $query->run($single);
 	}
@@ -84,6 +82,12 @@ class MicroModel
 	public function beforeCreate() {
 		return true;
 	}
+	/**
+	 * Create changes
+	 *
+	 * @access public
+	 * @return boolean
+	 */
 	public function create() {
 		if ($this->beforeCreate()) {
 			// TODO: logic
@@ -108,6 +112,12 @@ class MicroModel
 	public function beforeSave() {
 		return true;
 	}
+	/**
+	 * Save changes
+	 * 
+	 * @access public
+	 * @return boolean
+	 */
 	public function save() {
 		if ($this->isNewRecord) {
 			return $this->create();
@@ -136,6 +146,12 @@ class MicroModel
 	public function beforeUpdate() {
 		return true;
 	}
+	/**
+	 * Update changes
+	 *
+	 * @access public
+	 * @return boolean
+	 */
 	public function update() {
 		if (!$this->isNewRecord) {
 			if ($this->afterSave()) {
@@ -163,6 +179,12 @@ class MicroModel
 	public function beforeDelete() {
 		return true;
 	}
+	/**
+	 * Delete changes
+	 *
+	 * @access public
+	 * @return boolean
+	 */
 	public function delete() {
 		if (!$this->isNewRecord) {
 			if ($this->beforeDelete()) {
