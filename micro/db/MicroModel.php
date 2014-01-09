@@ -36,7 +36,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 class MicroModel
 {
+	/** @var MicroDbConnection $db */
 	private $db = false;
+	/** @var boolean $_isNewRecord */
 	private $_isNewRecord = false;
 
 	/**
@@ -90,10 +92,24 @@ class MicroModel
 	 */
 	public function create() {
 		if ($this->beforeCreate()) {
-			// TODO: logic
+			$arr = getVars($this);
+			unset($arr['isNewRecord']);
+
+			$arr_h = array_keys($arr);
+			$typs = implode(',', $arr_h);
+			$keys = ':'.implode(', :', $arr_h);
+
+			$sth = $this->db->prepare(
+				'INSERT INTO '. $this->tableName() . ' ('.$typs.') VALUES ('.$keys.');'
+			);
+
+			if ($sth->execute($arr)) {
+				$this->_isNewRecord = false;
+				$this->afterCreate();
+				return true;
+			}
 		}
-		$this->afterCreate();
-		return true; // TODO: patch me
+		return false;
 	}
 	/**
 	 * After create actions
@@ -102,6 +118,10 @@ class MicroModel
 	 * @return void
 	 */
 	public function afterCreate() {
+		// Get ID from created value
+		if (array_search('id', $this->db->listFields($this->tableName()))) {
+			$this->id = $this->db->lastInsertId();
+		}
 	}
 	/**
 	 * Before save actions
@@ -119,15 +139,17 @@ class MicroModel
 	 * @return boolean
 	 */
 	public function save() {
-		if ($this->isNewRecord) {
+		if ($this->isNewRecord()) {
 			return $this->create();
 		} else {
 			if ($this->beforeSave()) {
-				// TODO: logic
+				if ($this->update()) {
+					$this->afterSave();
+					return true;
+				}
 			}
-			$this->afterSave();
-			return true; // TODO: patch me
 		}
+		return false;
 	}
 	/**
 	 * After save actions
@@ -150,15 +172,38 @@ class MicroModel
 	 * Update changes
 	 *
 	 * @access public
+	 * @param string $where
 	 * @return boolean
 	 */
-	public function update() {
-		if (!$this->isNewRecord) {
-			if ($this->afterSave()) {
-				// TODO: logic
+	public function update($where = null) {
+		if (!$this->isNewRecord()) {
+			if ($this->beforeUpdate()) {
+				$arr = getVars($this);
+				unset($arr['isNewRecord']);
+
+				$params = array();
+				foreach ($arr AS $key => $val) {
+					if ($key == 'id') {
+						continue;
+					}
+					$params[] = $key . ' = :' . $key;
+				}
+
+				$query = 'UPDATE ' . $this->tableName() . ' SET ' . implode(', ', $params);
+				if ($where) {
+					$query .= ' WHERE ' . $where;
+				} elseif (isset($this->id) AND !empty($this->id)) {
+					$query .= ' WHERE id = :id';
+				} else {
+					throw new MicroException ('В таблице ' . $this->tableName() . ' опция id не существует/не ипользуется.');
+				}
+				$sth = $this->db->prepare($query);
+
+				if ($sth->execute($arr)) {
+					$this->afterUpdate();
+					return true;
+				}
 			}
-			$this->afterUpdate();
-			return true; // TODO: patch me
 		}
 		return false;
 	}
@@ -183,15 +228,32 @@ class MicroModel
 	 * Delete changes
 	 *
 	 * @access public
+	 * @param string $where
 	 * @return boolean
 	 */
-	public function delete() {
-		if (!$this->isNewRecord) {
+	public function delete($where = null) {
+		if (!$this->isNewRecord()) {
 			if ($this->beforeDelete()) {
-				// TODO: logic
+				$arr = getVars($this);
+				unset($arr['isNewRecord']);
+
+				$keys = array_keys($arr);
+				$params = array();
+
+				foreach ($keys AS $key) {
+					$params[] = $key . ' = :' . $key;
+				}
+
+				$sth = $this->db->prepare(
+					'DELETE FROM ' . $this->tableName() . ' WHERE ' . implode(' AND ', $params) . ' LIMIT 1;'
+				);
+
+				if ($sth->execute($arr)) {
+					$this->afterDelete();
+					unset($this);
+					return true;
+				}
 			}
-			$this->afterDelete();
-			return true; // TODO: patch me
 		}
 		return false;
 	}
@@ -203,4 +265,15 @@ class MicroModel
 	 */
 	public function afterDelete() {
 	}
+}
+
+/**
+ * Get public vars into object
+ *
+ * @access public
+ * @param mixed $object
+ * @return array
+ */
+function getVars($object) {
+	return get_object_vars($object);
 }

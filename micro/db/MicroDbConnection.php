@@ -73,8 +73,8 @@ class MicroDbConnection
 		return $this->conn->query('SHOW_DATABASES();'); // @TODO: Patch me
 	}
 
-	// list tables in db
-	// table_exits
+	// TODO: list tables in db
+	// TODO: table_exits
 
 	/**
 	 * Get array fields into table
@@ -93,8 +93,8 @@ class MicroDbConnection
 		return $result;
 	}
 
-	// field_exists
-	// field_info
+	// TODO: field_exists
+	// TODO: field_info
 
 	/**
 	 * Set current database

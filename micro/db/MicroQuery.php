@@ -187,13 +187,17 @@ class MicroQuery
 		// generate query string for PDO
 		$query = 'SELECT ';
 		$query .= ($this->distinct) ? 'DISTINCT ' : '';
-		$query .= $this->select . ' FROM ' . $this->table . ' ' .  $this->join . ' WHERE ' . $this->where;
+		$query .= $this->select . ' FROM ' . $this->table;
+
+		$query .= ($this->join) ? ' ' . $this->join : '';
+		$query .= ($this->where) ? ' WHERE ' . $this->where : '';
 		$query .= ($this->group) ? ' GROUP BY ' . $this->group : '';
 		$query .= ($this->having) ? ' HAVING ' . $this->having : '';
 		$query .= ($this->order) ? ' ORDER BY ' . $this->order : '';
+
 		if ($this->limit >= 0) {
 			$query .= ' LIMIT ';
-			if ($this->ofset) {
+			if ($this->ofset >= 0) {
 				$query .= $this->ofset . ',';
 			}
 			$query .= $this->limit;

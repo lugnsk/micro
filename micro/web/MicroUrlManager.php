@@ -47,10 +47,13 @@ class MicroUrlManager
 	 * @return string
 	 */
 	public static function parseUri() {
+		$config = Micro::getInstance()->config;
 		$urlManager = new MicroUrlManager();
+
 		$cut = ($num = strpos($_SERVER['REQUEST_URI'], '?')) ? $num : strlen($_SERVER['REQUEST_URI']) ;
 		$manager = (isset($config['urlManager'])) ? $config['urlManager'] : array();
 		$uri = $urlManager->parse(substr($_SERVER['REQUEST_URI'], 0, $cut), $manager);
+
 		// Hack for default page
 		if ( empty($uri) OR $uri == '/' ) {
 			$uri = '/default';
@@ -63,7 +66,7 @@ class MicroUrlManager
 	 * @param  array  params
 	 * @return string
 	 */
-	public function parse($url = '', $params= array()) {
+	public function parse($url = '', $params = array()) {
 		// $url is empty
 		if (empty($url) OR $url=='/') {
 			return $url;
@@ -99,12 +102,14 @@ class MicroUrlManager
 		$patternBlocks     = explode('/', $pattern);
 		$uriBlocks         = explode('/', $uri);
 		$replacementBlocks = explode('/', $replacement);
+
 		// Huck sizeof
 		array_shift($uriBlocks);
 		array_shift($replacementBlocks);
 		if ($pattern{0} == '/') {
 			array_shift($patternBlocks);
 		}
+
 		// sums blocks not equal
 		if (count($patternBlocks) != count($uriBlocks)) {
 			return false;
@@ -124,17 +129,27 @@ class MicroUrlManager
 				} else return false;
 			}
 		}
+
 		foreach ($replacementBlocks AS $i => $replace) {
 			if ($replace{0} == '<') {
 				if (!isset($valids[$replace])) {
 					return false;
 				}
 				$validatedRule .= '/' . $valids[$replace];
+				unset($valids[$replace]);
 			} else {
 				$validatedRule .= '/' . $replace;
 			}
 		}
-		return (!empty($validatedRule)) ? $validatedRule : false;
+
+		if (!empty($validatedRule)) {
+			foreach ($valids AS $key => $val) {
+				$_GET[substr($key, 1, -1)] = $val;
+			}
+			return $validatedRule;
+		}
+
+		return false;
 	}
 	/**
 	 * Is used module's in uri

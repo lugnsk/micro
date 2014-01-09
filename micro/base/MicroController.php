@@ -36,8 +36,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 class MicroController
 {
+	/** @var mixed $module */
 	public static $module;
+	/** @var string $layout */
 	public $layout;
+	/** @var string $defaultAction */
 	public $defaultAction = 'index';
 
 	/**
@@ -124,7 +127,6 @@ class MicroController
 	 * @return string
 	 */
 	protected function getLayoutFile($baseDir, $module) {
-		// end path of layout
 		$layout = $baseDir . DIRECTORY_SEPARATOR;
 		$layout .= ($module) ? $module.DIRECTORY_SEPARATOR : $module;
 		$afterpath = 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . ucfirst($this->layout) . '.php';

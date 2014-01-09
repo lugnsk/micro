@@ -112,7 +112,7 @@ class Micro {
 			$this->db = new MicroDbConnection($this->config['db']);
 		}
 
-		// Prepare AppDir
+		// Prepare
 		$this->module = $this->prepareModules($uriBlocks);
 		$this->prepareController($this->module, $uriBlocks);
 	}
