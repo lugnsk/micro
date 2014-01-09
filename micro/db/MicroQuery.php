@@ -1,28 +1,5 @@
 <?php
 
-/*
-The MIT License (MIT)
-
-Copyright (c) 2013 Oleg Lunegov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-
 /**
  * MicroQuery class file.
  *
@@ -61,6 +38,8 @@ class MicroQuery
 	public $params		= array();
 	/** @var string $table table for query */
 	public $table		= '';
+	/** @var string $objectName class name form fetching */
+	public $objectName	= '';
 	/** @var boolean $single */
 	public $single		= false;
 
@@ -82,7 +61,7 @@ class MicroQuery
 	 * @return void
 	 */
 	public function addWhere($sql, $operand = 'AND') {
-		$this->where = ($this->where) ? ' '. $operand. ' (' . $sql . ')' : ' ' . $this->where. ' (' . $sql . ')' ;
+		$this->where .= ($this->where) ? ' '. $operand. ' (' . $sql . ')' : ' ' . $this->where. ' (' . $sql . ')' ;
 	}
 	/**
 	 * Add search where
@@ -174,7 +153,7 @@ class MicroQuery
 	 * @return void
 	 */
 	public function addJoin($table, $cond, $type = 'LEFT') {
-		$this->join = ' ' . $type . ' JOIN ' . $table . ' ON ' . $cond;
+		$this->join .= ' ' . $type . ' JOIN ' . $table . ' ON ' . $cond;
 	}
 	/**
 	 * Running this query
@@ -204,7 +183,7 @@ class MicroQuery
 		}
 
 		$query = $this->_conn->prepare($query . ';');
-		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->table));
+		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->objectName), array('new'=>false));
 
 		foreach ($this->params AS $name => $value) {
 			$query->bindValue($name, $value);
