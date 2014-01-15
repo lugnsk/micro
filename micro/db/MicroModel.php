@@ -49,7 +49,7 @@ class MicroModel
 	 */
 	public static function finder($query = null, $single = false) {
 		$query = ($query instanceof MicroQuery) ? $query : new MicroQuery;
-		$query->table = static::tableName();
+		$query->table = static::tableName() . ' `m`';
 		$query->objectName = get_called_class();
 		$query->single = $single;
 		return $query->run($single);
