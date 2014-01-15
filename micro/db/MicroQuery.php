@@ -96,26 +96,32 @@ class MicroQuery
 	 *
 	 * @access public
 	 * @param string $column
-	 * @param array $arr
+	 * @param array|string $params
 	 * @param string $operand
 	 * @return void
 	 */
-	public function addIn($column, $arr=array(), $operand = 'AND') {
-		$arr = "('" . implode("','", $arr) . "')";
-		$this->addWhere($column . ' IN ' . $arr ,$operand);
+	public function addIn($column, $params, $operand = 'AND') {
+		if (is_array($params)) {
+			$params = "'" . implode("','", $params) . "'";
+		}
+
+		$this->addWhere($column . ' IN (' . $params . ')',$operand);
 	}
 	/**
 	 * Add not in where
 	 *
 	 * @access public
 	 * @param string $column
-	 * @param array $arr
+	 * @param array|string $params
 	 * @param string $operand
 	 * @return void
 	 */
-	public function addNotIn($column, $arr=array(), $operand = 'AND') {
-		$arr = "('" . implode("','", $arr) . "')";
-		$this->addWhere($column . ' NOT IN ' . $arr ,$operand);
+	public function addNotIn($column, $params, $operand = 'AND') {
+		if (is_array($params)) {
+			$params = "'" . implode("','", $params) . "'";
+		}
+
+		$this->addWhere($column . ' NOT IN (' . $params . ')',$operand);
 	}
 	/**
 	 * Add between where
@@ -156,14 +162,12 @@ class MicroQuery
 		$this->join .= ' ' . $type . ' JOIN ' . $table . ' ON ' . $cond;
 	}
 	/**
-	 * Running this query
+	 * Generate query string
 	 *
 	 * @access public
-	 * @param boolean $single
-	 * @return mixed result's of query
+	 * @return string
 	 */
-	public function run($single = false) {
-		// generate query string for PDO
+	public function getQuery() {
 		$query = 'SELECT ';
 		$query .= ($this->distinct) ? 'DISTINCT ' : '';
 		$query .= $this->select . ' FROM ' . $this->table;
@@ -182,7 +186,17 @@ class MicroQuery
 			$query .= $this->limit;
 		}
 
-		$query = $this->_conn->prepare($query . ';');
+		return $query.';';
+	}
+	/**
+	 * Running this query
+	 *
+	 * @access public
+	 * @param boolean $single
+	 * @return mixed result's of query
+	 */
+	public function run($single = false) {
+		$query = $this->_conn->prepare($this->getQuery());
 		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->objectName), array('new'=>false));
 
 		foreach ($this->params AS $name => $value) {
