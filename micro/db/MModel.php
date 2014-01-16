@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MicroModel class file.
+ * MModel class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -12,9 +12,9 @@
  * @version 1.0
  * @since 1.0
  */
-class MicroModel
+class MModel
 {
-	/** @var MicroDbConnection $db */
+	/** @var MDbConnection $db */
 	private $db = false;
 	/** @var boolean $_isNewRecord */
 	private $_isNewRecord = false;
@@ -43,12 +43,12 @@ class MicroModel
 	 * Finder data in DB
 	 *
 	 * @access public
-	 * @param MicroQuery $query
+	 * @param MQuery $query
 	 * @param bolean $single
 	 * @return mixed One or more data
 	 */
 	public static function finder($query = null, $single = false) {
-		$query = ($query instanceof MicroQuery) ? $query : new MicroQuery;
+		$query = ($query instanceof MQuery) ? $query : new MQuery;
 		$query->table = static::tableName() . ' `m`';
 		$query->objectName = get_called_class();
 		$query->single = $single;
@@ -173,7 +173,7 @@ class MicroModel
 				} elseif (isset($this->id) AND !empty($this->id)) {
 					$query .= ' WHERE id = :id';
 				} else {
-					throw new MicroException ('В таблице ' . $this->tableName() . ' опция id не существует/не ипользуется.');
+					throw new MException ('В таблице ' . $this->tableName() . ' опция id не существует/не ипользуется.');
 				}
 				$sth = $this->db->prepare($query);
 

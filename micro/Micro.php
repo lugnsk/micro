@@ -34,7 +34,7 @@ class Micro {
 	public $module;
 	/**
 	 * Current controller
-	 * @var MicroController $_controller
+	 * @var MController $_controller
 	 */
 	private $_controller;
 	/**
@@ -76,7 +76,7 @@ class Micro {
 	 */
 	public function run() {
 		// Parsing URI
-		$this->_uri = MicroUrlManager::parseUri();
+		$this->_uri = MUrlManager::parseUri();
 
 		// Get uriBlocks
 		$uriBlocks = explode('/', $this->_uri);
@@ -86,7 +86,7 @@ class Micro {
 
 		// connect to DB
 		if (!empty($this->config['db'])) {
-			$this->db = new MicroDbConnection($this->config['db']);
+			$this->db = new MDbConnection($this->config['db']);
 		}
 
 		// Prepare
@@ -101,7 +101,7 @@ class Micro {
 	private function prepareModules(&$uriBlocks){
 		$path = null;
 		for ($i = 0; $i < count($uriBlocks); $i++) {
-			if (MicroUrlManager::isUsedModules($this->config['AppDir'] . $path , $uriBlocks[$i])) {
+			if (MUrlManager::isUsedModules($this->config['AppDir'] . $path , $uriBlocks[$i])) {
 				$path .= DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $uriBlocks[$i];
 				unset($uriBlocks[$i]);
 			} else break;
@@ -143,7 +143,7 @@ class Micro {
 	}
 	/**
 	 * Return controller
-	 * @return MicroController
+	 * @return MController
 	 */
 	public function getController() {
 		return $this->_controller;

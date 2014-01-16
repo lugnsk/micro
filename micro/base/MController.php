@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MicroController class file.
+ * MController class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -11,7 +11,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MicroController
+class MController
 {
 	/** @var mixed $module */
 	public static $module;
@@ -36,7 +36,7 @@ class MicroController
 			
 		}
 
-		spl_autoload_register(array('MicroController','autoloader'));
+		spl_autoload_register(array('MController','autoloader'));
 	}
 	/**
 	 * Autoloader classes

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TODO: create specific exception
+ * MException specific exception
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -11,7 +11,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MicroException extends Exception
+class MException extends Exception
 {
 	public function __toString() {
 		return '<h1>Ошибка ' . $this->getCode() . '</h1><p>' . $this->getMessage() . '</p>';

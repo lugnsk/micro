@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MicroDbConnection class file.
+ * MDbConnection class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -12,7 +12,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MicroDbConnection
+class MDbConnection
 {
 	/** @var PDO|null $conn Connection to DB */
 	public $conn;
@@ -22,12 +22,13 @@ class MicroDbConnection
 	 *
 	 * @access public
 	 * @param array $config
+	 * @throw MException
 	 * @return void
 	 */
 	public function __construct($config = array()) {
 		try {
 			$this->conn = new PDO($config['connectionString'], $config['username'], $config['password']);
-		} catch (MicroException $e) {
+		} catch (MException $e) {
 			die('Подключение к БД не удалось: ' . $e->getMessage());
 		}
 	}

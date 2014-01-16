@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MicroUrlManager class file.
+ * MUrlManager class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -12,7 +12,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MicroUrlManager
+class MUrlManager
 {
 	private $_defaultRules = array(
 		'<module:(\w)+>/<controller:(\w)+>/<action:(\w)+>' => '/<module>/<controller>/<action>',
@@ -25,7 +25,7 @@ class MicroUrlManager
 	 */
 	public static function parseUri() {
 		$config = Micro::getInstance()->config;
-		$urlManager = new MicroUrlManager();
+		$urlManager = new MUrlManager();
 
 		$cut = ($num = strpos($_SERVER['REQUEST_URI'], '?')) ? $num : strlen($_SERVER['REQUEST_URI']) ;
 		$manager = (isset($config['urlManager'])) ? $config['urlManager'] : array();

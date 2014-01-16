@@ -12,7 +12,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MicroQuery
+class MQuery
 {
 	/** @var MicroConnection $_conn Current connect to DB */
 	private $_conn;
@@ -186,7 +186,7 @@ class MicroQuery
 			$query .= $this->limit;
 		}
 
-		return $query.';';
+		return $query;
 	}
 	/**
 	 * Running this query
@@ -196,7 +196,7 @@ class MicroQuery
 	 * @return mixed result's of query
 	 */
 	public function run($single = false) {
-		$query = $this->_conn->prepare($this->getQuery());
+		$query = $this->_conn->prepare($this->getQuery().';');
 		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->objectName), array('new'=>false));
 
 		foreach ($this->params AS $name => $value) {
