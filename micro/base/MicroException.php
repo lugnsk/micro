@@ -13,4 +13,7 @@
  */
 class MicroException extends Exception
 {
+	public function __toString() {
+		return '<h1>Ошибка ' . $this->getCode() . '</h1><p>' . $this->getMessage() . '</p>';
+	}
 }
