@@ -47,11 +47,29 @@ class MicroDbConnection
 	 * @return PDOResult
 	 */
 	public function listDatabases() {
-		return $this->conn->query('SHOW_DATABASES();'); // @TODO: Patch me
+		$sth = $this->conn->query('SHOW_DATABASES();'); // @TODO: Patch me
+
+		$result = array();
+		foreach ($sth->fetchAll() AS $row) {
+			$result[] = $row[''];
+		}
+		return $result;
 	}
 
 	// TODO: list tables in db
+	public function listTables() {
+		$sth = $this->conn->query('SHOW TABLES');
+
+		$result = array();
+		foreach ($sth->fetchAll() AS $row) {
+			$result[] = $row[''];
+		}
+		return $result;
+	}
 	// TODO: table_exits
+	public function tableExists($table) {
+		return (bool)array_search($table, $this->listTables());
+	}
 
 	/**
 	 * Get array fields into table
@@ -70,8 +88,18 @@ class MicroDbConnection
 		}
 		return $result;
 	}
+	/**
+	 * Field exists in table
+	 *
+	 * @access public
+	 * @param string $field
+	 * @param string $table
+	 * @result boolean
+	 */
+	public function fieldExists($field, $table) {
+		return (bool)array_search($field, $this->listFields($table));
+	}
 
-	// TODO: field_exists
 	// TODO: field_info
 
 	/**
