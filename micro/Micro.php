@@ -40,7 +40,11 @@ class Micro {
 	/**
 	 * Connection to DataBase
 	 */
-	 public $db;
+	public $db;
+	/**
+	 * Timer of generate page
+	 */
+	private $timer;
 
 	/**
 	 * Method CLONE is not alowed for application
@@ -65,6 +69,8 @@ class Micro {
 	 * @return void
 	 */
 	private function __construct($config = array()) {
+		// Register timer
+		$this->timer = microtime();
 		// Register config
 		$this->config = $config;
 		// Register loader
@@ -140,6 +146,12 @@ class Micro {
 		// Run action
 		$actionName = 'action' . ucfirst($actionName);
 		$this->_controller->$actionName();
+
+		// Render timer
+		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
+			$slice = microtime() - $this->timer;
+			die( MHtml::openTag('div',array('class'=>'Mruntime')) . $slice . MHtml::closeTag('div') );
+		}
 	}
 	/**
 	 * Return controller
