@@ -1,3 +1,4 @@
+# Run as URI Request
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
