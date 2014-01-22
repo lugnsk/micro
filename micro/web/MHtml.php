@@ -14,6 +14,9 @@
  */
 class MHtml
 {
+	/** @TODO: // LIST Elements // marklist, numlist, deplist, applet, imgmap */
+	/** @TODO: // TABLE Elements// table, caption, row (col) */
+
 	// BASIC Elements
 	/**
 	 * Render close tag
@@ -65,7 +68,7 @@ class MHtml
 	 * @param  array  attributes
 	 * @return string
 	 */
-	private static function field($type, $name, $value, $attributes=array()) {
+	private static function field($type, $name, $value, $attributes = array()) {
 		$attributes['type'] = $type;
 		$attributes['name'] = $name;
 		$attributes['value'] = $value;
@@ -203,7 +206,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function image($name, $file, $attributes= array()) {
+	public static function image($name, $file, $attributes = array()) {
 		$attributes['src'] = $source;
 		$attributes['alt'] = $name;
 		return self::tag('img', $attributes);
@@ -233,12 +236,7 @@ class MHtml
 	public static function heading($num, $value, $attributes = array()) {
 		return self::openTag('h'.$num, $attributes) . $value . self::closeTag('h'.$num);
 	}
-
-	// LIST Elements // marklist, numlist, deplist, applet, imgmap
-
-	// TABLE Elements// table, caption, row (col)
-
-	// FORM Elements// fieldset option dropdownlist listbox|multiplydropdownlist checkboxlist radiobuttonlist label
+	// FORM Elements
 	/**
 	 * Render begin form tag
 	 *
@@ -283,7 +281,7 @@ class MHtml
 	 * @param  array attributesImage
 	 * @return string
 	 */
-	public static function imageButton($name, $file, $attributesButton=array(), $attributesImage = array()) {
+	public static function imageButton($name, $file, $attributesButton = array(), $attributesImage = array()) {
 		return self::button(self::image($name, $file, $attributesImage), $attributesButton);
 	}
 	/**
@@ -309,6 +307,120 @@ class MHtml
 	public static function legend($text, $attributes = array()) {
 		return self::openTag('legend', $attributes) . $text . self::closeTag('legend');
 	}
+	/**
+	 * Generate label tag
+	 *
+	 * @access public
+	 * @param string name
+	 * @param string elemId
+	 * return string
+	 */
+	public static function label($name, $elemId = '') {
+		$elemId = ($elemId) ? array('for'=>$elemId) : array() ;
+		return self::tag('label', $elemId);
+	}
+	/**
+	 * Generate option tag
+	 *
+	 * @access public
+	 * @param string value
+	 * @param string text
+	 * @param array attributes
+	 * @return string
+	 */
+	public static function option($value, $text, $attributes=array()) {
+		$attributes['value'] = $value;
+		return self::openTag('option', $attributes) . $text . self::closeTag('option');
+	}
+	/**
+	 * Generate optgroup tag
+	 *
+	 * @access public
+	 * @param string label
+	 * @param array options format array(value, text, attributes) OR array(label, options, attributes)
+	 * @param array attributes
+	 * @return string
+	 */
+	public static function optgroup($label, $options = array(), $attributes = array()) {
+		$attributes['label'] = $label;
+		$opts = '';
+		foreach ($options AS $option) {
+			if (isset($option['label'])) {
+				$opts .= self::optgroup($option['label'], $option['options'], $option['attributes']);
+			} else {
+				$opts .= self::option($option['value'], $option['text'], $option['attributes']);
+			}
+		}
+		return self::openTag('optgroup', $attributes) . $opts . self::closeTag('optgroup');
+	}
+	/**
+	 * Generate dropdownlist (select tag)
+	 *
+	 * @access public
+	 * @param string name
+	 * @param array options format array(value, text, attributes) OR array(label, options, attributes)
+	 * @param array attributes
+	 * @return string
+	 */
+	public static function dropdownlist($name, $options = array(), $attributes = array()) {
+		$attributes['size'] = 1;
+		return self::listbox($name, $options, $attributes);
+	}
+	/**
+	 * Generate listbox (select tag)
+	 *
+	 * @access public
+	 * @param string name
+	 * @param array options format array(value, text, attributes) OR array(label, options, attributes)
+	 * @param array attributes
+	 * @return string
+	 */
+	public static function listbox($name, $options = array(), $attributes = array()) {
+		$attributes['name'] = $name;
+		$opts = '';
+		foreach ($options AS $option) {
+			if (isset($option['label'])) {
+				$opts .= self::optgroup($option['label'], $option['options'], $option['attributes']);
+			} else {
+				$opts .= self::option($option['value'], $option['text'], $option['attributes']);
+			}
+		}
+		return self::openTag('select', $attributes) . $opts . self::closeTag('select');
+	}
+	/**
+	 * Generate checkboxlist (input checkbox tags)
+	 *
+	 * @access public
+	 * @param string name
+	 * @param array checkboxes format array(text, value, attributes)
+	 * @param string format %check% - checkbox , %text% - text
+	 * @return string
+	 */
+	public static function checkboxList($name, $checkboxes = array(), $format = '<p>%check% %text%</p>') {
+		$checks = '';
+		foreach (checkboxes AS $checkbox) {
+			$check = self::checkboxField($name, $checkbox['value'], $checkbox['attributes']);
+			$checks .= str_replace('%text%', $checkbox['text'], str_replace('%check%', $check, $format));
+		}
+		return $cheks;
+	}
+	/**
+	 * Generate option tag
+	 *
+	 * @access public
+	 * @param string name
+	 * @param array radios format array(text, value, attributes)
+	 * @param string format %radio% - radio , %text% - text
+	 * @return string
+	 */
+	public static function radioButtonList($name, $radios = array(), $format = '<p>%radio% %text%</p>') {
+		$rads = '';
+		foreach ($radios AS $radio) {
+			$rad = self::radioField($name, $radio['value'], $radio['attributes']);
+			$rads .= str_replace('%text%', $radio['text'], str_replace('%radio%', $rad, $format));
+		}
+		return $cheks;
+	}
 	// INPUT Elements
 	/**
 	 * Render reset button tag
@@ -318,7 +430,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function resetButton($label='Reset', $attributes=array()) {
+	public static function resetButton($label = 'Reset', $attributes = array()) {
 		$attributes['type'] = 'reset';
 		$attributes['value'] = $label;
 		return self::tag('input', $attributes);
@@ -331,7 +443,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function submitButton($label='Submit', $attributes=array()) {
+	public static function submitButton($label = 'Submit', $attributes = array()) {
 		$attributes['type'] = 'submit';
 		$attributes['value'] = $label;
 		return self::tag('input', $attributes);
@@ -494,7 +606,7 @@ class MHtml
 	public static function urlField($name, $value, $attributes = array()) {
 		return self::field('url', $name, $value, $attributes);
 	}
-	// HTML5 Only // video, audio, canvas
+	// HTML5 Only
 	/**
 	 * Render charset meta tag
 	 *
@@ -504,5 +616,67 @@ class MHtml
 	 */
 	public static function charset($name) {
 		return self::tag('meta', array('charset'=>$name));
+	}
+	/**
+	 * Generate video tag
+	 *
+	 * @access public
+	 * @param array sources format type=>src
+	 * @param array tracks format array(kind, src, srclang, label)
+	 * @param array attributes
+	 * @param string nocodec text
+	 * @return string
+	 */
+	public static function video($sources = array(), $tracks = array(), $attributes = array(), $nocodec = '') {
+		$srcs = '';
+		foreach ($sources AS $name => $value) {
+			$srcs .= self::tag('source', array('type'=>$name, 'src'=>$value));
+		}
+		foreach ($tracks AS $track) {
+			$srcs .= self::tag('track', array(
+				'kind'=>$track['kind'],
+				'src'=>$track['src'],
+				'srclang'=>$track['srclang'],
+				'label'=>$track['label']
+			));
+		}
+		return self::openTag('video', $attributes) . $srcs . $nocodec . self::closeTag('video');
+	}
+	/**
+	 * Generate audio tag
+	 *
+	 * @access public
+	 * @param array sources format type=>src
+	 * @param array tracks format array(kind, src, srclang, label)
+	 * @param array attributes
+	 * @param string nocodec text
+	 * @return string
+	 */
+	public static function audio($sources = array(), $tracks = array(), $attributes = array(), $nocodec = '') {
+		$srcs = '';
+		foreach ($sources AS $name => $value) {
+			$srcs .= self::tag('audio', array('type'=>$name, 'src'=>$value));
+		}
+		foreach ($tracks AS $track) {
+			$srcs .= self::tag('track', array(
+				'kind'=>$track['kind'],
+				'src'=>$track['src'],
+				'srclang'=>$track['srclang'],
+				'label'=>$track['label']
+			));
+		}
+		return self::openTag('audio', $attributes) . $srcs . $nocodec . self::closeTag('audio');
+	}
+	/**
+	 * Generate video tag
+	 *
+	 * @access public
+	 * @param array sources format type=>src
+	 * @param array attributes
+	 * @param string nocodec text
+	 * @return string
+	 */
+	public static function canvas($attributes = array(), $nocodec = '') {
+		return self::openTag('canvas', $attributes) . $nocodec . self::closeTag('canvas');
 	}
 }
