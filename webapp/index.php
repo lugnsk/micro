@@ -6,7 +6,7 @@ if (DIRECTORY_SEPARATOR == null) {
 }
 
 // Configs
-$config = require_once 'app' . DIRECTORY_SEPARATOR . 'config.php';
+$config = require_once '../app' . DIRECTORY_SEPARATOR . 'config.php';
 
 // Start application
 require_once $config['MicroDir'] . DIRECTORY_SEPARATOR . 'Micro.php';
