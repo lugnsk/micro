@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * Get public vars into object
+ *
+ * @access public
+ * @param mixed $object
+ * @return array
+ */
+function getVars($object) {
+	return get_object_vars($object);
+}
+
+/**
  * MModel class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
@@ -28,7 +39,7 @@ class MModel
 	 */
 	public function __construct($new = true) {
 		$this->_isNewRecord = $new;
-		$this->db = Micro::getInstance()->db->conn;
+		$this->db = MRegistry::get('db');
 	}
 	/**
 	 * Is new record?
@@ -97,7 +108,7 @@ class MModel
 	 */
 	public function afterCreate() {
 		// Get ID from created value
-		if (array_search('id', Micro::getInstance()->db->listFields($this->tableName()))) {
+		if (array_search('id', $this->db->listFields($this->tableName()))) {
 			$this->id = $this->db->lastInsertId();
 		}
 	}
@@ -173,7 +184,7 @@ class MModel
 				} elseif (isset($this->id) AND !empty($this->id)) {
 					$query .= ' WHERE id = :id';
 				} else {
-					throw new MException ('В таблице ' . $this->tableName() . ' опция id не существует/не ипользуется.');
+					throw new MException ('In table ' . $this->tableName() . ' option `id` not defined/not use.');
 				}
 				$sth = $this->db->prepare($query);
 
@@ -243,15 +254,4 @@ class MModel
 	 */
 	public function afterDelete() {
 	}
-}
-
-/**
- * Get public vars into object
- *
- * @access public
- * @param mixed $object
- * @return array
- */
-function getVars($object) {
-	return get_object_vars($object);
 }
