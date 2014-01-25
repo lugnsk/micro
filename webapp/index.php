@@ -1,17 +1,15 @@
 <?php
 
 // Constants
-if (DIRECTORY_SEPARATOR == null) {
-	define('DIRECTORY_SEPARATOR', '/');
+if (empty(DIRECTORY_SEPARATOR)) {
+	define('DIRECTORY_SEPARATOR', (PHP_OS == 'Windows') ? '\\' : '/' );
 }
 
 // Configs
-$config = require_once '../app' . DIRECTORY_SEPARATOR . 'config.php';
+$config = require_once '..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'config.php';
 
-// Start application
+// Get micro
 require_once $config['MicroDir'] . DIRECTORY_SEPARATOR . 'Micro.php';
 
-$micro = Micro::getInstance($config);
-$micro->run();
-
-?>
+// Run application
+Micro::getInstance($config)->run();
