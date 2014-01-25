@@ -50,7 +50,7 @@ class MQuery
 	 * @return void
 	 */
 	public function __construct() {
-		$this->_conn = Micro::getInstance()->db->conn;
+		$this->_conn = MRegistry::get('db')->conn;
 	}
 	/**
 	 * Add where
