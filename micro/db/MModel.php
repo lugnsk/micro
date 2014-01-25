@@ -25,7 +25,7 @@ function getVars($object) {
  */
 class MModel
 {
-	/** @var MDbConnection $db */
+	/** @var PDO $db */
 	private $db = false;
 	/** @var boolean $_isNewRecord */
 	private $_isNewRecord = false;
@@ -39,7 +39,7 @@ class MModel
 	 */
 	public function __construct($new = true) {
 		$this->_isNewRecord = $new;
-		$this->db = MRegistry::get('db');
+		$this->db = MRegistry::get('db')->conn;
 	}
 	/**
 	 * Is new record?
@@ -108,7 +108,7 @@ class MModel
 	 */
 	public function afterCreate() {
 		// Get ID from created value
-		if (array_search('id', $this->db->listFields($this->tableName()))) {
+		if (array_search('id', MRegistry::get('db')->listFields($this->tableName()))) {
 			$this->id = $this->db->lastInsertId();
 		}
 	}
