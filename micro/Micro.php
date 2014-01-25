@@ -23,28 +23,10 @@ class Micro {
 	 */
 	public $config;
 	/**
-	 * Current URI
-	 * @var string $_uri
-	 */
-	private $_uri;
-	/**
-	 * Current module dir
-	 * @var string $module
-	 */
-	public $module;
-	/**
-	 * Current controller
-	 * @var MController $_controller
-	 */
-	private $_controller;
-	/**
-	 * Connection to DataBase
-	 */
-	public $db;
-	/**
 	 * Timer of generate page
 	 */
 	private $timer;
+
 
 	/**
 	 * Method CLONE is not alowed for application
@@ -74,145 +56,70 @@ class Micro {
 		// Register config
 		$this->config = $config;
 		// Register loader
-		spl_autoload_register(array('Micro','autoloader'));
+		spl_autoload_register(array('MAutoload','autoloader'));
 	}
+
 	/**
-	 * Run application
+	 * Running application
+	 *
+	 * @access public
 	 * @return void
 	 */
 	public function run() {
-		// Parsing URI
-		$this->_uri = MUrlManager::parseUri();
+		$this->loadComponents();
 
-		// Get uriBlocks
-		$uriBlocks = explode('/', $this->_uri);
-		if ($this->_uri{0} == '/') {
-			array_shift($uriBlocks);
-		}
+		$path   = $this->prepareController();
+		$action = 'action'.ucfirst(MRegistry::get('request')->getAction());
 
-		// connect to DB
-		if (!empty($this->config['db'])) {
-			$this->db = new MDbConnection($this->config['db']);
-		}
-
-		// Prepare
-		$this->module = $this->prepareModules($uriBlocks);
-		$this->prepareController($this->module, $uriBlocks);
+		require_once $path.'.php';
+		$name = basename($path);
+		$hmvc = new $name;
+		$hmvc->$action();
 	}
 	/**
-	 * Prepare modules
-	 * @param &array uriBlocks
-	 * @return string
-	 */
-	private function prepareModules(&$uriBlocks){
-		$path = null;
-		for ($i = 0; $i < count($uriBlocks); $i++) {
-			if (MUrlManager::isUsedModules($this->config['AppDir'] . $path , $uriBlocks[$i])) {
-				$path .= DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $uriBlocks[$i];
-				unset($uriBlocks[$i]);
-			} else break;
-		}
-		return $path;
-	}
-	/**
-	 * Prepare controller
-	 * @param string $path
-	 * @param &array $uriBlocks
+	 * Loading components in Registry
+	 *
+	 * @access public
 	 * @return void
 	 */
-	private function prepareController($path, &$uriBlocks) {
-		// Get controller
-		$controllerBaseDir = $path . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR;
-		$controllerName = ($str = ucfirst(current($uriBlocks))) ? $str : 'Default';
+	private function loadComponents() {
+		foreach ($this->config['components'] AS $name => $options) {
+			if (!isset($options['class']) OR empty($options['class'])) {
+				continue;
+			}
 
-		// Check controller
-		if (!file_exists($this->config['AppDir'] . $controllerBaseDir . $controllerName . 'Controller.php')) {
-			die( 'Controller ' . $controllerName . ' not set.' );
-		}
+			if (!class_exists($options['class'])) {
+				continue;
+			}
 
-		// Run controller
-		require_once $this->config['AppDir'] . $controllerBaseDir . $controllerName . 'Controller.php';
-		$controllerName .= 'Controller';
-		$this->_controller = new $controllerName();
+			$classname = $options['class'];
+			unset($options['class']);
 
-		// Get action
-		$actionName = ($str = next($uriBlocks)) ? $str : $this->_controller->defaultAction;
-
-		// Check action
-		if (!method_exists($this->_controller, 'action'.ucfirst($actionName))){
-			die( 'Action ' . $actionName . ' not set.' );
-		}
-
-		// Run action
-		$actionName = 'action' . ucfirst($actionName);
-		$this->_controller->$actionName();
-
-		// Render timer
-		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-			$slice = microtime() - $this->timer;
-			die( MHtml::openTag('div',array('class'=>'Mruntime')) . $slice . MHtml::closeTag('div') );
+			MRegistry::set($name, new $classname($options) );
 		}
 	}
 	/**
-	 * Return controller
-	 * @return MController
+	 * Prepare controller to use
+	 *
+	 * @access private
+	 * @return string
 	 */
-	public function getController() {
-		return $this->_controller;
-	}
-	/**
-	 * Function load files in application
-	 * @param  string classname
-	 * @param  string path
-	 * @return bool   status
-	 */
-	public static function autoloader($classname, $path = null) {
-		if (!$path) {
-			$config = Micro::getInstance()->config;
-			if (!isset($config['MicroDir']) OR empty($config['MicroDir'])) {
-				return false;
-			}
-			if (isset($config['AppDir']) AND !empty($config['AppDir'])) {
-				if (isset($config['import']) AND !empty($config['import'])) {
-					$paths = $config['import'];
-					foreach ($paths AS $pat) {
-						Micro::autoloader($classname, $config['AppDir'] . DIRECTORY_SEPARATOR . $pat);
-					}
-				}
-			}
-			$path = $config['MicroDir'];
+	private function prepareController() {
+		$request = MRegistry::get('request');
+		if (!$request) {
+			throw new MException('Component request not loaded.');
 		}
 
-		if (!file_exists($path)) {
-			return false;
+		$path = $this->config['AppDir'] . DIRECTORY_SEPARATOR;
+		if ($modules = $request->getModules()) {
+			$path .= $modules . DIRECTORY_SEPARATOR;
 		}
-
-		// search in micro dir
-		if ($path = self::find($path, $classname.'.php')) {
-			include $path;
-			return true;
+		if ($controller = $request->getController()) {
+			$path .= 'controllers' . DIRECTORY_SEPARATOR . $controller;
 		}
-		return false;
-	}
-	/**
-	 * Find file in directory
-	 * @param string $dir
-	 * @param string #tosearch
-	 * @return bool|string
-	 */
-	public static function find($dir, $tosearch) {
-		$files = array_diff( scandir( $dir ), Array( ".", ".." ) );
-
-		foreach( $files as $d ) {
-			if( !is_dir($dir."/".$d) ) {
-				if ($d == $tosearch)
-					return $dir."/".$d;
-			} else {
-				$res = self::find($dir."/".$d, $tosearch);
-				if ($res)
-					return $res;
-			}
+		if (!file_exists($path . '.php')) {
+			throw new MException('File not found in path: ' . $path . '.php');
 		}
-		return false;
+		return $path;
 	}
 }
