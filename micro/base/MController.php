@@ -25,51 +25,43 @@ class MController
 	 * @return void
 	 */
 	public function __construct(){
-		// Get module
-		if ($module = Micro::getInstance()->module) {
+		if ($module = MRegistry::get('request')->getModules()) {
 			$path = Micro::getInstance()->config['AppDir'] . DIRECTORY_SEPARATOR . $module .
 				DIRECTORY_SEPARATOR . ucfirst(basename($module)) . 'Module.php';
 
-			include $path;
-			$path = substr(basename($path), 0, -4);
-			self::$module = new $path();
-			
-		}
-
-		spl_autoload_register(array('MController','autoloader'));
-	}
-	/**
-	 * Autoloader classes
-	 * @param string $classname
-	 */
-	public static function autoloader($classname) {
-		$micro = Micro::getInstance();
-		if (method_exists(self::$module, 'setImport')) {
-			foreach (self::$module->setImport() AS $path) {
-				$path = DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $path);
-				Micro::autoloader($classname, $micro->config['AppDir'] . $path);
+			if (file_exists($path)) {
+				include $path;
+				$path = substr(basename($path), 0, -4);
+				self::$module = new $path();
 			}
 		}
+
+		spl_autoload_register(array('MAutoload','autoloaderController'));
 	}
 	/**
 	 * Render view
+	 *
+	 * @access protected
 	 * @param string $view
 	 * @param array  $data
-	 * @return string $output
+	 * @return string output
 	 */
 	protected function render($view, $data=array()) {
 		if (empty($view)) { return false; }
 
 		// Get info of controller
-		$micro = Micro::getInstance();
-		$module = $micro->module;
-		$cls    = str_replace('controller', '', strtolower(get_class($micro->getController())));
+		$micro		= Micro::getInstance();
+		$request	= MRegistry::get('request');
+
+		$module		= $request->getModules();
+		$classname	= str_replace('controller', '', strtolower($request->getController()));
 
 		// Calculate path to view
-		$path = $micro->config['AppDir'] . DIRECTORY_SEPARATOR .
-			$module . DIRECTORY_SEPARATOR .
-			'views' . DIRECTORY_SEPARATOR .
-			$cls . DIRECTORY_SEPARATOR . $view . '.php';
+		$path  = $micro->config['AppDir'] . DIRECTORY_SEPARATOR;
+		$path .= ($module) ? $module . DIRECTORY_SEPARATOR : null ;
+
+		$path .= 'views' . DIRECTORY_SEPARATOR;
+		$path .= ($classname) . DIRECTORY_SEPARATOR . $view . '.php';
 
 		// Generate layout path
 		$layoutPath = ($this->layout) ? $this->getLayoutFile($micro->config['AppDir'], $module) : null;
@@ -87,6 +79,8 @@ class MController
 	}
 	/**
 	 * Render file by path
+	 *
+	 * @access protected
 	 * @param string $filename
 	 * @param array  $data
 	 * @return string
@@ -99,6 +93,8 @@ class MController
 	}
 	/**
 	 * Get layout path
+	 *
+	 * @access protected
 	 * @param string $basedir
 	 * @param string $module
 	 * @return string
@@ -106,7 +102,9 @@ class MController
 	protected function getLayoutFile($baseDir, $module) {
 		$layout = $baseDir . DIRECTORY_SEPARATOR;
 		$layout .= ($module) ? $module.DIRECTORY_SEPARATOR : $module;
-		$afterpath = 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . ucfirst($this->layout) . '.php';
+
+		$afterpath = 'views' . DIRECTORY_SEPARATOR . 'layouts' .
+			DIRECTORY_SEPARATOR . ucfirst($this->layout) . '.php';
 
 		if (!file_exists($layout . $afterpath)) {
 			return false;
@@ -114,6 +112,13 @@ class MController
 
 		return $layout . $afterpath;
 	}
+	/**
+	 * Redirect user to path
+	 *
+	 * @access public
+	 * @param string path
+	 * @return void
+	 */
 	public function redirect($path) {
 		header('Location: '.$path);
 		exit();
