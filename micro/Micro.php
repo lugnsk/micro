@@ -12,19 +12,11 @@
  * @since 1.0
  */
 class Micro {
-	/**
-	 * Application singletone
-	 * @var Micro $_app
-	 */
+	/** @var Micro $_app Application singletone */
 	protected static $_app;
-	/**
-	 * Configuration array
-	 * @var array $config
-	 */
+	/** @var array $config Configuration array */
 	public $config;
-	/**
-	 * Timer of generate page
-	 */
+	/** @var integer $timer Timer of generate page */
 	private $timer;
 
 

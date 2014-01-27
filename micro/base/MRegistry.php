@@ -13,9 +13,7 @@
  */
 final class MRegistry
 {
-	/**
-	 * @var array $_registry
-	 */
+	/** @var array $_registry */
 	protected static $_registry = array();
 
 

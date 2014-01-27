@@ -14,14 +14,14 @@
  */
 class MRequest
 {
-	/** @property MRouter $router */
+	/** @var MRouter $router */
 	private $router;
 
-	/** @property string $modules */
+	/** @var string $modules */
 	private $modules;
-	/** @property string $controller */
+	/** @var string $controller */
 	private $controller;
-	/** @property string $action */
+	/** @var string $action */
 	private $action;
 
 

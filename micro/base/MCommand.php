@@ -13,11 +13,11 @@
  */
 abstract class MCommand
 {
-	/***/
+	/** @var array $args */
 	public $args = array();
-	/***/
+	/** @var bool $result */
 	public $result = false;
-	/***/
+	/** @var string $message */
 	public $message = '';
 
 	/**

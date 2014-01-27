@@ -57,7 +57,12 @@ class MDbConnection
 		return $result;
 	}
 
-	// TODO: list tables in db
+	/**
+	 * List tables in db
+	 *
+	 * @access public
+	 * @return array
+	 */
 	public function listTables() {
 		$sth = $this->conn->query('SHOW TABLES');
 
@@ -67,7 +72,13 @@ class MDbConnection
 		}
 		return $result;
 	}
-	// TODO: table_exits
+	/**
+	 * Table exists in db
+	 *
+	 * @access public
+	 * @param string $table
+	 * @return bool
+	 */
 	public function tableExists($table) {
 		return (bool)array_search($table, $this->listTables());
 	}
