@@ -59,7 +59,7 @@ class MQuery
 	 * @return void
 	 */
 	public function getDbConnection() {
-		$this->db = MRegistry::get('db')->conn;
+		$this->_conn = MRegistry::get('db')->conn;
 	}
 	/**
 	 * Add where
