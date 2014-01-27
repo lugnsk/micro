@@ -33,12 +33,21 @@ class MModel
 	/**
 	 * Constructor for model
 	 *
-	 * @global Micro
 	 * @access public
 	 * @return void
 	 */
 	public function __construct($new = true) {
 		$this->_isNewRecord = $new;
+		$this->getDbConnection();
+	}
+	/**
+	 * Get connection to db
+	 *
+	 * @access public
+	 * @global MRegistry
+	 * @return void
+	 */
+	public function getDbConnection() {
 		$this->db = MRegistry::get('db')->conn;
 	}
 	/**

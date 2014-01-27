@@ -1,14 +1,27 @@
 <?php
 
 /**
- * Управление запросом пользователя
+ * MRequest class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license http://opensource.org/licenses/MIT
+ * @package micro
+ * @subpackage web
+ * @version 1.0
+ * @since 1.0
  */
 class MRequest
 {
+	/** @property MRouter $router */
 	private $router;
 
+	/** @property string $modules */
 	private $modules;
+	/** @property string $controller */
 	private $controller;
+	/** @property string $action */
 	private $action;
 
 

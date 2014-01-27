@@ -45,12 +45,21 @@ class MQuery
 
 	/**
 	 * Construct class
-	 * @global Micro connection to db
 	 * @access public
 	 * @return void
 	 */
 	public function __construct() {
-		$this->_conn = MRegistry::get('db')->conn;
+		$this->getDbConnection();
+	}
+	/**
+	 * Get connection to db
+	 *
+	 * @access public
+	 * @global MRegistry
+	 * @return void
+	 */
+	public function getDbConnection() {
+		$this->db = MRegistry::get('db')->conn;
 	}
 	/**
 	 * Add where
