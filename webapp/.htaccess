@@ -3,9 +3,4 @@ RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-
-# Request as URI parameter
-RewriteRule ^(.*)\?*$ index.php/$1 [L,QSA]
-
-# Request as GET parameter
-#RewriteRule ^(.*)\?*$ index.php?r=/$1 [L,QSA]
+RewriteRule ^(.*)\?*$ index.php?r=/$1 [L,QSA]
