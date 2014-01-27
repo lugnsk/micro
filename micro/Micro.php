@@ -56,6 +56,7 @@ class Micro {
 		// Register config
 		$this->config = $config;
 		// Register loader
+		require_once $config['MicroDir'] . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'MAutoload.php';
 		spl_autoload_register(array('MAutoload','autoloader'));
 	}
 
@@ -69,12 +70,21 @@ class Micro {
 		$this->loadComponents();
 
 		$path   = $this->prepareController();
-		$action = 'action'.ucfirst(MRegistry::get('request')->getAction());
+		$action = MRegistry::get('request')->getAction();
 
 		require_once $path.'.php';
 		$name = basename($path);
-		$hmvc = new $name;
-		$hmvc->$action();
+
+		if (!class_exists($name)) {
+			throw new MException( 'Controller ' . $name . ' not set' );
+		}
+		$hmvc = new $name($action);
+
+		// Render timer
+		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
+			$slice = microtime() - $this->timer;
+			die( MHtml::openTag('div',array('class'=>'Mruntime')) . $slice . MHtml::closeTag('div') );
+		}
 	}
 	/**
 	 * Loading components in Registry
