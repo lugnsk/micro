@@ -112,6 +112,7 @@ class Micro {
 	 * Prepare controller to use
 	 *
 	 * @access private
+	 * @throw MExction
 	 * @return string
 	 */
 	private function prepareController() {

@@ -171,6 +171,7 @@ class MModel
 	 *
 	 * @access public
 	 * @param string $where
+	 * @throw MException
 	 * @return boolean
 	 */
 	public function update($where = null) {
