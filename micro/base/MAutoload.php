@@ -9,11 +9,11 @@ class MAutoload
 	 * @param string $classname
 	 * @return void
 	 */
-	public static function autoloader($classname) {
+	public static function autoloaderController($classname) {
 		$micro = Micro::getInstance();
 
-		if (method_exists(MController::module, 'setImport')) {
-			foreach (MController::module->setImport() AS $path) {
+		if (method_exists(MController::$module, 'setImport')) {
+			foreach (MController::$module->setImport() AS $path) {
 				$path = DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $path);
 				self::autoloader($classname, $micro->config['AppDir'] . $path);
 			}
@@ -38,7 +38,7 @@ class MAutoload
 				if (isset($config['import']) AND !empty($config['import'])) {
 					$paths = $config['import'];
 					foreach ($paths AS $pat) {
-						Micro::autoloader($classname, $config['AppDir'] . DIRECTORY_SEPARATOR . $pat);
+						self::autoloader($classname, $config['AppDir'] . DIRECTORY_SEPARATOR . $pat);
 					}
 				}
 			}
