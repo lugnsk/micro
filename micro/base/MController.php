@@ -24,9 +24,9 @@ class MController
 	 * Contructor for this class
 	 * @return void
 	 */
-	public function __construct(){
+	public function __construct($action = 'index'){
 		if ($module = MRegistry::get('request')->getModules()) {
-			$path = Micro::getInstance()->config['AppDir'] . DIRECTORY_SEPARATOR . $module .
+			$path = Micro::getInstance()->config['AppDir'] . $module .
 				DIRECTORY_SEPARATOR . ucfirst(basename($module)) . 'Module.php';
 
 			if (file_exists($path)) {
@@ -35,8 +35,10 @@ class MController
 				self::$module = new $path();
 			}
 		}
-
 		spl_autoload_register(array('MAutoload','autoloaderController'));
+
+		$action = 'action' . ucfirst($action);
+		$this->$action();
 	}
 	/**
 	 * Render view
