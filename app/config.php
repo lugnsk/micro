@@ -1,11 +1,9 @@
 <?php
 
-define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR . '..');
-
 return array(
 	// Directories
-	'MicroDir' => BASEDIR . DIRECTORY_SEPARATOR . 'micro',
-	'AppDir'   => BASEDIR . DIRECTORY_SEPARATOR . 'app',
+	'MicroDir' => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'micro',
+	'AppDir'   => __DIR__ ,
 
 	// Sitename
 	'company' => 'Micro',
@@ -14,6 +12,7 @@ return array(
 	// Default import dir
 	'import' => array(
 		'components',
+		'widgets',
 		'models',
 	),
 
@@ -28,6 +27,7 @@ return array(
 			'routes' => array(
 				'/login'=>'/default/login',
 				'/logout'=>'/default/logout',
+				'/login/<num:\d+>/<type:\w+>/<arr:\d{3}>' => '/default/login',
 			),
 		),
 		// DataBase

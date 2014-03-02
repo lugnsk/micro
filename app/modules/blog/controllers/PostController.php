@@ -1,9 +1,7 @@
 <?php
 
-class PostController extends MController
+class PostController extends Controller
 {
-	public $layout = 'maket';
-
 	public function actionList() {
 		$crt = new MQuery;
 		//$crt->addSearch('name', 'hello');

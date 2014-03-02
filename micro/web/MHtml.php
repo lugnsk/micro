@@ -102,6 +102,16 @@ class MHtml
 		return self::tag('meta', $attributes);
 	}
 	/**
+	 * Render favicon file
+	 *
+	 * @access public
+	 * @param string $url
+	 * @return string
+	 */
+	public static function favicon($url) {
+		return self::tag('link', array('href'=>$url, 'rel'=>'shortcut icon', 'type'=>'image/x-icon'));
+	}
+	/**
 	 * Render css file
 	 *
 	 * @access public

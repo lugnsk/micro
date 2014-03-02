@@ -4,6 +4,7 @@
 		<?= MHtml::charset('utf-8') ?>
 		<?= MHtml::meta('language', 'ru') ?>
 		<?= MHtml::cssFile('/css/main.css') ?>
+		<?= MHtml::favicon('/favicon.png'); ?>
 		<?= MHtml::meta('viewport', 'width=device-width, initial-scale=1.0') ?>
 		<?= MHtml::title($this->title) ?>
 	</head>
@@ -13,7 +14,7 @@
 				<span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
 			</div>
 			<div id="content">
-				<div class="menu"><?= implode(' ', $this->menu) ?></div>
+				<?php $this->widget('Menubar', array('links'=>$this->menu)); ?>
 				<?= $content ?>
 			</div>
 			<div id="footer">

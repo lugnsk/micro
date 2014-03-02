@@ -70,7 +70,8 @@ class Micro {
 		if (!class_exists($name)) {
 			throw new MException( 'Controller ' . $name . ' not set' );
 		}
-		$hmvc = new $name($action);
+		$hmvc = new $name;
+		$hmvc->action($action);
 
 		// Render timer
 		if (isset($this->config['timer']) AND $this->config['timer'] == true) {

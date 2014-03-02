@@ -33,7 +33,7 @@ class MRequest
 	 * @return void
 	 */
 	public function __construct($routes) {
-		$this->router = new MRouter($routes);
+		$this->router = new MRouter($routes['routes']);
 		$this->initialize();
 	}
 	/**
@@ -43,7 +43,7 @@ class MRequest
 	 * return void
 	 */
 	private function initialize() {
-		$uri		= ($_GET['r']) ? $_GET['r'] : '/';
+		$uri		= (isset($_GET['r']) OR !empty($_GET['r'])) ? $_GET['r'] : '/';
 		$trustUri	= $this->router->parse($uri);
 		$uriBlocks	= explode('/', $trustUri);
 
