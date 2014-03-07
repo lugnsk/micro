@@ -1,0 +1,1 @@
+<div class="menu"><?= implode(' ', $this->links); ?></div>
