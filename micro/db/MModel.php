@@ -30,6 +30,7 @@ class MModel
 	/** @var boolean $_isNewRecord */
 	private $_isNewRecord = false;
 
+
 	/**
 	 * Constructor for model
 	 *
