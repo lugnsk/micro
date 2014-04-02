@@ -17,6 +17,7 @@ class MDbConnection
 	/** @var PDO|null $conn Connection to DB */
 	public $conn;
 
+
 	/**
 	 * Construct for this class
 	 *
@@ -56,7 +57,6 @@ class MDbConnection
 		}
 		return $result;
 	}
-
 	/**
 	 * List tables in db
 	 *
@@ -82,7 +82,6 @@ class MDbConnection
 	public function tableExists($table) {
 		return (bool)array_search($table, $this->listTables());
 	}
-
 	/**
 	 * Get array fields into table
 	 *
@@ -111,9 +110,7 @@ class MDbConnection
 	public function fieldExists($field, $table) {
 		return (bool)array_search($field, $this->listFields($table));
 	}
-
 	// TODO: field_info
-
 	/**
 	 * Set current database
 	 *
