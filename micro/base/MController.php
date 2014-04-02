@@ -24,6 +24,7 @@ class MController
 	/** @var array $widgetStack */
 	private $widgetStack = array();
 
+
 	/**
 	 * Contructor for this class
 	 * @return void
@@ -110,7 +111,6 @@ class MController
 
 		return $output;
 	}
-
 	/**
 	 * Render file by path
 	 *
