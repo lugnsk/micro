@@ -20,6 +20,7 @@ abstract class MCommand
 	/** @var string $message */
 	public $message = '';
 
+
 	/**
 	 * Set arguments class
 	 *
