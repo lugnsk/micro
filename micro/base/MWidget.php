@@ -13,11 +13,6 @@
  */
 abstract class MWidget extends MController
 {
-	/**  */
-	abstract public function init();
-	/**  */
-	abstract public function run();
-
 	/**
 	 * Constructor for widgets
 	 *
@@ -32,4 +27,18 @@ abstract class MWidget extends MController
 
 		$this->asWidget = true;
 	}
+	/**
+	 * Initialize widget
+	 *
+	 * @access public
+	 * @return void
+	 */
+	abstract public function init();
+	/**
+	 * Run widget
+	 *
+	 * @access public
+	 * @return void
+	 */
+	abstract public function run();
 }
