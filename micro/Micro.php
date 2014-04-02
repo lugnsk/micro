@@ -51,7 +51,6 @@ class Micro {
 		require_once $config['MicroDir'] . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'MAutoload.php';
 		spl_autoload_register(array('MAutoload','autoloader'));
 	}
-
 	/**
 	 * Running application
 	 *
