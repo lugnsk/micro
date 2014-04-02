@@ -30,7 +30,6 @@ class MAutoload
 			}
 		}
 	}
-
 	/**
 	 * Function load files in application
 	 *
@@ -67,7 +66,6 @@ class MAutoload
 		}
 		return false;
 	}
-
 	/**
 	 * Find file in directory
 	 *
