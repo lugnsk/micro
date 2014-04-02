@@ -13,10 +13,6 @@
  */
 final class MRegistry
 {
-	/** @var array $_registry */
-	protected static $_registry = array();
-
-
 	/**
 	 * Disable construct
 	 * @return void
@@ -27,14 +23,13 @@ final class MRegistry
 	 * @return void
 	 */
 	protected function __clone() { }
-
 	/**
 	 * Get registry value
 	 * @param string $name
 	 * @return mixed
 	 */
 	public static function get($name) {
-		return (isset(self::$_registry[$name])) ? self::$_registry[$name] : null;
+		return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
 	}
 	/**
 	 * Get registry value
@@ -43,12 +38,12 @@ final class MRegistry
 	 * @return void
 	 */
 	public static function set($name, $value) {
-		self::$_registry[$name] = $value;
+		$GLOBALS[$name] = $value;
 	}
 	/**
 	 * Get all current values
 	 */
 	public static function getAll() {
-		return self::$_registry;
+		return $GLOBALS;
 	}
 }
