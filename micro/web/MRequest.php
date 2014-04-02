@@ -16,7 +16,6 @@ class MRequest
 {
 	/** @var MRouter $router */
 	private $router;
-
 	/** @var string $modules */
 	private $modules;
 	/** @var string $controller */
@@ -65,9 +64,11 @@ class MRequest
 			$_GET = array_merge($_GET, $gets);
 		}
 	}
-
 	/**
 	 * Prepare modules
+	 *
+	 * @access private
+	 * @return void
 	 */
 	private function prepareModules(&$uriBlocks) {
 		$path = Micro::getInstance()->config['AppDir'];
@@ -81,17 +82,22 @@ class MRequest
 	}
 	/**
 	 * Prepare controller
+	 *
+	 * @access private
+	 * @return void
 	 */
 	private function prepareController(&$uriBlocks) {
 		$this->controller = ($str = array_shift($uriBlocks)) ? $str : 'default';
 	}
 	/**
 	 * Prepare action
+	 *
+	 * @access private
+	 * @return мщшв
 	 */
 	private function prepareAction(&$uriBlocks) {
 		$this->action = ($str = array_shift($uriBlocks)) ? $str : 'index' ;
 	}
-
 	/**
 	 * Get modules from request
 	 *
