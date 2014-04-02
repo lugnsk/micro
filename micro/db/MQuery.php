@@ -14,7 +14,7 @@
  */
 class MQuery
 {
-	/** @var MicroConnection $_conn Current connect to DB */
+	/** @var MConnection $_conn Current connect to DB */
 	private $_conn;
 	/** @var string $select selectable columns */
 	public $select		= '*';
@@ -45,6 +45,7 @@ class MQuery
 
 	/**
 	 * Construct class
+	 *
 	 * @access public
 	 * @return void
 	 */
