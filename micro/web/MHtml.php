@@ -14,9 +14,6 @@
  */
 class MHtml
 {
-	/** @TODO: // LIST Elements // marklist, numlist, deplist, applet, imgmap */
-	/** @TODO: // TABLE Elements// table, caption, row (col) */
-
 	// BASIC Elements
 	/**
 	 * Render close tag
@@ -43,8 +40,8 @@ class MHtml
 	 */
 	public static function openTag($name, $attributes = array()) {
 		$result = '';
-		foreach ($attributes AS $name => $value) {
-			$result .= $name . '="' . $value . '" ';
+		foreach ($attributes AS $key => $value) {
+			$result .= $key . '="' . $value . '" ';
 		}
 		return '<'.$name.' '.$result.'>';
 	}
@@ -68,7 +65,7 @@ class MHtml
 	 * @param  array  attributes
 	 * @return string
 	 */
-	private static function field($type, $name, $value, $attributes = array()) {
+	private static function field($type, $name,  $value = null, $attributes = array()) {
 		$attributes['type'] = $type;
 		$attributes['name'] = $name;
 		$attributes['value'] = $value;
@@ -243,8 +240,100 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function heading($num, $value, $attributes = array()) {
+	public static function heading($num,  $value = null, $attributes = array()) {
 		return self::openTag('h'.$num, $attributes) . $value . self::closeTag('h'.$num);
+	}
+	// LIST Elements // marklist, numlist, deplist, applet, imgmap, object
+	public static function applet($attributes = array()) {
+	}
+	// TABLE Elements
+	/**
+	 * Render table element
+	 *
+	 * How to use $elements:
+	 * array(
+	 *     array( // row
+	 *         'cells'=>array( // cell
+	 *             'value'=>'text',
+	 *             'attributes'=>array()
+	 *         ),
+	 *         attributes'=>array()
+	 *     )
+	 * )
+	 * 
+	 * @access public
+	 * @param array $elements
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function table($elements = array(), $attributes = array()) {
+		$output = null;
+		foreach ($elements AS $value) {
+			$output = self::tableRow(
+				(isset($value['cells'])) ? $value['cells'] : null,
+				(isset($value['attributes'])) ? $value['attributes'] : null
+			);
+		}
+		return self::beginTable($attributes) . $output . self::endTable();
+	}
+	/**
+	 * Render begin table element
+	 *
+	 * @access public
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function beginTable($attributes = array()) {
+		return self::openTag('table', $attributes);
+	}
+	/**
+	 * Render end table element
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public static function endTable() {
+		return self::closeTag('table');
+	}
+	/**
+	 * Render table caption element
+	 *
+	 * @access public
+	 * @param string $text
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function tableCaption($text, $attributes = array()) {
+		return self::openTag('caption', $attributes) . $text . self::closeTag('caption');
+	}
+	/**
+	 * Render table row element
+	 *
+	 * @access public
+	 * @param array $elements array(value, attributes)
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function tableRow($elements = array(),$attributes = array()) {
+		$output = null;
+		foreach ($elements AS $value) {
+			$output = self::tableCell(
+				(isset($value['value'])) ? $value['value'] : null,
+				(isset($value['attributes'])) ? $value['attributes'] : null
+			);
+		}
+		return self::openTag('tr', $attributes) . $output . self::closeTag('tr');
+	}
+	/**
+	 * Render table cell element
+	 *
+	 * @access public
+	 * @param string $text
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function tableCell($text, $attributes = array()) {
+		return self::openTag('td', $attributes) . $text . self::closeTag('td');
 	}
 	// FORM Elements
 	/**
@@ -327,7 +416,7 @@ class MHtml
 	 */
 	public static function label($name, $elemId = '') {
 		$elemId = ($elemId) ? array('for'=>$elemId) : array() ;
-		return self::tag('label', $elemId);
+		return self::openTag('label', $elemId) . $name . self::closeTag('label');
 	}
 	/**
 	 * Generate option tag
@@ -467,7 +556,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function buttonField($name, $value, $attributes = array()) {
+	public static function buttonField($name,  $value = null, $attributes = array()) {
 		return self::field('button', $name, $value, $attributes);
 	}
 	/**
@@ -479,7 +568,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function checkboxField($name, $value, $attributes = array()) {
+	public static function checkboxField($name,  $value = null, $attributes = array()) {
 		return self::field('checkbox', $name, $value, $attributes);
 	}
 	/**
@@ -491,7 +580,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function fileField($name, $value, $attributes = array()) {
+	public static function fileField($name,  $value = null, $attributes = array()) {
 		return self::field('file', $name, $value, $attributes);
 	}
 	/**
@@ -503,7 +592,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function hiddenField($name, $value, $attributes = array()) {
+	public static function hiddenField($name,  $value = null, $attributes = array()) {
 		return self::field('hidden', $name, $value, $attributes);
 	}
 	/**
@@ -516,7 +605,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function imageField($name, $value, $file, $attributes = array()) {
+	public static function imageField($name,  $value = null, $file, $attributes = array()) {
 		$attributes['src'] = $file;
 		return self::field('image', $name, $value, $attributes);
 	}
@@ -529,7 +618,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function passwordField($name, $value, $attributes = array()) {
+	public static function passwordField($name,  $value = null, $attributes = array()) {
 		return self::field('password', $name, $value, $attributes);
 	}
 	/**
@@ -541,7 +630,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function radioField($name, $value, $attributes = array()) {
+	public static function radioField($name,  $value = null, $attributes = array()) {
 		return self::field('radio', $name, $value, $attributes);
 	}
 	/**
@@ -553,7 +642,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function textField($name, $value, $attributes = array()) {
+	public static function textField($name,  $value = null, $attributes = array()) {
 		return self::field('text', $name, $value, $attributes);
 	}
 	/**
@@ -565,7 +654,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function emailField($name, $value, $attributes = array()) {
+	public static function emailField($name,  $value = null, $attributes = array()) {
 		return self::field('email', $name, $value, $attributes);
 	}
 	/**
@@ -577,7 +666,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function rangeField($name, $value, $attributes = array()) {
+	public static function rangeField($name,  $value = null, $attributes = array()) {
 		return self::field('range', $name, $value, $attributes);
 	}
 	/**
@@ -589,7 +678,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function searchField($name, $value, $attributes = array()) {
+	public static function searchField($name,  $value = null, $attributes = array()) {
 		return self::field('search', $name, $value, $attributes);
 	}
 	/**
@@ -601,7 +690,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function telField($name, $value, $attributes = array()) {
+	public static function telField($name,  $value = null, $attributes = array()) {
 		return self::field('tel', $name, $value, $attributes);
 	}
 	/**
@@ -613,7 +702,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function urlField($name, $value, $attributes = array()) {
+	public static function urlField($name,  $value = null, $attributes = array()) {
 		return self::field('url', $name, $value, $attributes);
 	}
 	// HTML5 Only
