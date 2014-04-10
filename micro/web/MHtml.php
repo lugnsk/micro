@@ -214,7 +214,7 @@ class MHtml
 	 * @return string
 	 */
 	public static function image($name, $file, $attributes = array()) {
-		$attributes['src'] = $source;
+		$attributes['src'] = $file;
 		$attributes['alt'] = $name;
 		return self::tag('img', $attributes);
 	}
@@ -440,7 +440,7 @@ class MHtml
 	 * @param array attributes
 	 * @return string
 	 */
-	public static function optgroup($label, $options = array(), $attributes = array()) {
+	public static function optGroup($label, $options = array(), $attributes = array()) {
 		$attributes['label'] = $label;
 		$opts = '';
 		foreach ($options AS $option) {
@@ -461,7 +461,7 @@ class MHtml
 	 * @param array attributes
 	 * @return string
 	 */
-	public static function dropdownlist($name, $options = array(), $attributes = array()) {
+	public static function dropDownList($name, $options = array(), $attributes = array()) {
 		$attributes['size'] = 1;
 		return self::listbox($name, $options, $attributes);
 	}
@@ -474,12 +474,12 @@ class MHtml
 	 * @param array attributes
 	 * @return string
 	 */
-	public static function listbox($name, $options = array(), $attributes = array()) {
+	public static function listBox($name, $options = array(), $attributes = array()) {
 		$attributes['name'] = $name;
 		$opts = '';
 		foreach ($options AS $option) {
 			if (isset($option['label'])) {
-				$opts .= self::optgroup($option['label'], $option['options'], $option['attributes']);
+				$opts .= self::optGroup($option['label'], $option['options'], $option['attributes']);
 			} else {
 				$opts .= self::option($option['value'], $option['text'], $option['attributes']);
 			}
@@ -495,7 +495,7 @@ class MHtml
 	 * @param string format %check% - checkbox , %text% - text
 	 * @return string
 	 */
-	public static function checkboxList($name, $checkboxes = array(), $format = '<p>%check% %text%</p>') {
+	public static function checkBoxList($name, $checkboxes = array(), $format = '<p>%check% %text%</p>') {
 		$checks = '';
 		foreach (checkboxes AS $checkbox) {
 			$check = self::checkboxField($name, $checkbox['value'], $checkbox['attributes']);
@@ -568,7 +568,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function checkboxField($name,  $value = null, $attributes = array()) {
+	public static function checkBoxField($name,  $value = null, $attributes = array()) {
 		return self::field('checkbox', $name, $value, $attributes);
 	}
 	/**
