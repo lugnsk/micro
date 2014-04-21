@@ -11,7 +11,7 @@ class Controller extends MController
 		parent::__construct();
 
 		if (isset($_SESSION['UserID']) AND !empty($_SESSION['UserID'])) {
-			$this->menu[] = '<a href="/stat">Статистика</a>';
+			$this->menu[] = '<a href="/profile">Профиль</a>';
 			$this->menu[] = ' (<a href="/logout">Выйти</a>)';
 		} else {
 			$this->menu[] = '<a href="/login">Войти</a>';
