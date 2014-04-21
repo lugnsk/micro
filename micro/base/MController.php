@@ -120,6 +120,12 @@ class MController
 	 * @return string
 	 */
 	protected function renderFile($filename, $data=array()) {
+		$filenamel = substr($filename, 0, -3) . 'ini';
+		if (file_exists($filenamel)) {
+			$lang = new MLanguage($filenamel);
+		}
+		unset($filenamel);
+
 		extract($data, EXTR_PREFIX_SAME, 'data');
 		ob_start();
 		include $filename;
