@@ -34,9 +34,7 @@ class DefaultController extends Controller
 	}
 
 	public function actionLogout() {
-		if (isset($_SESSION['UserID'])) {
-			unset($_SESSION['UserID']);
-		}
+		Registry::get('session')->destroy();
 		$this->redirect('/');
 	}
 }
