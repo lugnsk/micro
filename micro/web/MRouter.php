@@ -127,7 +127,7 @@ class MRouter
 
 		for ($i = 0; $i < count($repBlocks); $i++) {
 			if ($repBlocks[$i]{0} == '<') {
-				$val = substr($repBlocks[$i], 1, strlen($repBlocks)-1 );
+				$val = substr($repBlocks[$i], 1, strlen($repBlocks[$i])-1 );
 
 				if (isset($attr[$val])) {
 					$result .= '/' . $attr[$val];
