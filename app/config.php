@@ -7,7 +7,7 @@ return array(
 
 	// Sitename
 	'company' => 'Micro',
-	'slogan'  => 'php hmvc framework',
+	'slogan'  => 'simply hmvc php framework',
 
 	// Default import dir
 	'import' => array(
@@ -17,7 +17,7 @@ return array(
 	),
 
 	// Print runtime
-	'timer' => true,
+	'timer' => false,
 
 	// Setup components
 	'components' => array(
@@ -29,6 +29,13 @@ return array(
 				'/logout'=>'/default/logout',
 				'/login/<num:\d+>/<type:\w+>/<arr:\d{3}>' => '/default/login',
 			),
+		),
+		'session' => array(
+			'class' => 'MSession',
+			'autoStart' => true,
+		),
+		'flash' => array(
+			'class' => 'MFlashMessage',
 		),
 		// DataBase
 		'db' => array(
