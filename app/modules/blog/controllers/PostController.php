@@ -2,12 +2,15 @@
 
 class PostController extends Controller
 {
-	public function actionList() {
+	public function actionIndex() {
 		$crt = new MQuery;
-		//$crt->addSearch('name', 'hello');
-		$blogs = Blog::finder($crt);
+		$crt->limit = 10;
 
-		echo $this->render('index', array('blogs'=>$blogs));
+		if (isset($_GET['page']) AND is_numeric($_GET['page'])) {
+			$crt->offset = $_GET['page'] * $crt->limit;
+		}
+
+		echo $this->render('index', array('blogs'=>Blog::finder($crt)));
 	}
 
 	public function actionCreate() {
