@@ -16,7 +16,7 @@ return array(
 		'models',
 	),
 
-	// Print runtime
+	// Print run time
 	'timer' => false,
 
 	// Setup components
@@ -28,12 +28,17 @@ return array(
 				'/login'=>'/default/login',
 				'/logout'=>'/default/logout',
 				'/login/<num:\d+>/<type:\w+>/<arr:\d{3}>' => '/default/login',
+
+				'/blog/post/index/<page:\d+>' => '/blog/post',
+				'/blog/post/<id:\d+>' => '/blog/post/view',
 			),
 		),
+		// Default session
 		'session' => array(
 			'class' => 'MSession',
 			'autoStart' => true,
 		),
+		// Flash messages
 		'flash' => array(
 			'class' => 'MFlashMessage',
 		),
