@@ -210,6 +210,7 @@ class MQuery
 	 * @return mixed
 	 */
 	public function run() {
+		/** @var PDO $query */
 		$query = $this->_conn->prepare($this->getQuery().';');
 		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->objectName), array('new'=>false));
 
