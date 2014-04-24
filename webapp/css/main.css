@@ -9,7 +9,7 @@ html, body {
 .Mruntime {
 	position: absolute;
 	left: 85%;
-	top: 0%;
+	top: 0;
 	font-weight: bold;
 	font-size: small;
 }
