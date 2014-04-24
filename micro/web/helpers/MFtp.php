@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Simple FTP Class
- * 
- * @package SFTP
- * @name SFTP
- * @version 1.0
+ *
  * @author Shay Anderson 05.11
  * @link shayanderson.com
  * @license http://www.gnu.org/licenses/gpl.html GPL License
- * SFTP is free software and is distributed WITHOUT ANY WARRANTY
+ * @package micro
+ * @subpackage web
+ * @subpackage helpers
+ * @version 1.0
  */
 final class MFtp {
 	/**
@@ -246,8 +247,6 @@ final class MFtp {
 	 * @return array
 	 */
 	public function ls($directory = null) {
-		$list = array();
-
 		// attempt to get list
 		if($list = ftp_nlist($this->_stream, $directory)) {
 			// success
@@ -280,8 +279,8 @@ final class MFtp {
 	/**
 	 * Upload file to server
 	 *
-	 * @param string $local_path
-	 * @param string $remote_file_path
+	 * @param string $local_file
+	 * @param string $remote_file
 	 * @param int $mode
 	 * @return bool
 	 */
