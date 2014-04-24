@@ -1,4 +1,4 @@
 micro
 =====
 
-PHP Micro HMVC Framework 
+PHP Micro H-MVC Framework
