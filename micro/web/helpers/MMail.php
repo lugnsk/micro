@@ -15,10 +15,15 @@
  */
 class MMail
 {
+	/** @var string $form */
 	private $from;
+	/** @var string $fromName */
 	private $fromName = "";
+	/** @var string $type */
 	private $type = "text/html";
+	/** @var string $encoding */
 	private $encoding = "utf-8";
+	/** @var bool $notify */
 	private $notify = false;
 
 	/**
