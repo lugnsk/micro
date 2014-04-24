@@ -22,17 +22,18 @@ class MRouter
 
 
 	/**
-	 * Construct for route scaner
+	 * Construct for route scanner
 	 *
+	 * @access public
 	 * @param array $routes
-	 * @return void
 	 */
-	public function __construct($routes) {
+	public function __construct($routes = array()) {
 		$this->routes = array_merge($this->routes, $routes);
 	}
 	/**
 	 * Parsing uri
 	 *
+	 * @access public
 	 * @param string $uri
 	 * @return string
 	 */
@@ -59,8 +60,9 @@ class MRouter
 	/**
 	 * Validated router rule
 	 *
+	 * @access private
 	 * @param string $uri
-	 * @param string $condition
+	 * @param string $pattern
 	 * @param string $replacement
 	 * @return string
 	 */
@@ -69,35 +71,34 @@ class MRouter
 		$patBlocks = explode('/', $pattern);		if ($patBlocks[0] == '') array_shift($patBlocks);
 		$repBlocks = explode('/', $replacement);	if ($repBlocks[0] == '') array_shift($repBlocks);
 
-		$attr = array(); $result = null;
+		$attributes = array(); $result = null;
 
 		if (count($uriBlocks) != count($patBlocks) ) {
 			return false;
 		}
-		if (! $attr = $this->parseUri($uriBlocks, $patBlocks) ) {
+		if (! $attributes = $this->parseUri($uriBlocks, $patBlocks) ) {
 			return false;
 		}
-		$result = $this->buildResult($attr, $repBlocks);
+		$result = $this->buildResult($attributes, $repBlocks);
 		if ($result == null OR $result == false) {
 			return false;
 		}
 
-		foreach ($attr AS $key => $val) {
+		foreach ($attributes AS $key => $val) {
 			$_GET[$key] = $val;
 		}
 
 		return $result;
 	}
-
 	/**
 	 * Match patBlocks in uriBlocks
 	 *
 	 * @access private
 	 * @param array $uriBlocks
 	 * @param array $patBlocks
-	 * @result bool|array
+	 * @return array|bool
 	 */
-	private function parseUri($uriBlocks, $patBlocks) {
+	private function parseUri($uriBlocks=array(), $patBlocks=array()) {
 		$attr = array();
 
 		for ($i = 0; $i < count($uriBlocks); $i++) {
@@ -115,12 +116,12 @@ class MRouter
 		return $attr;
 	}
 	/**
-	 * Replacement result with repBlocks and attr
+	 * Replacement $result with repBlocks
 	 *
 	 * @access private
-	 * @param array $attr
-	 * @param array $patBlocks
-	 * @result bool|string
+	 * @param $attr
+	 * @param $repBlocks
+	 * @return bool|null|string
 	 */
 	private function buildResult(&$attr, $repBlocks) {
 		$result = null;
