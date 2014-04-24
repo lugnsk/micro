@@ -1,11 +1,31 @@
 <?php
 
+/**
+ * MFlashMessage is a flash messenger.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license http://opensource.org/licenses/MIT
+ * @package micro
+ * @subpackage web
+ * @subpackage helpers
+ * @version 1.0
+ * @since 1.0
+ */
 class MFlashMessage
 {
 	const TYPE_SUCCESS = 1;
 	const TYPE_NOTICE = 2;
 	const TYPE_ERROR = 3;
 
+	/**
+	 * Constructor messenger
+	 *
+	 * @access public
+	 * @result void
+	 * @catch MException
+	 */
 	public function __construct() {
 		try {
 			MRegistry::get('session')->flash = array();
@@ -13,7 +33,16 @@ class MFlashMessage
 			die('Механизм сессий не активирован: ' . $e->getMessage());
 		}
 	}
-	// push a new flash
+
+	/**
+	 * Push a new flash
+	 *
+	 * @access public
+	 * @param int $type
+	 * @param string $title
+	 * @param string $description
+	 * @return void
+	 */
 	public function push($type = MFlashMessage::TYPE_SUCCESS, $title = '', $description = '') {
 		MRegistry::get('session')->flash[] = array(
 			'type'=> $type,
@@ -21,7 +50,13 @@ class MFlashMessage
 			'description'=> $description
 		);
 	}
-	// has flashes by type
+	/**
+	 * Has flashes by type
+	 *
+	 * @access public
+	 * @param int $type
+	 * @return bool
+	 */
 	public function has($type = MFlashMessage::TYPE_SUCCESS) {
 		foreach (MRegistry::get('session')->flash AS $element) {
 			if (isset($element['type']) && $element['type'] == $type) {
@@ -30,9 +65,15 @@ class MFlashMessage
 		}
 		return false;
 	}
-	// get flash by type
+
+	/**
+	 * Get flash by type
+	 *
+	 * @access public
+	 * @param int $type
+	 * @return array|bool
+	 */
 	public function get($type = MFlashMessage::TYPE_SUCCESS) {
-		$result = array();
 		foreach (MRegistry::get('session')->flash AS $key=>$element) {
 			if (isset($element['type']) && $element['type'] == $type) {
 				$result = $element;
@@ -42,7 +83,13 @@ class MFlashMessage
 		}
 		return false;
 	}
-	// get all flashes
+
+	/**
+	 * Get all flashes
+	 *
+	 * @access public
+	 * @return mixed
+	 */
 	public function getAll() {
 		$result = MRegistry::get('session')->flash;
 		MRegistry::get('session')->flash = array();
