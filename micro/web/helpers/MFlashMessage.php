@@ -15,8 +15,11 @@
  */
 class MFlashMessage
 {
+	/** @var integer $TYPE_SUCCESS */
 	const TYPE_SUCCESS = 1;
+	/** @var integer $TYPE_NOTICE */
 	const TYPE_NOTICE = 2;
+	/** @var integer $TYPE_ERROR */
 	const TYPE_ERROR = 3;
 
 	/**
