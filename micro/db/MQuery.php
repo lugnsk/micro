@@ -188,14 +188,19 @@ class MQuery
 		$query .= ($this->having) ? ' HAVING ' . $this->having : '';
 		$query .= ($this->order) ? ' ORDER BY ' . $this->order : '';
 
-		if ($this->limit >= 0) {
+		if ($this->limit != -1 OR $this->ofset != -1) {
 			$query .= ' LIMIT ';
-			if ($this->ofset >= 0) {
-				$query .= $this->ofset . ',';
-			}
-			$query .= $this->limit;
-		}
 
+			if ($this->ofset != -1) {
+				$query .= $this->ofset;
+			}
+			if ($this->limit != -1 AND $this->ofset != -1) {
+				$query .= ',';
+			}
+			if ($this->limit != -1) {
+				$query .= $this->limit;
+			}
+		}
 		return $query;
 	}
 	/**
@@ -205,7 +210,7 @@ class MQuery
 	 * @param boolean $single
 	 * @return mixed result's of query
 	 */
-	public function run($single = false) {
+	public function run() {
 		$query = $this->_conn->prepare($this->getQuery().';');
 		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->objectName), array('new'=>false));
 

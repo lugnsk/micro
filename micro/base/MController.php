@@ -62,6 +62,20 @@ class MController
 
 		$this->$action();
 	}
+
+	protected function renderPartial($view, $data=array()) {
+		$lay = $this->layout;
+		$wid = $this->asWidget;
+
+		$this->layout = null;
+		$this->asWidget = false;
+		$output = $this->render($view, $data);
+		$this->layout = $lay;
+		$this->asWidget = $wid;
+
+		return $output;
+	}
+
 	/**
 	 * Render view
 	 *

@@ -7,12 +7,16 @@ class MAssets
 	public function publish($dir) {
 		$hashDir = getPublishDir($dir);
 
+		if (!file_exists($hashDir)) {
+			@mkdir($hashDir, 0777);
+		}
+
 		if (is_dir($dir)) {
 			MFile::recurseCopyIfEdited($dir, $hashDir);
 		} else {
 			if (filemtime($dir) != filemtime($hashDir)) {
 				copy($dir, $hashDir);
-				@chmod($dstDir, 0666);
+				@chmod($hashDir.$dir, 0666);
 			}
 		}
 	}

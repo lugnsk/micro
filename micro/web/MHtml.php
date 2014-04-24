@@ -345,7 +345,7 @@ class MHtml
 	 * @param  array attributes
 	 * @return string
 	 */
-	public static function beginForm($action, $method, $attributes = array()) {
+	public static function beginForm($action, $method = 'POST', $attributes = array()) {
 		$attributes['action'] = $action;
 		$attributes['method'] = $method;
 		return self::openTag('form', $attributes);
@@ -393,6 +393,7 @@ class MHtml
 	 * @return string
 	 */
 	public static function textArea($name, $text, $attributes = array()) {
+		$attributes['name'] = $name;
 		return self::openTag('textarea', $attributes) . $text . self::closeTag('textarea');
 	}
 	/**
