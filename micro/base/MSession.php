@@ -17,8 +17,7 @@ class MSession
 	 * Construct for this class
 	 *
 	 * @access public
-	 * @param array $config
-	 * @return void
+	 * @param array $config init params
 	 */
 	public function __construct($config = array()) {
 		if (isset($config['autoStart']) AND ($config['autoStart'] == true)) {
@@ -53,7 +52,7 @@ class MSession
 	 *
 	 * @access public
 	 * @param string $name
-	 * @return void
+	 * @return mixed
 	 */
 	public function __get($name) {
 		return (isset($_SESSION[$name])) ? $_SESSION[$name] : NULL;
