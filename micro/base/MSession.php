@@ -17,7 +17,8 @@ class MSession
 	 * Construct for this class
 	 *
 	 * @access public
-	 * @param array $config init params
+	 * @param array $config
+	 * @result void
 	 */
 	public function __construct($config = array()) {
 		if (isset($config['autoStart']) AND ($config['autoStart'] == true)) {

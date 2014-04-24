@@ -15,16 +15,22 @@ final class MRegistry
 {
 	/**
 	 * Disable construct
-	 * @return void
+	 *
+	 * @access protected
+	 * @result void
 	 */
 	protected function __construct() { }
 	/**
 	 * Disable clone
+	 *
+	 * @access protected
 	 * @return void
 	 */
 	protected function __clone() { }
 	/**
 	 * Get registry value
+	 *
+	 * @access public
 	 * @param string $name
 	 * @return mixed
 	 */
@@ -33,6 +39,8 @@ final class MRegistry
 	}
 	/**
 	 * Get registry value
+	 *
+	 * @access public
 	 * @param string $name
 	 * @param mixed $value
 	 * @return void
@@ -42,6 +50,9 @@ final class MRegistry
 	}
 	/**
 	 * Get all current values
+	 *
+	 * @access public
+	 * @return array
 	 */
 	public static function getAll() {
 		return $GLOBALS;
