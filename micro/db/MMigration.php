@@ -21,7 +21,7 @@ class MMigration {
 	 * Constructor for model
 	 *
 	 * @access public
-	 * @return void
+	 * @result void
 	 */
 	public function __construct() {
 		$this->getDbConnection();
