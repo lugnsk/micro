@@ -26,8 +26,9 @@ class MController
 
 
 	/**
-	 * Contructor for this class
-	 * @return void
+	 * Constructor for this class
+	 *
+	 * @access public
 	 */
 	public function __construct(){
 		if ($module = MRegistry::get('request')->getModules()) {
@@ -47,6 +48,7 @@ class MController
 	 *
 	 * @access public
 	 * @param string $name
+	 * @throws MException method not declared
 	 * @return void
 	 */
 	public function action($name = 'index') {
@@ -63,6 +65,13 @@ class MController
 		$this->$action();
 	}
 
+	/**
+	 * Render partial a view
+	 *
+	 * @param string $view view name
+	 * @param array $data
+	 * @return string
+	 */
 	protected function renderPartial($view, $data=array()) {
 		$lay = $this->layout;
 		$wid = $this->asWidget;
@@ -88,33 +97,34 @@ class MController
 		if (empty($view)) { return false; }
 
 		// Get inf of controller
-		$appdir = Micro::getInstance()->config['AppDir'];
+		$appDirectory = Micro::getInstance()->config['AppDir'];
+		$className = null;
 
 		if (!$this->asWidget) {
 			$module = MRegistry::get('request')->getModules();
 		} else {
 			$reflector = new ReflectionClass(get_called_class());
-			$module = str_replace($appdir, '', dirname($reflector->getFileName()));
+			$module = str_replace($appDirectory, '', dirname($reflector->getFileName()));
 			unset($reflector);
 		}
 
 		if (!$this->asWidget) {
-			$classname = str_replace('controller', '', strtolower(MRegistry::get('request')->getController()));
+			$className = str_replace('controller', '', strtolower(MRegistry::get('request')->getController()));
 		}
 
 		// Calculate path to view
-		$path  = $appdir . DIRECTORY_SEPARATOR . (($module) ? $module . DIRECTORY_SEPARATOR : null );
+		$path  = $appDirectory . DIRECTORY_SEPARATOR . (($module) ? $module . DIRECTORY_SEPARATOR : null );
 
 		if ($this->asWidget) {
 			$path .=  DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $view . '.php';
 		} else {
-			$path .= 'views' . DIRECTORY_SEPARATOR . $classname . DIRECTORY_SEPARATOR . $view . '.php';
+			$path .= 'views' . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR . $view . '.php';
 		}
 
 		// Generate layout path
-		$layoutPath = ($this->layout) ? $this->getLayoutFile($appdir, $module) : null;
+		$layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, $module) : null;
 		if (!file_exists($layoutPath)) {
-			$layoutPath = ($this->layout) ? $this->getLayoutFile($appdir, '') : null;
+			$layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, '') : null;
 		}
 
 		// Render view
@@ -129,27 +139,27 @@ class MController
 	 * Render file by path
 	 *
 	 * @access protected
-	 * @param string $filename
+	 * @param string $fileName
 	 * @param array  $data
 	 * @return string
 	 */
-	protected function renderFile($filename, $data=array()) {
-		$filenamel = substr($filename, 0, -3) . 'ini';
-		if (file_exists($filenamel)) {
-			$lang = new MLanguage($filenamel);
+	protected function renderFile($fileName, $data=array()) {
+		$fileNameLang = substr($fileName, 0, -3) . 'ini';
+		if (file_exists($fileNameLang)) {
+			$lang = new MLanguage($fileNameLang);
 		}
-		unset($filenamel);
+		unset($fileNameLang);
 
 		extract($data, EXTR_PREFIX_SAME, 'data');
 		ob_start();
-		include $filename;
+		include $fileName;
 		return ob_get_clean();
 	}
 	/**
 	 * Get layout path
 	 *
 	 * @access protected
-	 * @param string $basedir
+	 * @param string $baseDir
 	 * @param string $module
 	 * @return string
 	 */
@@ -157,20 +167,20 @@ class MController
 		$layout = $baseDir . DIRECTORY_SEPARATOR;
 		$layout .= ($module) ? $module.DIRECTORY_SEPARATOR : $module;
 
-		$afterpath = 'views' . DIRECTORY_SEPARATOR . 'layouts' .
+		$afterPath = 'views' . DIRECTORY_SEPARATOR . 'layouts' .
 			DIRECTORY_SEPARATOR . ucfirst($this->layout) . '.php';
 
-		if (!file_exists($layout . $afterpath)) {
+		if (!file_exists($layout . $afterPath)) {
 			return false;
 		}
 
-		return $layout . $afterpath;
+		return $layout . $afterPath;
 	}
 	/**
 	 * Redirect user to path
 	 *
 	 * @access public
-	 * @param string path
+	 * @param string $path
 	 * @return void
 	 */
 	public function redirect($path) {
@@ -179,14 +189,14 @@ class MController
 	}
 	// Widgets:
 	/**
-	 * Render widget
+	 * Render a widget
 	 *
 	 * @access public
 	 * @param string $name
 	 * @param array $options
-	 * @param boolean $capture
-	 * @throw MException
-	 * @result null|string
+	 * @param bool $capture
+	 * @return string
+	 * @throws MException
 	 */
 	public function widget($name, $options = array(), $capture=false) {
 		$name = $name.'Widget';
@@ -211,10 +221,10 @@ class MController
 	 * Start render widget
 	 *
 	 * @access public
-	 * @param string $name
+	 * @param $name
 	 * @param array $options
-	 * @throw MException
-	 * @result mixed MWidget
+	 * @return mixed
+	 * @throws MException
 	 */
 	public function startWidget($name, $options = array()) {
 		$name = $name.'Widget';
@@ -227,18 +237,17 @@ class MController
 			throw new MException('This widget already started!');
 		}
 
-		$this->widgetStack[$name] = new $name();
+		$this->widgetStack[$name] = new $name($options);
 		$this->widgetStack[$name]->init();
 		return $this->widgetStack[$name];
 	}
+
 	/**
-	 * End render widget
+	 * End of widget
 	 *
 	 * @access public
 	 * @param string $name
-	 * @param array $options
-	 * @throw MException
-	 * @result string
+	 * @throws MException
 	 */
 	public function endWidget($name){
 		$name = $name.'Widget';
