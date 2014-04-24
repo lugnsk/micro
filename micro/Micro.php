@@ -12,7 +12,7 @@
  * @since 1.0
  */
 class Micro {
-	/** @var Micro $_app Application singletone */
+	/** @var Micro $_app Application singleton */
 	protected static $_app;
 	/** @var array $config Configuration array */
 	public $config;
@@ -21,13 +21,17 @@ class Micro {
 
 
 	/**
-	 * Method CLONE is not alowed for application
+	 * Method CLONE is not allowed for application
+	 *
+	 * @access private
 	 * @return void
 	 */
 	private function __clone() {
 	}
 	/**
-	 * Get application singletone instance
+	 * Get application singleton instance
+	 *
+	 * @access public
 	 * @param  array $config
 	 * @return Micro this
 	 */
@@ -39,8 +43,10 @@ class Micro {
 		return self::$_app;
 	}
 	/**
-	 * Contruct application
-	 * @return void
+	 * Constructor application
+	 *
+	 * @access private
+	 * @param array $config
 	 */
 	private function __construct($config = array()) {
 		// Register timer
@@ -48,13 +54,14 @@ class Micro {
 		// Register config
 		$this->config = $config;
 		// Register loader
-		require_once $config['MicroDir'] . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'MAutoload.php';
+		require $config['MicroDir'] . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'MAutoload.php';
 		spl_autoload_register(array('MAutoload','autoloader'));
 	}
 	/**
 	 * Running application
 	 *
 	 * @access public
+	 * @throws MException controller not set
 	 * @return void
 	 */
 	public function run() {
@@ -69,8 +76,8 @@ class Micro {
 		if (!class_exists($name)) {
 			throw new MException( 'Controller ' . $name . ' not set' );
 		}
-		$hmvc = new $name;
-		$hmvc->action($action);
+		$mvc = new $name;
+		$mvc->action($action);
 
 		// Render timer
 		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
@@ -94,18 +101,18 @@ class Micro {
 				continue;
 			}
 
-			$classname = $options['class'];
+			$className = $options['class'];
 			unset($options['class']);
 
-			MRegistry::set($name, new $classname($options) );
+			MRegistry::set($name, new $className($options) );
 		}
 	}
 	/**
 	 * Prepare controller to use
 	 *
 	 * @access private
-	 * @throw MExction
 	 * @return string
+	 * @throws MException
 	 */
 	private function prepareController() {
 		$request = MRegistry::get('request');
