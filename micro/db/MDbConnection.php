@@ -24,7 +24,7 @@ class MDbConnection
 	 * @access public
 	 * @param array $config
 	 * @throw MException
-	 * @return void
+	 * @result void
 	 */
 	public function __construct($config = array()) {
 		try {
@@ -46,7 +46,7 @@ class MDbConnection
 	 * List database names on this connecion
 	 *
 	 * @access public
-	 * @return PDOResult
+	 * @return mixed
 	 */
 	public function listDatabases() {
 		$sth = $this->conn->query('SHOW_DATABASES();'); // @TODO: Patch me
@@ -87,7 +87,7 @@ class MDbConnection
 	 *
 	 * @access public
 	 * @param string $table
-	 * @result array
+	 * @return array
 	 */
 	public function listFields($table) {
 		$sth = $this->conn->query('SHOW COLUMNS FROM '.$table.';');
@@ -105,7 +105,7 @@ class MDbConnection
 	 * @access public
 	 * @param string $field
 	 * @param string $table
-	 * @result boolean
+	 * @return boolean
 	 */
 	public function fieldExists($field, $table) {
 		return (bool)array_search($field, $this->listFields($table));
@@ -115,11 +115,11 @@ class MDbConnection
 	 * Set current database
 	 *
 	 * @access public
-	 * @param string $dbname
+	 * @param string $dbName
 	 * @return boolean
 	 */
-	public function switchDatabase($dbname) {
-		if ($this->conn->exec('USE ' . $dbname . ';') != FALSE) {
+	public function switchDatabase($dbName) {
+		if ($this->conn->exec('USE ' . $dbName . ';') != FALSE) {
 			return true;
 		} else return false;
 	}
@@ -130,6 +130,6 @@ class MDbConnection
 	 * @return integer
 	 */
 	public function lastInsertId() {
-		return $his->conn->lastInsertId();
+		return $this->conn->lastInsertId();
 	}
 }
