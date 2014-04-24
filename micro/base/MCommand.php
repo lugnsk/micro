@@ -10,6 +10,7 @@
  * @package micro
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class MCommand
 {
@@ -26,15 +27,14 @@ abstract class MCommand
 	 *
 	 * @access public
 	 * @param array $args
-	 * @return void
+	 * @result void
 	 */
 	public function __construct($args = array()) {
 		$this->args = $args;
 	}
 	/**
 	 * Execute command
-	 *
-	 * @access public
+	 * @abstract
 	 */
 	public abstract function execute();
 }
