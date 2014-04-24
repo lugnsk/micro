@@ -17,16 +17,16 @@ class MAutoload
 	 * Autoloader classes
 	 *
 	 * @access public
-	 * @param string $classname
+	 * @param string $className
 	 * @return void
 	 */
-	public static function autoloaderController($classname) {
+	public static function autoloaderController($className) {
 		$micro = Micro::getInstance();
 
 		if (method_exists(MController::$module, 'setImport')) {
 			foreach (MController::$module->setImport() AS $path) {
 				$path = DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $path);
-				self::autoloader($classname, $micro->config['AppDir'] . $path);
+				self::autoloader($className, $micro->config['AppDir'] . $path);
 			}
 		}
 	}
@@ -34,11 +34,11 @@ class MAutoload
 	 * Function load files in application
 	 *
 	 * @access public
-	 * @param  string classname
-	 * @param  string path
-	 * @return bool   status
+	 * @param  string $className
+	 * @param  string $path
+	 * @return bool
 	 */
-	public static function autoloader($classname, $path = null) {
+	public static function autoloader($className, $path = null) {
 		if (!$path) {
 			$config = Micro::getInstance()->config;
 			if (!isset($config['MicroDir']) OR empty($config['MicroDir'])) {
@@ -48,7 +48,7 @@ class MAutoload
 				if (isset($config['import']) AND !empty($config['import'])) {
 					$paths = $config['import'];
 					foreach ($paths AS $pat) {
-						self::autoloader($classname, $config['AppDir'] . DIRECTORY_SEPARATOR . $pat);
+						self::autoloader($className, $config['AppDir'] . DIRECTORY_SEPARATOR . $pat);
 					}
 				}
 			}
@@ -60,7 +60,7 @@ class MAutoload
 		}
 
 		// search in micro dir
-		if ($path = self::find($path, $classname.'.php')) {
+		if ($path = self::find($path, $className.'.php')) {
 			include $path;
 			return true;
 		}
@@ -71,18 +71,18 @@ class MAutoload
 	 *
 	 * @access public
 	 * @param string $dir
-	 * @param string #tosearch
+	 * @param string $toSearch
 	 * @return bool|string
 	 */
-	public static function find($dir, $tosearch) {
+	public static function find($dir, $toSearch) {
 		$files = array_diff( scandir( $dir ), Array( ".", ".." ) );
 
 		foreach( $files as $d ) {
 			if( !is_dir($dir."/".$d) ) {
-				if ($d == $tosearch)
+				if ($d == $toSearch)
 					return $dir."/".$d;
 			} else {
-				$res = self::find($dir."/".$d, $tosearch);
+				$res = self::find($dir."/".$d, $toSearch);
 				if ($res)
 					return $res;
 			}
