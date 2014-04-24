@@ -18,11 +18,11 @@ class MLanguage
 
 
 	/**
-	 * Construct language
+	 * Constructor language
 	 *
 	 * @access public
 	 * @param string $filename
-	 * @return void
+	 * @result void
 	 */
 	public function __construct($filename) {
 		$this->language = parse_ini_file($filename, true);
@@ -31,7 +31,7 @@ class MLanguage
 	 * Get param value
 	 *
 	 * @access public
-	 * @param string name
+	 * @param string $name
 	 * @return mixed
 	 */
 	public function __get($name) {
