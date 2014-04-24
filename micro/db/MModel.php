@@ -35,7 +35,8 @@ class MModel
 	 * Constructor for model
 	 *
 	 * @access public
-	 * @return void
+	 * @param boolean $new
+	 * @result void
 	 */
 	public function __construct($new = true) {
 		$this->_isNewRecord = $new;
@@ -65,7 +66,7 @@ class MModel
 	 *
 	 * @access public
 	 * @param MQuery $query
-	 * @param bolean $single
+	 * @param boolean $single
 	 * @return mixed One or more data
 	 */
 	public static function finder($query = null, $single = false) {
@@ -172,7 +173,7 @@ class MModel
 	 *
 	 * @access public
 	 * @param string $where
-	 * @throw MException
+	 * @throws MException
 	 * @return boolean
 	 */
 	public function update($where = null) {
@@ -228,27 +229,17 @@ class MModel
 	 * Delete changes
 	 *
 	 * @access public
-	 * @param string $where
 	 * @return boolean
 	 */
-	public function delete($where = null) {
+	public function delete() {
 		if (!$this->isNewRecord()) {
 			if ($this->beforeDelete()) {
-				$arr = getVars($this);
-				unset($arr['isNewRecord']);
-
-				$keys = array_keys($arr);
-				$params = array();
-
-				foreach ($keys AS $key) {
-					$params[] = $key . ' = :' . $key;
-				}
 
 				$sth = $this->db->prepare(
-					'DELETE FROM ' . $this->tableName() . ' WHERE ' . implode(' AND ', $params) . ' LIMIT 1;'
+					'DELETE FROM ' . $this->tableName() . ' WHERE id=' . $this->id . ' LIMIT 1;'
 				);
 
-				if ($sth->execute($arr)) {
+				if ($sth->execute()) {
 					$this->afterDelete();
 					unset($this);
 					return true;
