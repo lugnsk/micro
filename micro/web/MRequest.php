@@ -25,13 +25,12 @@ class MRequest
 
 
 	/**
-	 * Construct Request
+	 * Constructor Request
 	 *
 	 * @access public
-	 * @param array routes
-	 * @return void
+	 * @param array $routes
 	 */
-	public function __construct($routes) {
+	public function __construct($routes = array()) {
 		$this->router = new MRouter($routes['routes']);
 		$this->initialize();
 	}
@@ -68,6 +67,7 @@ class MRequest
 	 * Prepare modules
 	 *
 	 * @access private
+	 * @param array $uriBlocks
 	 * @return void
 	 */
 	private function prepareModules(&$uriBlocks) {
@@ -84,6 +84,7 @@ class MRequest
 	 * Prepare controller
 	 *
 	 * @access private
+	 * @param array $uriBlocks
 	 * @return void
 	 */
 	private function prepareController(&$uriBlocks) {
@@ -93,7 +94,8 @@ class MRequest
 	 * Prepare action
 	 *
 	 * @access private
-	 * @return мщшв
+	 * @param array $uriBlocks
+	 * @return void
 	 */
 	private function prepareAction(&$uriBlocks) {
 		$this->action = ($str = array_shift($uriBlocks)) ? $str : 'index' ;
