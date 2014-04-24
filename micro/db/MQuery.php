@@ -14,11 +14,11 @@
  */
 class MQuery
 {
-	/** @var MConnection $_conn Current connect to DB */
+	/** @var MDbConnection $_conn Current connect to DB */
 	private $_conn;
 	/** @var string $select selectable columns */
 	public $select		= '*';
-	/** @var boolean $distinct uniques rows */
+	/** @var boolean $distinct unique rows */
 	public $distinct	= false;
 	/** @var string $where condition */
 	public $where		= '';
@@ -47,7 +47,7 @@ class MQuery
 	 * Construct class
 	 *
 	 * @access public
-	 * @return void
+	 * @result void
 	 */
 	public function __construct() {
 		$this->getDbConnection();
@@ -138,7 +138,7 @@ class MQuery
 	 *
 	 * @access public
 	 * @param string $column
-	 * @param mixed $strart
+	 * @param mixed $start
 	 * @param mixed $stop
 	 * @param string $operand
 	 * @return void
@@ -151,7 +151,7 @@ class MQuery
 	 *
 	 * @access public
 	 * @param string $column
-	 * @param mixed $strart
+	 * @param mixed $start
 	 * @param mixed $stop
 	 * @param string $operand
 	 * @return void
@@ -168,8 +168,8 @@ class MQuery
 	 * @param string $type
 	 * @return void
 	 */
-	public function addJoin($table, $cond, $type = 'LEFT') {
-		$this->join .= ' ' . $type . ' JOIN ' . $table . ' ON ' . $cond;
+	public function addJoin($table, $condition, $type = 'LEFT') {
+		$this->join .= ' ' . $type . ' JOIN ' . $table . ' ON ' . $condition;
 	}
 	/**
 	 * Generate query string
@@ -207,8 +207,7 @@ class MQuery
 	 * Running this query
 	 *
 	 * @access public
-	 * @param boolean $single
-	 * @return mixed result's of query
+	 * @return mixed
 	 */
 	public function run() {
 		$query = $this->_conn->prepare($this->getQuery().';');
