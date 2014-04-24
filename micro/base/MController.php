@@ -29,6 +29,7 @@ class MController
 	 * Constructor for this class
 	 *
 	 * @access public
+	 * @result void
 	 */
 	public function __construct(){
 		if ($module = MRegistry::get('request')->getModules()) {
@@ -91,7 +92,7 @@ class MController
 	 * @access protected
 	 * @param string $view
 	 * @param array  $data
-	 * @return string output
+	 * @return string
 	 */
 	protected function render($view, $data=array()) {
 		if (empty($view)) { return false; }
@@ -247,6 +248,7 @@ class MController
 	 *
 	 * @access public
 	 * @param string $name
+	 * @return void
 	 * @throws MException
 	 */
 	public function endWidget($name){
