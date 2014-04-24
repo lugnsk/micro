@@ -24,7 +24,7 @@ class MMail
 	/**
 	 * Constructor for class
 	 *
-	 * @access puublic
+	 * @access public
 	 * @param string $from
 	 * @result void
 	 */
@@ -87,10 +87,10 @@ class MMail
 	 * @param string $to
 	 * @param string $subject
 	 * @param string $message
-	 * @result boolean
+	 * @return boolean
 	 */
 	public function send($to, $subject, $message) {
-		$from = "=?utf-8?B?" . base64_encode($this->from_name) . "?=" . " <" . $this->from . ">";
+		$from = "=?utf-8?B?" . base64_encode($this->fromName) . "?=" . " <" . $this->from . ">";
 
 		$headers = "From: " . $from .
 			"\r\nReply-To: " . $from .
