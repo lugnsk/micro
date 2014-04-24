@@ -18,7 +18,7 @@ abstract class MWidget extends MController
 	 *
 	 * @access public
 	 * @param array $args
-	 * @return void
+	 * @result void
 	 */
 	public function __construct($args = array()) {
 		foreach ($args AS $name => $value) {
@@ -29,16 +29,12 @@ abstract class MWidget extends MController
 	}
 	/**
 	 * Initialize widget
-	 *
-	 * @access public
-	 * @return void
+	 * @abstract
 	 */
 	abstract public function init();
 	/**
 	 * Run widget
-	 *
-	 * @access public
-	 * @return void
+	 * @abstract
 	 */
 	abstract public function run();
 }
