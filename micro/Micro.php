@@ -61,6 +61,7 @@ class Micro {
 	 * Running application
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @throws MException controller not set
 	 * @return void
 	 */
@@ -89,6 +90,7 @@ class Micro {
 	 * Loading components in Registry
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @return void
 	 */
 	private function loadComponents() {
@@ -111,6 +113,7 @@ class Micro {
 	 * Prepare controller to use
 	 *
 	 * @access private
+	 * @global MRegistry
 	 * @return string
 	 * @throws MException
 	 */

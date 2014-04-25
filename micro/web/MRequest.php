@@ -67,6 +67,7 @@ class MRequest
 	 * Prepare modules
 	 *
 	 * @access private
+	 * @global Micro
 	 * @param array $uriBlocks
 	 * @return void
 	 */

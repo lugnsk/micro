@@ -115,6 +115,7 @@ class MModel
 	 * After create actions
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @return void
 	 */
 	public function afterCreate() {

@@ -26,6 +26,7 @@ class MFlashMessage
 	 * Constructor messenger
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @result void
 	 * @catch MException
 	 */
@@ -41,6 +42,7 @@ class MFlashMessage
 	 * Push a new flash
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @param int $type
 	 * @param string $title
 	 * @param string $description
@@ -57,6 +59,7 @@ class MFlashMessage
 	 * Has flashes by type
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @param int $type
 	 * @return bool
 	 */
@@ -73,6 +76,7 @@ class MFlashMessage
 	 * Get flash by type
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @param int $type
 	 * @return array|bool
 	 */
@@ -91,6 +95,7 @@ class MFlashMessage
 	 * Get all flashes
 	 *
 	 * @access public
+	 * @global MRegistry
 	 * @return mixed
 	 */
 	public function getAll() {

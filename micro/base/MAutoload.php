@@ -17,6 +17,7 @@ class MAutoload
 	 * Autoloader classes
 	 *
 	 * @access public
+	 * @global Micro
 	 * @param string $className
 	 * @return void
 	 */
@@ -34,6 +35,7 @@ class MAutoload
 	 * Function load files in application
 	 *
 	 * @access public
+	 * @global Micro
 	 * @param  string $className
 	 * @param  string $path
 	 * @return bool

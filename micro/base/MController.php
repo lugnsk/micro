@@ -29,6 +29,8 @@ class MController
 	 * Constructor for this class
 	 *
 	 * @access public
+	 * @global Micro
+	 * @global MRegistry
 	 * @result void
 	 */
 	public function __construct(){
@@ -49,8 +51,8 @@ class MController
 	 *
 	 * @access public
 	 * @param string $name
-	 * @throws MException method not declared
 	 * @return void
+	 * @throws MException method not declared
 	 */
 	public function action($name = 'index') {
 		$action = 'action' . ucfirst($name);
@@ -69,6 +71,7 @@ class MController
 	/**
 	 * Render partial a view
 	 *
+	 * @access protected
 	 * @param string $view view name
 	 * @param array $data
 	 * @return string
@@ -90,6 +93,8 @@ class MController
 	 * Render view
 	 *
 	 * @access protected
+	 * @global Micro
+	 * @global MRegistry
 	 * @param string $view
 	 * @param array  $data
 	 * @return string
