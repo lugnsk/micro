@@ -1,7 +1,9 @@
-<?php
+<?php /** Micro */
 
 /**
  * Micro class file.
+ *
+ * Base class for initialize framework
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro

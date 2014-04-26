@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroException */
 
 /**
  * MException specific exception

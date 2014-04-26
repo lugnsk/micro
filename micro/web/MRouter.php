@@ -1,7 +1,9 @@
-<?php
+<?php /** MicroRouter */
 
 /**
  * MRouter class file.
+ *
+ * Routing user requests
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -14,7 +16,7 @@
  */
 class MRouter
 {
-	/** @property array $routes */
+	/** @var array $routes routes for routing */
 	public $routes = array(
 		'<module:\w+>/<controller:\w+>/<action:\w+>' => '/<module>/<controller>/<action>',
 		'<controller:\w+>/<action:\w+>' => '/<controller>/<action>',

@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroMail */
 
 /**
  * MMail class file.
@@ -8,22 +8,21 @@
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license http://opensource.org/licenses/MIT
  * @package micro
- * @subpackage web
- * @subpackage helpers
+ * @subpackage web\helpers
  * @version 1.0
  * @since 1.0
  */
 class MMail
 {
-	/** @var string $form */
+	/** @var string $form sender mail */
 	private $from;
-	/** @var string $fromName */
+	/** @var string $fromName sender name */
 	private $fromName = "";
-	/** @var string $type */
+	/** @var string $type type of message */
 	private $type = "text/html";
-	/** @var string $encoding */
+	/** @var string $encoding encoding */
 	private $encoding = "utf-8";
-	/** @var bool $notify */
+	/** @var bool $notify notification of read */
 	private $notify = false;
 
 	/**

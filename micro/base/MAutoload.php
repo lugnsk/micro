@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroAutoloader */
 
 /**
  * MAutoload class file.

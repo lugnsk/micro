@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroRequest */
 
 /**
  * MRequest class file.
@@ -14,13 +14,13 @@
  */
 class MRequest
 {
-	/** @var MRouter $router */
+	/** @var MRouter $router router for request */
 	private $router;
-	/** @var string $modules */
+	/** @var string $modules modules in request */
 	private $modules;
-	/** @var string $controller */
+	/** @var string $controller controller to run */
 	private $controller;
-	/** @var string $action */
+	/** @var string $action action to run */
 	private $action;
 
 

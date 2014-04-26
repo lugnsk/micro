@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroLanguage */
 
 /**
  * MLanguage getter language tags from *.ini files
@@ -13,7 +13,7 @@
  */
 class MLanguage
 {
-	/** @var array $language */
+	/** @var array $language language array */
 	private $language = array();
 
 

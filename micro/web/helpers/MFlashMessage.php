@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroFlashMessage */
 
 /**
  * MFlashMessage is a flash messenger.
@@ -8,18 +8,17 @@
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license http://opensource.org/licenses/MIT
  * @package micro
- * @subpackage web
- * @subpackage helpers
+ * @subpackage web\helpers
  * @version 1.0
  * @since 1.0
  */
 class MFlashMessage
 {
-	/** @var integer $TYPE_SUCCESS */
+	/** @property integer $TYPE_SUCCESS */
 	const TYPE_SUCCESS = 1;
-	/** @var integer $TYPE_NOTICE */
+	/** @property integer $TYPE_NOTICE */
 	const TYPE_NOTICE = 2;
-	/** @var integer $TYPE_ERROR */
+	/** @property integer $TYPE_ERROR */
 	const TYPE_ERROR = 3;
 
 	/**

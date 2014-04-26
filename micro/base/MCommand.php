@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroCommand */
 
 /**
  * MCommand class file.
@@ -14,11 +14,11 @@
  */
 abstract class MCommand
 {
-	/** @var array $args */
+	/** @var array $args arguments for command */
 	public $args = array();
-	/** @var bool $result */
+	/** @var bool $result status of execute command */
 	public $result = false;
-	/** @var string $message */
+	/** @var string $message status message of execute command */
 	public $message = '';
 
 

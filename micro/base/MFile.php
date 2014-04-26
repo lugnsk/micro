@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroFile */
 
 /**
  * MFile io class

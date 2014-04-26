@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroController */
 
 /**
  * MController class file.
@@ -13,15 +13,15 @@
  */
 class MController
 {
-	/** @var mixed $module */
+	/** @var mixed $module module name */
 	public static $module;
-	/** @var string $layout */
+	/** @var string $layout layout name */
 	public $layout;
-	/** @var string $defaultAction */
+	/** @var string $defaultAction default run action */
 	public $defaultAction = 'index';
-	/** @var boolean $asWidget */
+	/** @var boolean $asWidget is a widget? */
 	public $asWidget = false;
-	/** @var array $widgetStack */
+	/** @var array $widgetStack widgets stack */
 	private $widgetStack = array();
 
 

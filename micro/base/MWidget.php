@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroWidget */
 
 /**
  * MWidget class file.

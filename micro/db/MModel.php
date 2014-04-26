@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroModel */
 
 /**
  * Get public vars into object
@@ -25,9 +25,9 @@ function getVars($object) {
  */
 class MModel
 {
-	/** @var PDO $db */
+	/** @var PDO $db pdo connection */
 	private $db = false;
-	/** @var boolean $_isNewRecord */
+	/** @var boolean $_isNewRecord is new record? */
 	private $_isNewRecord = false;
 
 

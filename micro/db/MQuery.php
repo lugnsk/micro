@@ -1,7 +1,7 @@
-<?php
+<?php /** MicroQuery */
 
 /**
- * MicroQuery class file.
+ * MQuery class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -40,7 +40,7 @@ class MQuery
 	public $table		= '';
 	/** @var string $objectName class name form fetching */
 	public $objectName	= '';
-	/** @var boolean $single */
+	/** @var boolean $single is one result? */
 	public $single		= false;
 
 	/**

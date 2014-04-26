@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroAssets */
 
 /**
  * MAssets class file.
@@ -14,13 +14,14 @@
  */
 class MAssets
 {
-	/** @var string $assetDir */
+	/** @var string $assetDir directory for assets */
 	private $assetDir = 'assets';
 
 	/**
 	 * Publish dir or file for user
 	 *
 	 * @access public
+	 * @global MFile
 	 * @param string $dir
 	 * @return void
 	 */

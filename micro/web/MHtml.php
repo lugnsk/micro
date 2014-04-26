@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroHtml */
 
 /**
  * MHtml class file.

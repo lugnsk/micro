@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroFTP */
 
 /**
  * Simple FTP Class
@@ -7,8 +7,7 @@
  * @link shayanderson.com
  * @license http://www.gnu.org/licenses/gpl.html GPL License
  * @package micro
- * @subpackage web
- * @subpackage helpers
+ * @subpackage web\helpers
  * @version 1.0
  */
 final class MFtp {

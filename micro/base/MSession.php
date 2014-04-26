@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroSession */
 
 /**
  * MSession is a Session manager

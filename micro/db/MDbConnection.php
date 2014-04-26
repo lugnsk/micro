@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroDataBaseConnection */
 
 /**
  * MDbConnection class file.

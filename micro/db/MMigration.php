@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroMigration */
 
 /**
  * MMigration class file.
@@ -13,7 +13,7 @@
  * @since 1.0
  */
 class MMigration {
-	/** @var MDbConnection $db */
+	/** @var MDbConnection $db connection to db */
 	private $db = false;
 
 
