@@ -207,12 +207,17 @@ class MQuery
 	 * Running this query
 	 *
 	 * @access public
+	 * @param integer $as
 	 * @return mixed
 	 */
-	public function run() {
+	public function run($as = PDO::FETCH_CLASS) {
 		/** @var PDO $query */
 		$query = $this->_conn->prepare($this->getQuery().';');
-		$query->setFetchMode(PDO::FETCH_CLASS, ucfirst($this->objectName), array('new'=>false));
+		if ($as == PDO::FETCH_CLASS) {
+			$query->setFetchMode($as, ucfirst($this->objectName), array('new'=>false));
+		} else {
+			$query->setFetchMode($as);
+		}
 
 		foreach ($this->params AS $name => $value) {
 			$query->bindValue($name, $value);

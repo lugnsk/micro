@@ -16,6 +16,12 @@ class MDbConnection
 {
 	/** @var PDO|null $conn Connection to DB */
 	public $conn;
+// CREATE TABLE tbname (tbfields);
+// SHOW INDEX FROM tbname;
+// SHOW STATUS process_name;
+// SHOW VARIABLES varname;
+// SHOW PROCCESSLIST;
+// SHOW TABLE STATUS FROM tbname;
 
 
 	/**
@@ -49,11 +55,27 @@ class MDbConnection
 	 * @return mixed
 	 */
 	public function listDatabases() {
-		$sth = $this->conn->query('SHOW_DATABASES();'); // @TODO: Patch me
+		$sth = $this->conn->query('SHOW DATABASES;');
 
 		$result = array();
 		foreach ($sth->fetchAll() AS $row) {
-			$result[] = $row[''];
+			$result[] = $row[0];
+		}
+		return $result;
+	}
+	public function infoDatabase($dbName) {
+		$sth = $this->conn->query('SHOW TABLE STATUS FROM '.$dbName.';');
+
+		$result = array();
+		foreach ($sth->fetchAll() AS $row) {
+			$result[] = array(
+				'name'      => $row['Name'],
+				'engine'    => $row['Engine'],
+				'rows'      => $row['Rows'],
+				'length'    => $row['Avg_row_length'],
+				'increment' => $row['Auto_increment'],
+				'collation' => $row['Collation'],
+			);
 		}
 		return $result;
 	}
@@ -64,11 +86,11 @@ class MDbConnection
 	 * @return array
 	 */
 	public function listTables() {
-		$sth = $this->conn->query('SHOW TABLES');
+		$sth = $this->conn->query('SHOW TABLES;');
 
 		$result = array();
 		foreach ($sth->fetchAll() AS $row) {
-			$result[] = $row[''];
+			$result[] = $row[0];
 		}
 		return $result;
 	}
@@ -91,11 +113,17 @@ class MDbConnection
 	 */
 	public function listFields($table) {
 		$sth = $this->conn->query('SHOW COLUMNS FROM '.$table.';');
-		$sth->setFetchMode(PDO::FETCH_ASSOC);
 
 		$result = array();
-		while ($row = $sth->fetch()) {
-			$result[] = $row['Field'];
+		foreach ($sth->fetchAll() as $row) {
+			$result[] = array(
+				'field'   => $row['Field'],
+				'type'    => $row['Type'],
+				'null'    => $row['Null'],
+				'key'     => $row['Key'],
+				'default' => $row['Default'],
+				'extra'   => $row['Extra'],
+			);
 		}
 		return $result;
 	}

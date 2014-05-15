@@ -23,9 +23,7 @@ class DefaultController extends Controller
 				':pass' => md5($form['pass'])
 			);
 
-			$user = User::finder($query, true);
-
-			if ($user) {
+			if ($user = User::finder($query, true)) {
 				$_SESSION['UserID'] = $user->id;
 				$this->redirect('/profile');
 			}

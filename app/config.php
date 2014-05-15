@@ -11,6 +11,7 @@ return array(
 
 	// Default import dir
 	'import' => array(
+		'extensions',
 		'components',
 		'widgets',
 		'models',

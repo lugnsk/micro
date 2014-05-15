@@ -14,6 +14,8 @@
  * @since 1.0
  */
 class Micro {
+	/** @var string $version of Micro */
+	public static $version = '1.0';
 	/** @var Micro $_app Application singleton */
 	protected static $_app;
 	/** @var array $config Configuration array */

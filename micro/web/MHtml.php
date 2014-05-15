@@ -245,7 +245,14 @@ class MHtml
 		return self::openTag('h'.$num, $attributes) . $value . self::closeTag('h'.$num);
 	}
 	// LIST Elements // marklist, numlist, deplist, applet, imgmap, object
-
+	public static function lists($items = array(), $attributes = array()) {
+		$result = null;
+		foreach ($items AS $item) {
+			$result .= MHtml::openTag('li', (isset($item['attr'])) ? $item['attr'] : array() );
+			$result .= $item['text'] . MHtml::closeTag('li');
+		}
+		return self::openTag('ul', $attributes) . $result . self::closeTag('ul');
+	}
 	// TABLE Elements
 	/**
 	 * Render table element
@@ -269,9 +276,10 @@ class MHtml
 	public static function table($elements = array(), $attributes = array()) {
 		$output = null;
 		foreach ($elements AS $value) {
-			$output = self::tableRow(
-				(isset($value['cells'])) ? $value['cells'] : null,
-				(isset($value['attributes'])) ? $value['attributes'] : null
+			$output .= self::tableRow(
+				(isset($value['cells'])) ? $value['cells'] : array(),
+				(isset($value['header'])) ? $value['header'] : false,
+				(isset($value['attributes'])) ? $value['attributes'] : array()
 			);
 		}
 		return self::beginTable($attributes) . $output . self::endTable();
@@ -311,18 +319,29 @@ class MHtml
 	 *
 	 * @access public
 	 * @param array $elements array(value, attributes)
+	 * @param boolean $isHeading
 	 * @param array $attributes
 	 * @return string
 	 */
-	public static function tableRow($elements = array(),$attributes = array()) {
+	public static function tableRow($elements = array(), $isHeading = false, $attributes = array()) {
 		$output = null;
 		foreach ($elements AS $value) {
-			$output = self::tableCell(
-				(isset($value['value'])) ? $value['value'] : null,
-				(isset($value['attributes'])) ? $value['attributes'] : null
-			);
+			if ($isHeading == false) {
+				$output .= self::tableCell(
+					(isset($value['value'])) ? $value['value'] : array(),
+					(isset($value['attributes'])) ? $value['attributes'] : array()
+				);
+			} else {
+				$output .= self::tableHeading(
+					(isset($value['value'])) ? $value['value'] : array(),
+					(isset($value['attributes'])) ? $value['attributes'] : array()
+				);
+			}
 		}
 		return self::openTag('tr', $attributes) . $output . self::closeTag('tr');
+	}
+	public static function tableHeading($text,$attributes=array()) {
+		return self::openTag('th', $attributes) . $text . self::closeTag('th');
 	}
 	/**
 	 * Render table cell element

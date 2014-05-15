@@ -16,39 +16,64 @@ class MAssets
 {
 	/** @var string $assetDir directory for assets */
 	private $assetDir = 'assets';
+	private $hash = '';
+	private $directory = '';
+	private $sourceDir = '';
+	private $publishDir = '';
 
+
+	public function __construct($directory = '') {
+		$this->directory = $directory;
+		$this->hash = md5($this->directory);
+
+		$tmp = DIRECTORY_SEPARATOR . $this->assetDir . DIRECTORY_SEPARATOR . $this->hash;
+		$this->publishDir = Micro::getInstance()->config['HtmlDir'] . $tmp;
+		$this->sourceDir = Micro::getInstance()->config['WebDir'] . $tmp;
+	}
 	/**
-	 * Publish dir or file for user
+	 * Publication directory or files
 	 *
 	 * @access public
-	 * @global MFile
-	 * @param string $dir
+	 * @param string $exclude exclude files
 	 * @return void
 	 */
-	public function publish($dir) {
-		$hashDir = $this->getPublishDir($dir);
+	public function publish($exclude='.php') {
+		$hashDir = $this->getSourceDir();
 
 		if (!file_exists($hashDir)) {
 			@mkdir($hashDir, 0777);
 		}
 
-		if (is_dir($dir)) {
-			MFile::recurseCopyIfEdited($dir, $hashDir);
+		if (is_dir($this->directory)) {
+			MFile::recurseCopyIfEdited($this->directory, $this->sourceDir);
 		} else {
-			if (filemtime($dir) != filemtime($hashDir)) {
-				copy($dir, $hashDir);
-				@chmod($hashDir.$dir, 0666);
+			if (substr($hashDir, strlen($hashDir)-strlen($exclude) ) != $exclude) {
+				if (!file_exists($hashDir)) {
+					copy($this->directory, $hashDir);
+					@chmod($hashDir, 0666);
+				} elseif (filemtime($this->directory) != filemtime($hashDir)) {
+					copy($this->directory, $hashDir);
+					@chmod($hashDir, 0666);
+				}
 			}
 		}
 	}
-
 	/**
-	 * Get publish dir
+	 * Get publish directory
 	 *
-	 * @param string $dir
+	 * @access public
 	 * @return string
 	 */
-	public function getPublishDir($dir) {
-		return $this->assetDir . DIRECTORY_SEPARATOR . md5($dir);
+	public function getPublishDir() {
+		return $this->publishDir;
+	}
+	/**
+	 * Get source directory
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function getSourceDir() {
+		return $this->sourceDir;
 	}
 }

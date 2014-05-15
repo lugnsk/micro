@@ -44,9 +44,10 @@ class MFile
 	 * @access public
 	 * @param string $src
 	 * @param string $dst
+	 * @param string $exc
 	 * @return void
 	 */
-	public static function recurseCopyIfEdited($src,$dst) {
+	public static function recurseCopyIfEdited($src = '',$dst = '', $exc = '.php') {
 		$dir = opendir($src);
 		@mkdir($dst, 0777);
 
@@ -56,9 +57,14 @@ class MFile
 					self::recurseCopyIfEdited($src . '/' . $file,$dst . '/' . $file);
 				}
 				else {
-					if (filemtime($src . '/' . $file) != filemtime($dst . '/' . $file)) {
-						copy($src . '/' . $file,$dst . '/' . $file);
-						@chmod($dst . '/' . $file, 0666);
+					if (substr($src.'/'.$file, strlen($src.'/'.$file)-strlen($exc) ) != $exc) {
+						if (!file_exists($dst . '/' . $file)) {
+							copy($src . '/' . $file,$dst . '/' . $file);
+							@chmod($dst . '/' . $file, 0666);
+						} elseif (filemtime($src . '/' . $file) != filemtime($dst . '/' . $file)) {
+							copy($src . '/' . $file,$dst . '/' . $file);
+							@chmod($dst . '/' . $file, 0666);
+						}
 					}
 				}
 			}

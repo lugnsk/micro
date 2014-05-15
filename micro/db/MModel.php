@@ -74,7 +74,7 @@ class MModel
 		$query->table = static::tableName() . ' `m`';
 		$query->objectName = get_called_class();
 		$query->single = $single;
-		return $query->run($single);
+		return $query->run();
 	}
 	/**
 	 * Before create actions
