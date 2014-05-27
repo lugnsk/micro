@@ -16,12 +16,6 @@ class MDbConnection
 {
 	/** @var PDO|null $conn Connection to DB */
 	public $conn;
-// CREATE TABLE tbname (tbfields);
-// SHOW INDEX FROM tbname;
-// SHOW STATUS process_name;
-// SHOW VARIABLES varname;
-// SHOW PROCCESSLIST;
-// SHOW TABLE STATUS FROM tbname;
 
 
 	/**
@@ -63,6 +57,12 @@ class MDbConnection
 		}
 		return $result;
 	}
+	/**
+	 * Info of database
+	 *
+	 * @param $dbName
+	 * @return array
+	 */
 	public function infoDatabase($dbName) {
 		$sth = $this->conn->query('SHOW TABLE STATUS FROM '.$dbName.';');
 
@@ -103,6 +103,17 @@ class MDbConnection
 	 */
 	public function tableExists($table) {
 		return (bool)array_search($table, $this->listTables());
+	}
+	/**
+	 * Create a new table
+	 *
+	 * @param $name
+	 * @param array $elements
+	 * @param string $params
+	 * @return int
+	 */
+	public function createTable($name, $elements=array(), $params='') {
+		return $this->conn->exec('CREATE TABLE IF EXISTS '.$name.' ('.implode(',', $elements).') '.$params.';');
 	}
 	/**
 	 * Get array fields into table

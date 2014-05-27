@@ -54,7 +54,8 @@ class Micro {
 	 */
 	private function __construct($config = array()) {
 		// Register timer
-		$this->timer = microtime();
+		$this->timer = explode(" ",microtime());
+		$this->timer = $this->timer[1] + $this->timer[0];
 		// Register config
 		$this->config = $config;
 		// Register loader
@@ -86,8 +87,9 @@ class Micro {
 
 		// Render timer
 		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-			$slice = microtime() - $this->timer;
-			die( MHtml::openTag('div',array('class'=>'Mruntime')) . $slice . MHtml::closeTag('div') );
+			$slice = explode(" ",microtime());
+			$slice = $slice[1] + $slice[0];
+			die( MHtml::openTag('div',array('class'=>'Mruntime')) . ($slice - $this->timer) . MHtml::closeTag('div') );
 		}
 	}
 	/**

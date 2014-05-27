@@ -24,7 +24,6 @@ abstract class MWidget extends MController
 		foreach ($args AS $name => $value) {
 			$this->$name = $value;
 		}
-
 		$this->asWidget = true;
 	}
 	/**

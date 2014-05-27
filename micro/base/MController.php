@@ -104,7 +104,6 @@ class MController
 
 		// Get inf of controller
 		$appDirectory = Micro::getInstance()->config['AppDir'];
-		$className = null;
 
 		if (!$this->asWidget) {
 			$module = MRegistry::get('request')->getModules();
@@ -114,16 +113,13 @@ class MController
 			unset($reflector);
 		}
 
-		if (!$this->asWidget) {
-			$className = str_replace('controller', '', strtolower(MRegistry::get('request')->getController()));
-		}
-
 		// Calculate path to view
 		$path  = $appDirectory . DIRECTORY_SEPARATOR . (($module) ? $module . DIRECTORY_SEPARATOR : null );
 
 		if ($this->asWidget) {
 			$path .=  DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $view . '.php';
 		} else {
+			$className = str_replace('controller', '', strtolower(MRegistry::get('request')->getController()));
 			$path .= 'views' . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR . $view . '.php';
 		}
 
@@ -150,7 +146,7 @@ class MController
 	 * @return string
 	 */
 	protected function renderFile($fileName, $data=array()) {
-		$fileNameLang = substr($fileName, 0, -3) . 'ini';
+		$fileNameLang = substr($fileName, 0, -3);
 		if (file_exists($fileNameLang)) {
 			$lang = new MLanguage($fileNameLang);
 		}
@@ -159,6 +155,10 @@ class MController
 		extract($data, EXTR_PREFIX_SAME, 'data');
 		ob_start();
 		include $fileName;
+
+		if (!empty($this->widgetStack)) {
+			throw new MException( count($this->widgetStack).' widgets not endings.');
+		}
 		return ob_get_clean();
 	}
 	/**
@@ -208,7 +208,7 @@ class MController
 		$name = $name.'Widget';
 
 		if (!class_exists($name)) {
-			throw new MException('Widget not found.');
+			throw new MException('Widget '.$name.' not found.');
 		}
 
 		$widget = new $name($options);

@@ -18,7 +18,9 @@ return array(
 	),
 
 	// Print run time
-	'timer' => false,
+	'timer' => true,
+	// Language
+	'lang' => 'en',
 
 	// Setup components
 	'components' => array(

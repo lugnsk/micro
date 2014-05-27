@@ -249,7 +249,12 @@ class MHtml
 		$result = null;
 		foreach ($items AS $item) {
 			$result .= MHtml::openTag('li', (isset($item['attr'])) ? $item['attr'] : array() );
-			$result .= $item['text'] . MHtml::closeTag('li');
+			if (isset($item['parents'])) {
+				$result .=  self::lists($item['parents'], (isset($item['parentsAttr'])) ? $item['parentsAttr'] : array() );
+			} else {
+				$result .= $item['text'];
+			}
+			$result .= MHtml::closeTag('li');
 		}
 		return self::openTag('ul', $attributes) . $result . self::closeTag('ul');
 	}

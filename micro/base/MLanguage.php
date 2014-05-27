@@ -16,6 +16,8 @@ class MLanguage
 	/** @var array $language language array */
 	private $language = array();
 
+	private $defaultLang = 'en';
+
 
 	/**
 	 * Constructor language
@@ -23,9 +25,15 @@ class MLanguage
 	 * @access public
 	 * @param string $filename
 	 * @result void
+	 * @throws MException
 	 */
 	public function __construct($filename) {
-		$this->language = parse_ini_file($filename, true);
+
+		$lang = (!empty(MRegistry::get('lang'))) ? MRegistry::get('lang') : $this->defaultLang;
+		if (!file_exists($filename.$lang.'.ini')) {
+			throw new MException('Language file '.$filename.$lang.'.ini not exists.');
+		}
+		$this->language = parse_ini_file($filename.'ini', true);
 	}
 	/**
 	 * Get param value
