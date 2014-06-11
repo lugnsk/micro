@@ -6,7 +6,7 @@
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
- * @license http://opensource.org/licenses/MIT
+ * @license /LICENSE
  * @package micro
  * @subpackage web
  * @version 1.0
