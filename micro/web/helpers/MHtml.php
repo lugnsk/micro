@@ -229,7 +229,21 @@ class MHtml
 	 * @return string
 	 */
 	public static function mailto($name, $email, $attributes = array()) {
-		$attributes['href'] = $email;
+		$attributes['href'] = 'mailto:'.$email;
+		return self::openTag('a', $attributes) . $name . self::closeTag('a');
+	}
+
+	/**
+	 * Render link
+	 *
+	 * @access public
+	 * @param $name
+	 * @param $url
+	 * @param array $attributes
+	 * @return string
+	 */
+	public static function href($name, $url, $attributes = array()) {
+		$attributes['href'] = $url;
 		return self::openTag('a', $attributes) . $name . self::closeTag('a');
 	}
 	/**
@@ -250,6 +264,7 @@ class MHtml
 		foreach ($items AS $item) {
 			$result .= MHtml::openTag('li', (isset($item['attr'])) ? $item['attr'] : array() );
 			if (isset($item['parents'])) {
+				$result .= ($item['text']) ? $item['text'] : null;
 				$result .=  self::lists($item['parents'], (isset($item['parentsAttr'])) ? $item['parentsAttr'] : array() );
 			} else {
 				$result .= $item['text'];

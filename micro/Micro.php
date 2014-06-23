@@ -71,8 +71,6 @@ class Micro {
 	 * @return void
 	 */
 	public function run() {
-		$this->loadComponents();
-
 		$path   = $this->prepareController();
 		$action = MRegistry::get('request')->getAction();
 
@@ -90,29 +88,6 @@ class Micro {
 			$slice = explode(" ",microtime());
 			$slice = $slice[1] + $slice[0];
 			die( MHtml::openTag('div',array('class'=>'Mruntime')) . ($slice - $this->timer) . MHtml::closeTag('div') );
-		}
-	}
-	/**
-	 * Loading components in Registry
-	 *
-	 * @access public
-	 * @global MRegistry
-	 * @return void
-	 */
-	private function loadComponents() {
-		foreach ($this->config['components'] AS $name => $options) {
-			if (!isset($options['class']) OR empty($options['class'])) {
-				continue;
-			}
-
-			if (!class_exists($options['class'])) {
-				continue;
-			}
-
-			$className = $options['class'];
-			unset($options['class']);
-
-			MRegistry::set($name, new $className($options) );
 		}
 	}
 	/**
