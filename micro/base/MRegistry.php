@@ -36,7 +36,6 @@ final class MRegistry
 	 */
 	public static function get($name) {
 		self::configure($name);
-
 		return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
 	}
 	/**
@@ -49,7 +48,6 @@ final class MRegistry
 	 */
 	public static function set($name, $value) {
 		self::configure($name);
-
 		$GLOBALS[$name] = $value;
 	}
 	/**

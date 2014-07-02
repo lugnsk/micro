@@ -257,4 +257,11 @@ class MModel
 	 */
 	public function afterDelete() {
 	}
+	public function attributeLabels() {
+		return array();
+	}
+	public function getLabel($property) {
+		$elements = $this->attributeLabels();
+		return (isset($elements[$property])) ? $elements[$property] : null;
+	}
 }

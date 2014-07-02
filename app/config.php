@@ -2,7 +2,7 @@
 
 return array(
 	// Directories
-	'MicroDir' => __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'micro',
+	'MicroDir' => __DIR__ . '/../micro',
 	'AppDir'   => __DIR__ ,
 
 	// Sitename

@@ -54,12 +54,11 @@ class Micro {
 	 */
 	private function __construct($config = array()) {
 		// Register timer
-		$this->timer = explode(" ",microtime());
-		$this->timer = $this->timer[1] + $this->timer[0];
+		$this->timer = microtime(1);
 		// Register config
 		$this->config = $config;
 		// Register loader
-		require $config['MicroDir'] . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'MAutoload.php';
+		require $config['MicroDir'] . '/base/MAutoload.php';
 		spl_autoload_register(array('MAutoload','autoloader'));
 	}
 	/**
@@ -85,9 +84,7 @@ class Micro {
 
 		// Render timer
 		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-			$slice = explode(" ",microtime());
-			$slice = $slice[1] + $slice[0];
-			die( MHtml::openTag('div',array('class'=>'Mruntime')) . ($slice - $this->timer) . MHtml::closeTag('div') );
+			die(MHtml::openTag('div',array('class'=>'Mruntime')).(microtime(1) - $this->timer).MHtml::closeTag('div'));
 		}
 	}
 	/**
@@ -104,12 +101,12 @@ class Micro {
 			throw new MException('Component request not loaded.');
 		}
 
-		$path = $this->config['AppDir'] . DIRECTORY_SEPARATOR;
+		$path = $this->config['AppDir'] . '/';
 		if ($modules = $request->getModules()) {
-			$path .= $modules . DIRECTORY_SEPARATOR;
+			$path .= $modules . '/';
 		}
 		if ($controller = $request->getController()) {
-			$path .= 'controllers' . DIRECTORY_SEPARATOR . $controller;
+			$path .= 'controllers/' . $controller;
 		}
 		if (!file_exists($path . '.php')) {
 			throw new MException('File not found in path: ' . $path . '.php');

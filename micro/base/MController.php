@@ -35,8 +35,7 @@ class MController
 	 */
 	public function __construct(){
 		if ($module = MRegistry::get('request')->getModules()) {
-			$path = Micro::getInstance()->config['AppDir'] . $module .
-				DIRECTORY_SEPARATOR . ucfirst(basename($module)) . 'Module.php';
+			$path = Micro::getInstance()->config['AppDir'] . $module .'/'. ucfirst(basename($module)) .'Module.php';
 
 			if (file_exists($path)) {
 				include $path;
@@ -114,13 +113,13 @@ class MController
 		}
 
 		// Calculate path to view
-		$path  = $appDirectory . DIRECTORY_SEPARATOR . (($module) ? $module . DIRECTORY_SEPARATOR : null );
+		$path  = $appDirectory . '/' . (($module) ? $module . '/' : null );
 
 		if ($this->asWidget) {
-			$path .=  DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $view . '.php';
+			$path .=  '/views/' . $view . '.php';
 		} else {
 			$className = str_replace('controller', '', strtolower(MRegistry::get('request')->getController()));
-			$path .= 'views' . DIRECTORY_SEPARATOR . $className . DIRECTORY_SEPARATOR . $view . '.php';
+			$path .= 'views/' . $className . '/' . $view . '.php';
 		}
 
 		// Generate layout path
@@ -170,16 +169,12 @@ class MController
 	 * @return string
 	 */
 	protected function getLayoutFile($baseDir, $module) {
-		$layout = $baseDir . DIRECTORY_SEPARATOR;
-		$layout .= ($module) ? $module.DIRECTORY_SEPARATOR : $module;
-
-		$afterPath = 'views' . DIRECTORY_SEPARATOR . 'layouts' .
-			DIRECTORY_SEPARATOR . ucfirst($this->layout) . '.php';
+		$layout = $baseDir . '/' . (($module) ? $module.'/' : $module);
+		$afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
 
 		if (!file_exists($layout . $afterPath)) {
 			return false;
 		}
-
 		return $layout . $afterPath;
 	}
 	/**
@@ -236,16 +231,15 @@ class MController
 		$name = $name.'Widget';
 
 		if (!class_exists($name)) {
-			throw new MException('Widget not found.');
+			throw new MException('Widget '.$name.' not found.');
 		}
 
-		if (isset($this->widgetStack[$name])) {
-			throw new MException('This widget already started!');
+		if (isset($GLOBALS['widgetStack'][$name])) {
+			throw new MException('This widget ('.$name.') already started!');
 		}
 
-		$this->widgetStack[$name] = new $name($options);
-		$this->widgetStack[$name]->init();
-		return $this->widgetStack[$name];
+		$GLOBALS['widgetStack'][$name] = new $name($options);
+		return $GLOBALS['widgetStack'][$name]->init();
 	}
 
 	/**
@@ -259,12 +253,12 @@ class MController
 	public function endWidget($name){
 		$name = $name.'Widget';
 
-		if (!class_exists($name) OR !isset($this->widgetStack[$name])) {
-			throw new MException('Widget not started.');
+		if (!class_exists($name) OR !isset($GLOBALS['widgetStack'][$name])) {
+			throw new MException('Widget '.$name.' not started.');
 		}
 
-		$widget = $this->widgetStack[$name];
-		unset($this->widgetStack[$name]);
+		$widget = $GLOBALS['widgetStack'][$name];
+		unset($GLOBALS['widgetStack'][$name]);
 		$widget->run();
 		unset($widget);
 	}

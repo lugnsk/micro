@@ -76,7 +76,7 @@ class MRequest
 
 		foreach ($uriBlocks AS $i => $block) {
 			if (file_exists($path . $this->modules . '/modules/' . $block)) {
-				$this->modules .= DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $block;
+				$this->modules .= '/modules/' . $block;
 				unset($uriBlocks[$i]);
 			} else break;
 		}

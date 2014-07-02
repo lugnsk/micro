@@ -26,7 +26,7 @@ class MAssets
 		$this->directory = $directory;
 		$this->hash = md5($this->directory);
 
-		$tmp = DIRECTORY_SEPARATOR . $this->assetDir . DIRECTORY_SEPARATOR . $this->hash;
+		$tmp = '/' . $this->assetDir . '/' . $this->hash;
 		$this->publishDir = Micro::getInstance()->config['HtmlDir'] . $tmp;
 		$this->sourceDir = Micro::getInstance()->config['WebDir'] . $tmp;
 	}
@@ -41,7 +41,7 @@ class MAssets
 		$hashDir = $this->getSourceDir();
 
 		if (!file_exists($hashDir)) {
-			@mkdir($hashDir, 0777);
+			mkdir($hashDir, 0777);
 		}
 
 		if (is_dir($this->directory)) {
@@ -50,10 +50,10 @@ class MAssets
 			if (substr($hashDir, strlen($hashDir)-strlen($exclude) ) != $exclude) {
 				if (!file_exists($hashDir)) {
 					copy($this->directory, $hashDir);
-					@chmod($hashDir, 0666);
+					chmod($hashDir, 0666);
 				} elseif (filemtime($this->directory) != filemtime($hashDir)) {
 					copy($this->directory, $hashDir);
-					@chmod($hashDir, 0666);
+					chmod($hashDir, 0666);
 				}
 			}
 		}

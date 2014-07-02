@@ -134,18 +134,6 @@ class MHtml
 		return self::openTag('script', $attributes) . self::closeTag('script');
 	}
 	/**
-	 * Render script source
-	 *
-	 * @access public
-	 * @param  string $text script
-	 * @param  array $attributes
-	 * @return string
-	 */
-	public static function script($text, $attributes = array()) {
-		$attributes['type'] = 'text/javascript';
-		return self::openTag('script', $attributes) ."\n/*<![CDATA[*/\n".$text."\n/*]]>*/\n". self::closeTag('script');
-	}
-	/**
 	 * Render style source
 	 *
 	 * @access public
@@ -156,6 +144,18 @@ class MHtml
 	public static function css($text, $attributes = array()) {
 		$attributes['type'] = 'text/css';
 		return self::openTag('style', $attributes) . $text . self::closeTag('style');
+	}
+	/**
+	 * Render script source
+	 *
+	 * @access public
+	 * @param  string $text script
+	 * @param  array $attributes
+	 * @return string
+	 */
+	public static function script($text, $attributes = array()) {
+		$attributes['type'] = 'text/javascript';
+		return self::openTag('script', $attributes) ."\n/*<![CDATA[*/\n".$text."\n/*]]>*/\n". self::closeTag('script');
 	}
 	/**
 	 * Render docType tag
@@ -492,11 +492,12 @@ class MHtml
 	 * @access public
 	 * @param string $name
 	 * @param string $elemId
+	 * @param array $attributes
 	 * @return string
 	 */
-	public static function label($name, $elemId = '') {
-		$elemId = ($elemId) ? array('for'=>$elemId) : array() ;
-		return self::openTag('label', $elemId) . $name . self::closeTag('label');
+	public static function label($name, $elemId = '', $attributes=array()) {
+		$attributes['for'] = $elemId;
+		return self::openTag('label', $attributes) . $name . self::closeTag('label');
 	}
 	/**
 	 * Render option tag
@@ -654,7 +655,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function buttonField($name,  $value = null, $attributes = array()) {
+	public static function buttonField($name, $value = null, $attributes = array()) {
 		return self::field('button', $name, $value, $attributes);
 	}
 	/**
@@ -666,7 +667,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function checkBoxField($name,  $value = null, $attributes = array()) {
+	public static function checkBoxField($name, $value = null, $attributes = array()) {
 		return self::field('checkbox', $name, $value, $attributes);
 	}
 	/**
@@ -678,7 +679,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function fileField($name,  $value = null, $attributes = array()) {
+	public static function fileField($name, $value = null, $attributes = array()) {
 		return self::field('file', $name, $value, $attributes);
 	}
 	/**
@@ -690,7 +691,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function hiddenField($name,  $value = null, $attributes = array()) {
+	public static function hiddenField($name, $value = null, $attributes = array()) {
 		return self::field('hidden', $name, $value, $attributes);
 	}
 	/**
@@ -699,12 +700,12 @@ class MHtml
 	 * @access public
 	 * @param  string $name
 	 * @param  string $value
-	 * @param  string $file
+	 * @param  string $srcFile
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function imageField($name,  $value = null, $file, $attributes = array()) {
-		$attributes['src'] = $file;
+	public static function imageField($name, $value = null, $srcFile, $attributes = array()) {
+		$attributes['src'] = $srcFile;
 		return self::field('image', $name, $value, $attributes);
 	}
 	/**
@@ -716,7 +717,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function passwordField($name,  $value = null, $attributes = array()) {
+	public static function passwordField($name, $value = null, $attributes = array()) {
 		return self::field('password', $name, $value, $attributes);
 	}
 	/**
@@ -728,7 +729,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function radioField($name,  $value = null, $attributes = array()) {
+	public static function radioField($name, $value = null, $attributes = array()) {
 		return self::field('radio', $name, $value, $attributes);
 	}
 	/**
@@ -740,7 +741,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function textField($name,  $value = null, $attributes = array()) {
+	public static function textField($name, $value = null, $attributes = array()) {
 		return self::field('text', $name, $value, $attributes);
 	}
 	/**
@@ -752,7 +753,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function emailField($name,  $value = null, $attributes = array()) {
+	public static function emailField($name, $value = null, $attributes = array()) {
 		return self::field('email', $name, $value, $attributes);
 	}
 	/**
@@ -764,7 +765,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function rangeField($name,  $value = null, $attributes = array()) {
+	public static function rangeField($name, $value = null, $attributes = array()) {
 		return self::field('range', $name, $value, $attributes);
 	}
 	/**
@@ -776,7 +777,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function searchField($name,  $value = null, $attributes = array()) {
+	public static function searchField($name, $value = null, $attributes = array()) {
 		return self::field('search', $name, $value, $attributes);
 	}
 	/**
@@ -788,7 +789,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function telField($name,  $value = null, $attributes = array()) {
+	public static function telField($name, $value = null, $attributes = array()) {
 		return self::field('tel', $name, $value, $attributes);
 	}
 	/**
@@ -800,7 +801,7 @@ class MHtml
 	 * @param  array  $attributes
 	 * @return string
 	 */
-	public static function urlField($name,  $value = null, $attributes = array()) {
+	public static function urlField($name, $value = null, $attributes = array()) {
 		return self::field('url', $name, $value, $attributes);
 	}
 
