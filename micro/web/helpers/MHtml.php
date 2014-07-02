@@ -16,7 +16,7 @@ class MHtml
 {
 	// BASIC Elements
 	/**
-	 * Render close tag
+	 * Render tag
 	 *
 	 * @access public
 	 * @param  string $name
@@ -31,7 +31,7 @@ class MHtml
 		return '<'.$name.' '.$result.'/>';
 	}
 	/**
-	 * Render close tag
+	 * Render open tag
 	 *
 	 * @access public
 	 * @param  string $name
@@ -66,14 +66,16 @@ class MHtml
 	 * @return string
 	 */
 	private static function field($type, $name,  $value = null, $attributes = array()) {
+		$attributes['id'] = $name;
 		$attributes['type'] = $type;
 		$attributes['name'] = $name;
 		$attributes['value'] = $value;
 		return self::tag('input', $attributes);
 	}
+
 	// HEAD Elements
 	/**
-	 * Render meta tag
+	 * Render link tag
 	 *
 	 * @access public
 	 * @param  string $name
@@ -189,6 +191,7 @@ class MHtml
 	public static function title($name){
 		return self::openTag('title') . $name . self::closeTag('title');
 	}
+
 	// BODY Elements
 	/**
 	 * Render BR tag
@@ -220,7 +223,7 @@ class MHtml
 		return self::tag('img', $attributes);
 	}
 	/**
-	 * Render Mail a tag
+	 * Render mail a tag
 	 *
 	 * @access public
 	 * @param  string $name
@@ -232,7 +235,6 @@ class MHtml
 		$attributes['href'] = 'mailto:'.$email;
 		return self::openTag('a', $attributes) . $name . self::closeTag('a');
 	}
-
 	/**
 	 * Render link
 	 *
@@ -258,7 +260,35 @@ class MHtml
 	public static function heading($num,  $value = null, $attributes = array()) {
 		return self::openTag('h'.$num, $attributes) . $value . self::closeTag('h'.$num);
 	}
-	// LIST Elements // marklist, numlist, deplist, applet, imgmap, object
+	/**
+	 * Render applet tag
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public static function applet() {
+		return '';
+	}
+	/**
+	 * Render image map tag
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public static function imgmap() {
+		return '';
+	}
+	/**
+	 * Render object tag
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public static function object() {
+		return '';
+	}
+
+	// LIST Elements // marklist, numlist, deplist
 	public static function lists($items = array(), $attributes = array()) {
 		$result = null;
 		foreach ($items AS $item) {
@@ -273,6 +303,7 @@ class MHtml
 		}
 		return self::openTag('ul', $attributes) . $result . self::closeTag('ul');
 	}
+
 	// TABLE Elements
 	/**
 	 * Render table element
@@ -360,6 +391,13 @@ class MHtml
 		}
 		return self::openTag('tr', $attributes) . $output . self::closeTag('tr');
 	}
+	/**
+	 * Render table heading tag
+	 *
+	 * @param string $text
+	 * @param array $attributes
+	 * @return string
+	 */
 	public static function tableHeading($text,$attributes=array()) {
 		return self::openTag('th', $attributes) . $text . self::closeTag('th');
 	}
@@ -374,6 +412,7 @@ class MHtml
 	public static function tableCell($text, $attributes = array()) {
 		return self::openTag('td', $attributes) . $text . self::closeTag('td');
 	}
+
 	// FORM Elements
 	/**
 	 * Render begin form tag
@@ -390,7 +429,7 @@ class MHtml
 		return self::openTag('form', $attributes);
 	}
 	/**
-	 * Render doctype tag
+	 * Render end form tag
 	 *
 	 * @access public
 	 * @return string
@@ -432,6 +471,7 @@ class MHtml
 	 * @return string
 	 */
 	public static function textArea($name, $text, $attributes = array()) {
+		$attributes['id'] = $name;
 		$attributes['name'] = $name;
 		return self::openTag('textarea', $attributes) . $text . self::closeTag('textarea');
 	}
@@ -447,7 +487,7 @@ class MHtml
 		return self::openTag('legend', $attributes) . $text . self::closeTag('legend');
 	}
 	/**
-	 * Generate label tag
+	 * Render label tag
 	 *
 	 * @access public
 	 * @param string $name
@@ -459,7 +499,7 @@ class MHtml
 		return self::openTag('label', $elemId) . $name . self::closeTag('label');
 	}
 	/**
-	 * Generate option tag
+	 * Render option tag
 	 *
 	 * @access public
 	 * @param string $value
@@ -472,7 +512,7 @@ class MHtml
 		return self::openTag('option', $attributes) . $text . self::closeTag('option');
 	}
 	/**
-	 * Generate optGroup tag
+	 * Render optGroup tag
 	 *
 	 * @access public
 	 * @param string $label
@@ -493,7 +533,7 @@ class MHtml
 		return self::openTag('optgroup', $attributes) . $opts . self::closeTag('optgroup');
 	}
 	/**
-	 * Generate dropDownList (select tag)
+	 * Render dropDownList (select tag)
 	 *
 	 * @access public
 	 * @param string $name
@@ -502,11 +542,12 @@ class MHtml
 	 * @return string
 	 */
 	public static function dropDownList($name, $options = array(), $attributes = array()) {
+		$attributes['id'] = $name;
 		$attributes['size'] = 1;
 		return self::listbox($name, $options, $attributes);
 	}
 	/**
-	 * Generate listBox (select tag)
+	 * Render listBox (select tag)
 	 *
 	 * @access public
 	 * @param string $name
@@ -515,51 +556,68 @@ class MHtml
 	 * @return string
 	 */
 	public static function listBox($name, $options = array(), $attributes = array()) {
+		if (isset($attributes['selected'])) {
+			$selected = $attributes['selected'];
+			unset($attributes['selected']);
+		} else {
+			$selected = null;
+		}
+
 		$attributes['name'] = $name;
 		$opts = '';
 		foreach ($options AS $option) {
 			if (isset($option['label'])) {
 				$opts .= self::optGroup($option['label'], $option['options'], $option['attributes']);
 			} else {
+				if ($option['value'] == $selected) { $option['selected'] = 'selected'; }
 				$opts .= self::option($option['value'], $option['text'], $option['attributes']);
 			}
 		}
 		return self::openTag('select', $attributes) . $opts . self::closeTag('select');
 	}
 	/**
-	 * Generate checkBoxList (input checkbox tags)
+	 * Render checkBoxList (input checkbox tags)
 	 *
 	 * @access public
 	 * @param string $name
 	 * @param array  $checkboxes format array(text, value, attributes)
 	 * @param string $format %check% - checkbox , %text% - text
+	 * @param string $selected
 	 * @return string
 	 */
-	public static function checkBoxList($name, $checkboxes = array(), $format = '<p>%check% %text%</p>') {
+	public static function checkBoxList($name, $checkboxes = array(), $format = '<p>%check% %text%</p>', $selected='') {
 		$checks = '';
 		foreach ($checkboxes AS $checkbox) {
+			if ($checkbox['value'] == $selected) {
+				$checkbox['attributes']['selected'] = 'selected';
+			}
 			$check = self::checkboxField($name, $checkbox['value'], $checkbox['attributes']);
 			$checks .= str_replace('%text%', $checkbox['text'], str_replace('%check%', $check, $format));
 		}
 		return $checks;
 	}
 	/**
-	 * Generate option tag
+	 * Render radio button list tag
 	 *
 	 * @access public
 	 * @param string $name
 	 * @param array  $radios format array(text, value, attributes)
 	 * @param string $format %radio% - radio , %text% - text
+	 * @param string $selected
 	 * @return string
 	 */
-	public static function radioButtonList($name, $radios = array(), $format = '<p>%radio% %text%</p>') {
+	public static function radioButtonList($name, $radios = array(), $format = '<p>%radio% %text%</p>', $selected='') {
 		$rads = '';
 		foreach ($radios AS $radio) {
+			if ($radio['value'] == $selected) {
+				$radio['attributes']['selected'] = 'selected';
+			}
 			$rad = self::radioField($name, $radio['value'], $radio['attributes']);
 			$rads .= str_replace('%text%', $radio['text'], str_replace('%radio%', $rad, $format));
 		}
 		return $rads;
 	}
+
 	// INPUT Elements
 	/**
 	 * Render reset button tag
@@ -745,9 +803,10 @@ class MHtml
 	public static function urlField($name,  $value = null, $attributes = array()) {
 		return self::field('url', $name, $value, $attributes);
 	}
+
 	// HTML5 Only
 	/**
-	 * Render charset meta tag
+	 * Render charset tag
 	 *
 	 * @access public
 	 * @param  string $name
@@ -757,7 +816,7 @@ class MHtml
 		return self::tag('meta', array('charset'=>$name));
 	}
 	/**
-	 * Generate video tag
+	 * Render video tag
 	 *
 	 * @access public
 	 * @param array $sources format type=>src
@@ -782,7 +841,7 @@ class MHtml
 		return self::openTag('video', $attributes) . $srcs . $noCodec . self::closeTag('video');
 	}
 	/**
-	 * Generate audio tag
+	 * Render audio tag
 	 *
 	 * @access public
 	 * @param array $sources format type=>src
@@ -807,7 +866,7 @@ class MHtml
 		return self::openTag('audio', $attributes) . $srcs . $noCodec . self::closeTag('audio');
 	}
 	/**
-	 * Generate canvas tag
+	 * Render canvas tag
 	 *
 	 * @access public
 	 * @param array  $attributes
