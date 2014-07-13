@@ -7,32 +7,27 @@ class DefaultController extends Controller
 	}
 
 	public function actionLogin() {
-		if (isset($_SESSION['UserID']) AND !empty($_SESSION['UserID'])) {
-			$this->redirect('/profile');
+		if (!MRegistry::get('user')->isGuest()) {
+			$this->redirect('/');
 		}
 
-		if (isset($_POST['Login'])) {
-			$form = $_POST['Login'];
+		$form = new MFormBuilder(
+			include Micro::getInstance()->config['AppDir'].'/views/default/loginform.php',
+			new LoginFormModel(),
+			'POST'
+		);
 
-			$query = new MQuery;
-			$query->addWhere('login = :login');
-			$query->addWhere('pass = :pass');
-
-			$query->params = array(
-				':login' => $form['login'],
-				':pass' => md5($form['pass'])
-			);
-
-			if ($user = User::finder($query, true)) {
-				$_SESSION['UserID'] = $user->id;
+		if (isset($_POST['LoginFormModel'])) {
+			$form->setModelData($_POST['LoginFormModel']);
+			if ($form->validateModel() AND $form->getModel()->logined()) {
 				$this->redirect('/profile');
 			}
 		}
-		echo $this->render('login');
+		echo $this->render('login', array('form'=>$form));
 	}
 
 	public function actionLogout() {
-		Registry::get('session')->destroy();
+		MRegistry::get('session')->destroy();
 		$this->redirect('/');
 	}
 }

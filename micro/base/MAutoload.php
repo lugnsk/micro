@@ -73,7 +73,7 @@ class MAutoload
 	 */
 	public static function find($dir, $toSearch) {
 		if (is_dir($dir)) {
-			$files = array_diff( scandir( $dir ), array( '.', '..' ) );
+			$files = array_diff( scandir( $dir ), array( '.', '..', 'validators', 'views', 'config' ) );
 		} else {
 			$files[] = $dir.'/'.$toSearch;
 		}
@@ -93,6 +93,7 @@ class MAutoload
 		return false;
 	}
 
+	/** @var array $files Micro files */
 	private static $files = array(
 		'Micro'=>'/Micro.php',
 		'MAutoload'=>'/base/MAutoload.php',
@@ -103,6 +104,7 @@ class MAutoload
 		'MLanguage'=>'/base/MLanguage.php',
 		'MRegistry'=>'/base/MRegistry.php',
 		'MSession'=>'/base/MSession.php',
+		'MValidator'=>'/base/MValidator.php',
 		'MWidget'=>'/base/MWidget.php',
 		'MDbConnection'=>'/db/MDbConnection.php',
 		'MMigration'=>'/db/MMigration.php',
@@ -110,13 +112,15 @@ class MAutoload
 		'MQuery'=>'/db/MQuery.php',
 		'MAssets'=>'/web/MAssets.php',
 		'MForm'=>'/web/MForm.php',
+		'MFormModel'=>'/web/MFormModel.php',
+		'MFormBuilder'=>'/web/MFormBuilder.php',
 		'MRequest'=>'/web/MRequest.php',
 		'MRouter'=>'/web/MRouter.php',
-		'MFlashMessage'=>'/web/helpers/MFlashMessage.php',
 		'MFtp'=>'/web/helpers/MFtp.php',
 		'MHtml'=>'/web/helpers/MHtml.php',
 		'MMail'=>'/web/helpers/MMail.php',
 		'MUser'=>'/web/helpers/MUser.php',
+		'MFlashMessage'=>'/web/helpers/MFlashMessage.php',
 		'MFormWidget'=>'/widgets/MFormWidget.php',
 		'MMenuWidget'=>'/widgets/MMenuWidget.php'
 	);

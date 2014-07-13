@@ -24,7 +24,8 @@ class MForm
 	 */
 	private function getField($model,$property) {
 		return array(
-			'name'=> get_class($model) . '_' . $property,
+			'id'=> get_class($model) . '_' . $property,
+			'name'=> get_class($model) . '[' . $property . ']',
 			'value'=> (property_exists($model, $property)) ? $model->$property : null
 		);
 	}
@@ -38,8 +39,7 @@ class MForm
 	 * @return string
 	 */
 	public function label($model,$property, $options = array()) {
-		$element = $model->getLabel($property);
-		return MHtml::label($element['name'], get_class($model).'_'.$property, $options);
+		return MHtml::label($model->getLabel($property), get_class($model).'_'.$property, $options);
 	}
 	/**
 	 * Render text field tag
@@ -52,7 +52,16 @@ class MForm
 	 */
 	public function textField($model, $property, $options = array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::textField($element['name'], $element['value'], $options);
+	}
+	public function textFieldRow($model, $property, $options=array(), $labelOptions=array()) {
+		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
+		return MHtml::openTag('div',array('class'=>'row')).
+			MHtml::label($model->getLabel($property), $element['name'],$labelOptions).
+			$this->textField($model,$property,$options).
+			MHtml::closeTag('div');
 	}
 	/**
 	 * Render button field tag
@@ -65,6 +74,7 @@ class MForm
 	 */
 	public function buttonField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::buttonField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -78,6 +88,7 @@ class MForm
 	 */
 	public function checkBoxField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::checkBoxField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -91,6 +102,7 @@ class MForm
 	 */
 	public function fileField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::fileField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -118,6 +130,7 @@ class MForm
 	 */
 	public function imageField($model, $property, $imageSource, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::imageField($element['name'], $element['value'], $imageSource, $options);
 	}
 	/**
@@ -131,7 +144,15 @@ class MForm
 	 */
 	public function passwordField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::passwordField($element['name'], $element['value'], $options);
+	}
+	public function passwordFieldRow($model, $property, $options=array(), $labelOptions=array()) {
+		$element = $this->getField($model,$property);
+		return MHtml::openTag('div',array('class'=>'row')).
+		MHtml::label($model->getLabel($property), $element['name'],$labelOptions).
+		$this->passwordField($model,$property,$options).
+		MHtml::closeTag('div');
 	}
 	/**
 	 * Render radio field tag
@@ -144,6 +165,7 @@ class MForm
 	 */
 	public function radioField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::radioField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -157,6 +179,7 @@ class MForm
 	 */
 	public function emailField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::emailField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -170,6 +193,7 @@ class MForm
 	 */
 	public function rangeField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::rangeField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -183,6 +207,7 @@ class MForm
 	 */
 	public function searchField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::searchField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -196,6 +221,7 @@ class MForm
 	 */
 	public function telField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::telField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -209,6 +235,7 @@ class MForm
 	 */
 	public function urlField($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::urlField($element['name'], $element['value'], $options);
 	}
 	/**
@@ -222,6 +249,7 @@ class MForm
 	 */
 	public function textArea($model, $property, $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		return MHtml::textArea($element['name'],$element['value'], $options);
 	}
 	/**
@@ -236,6 +264,7 @@ class MForm
 	 */
 	public function dropDownList($model, $property, $elements=array(), $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		$options['selected'] = $element['value'];
 		return MHtml::dropDownList($element['name'], $elements, $options);
 	}
@@ -251,6 +280,7 @@ class MForm
 	 */
 	public function listBox($model, $property, $elements=array(), $options=array()) {
 		$element = $this->getField($model,$property);
+		$options['id'] = $element['id'];
 		$options['selected'] = $element['value'];
 		return MHtml::listBox($element['name'], $elements, $options);
 	}

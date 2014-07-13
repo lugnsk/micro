@@ -14,10 +14,14 @@
  */
 class MFormWidget extends MWidget
 {
+	public $action = '';
+	public $method = 'GET';
+	public $type = 'text/plain';
 	/**
 	 * @return MForm
 	 */
 	public function init() {
+		$this->action = ($this->action) ? $this->action : $_SERVER['REQUEST_URI'];
 		echo MHtml::beginForm($this->action,$this->method,array('type'=>$this->type));
 		return new MForm;
 	}

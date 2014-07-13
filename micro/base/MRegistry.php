@@ -77,8 +77,10 @@ final class MRegistry
 			if (!self::loadComponent($name, $configs[$name])) {
 				throw new MException('Class '.$name.' error loading.');
 			}
+
 		} elseif ($name AND !isset($configs[$name])) {
 			throw new MException('Class '.$name.' not configured.');
+
 		} else {
 			foreach ($configs AS $name => $options) {
 				if (!self::loadComponent($name,$options)) {
@@ -102,6 +104,14 @@ final class MRegistry
 
 		if (!class_exists($options['class'])) {
 			return false;
+		}
+
+		if (isset($options['depends']) AND $options['depends']) {
+			if (is_array($options['depends'])) {
+				foreach($options['depends'] AS $depend) { self::configure($depend); }
+			} else {
+				self::configure($options['depends']);
+			}
 		}
 
 		$className = $options['class'];

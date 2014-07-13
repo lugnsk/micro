@@ -23,7 +23,7 @@ function getVars($object) {
  * @version 1.0
  * @since 1.0
  */
-class MModel
+abstract class MModel extends MFormModel
 {
 	/** @var PDO $db pdo connection */
 	private $db = false;
@@ -256,12 +256,5 @@ class MModel
 	 * @return void
 	 */
 	public function afterDelete() {
-	}
-	public function attributeLabels() {
-		return array();
-	}
-	public function getLabel($property) {
-		$elements = $this->attributeLabels();
-		return (isset($elements[$property])) ? $elements[$property] : null;
 	}
 }

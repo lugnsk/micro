@@ -3,7 +3,7 @@
 class ProfileController extends Controller
 {
 	public function actionIndex() {
-		if (!isset($_SESSION['UserID']) OR empty($_SESSION['UserID'])) {
+		if (MRegistry::get('user')->isGuest()) {
 			$this->redirect('/');
 		}
 

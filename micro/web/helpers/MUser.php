@@ -14,7 +14,13 @@
  */
 class MUser
 {
+	/**
+	 * Get state user
+	 *
+	 * @access public
+	 * @return bool
+	 */
 	public function isGuest() {
-		return (isset($_SESSION['UserID']) AND !empty($_SESSION['UserID']));
+		return (!isset($_SESSION['UserID']) OR empty($_SESSION['UserID']));
 	}
 }

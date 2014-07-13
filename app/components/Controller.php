@@ -10,7 +10,7 @@ class Controller extends MController
 	public function __construct() {
 		parent::__construct();
 
-		if (isset($_SESSION['UserID']) AND !empty($_SESSION['UserID'])) {
+		if (!MRegistry::get('user')->isGuest()) {
 			$this->menu[] = '<a href="/profile">Профиль</a>';
 			$this->menu[] = ' (<a href="/logout">Выйти</a>)';
 		} else {

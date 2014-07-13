@@ -44,6 +44,7 @@ return array(
 		// Flash messages
 		'flash' => array(
 			'class' => 'MFlashMessage',
+			'depends' => 'session'
 		),
 		// DataBase
 		'db' => array(
@@ -52,6 +53,10 @@ return array(
 			'username'=>'micro',
 			'password'=>'micro',
 			'charset'=>'utf8'
+		),
+		'user'=>array(
+			'class'=>'MUser',
+			'depends'=>'session'
 		)
 	)
 );
