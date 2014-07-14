@@ -14,10 +14,16 @@
  */
 class MFormWidget extends MWidget
 {
+	/** @property string $action */
 	public $action = '';
+	/** @property string $method */
 	public $method = 'GET';
+	/** @property string $type */
 	public $type = 'text/plain';
 	/**
+	 * Initialize widget
+	 *
+	 * @access public
 	 * @return MForm
 	 */
 	public function init() {
@@ -25,8 +31,10 @@ class MFormWidget extends MWidget
 		echo MHtml::beginForm($this->action,$this->method,array('type'=>$this->type));
 		return new MForm;
 	}
-
 	/**
+	 * Running widget
+	 *
+	 * @access public
 	 * @return void
 	 */
 	public function run() {

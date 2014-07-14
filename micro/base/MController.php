@@ -11,7 +11,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MController
+abstract class MController
 {
 	/** @var mixed $module module name */
 	public static $module;
@@ -241,7 +241,6 @@ class MController
 		$GLOBALS['widgetStack'][$name] = new $name($options);
 		return $GLOBALS['widgetStack'][$name]->init();
 	}
-
 	/**
 	 * End of widget
 	 *

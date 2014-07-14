@@ -14,35 +14,88 @@
  */
 class MFormBuilder
 {
+	/** @property MFormWidget $widget  */
 	protected $widget;
 	/** @property MForm $form */
 	protected $form;
-
+	/** @property array $model */
 	private $config;
+	/** @property MModel $model */
 	private $model;
 
+
+	/**
+	 * Constructor object
+	 *
+	 * @access public
+	 * @param array $config
+	 * @param MModel $model
+	 * @param string $method
+	 * @param string $type
+	 * @param string $action
+	 * @result void
+	 */
 	public function __construct($config = array(), $model=null, $method='GET', $type='text/plain', $action='') {
 		$this->config = $config;
 		$this->model = $model;
 		$this->widget = new MFormWidget(array('action'=>$action,'method'=>$method,'type'=>$type));
 	}
+	/**
+	 * Set model data
+	 *
+	 * Loading data in model from array
+	 *
+	 * @access public
+	 * @param array $data
+	 * @return void
+	 */
 	public function setModelData($data=array()) {
 		foreach ($data AS $key=>$value) {
 			$this->model->$key = $value;
 		}
 	}
+	/**
+	 * Validation model
+	 *
+	 * @access public
+	 * @return bool
+	 */
 	public function validateModel() {
 		return $this->model->validate();
 	}
-	public  function getModelErrors() {
+	/**
+	 * Get errors from model
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function getModelErrors() {
 		return $this->model->getErrors();
 	}
+	/**
+	 * Getting model
+	 *
+	 * @access public
+	 * @return MModel
+	 */
 	public function getModel() {
 		return $this->model;
 	}
+	/**
+	 * Convert object to string
+	 *
+	 * @access public
+	 * @return string
+	 */
 	public function __toString() {
 		return $this->render();
 	}
+	/**
+	 * Render form builder
+	 *
+	 * @access public
+	 * @return string
+	 */
 	public function render() {
 		ob_start();
 
@@ -52,6 +105,12 @@ class MFormBuilder
 
 		return ob_get_clean();
 	}
+	/**
+	 * Render form heading
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function beginRender() {
 		$this->form = $this->widget->init();
 		if (isset($this->config['legend'])) {
@@ -71,12 +130,25 @@ class MFormBuilder
 			}
 		}
 	}
+	/**
+	 * Finish form render
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function endRender() {
 		if (isset($this->config['legend'])) {
 			echo MHtml::closeTag('fieldset');
 		}
 		$this->widget->run();
 	}
+	/**
+	 * Render form elements
+	 *
+	 * @access public
+	 * @param null|array $conf
+	 * @return void
+	 */
 	public function contentRender($conf=null) {
 		if (!$conf) {
 			$conf = $this->config;

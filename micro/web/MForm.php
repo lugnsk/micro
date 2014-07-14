@@ -55,6 +55,16 @@ class MForm
 		$options['id'] = $element['id'];
 		return MHtml::textField($element['name'], $element['value'], $options);
 	}
+	/**
+	 * Render text field row
+	 *
+	 * @access public
+	 * @param MModel $model
+	 * @param string $property
+	 * @param array $options
+	 * @param array $labelOptions
+	 * @return string
+	 */
 	public function textFieldRow($model, $property, $options=array(), $labelOptions=array()) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
@@ -147,6 +157,16 @@ class MForm
 		$options['id'] = $element['id'];
 		return MHtml::passwordField($element['name'], $element['value'], $options);
 	}
+	/**
+	 * Render password field row
+	 *
+	 * @access public
+	 * @param MModel $model
+	 * @param string $property
+	 * @param array $options
+	 * @param array $labelOptions
+	 * @return string
+	 */
 	public function passwordFieldRow($model, $property, $options=array(), $labelOptions=array()) {
 		$element = $this->getField($model,$property);
 		return MHtml::openTag('div',array('class'=>'row')).

@@ -15,7 +15,7 @@ class MLanguage
 {
 	/** @var array $language language array */
 	private $language = array();
-
+	/** @var string $defaultLang */
 	private $defaultLang = 'en';
 
 
@@ -28,7 +28,6 @@ class MLanguage
 	 * @throws MException
 	 */
 	public function __construct($filename) {
-
 		$lang = (!empty(MRegistry::get('lang'))) ? MRegistry::get('lang') : $this->defaultLang;
 		if (!file_exists($filename.$lang.'.ini')) {
 			throw new MException('Language file '.$filename.$lang.'.ini not exists.');

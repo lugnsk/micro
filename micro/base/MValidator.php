@@ -1,24 +1,90 @@
-<?php
+<?php /** MicroValidator */
 
+/**
+ * MValidator is a runner validation process
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @version 1.0
+ * @since 1.0
+ */
 class MValidator
 {
+	/** @property array $rule */
 	private $rule=array();
+	/** @property array $errors */
 	public $errors=array();
-
+	/** @property array $elements */
 	public $elements=array();
+	/** @property array $params */
 	public $params=array();
+	/** @property array $validators */
+	protected $validators=array(
+		'string'=>'MStringValidator',
+		//		'required'=>'CRequiredValidator',
+		//		'filter'=>'CFilterValidator',
+		//		'match'=>'CRegularExpressionValidator',
+		//		'email'=>'CEmailValidator',
+		//		'url'=>'CUrlValidator',
+		//		'unique'=>'CUniqueValidator',
+		//		'compare'=>'CCompareValidator',
+		//		'length'=>'CStringValidator',
+		//		'in'=>'CRangeValidator',
+		//		'numerical'=>'CNumberValidator',
+		//		'captcha'=>'CCaptchaValidator',
+		//		'type'=>'CTypeValidator',
+		//		'file'=>'CFileValidator',
+		//		'default'=>'CDefaultValueValidator',
+		//		'exist'=>'CExistValidator',
+		//		'boolean'=>'CBooleanValidator',
+		//		'safe'=>'CSafeValidator',
+		//		'unsafe'=>'CUnsafeValidator',
+		//		'date'=>'CDateValidator',
+	);
 
+
+	/**
+	 * Constructor validator object
+	 *
+	 * @access public
+	 * @param array $rule
+	 * @result void
+	 */
 	public function __construct($rule=array()) {
 		$this->rule = $rule;
 	}
+	/**
+	 * Check is empty property
+	 *
+	 * @access protected
+	 * @param $value
+	 * @param bool $trim
+	 * @return bool
+	 */
 	protected function isEmpty($value,$trim=false)
 	{
 		return $value===null || $value===array() || $value==='' || $trim && is_scalar($value) && trim($value)==='';
 	}
+	/**
+	 * Get errors after run validation
+	 *
+	 * @access public
+	 * @return array
+	 */
 	public function getErrors() {
 		return $this->errors;
 	}
-
+	/**
+	 * Running validation process
+	 *
+	 * @access public
+	 * @param $model
+	 * @param bool $client
+	 * @return bool|string
+	 */
 	public function run($model, $client=false) {
 		$elements = explode(',', str_replace(' ', '', array_shift($this->rule)));
 		$name = array_shift($this->rule);
@@ -43,26 +109,4 @@ class MValidator
 		}
 		return $result;
 	}
-	protected $validators=array(
-		'string'=>'MStringValidator',
-		//		'required'=>'CRequiredValidator',
-		//		'filter'=>'CFilterValidator',
-		//		'match'=>'CRegularExpressionValidator',
-		//		'email'=>'CEmailValidator',
-		//		'url'=>'CUrlValidator',
-		//		'unique'=>'CUniqueValidator',
-		//		'compare'=>'CCompareValidator',
-		//		'length'=>'CStringValidator',
-		//		'in'=>'CRangeValidator',
-		//		'numerical'=>'CNumberValidator',
-		//		'captcha'=>'CCaptchaValidator',
-		//		'type'=>'CTypeValidator',
-		//		'file'=>'CFileValidator',
-		//		'default'=>'CDefaultValueValidator',
-		//		'exist'=>'CExistValidator',
-		//		'boolean'=>'CBooleanValidator',
-		//		'safe'=>'CSafeValidator',
-		//		'unsafe'=>'CUnsafeValidator',
-		//		'date'=>'CDateValidator',
-	);
 }

@@ -39,7 +39,7 @@ final class MRegistry
 		return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
 	}
 	/**
-	 * Get registry value
+	 * Set registry value
 	 *
 	 * @access public
 	 * @param string $name

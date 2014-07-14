@@ -14,7 +14,7 @@
  */
 class MDbConnection
 {
-	/** @var PDO|null $conn Connection to DB */
+	/** @property PDO|null $conn Connection to DB */
 	public $conn;
 
 
@@ -23,8 +23,8 @@ class MDbConnection
 	 *
 	 * @access public
 	 * @param array $config
-	 * @throw MException
 	 * @result void
+	 * @throw MException
 	 */
 	public function __construct($config = array()) {
 		try {
@@ -43,7 +43,7 @@ class MDbConnection
 		$this->conn = null;
 	}
 	/**
-	 * List database names on this connecion
+	 * List database names on this connection
 	 *
 	 * @access public
 	 * @return mixed
@@ -149,7 +149,18 @@ class MDbConnection
 	public function fieldExists($field, $table) {
 		return (bool)array_search($field, $this->listFields($table));
 	}
-	// TODO: field_info
+	/**
+	 * Get info of a field
+	 *
+	 * @access public
+	 * @param string $field
+	 * @param string $table
+	 * @return array
+	 */
+	public function fieldInfo($field, $table) {
+		$sth = $this->conn->query('SELECT '.$field.' FROM '.$table.' LIMIT 1');
+		return $sth->getColumnMeta(0);
+	}
 	/**
 	 * Set current database
 	 *

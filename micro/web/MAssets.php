@@ -14,14 +14,25 @@
  */
 class MAssets
 {
-	/** @var string $assetDir directory for assets */
+	/** @property string $assetDir directory for assets */
 	private $assetDir = 'assets';
+	/** @property string $hash */
 	private $hash = '';
+	/** @property string $directory */
 	private $directory = '';
+	/** @property string $sourceDir */
 	private $sourceDir = '';
+	/** @property string $publishDir */
 	private $publishDir = '';
 
 
+	/**
+	 * Constructor for class
+	 *
+	 * @access public
+	 * @param string $directory
+	 * @result void
+	 */
 	public function __construct($directory = '') {
 		$this->directory = $directory;
 		$this->hash = md5($this->directory);

@@ -13,7 +13,7 @@
  * @version 1.0
  * @since 1.0
  */
-class Micro {
+final class Micro {
 	/** @var string $version of Micro */
 	public static $version = '1.0';
 	/** @var Micro $_app Application singleton */
@@ -30,7 +30,7 @@ class Micro {
 	 * @access private
 	 * @return void
 	 */
-	private function __clone() {
+	protected function __clone() {
 	}
 	/**
 	 * Get application singleton instance

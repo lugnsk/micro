@@ -12,17 +12,17 @@
  * @version 1.0
  * @since 1.0
  */
-class MMail
+final class MMail
 {
-	/** @var string $form sender mail */
+	/** @property string $form sender mail */
 	private $from;
-	/** @var string $fromName sender name */
+	/** @property string $fromName sender name */
 	private $fromName = "";
-	/** @var string $type type of message */
+	/** @property string $type type of message */
 	private $type = "text/html";
-	/** @var string $encoding encoding */
+	/** @property string $encoding encoding */
 	private $encoding = "utf-8";
-	/** @var bool $notify notification of read */
+	/** @property bool $notify notification of read */
 	private $notify = false;
 
 	/**

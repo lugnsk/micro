@@ -181,7 +181,6 @@ class MQuery
 		$query = 'SELECT ';
 		$query .= ($this->distinct) ? 'DISTINCT ' : '';
 		$query .= $this->select . ' FROM ' . $this->table;
-
 		$query .= ($this->join) ? ' ' . $this->join : '';
 		$query .= ($this->where) ? ' WHERE ' . $this->where : '';
 		$query .= ($this->group) ? ' GROUP BY ' . $this->group : '';
