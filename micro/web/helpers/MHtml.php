@@ -26,9 +26,9 @@ class MHtml
 	public static function tag($name, $attributes = array()) {
 		$result = '';
 		foreach ($attributes AS $elem => $value) {
-			$result .= $elem . '="' . $value . '" ';
+			$result .= ' '.$elem . '="' . $value . '" ';
 		}
-		return '<'.$name.' '.$result.'/>';
+		return '<'.$name.$result.'/>';
 	}
 	/**
 	 * Render open tag
@@ -41,9 +41,9 @@ class MHtml
 	public static function openTag($name, $attributes = array()) {
 		$result = '';
 		foreach ($attributes AS $key => $value) {
-			$result .= $key . '="' . $value . '" ';
+			$result .= ' ' . $key . '="' . $value . '"';
 		}
-		return '<'.$name.' '.$result.'>';
+		return '<'.$name.$result.'>';
 	}
 	/**
 	 * Render close tag
