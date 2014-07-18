@@ -155,7 +155,7 @@ class MHtml
 	 */
 	public static function script($text, $attributes = array()) {
 		$attributes['type'] = 'text/javascript';
-		return self::openTag('script', $attributes) ."\n/*<![CDATA[*/\n".$text."\n/*]]>*/\n". self::closeTag('script');
+		return self::openTag('script', $attributes) ." /*<![CDATA[*/ ".$text." /*]]>*/ ". self::closeTag('script');
 	}
 	/**
 	 * Render docType tag
