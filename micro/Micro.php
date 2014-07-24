@@ -1,5 +1,12 @@
 <?php /** Micro */
 
+namespace Micro;
+
+use Micro\base\MException;
+use Micro\web\helpers\MHtml;
+use Micro\base\MAutoload;
+use Micro\base\MRegistry;
+
 /**
  * Micro class file.
  *
@@ -39,7 +46,7 @@ final class Micro {
 	 * @param  array $config
 	 * @return Micro this
 	 */
-	public static function getInstance($config = array()) {
+	public static function getInstance($config = []) {
 		if (self::$_app == null) {
 			self::$_app = new Micro($config);
 		}
@@ -52,14 +59,24 @@ final class Micro {
 	 * @access private
 	 * @param array $config
 	 */
-	private function __construct($config = array()) {
+	private function __construct($config = []) {
 		// Register timer
 		$this->timer = microtime(1);
+
 		// Register config
 		$this->config = $config;
+
+		// Register aliases
+		MAutoload::setAlias('Micro',  $config['MicroDir']);
+		MAutoload::setAlias('App',    $config['AppDir']);
+
+		// Patch for composer
+		if (isset($config['VendorDir'])) {
+			MAutoload::setAlias('Vendor', $config['VendorDir']);
+		}
+
 		// Register loader
-		require $config['MicroDir'] . '/base/MAutoload.php';
-		spl_autoload_register(array('MAutoload','autoloader'));
+		spl_autoload_register(['\Micro\base\MAutoload','loader']);
 	}
 	/**
 	 * Running application
@@ -72,8 +89,8 @@ final class Micro {
 	public function run() {
 		$path   = $this->prepareController();
 		$action = MRegistry::get('request')->getAction();
-
-		require_once $path.'.php';
+//die($path);
+		//require_once $path.'.php';
 		$name = basename($path);
 
 		if (!class_exists($name)) {
@@ -101,16 +118,16 @@ final class Micro {
 			throw new MException('Component request not loaded.');
 		}
 
-		$path = $this->config['AppDir'] . '/';
+		$path = 'App\\';
 		if ($modules = $request->getModules()) {
-			$path .= $modules . '/';
+			$path .= $modules . '\\';
 		}
 		if ($controller = $request->getController()) {
-			$path .= 'controllers/' . $controller;
-		}
+			$path .= 'controllers\\' . $controller;
+		}/*
 		if (!file_exists($path . '.php')) {
 			throw new MException('File not found in path: ' . $path . '.php');
-		}
+		}*/
 		return $path;
 	}
 }

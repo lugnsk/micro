@@ -1,5 +1,7 @@
 <?php /** MicroRouter */
 
+namespace Micro\web;
+
 /**
  * MRouter class file.
  *
@@ -29,7 +31,7 @@ class MRouter
 	 * @access public
 	 * @param array $routes
 	 */
-	public function __construct($routes = array()) {
+	public function __construct($routes = []) {
 		$this->routes = array_merge($this->routes, $routes);
 	}
 	/**
@@ -73,7 +75,7 @@ class MRouter
 		$patBlocks = explode('/', $pattern);		if ($patBlocks[0] == '') array_shift($patBlocks);
 		$repBlocks = explode('/', $replacement);	if ($repBlocks[0] == '') array_shift($repBlocks);
 
-		$attributes = array(); $result = null;
+		$attributes = []; $result = null;
 
 		if (count($uriBlocks) != count($patBlocks) ) {
 			return false;
@@ -100,8 +102,8 @@ class MRouter
 	 * @param array $patBlocks
 	 * @return array|bool
 	 */
-	private function parseUri($uriBlocks=array(), $patBlocks=array()) {
-		$attr = array();
+	private function parseUri($uriBlocks=[], $patBlocks=[]) {
+		$attr = [];
 
 		for ($i = 0; $i < count($uriBlocks); $i++) {
 			if ($patBlocks[$i]{0} == '<') {

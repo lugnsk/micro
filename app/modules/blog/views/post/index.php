@@ -1,4 +1,4 @@
-<?php $this->widget('Topblogs'); ?>
+<?php $this->widget('App\modules\blog\widgets\Topblogs'); ?>
 <a href="/blog/post/create">создать</a>
 
 <?php if(!$blogs): ?>

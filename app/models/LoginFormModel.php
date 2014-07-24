@@ -1,5 +1,11 @@
 <?php
 
+namespace App\models;
+
+use Micro\web\MFormModel;
+use Micro\db\MQuery;
+use App\models\User;
+
 class LoginFormModel extends MFormModel
 {
 	public $login;

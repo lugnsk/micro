@@ -1,4 +1,8 @@
-<?php /* MicroFormModel */
+<?php /** MicroFormModel */
+
+namespace Micro\web;
+
+use Micro\base\MValidator;
 
 /**
  * Class MFormModel.
@@ -14,8 +18,8 @@
  */
 abstract class MFormModel
 {
-	/** @property array $errors */
-	protected $errors=array();
+	/** @property array $errors validation errors */
+	protected $errors=[];
 
 
 	/**
@@ -25,7 +29,7 @@ abstract class MFormModel
 	 * @return array
 	 */
 	public function rules() {
-		return array();
+		return [];
 	}
 	/**
 	 * Run validation
@@ -70,7 +74,7 @@ abstract class MFormModel
 	 * @return array
 	 */
 	private function convertMultiArrayToArray($errors) {
-		static $result=array();
+		static $result=[];
 		foreach ($errors AS $error) {
 			if (is_array($error)) {
 				$this->convertMultiArrayToArray($error);
@@ -87,7 +91,7 @@ abstract class MFormModel
 	 * @return array
 	 */
 	public function attributeLabels() {
-		return array();
+		return [];
 	}
 	/**
 	 * Get element label

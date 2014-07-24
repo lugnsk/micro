@@ -1,5 +1,12 @@
 <?php /** MicroModel */
 
+namespace Micro\db;
+
+use Micro\web\MFormModel;
+use Micro\base\MRegistry;
+use Micro\base\MException;
+use Micro\db\MQuery;
+
 /**
  * Get public vars into object
  *
@@ -183,7 +190,7 @@ abstract class MModel extends MFormModel
 				$arr = getVars($this);
 				unset($arr['isNewRecord']);
 
-				$params = array();
+				$params = [];
 				foreach ($arr AS $key => $val) {
 					if ($key == 'id') {
 						continue;

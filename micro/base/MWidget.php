@@ -1,5 +1,7 @@
 <?php /** MicroWidget */
 
+namespace Micro\base;
+
 /**
  * MWidget class file.
  *
@@ -11,7 +13,7 @@
  * @version 1.0
  * @since 1.0
  */
-abstract class MWidget extends MController
+abstract class MWidget extends \Micro\base\MController
 {
 	/**
 	 * Constructor for widgets
@@ -20,7 +22,7 @@ abstract class MWidget extends MController
 	 * @param array $args
 	 * @result void
 	 */
-	public function __construct($args = array()) {
+	public function __construct($args = []) {
 		foreach ($args AS $name => $value) {
 			$this->$name = $value;
 		}

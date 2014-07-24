@@ -1,5 +1,9 @@
 <?php
 
+namespace App\controllers;
+
+use App\components\Controller;
+
 class RegisterController extends Controller
 {
 	public function actionIndex() {

@@ -1,5 +1,10 @@
 <?php /** MicroMenuWidget */
 
+namespace Micro\widgets;
+
+use Micro\base\MWidget;
+use Micro\web\helpers\MHtml;
+
 /**
  * MMenuWidget class file.
  *
@@ -15,9 +20,9 @@
 class MMenuWidget extends MWidget
 {
 	/** @property array $menu */
-	public $menu = array();
+	public $menu = [];
 	/** @property array $attributes */
-	public $attributes = array();
+	public $attributes = [];
 
 	/**
 	 * Constructor for widget
@@ -27,7 +32,7 @@ class MMenuWidget extends MWidget
 	 * @param array $attributes
 	 * @result void
 	 */
-	public function __construct($items=array(), $attributes=array()) {
+	public function __construct($items=[], $attributes=[]) {
 		parent::__construct();
 
 		$this->menu = $items;

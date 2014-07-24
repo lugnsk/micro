@@ -1,5 +1,9 @@
 <?php
 
+namespace App\modules\blog\widgets;
+
+use Micro\base\MWidget;
+
 class TopblogsWidget extends MWidget
 {
 	public function init() {}

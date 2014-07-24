@@ -1,5 +1,6 @@
 <?php /** MicroCommand */
 
+namespace Micro\base;
 /**
  * MCommand class file.
  *
@@ -15,7 +16,7 @@
 abstract class MCommand
 {
 	/** @var array $args arguments for command */
-	public $args = array();
+	public $args = [];
 	/** @var bool $result status of execute command */
 	public $result = false;
 	/** @var string $message status message of execute command */
@@ -29,7 +30,7 @@ abstract class MCommand
 	 * @param array $args
 	 * @result void
 	 */
-	public function __construct($args = array()) {
+	public function __construct($args = []) {
 		$this->args = $args;
 	}
 	/**

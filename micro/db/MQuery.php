@@ -1,5 +1,10 @@
 <?php /** MicroQuery */
 
+namespace Micro\db;
+
+use \PDO;
+use Micro\base\MRegistry;
+
 /**
  * MQuery class file.
  *
@@ -35,7 +40,7 @@ class MQuery
 	/** @var integer $offset offset on strart result rows */
 	public $ofset		= -1;
 	/** @var array $params masks for where */
-	public $params		= array();
+	public $params		= [];
 	/** @var string $table table for query */
 	public $table		= '';
 	/** @var string $objectName class name form fetching */

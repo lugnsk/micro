@@ -1,5 +1,10 @@
 <?php
 
+namespace App\components;
+
+use Micro\base\MController;
+use Micro\base\MRegistry;
+
 class Controller extends MController
 {
 	public $title = 'Micro';

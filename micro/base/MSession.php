@@ -1,5 +1,7 @@
 <?php /** MicroSession */
 
+namespace Micro\base;
+
 /**
  * MSession is a Session manager
  *
@@ -20,7 +22,7 @@ class MSession
 	 * @param array $config
 	 * @result void
 	 */
-	public function __construct($config = array()) {
+	public function __construct($config = []) {
 		if (isset($config['autoStart']) AND ($config['autoStart'] == true)) {
 			$this->create();
 		}

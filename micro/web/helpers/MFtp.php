@@ -1,5 +1,7 @@
 <?php /** MicroFTP */
 
+namespace Micro\web\helpers;
+
 /**
  * Simple FTP Class
  *
@@ -253,7 +255,7 @@ final class MFtp {
 		// fail
 		} else {
 			$this->error = "Failed to get directory list";
-			return array();
+			return [];
 		}
 	}
 

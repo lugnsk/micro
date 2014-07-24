@@ -1,5 +1,7 @@
 <?php /** MicroAutoloader */
 
+namespace Micro\base;
+
 /**
  * MAutoload class file.
  *
@@ -13,6 +15,47 @@
  */
 class MAutoload
 {
+	private static $aliases = [];
+
+	public static function setAlias($alias, $realPath) {
+		self::$aliases[$alias] = $realPath;
+	}
+
+	public static function loader($className) {
+		// Patch prev backslash
+		$className = ltrim($className, '\\');
+		// Define result path
+		$path = '';
+
+		// if use namespace
+		if ($lastNsPos = strrpos($className, '\\')) {
+			// Get alias
+			$firstNsPos = strpos($className, '\\');
+			// Add alias in path
+			if ($alias = substr($className, 0, $firstNsPos)) {
+				$path .= (isset(self::$aliases[$alias])) ? self::$aliases[$alias] : '';
+				$className = substr($className, $firstNsPos);
+				$lastNsPos -= $firstNsPos;
+			}
+
+			// Get namespace and class name
+			$namespace = substr($className, 0, $lastNsPos);
+			$className = substr($className, $lastNsPos + 1);
+			// Add in path
+			$path .= str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+		}
+
+		// result path
+		$path .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+		require $path;
+	}
+
+
+
+
+
+
+
 	/**
 	 * Autoloader classes
 	 *

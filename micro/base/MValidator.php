@@ -1,5 +1,9 @@
 <?php /** MicroValidator */
 
+namespace Micro\base;
+
+use Micro\Micro;
+
 /**
  * MValidator is a runner validation process
  *
@@ -14,13 +18,13 @@
 class MValidator
 {
 	/** @property array $rule */
-	private $rule=array();
+	private $rule=[];
 	/** @property array $errors */
-	public $errors=array();
+	public $errors=[];
 	/** @property array $elements */
-	public $elements=array();
+	public $elements=[];
 	/** @property array $params */
-	public $params=array();
+	public $params=[];
 	/** @property array $validators */
 	protected $validators=array(
 		'string'	=> 'MStringValidator',
@@ -52,7 +56,7 @@ class MValidator
 	 * @param array $rule
 	 * @result void
 	 */
-	public function __construct($rule=array()) {
+	public function __construct($rule=[]) {
 		$this->rule = $rule;
 	}
 	/**
@@ -65,7 +69,7 @@ class MValidator
 	 */
 	protected function isEmpty($value,$trim=false)
 	{
-		return $value===null || $value===array() || $value==='' || $trim && is_scalar($value) && trim($value)==='';
+		return $value===null || $value===[] || $value==='' || $trim && is_scalar($value) && trim($value)==='';
 	}
 	/**
 	 * Get errors after run validation

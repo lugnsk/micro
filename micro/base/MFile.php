@@ -1,5 +1,7 @@
 <?php /** MicroFile */
 
+namespace Micro\base;
+
 /**
  * MFile io class
  *

@@ -1,4 +1,9 @@
-<?php /* MicroFormBuilder */
+<?php /** MicroFormBuilder */
+
+namespace Micro\web;
+
+use Micro\web\helpers\MHtml;
+use Micro\widgets\MFormWidget;
 
 /**
  * Class MFormBuilder.
@@ -14,13 +19,13 @@
  */
 class MFormBuilder
 {
-	/** @property MFormWidget $widget  */
+	/** @property MFormWidget $widget widget for render  */
 	protected $widget;
-	/** @property MForm $form */
+	/** @property MForm $form generator for elements */
 	protected $form;
-	/** @property array $model */
+	/** @property array $config config array */
 	private $config;
-	/** @property MModel $model */
+	/** @property MModel $model model for get data */
 	private $model;
 
 
@@ -35,7 +40,7 @@ class MFormBuilder
 	 * @param string $action
 	 * @result void
 	 */
-	public function __construct($config = array(), $model=null, $method='GET', $type='text/plain', $action='') {
+	public function __construct($config = [], $model=null, $method='GET', $type='text/plain', $action='') {
 		$this->config = $config;
 		$this->model = $model;
 		$this->widget = new MFormWidget(array('action'=>$action,'method'=>$method,'type'=>$type));
@@ -49,7 +54,7 @@ class MFormBuilder
 	 * @param array $data
 	 * @return void
 	 */
-	public function setModelData($data=array()) {
+	public function setModelData($data=[]) {
 		foreach ($data AS $key=>$value) {
 			$this->model->$key = $value;
 		}
@@ -159,7 +164,7 @@ class MFormBuilder
 					$subForm = new MFormBuilder($value, (isset($value['model'])) ? $value['model'] : null);
 					echo $subForm;
 				} elseif ($this->model) {
-					echo $this->form->$value['type']($this->model,$key,(isset($value['options'])) ? $value['options'] : array());
+					echo $this->form->$value['type']($this->model,$key,(isset($value['options'])) ? $value['options'] : []);
 				} else {
 					echo MHtml::$value['type']($key, $value['value'], $value['options']);
 				}
@@ -169,7 +174,7 @@ class MFormBuilder
 		}
 		foreach ($this->config['buttons'] AS $button) {
 			$type = $button['type'].'Button';
-			echo MHtml::$type($button['label'], (isset($button['options'])) ? $button['options'] : array() );
+			echo MHtml::$type($button['label'], (isset($button['options'])) ? $button['options'] : [] );
 		}
 	}
 }

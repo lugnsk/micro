@@ -1,5 +1,10 @@
 <?php /** MicroLanguage */
 
+namespace Micro\base;
+
+use \Micro\base\MRegistry;
+use \Micro\base\MException;
+
 /**
  * MLanguage getter language tags from *.ini files
  *
@@ -14,7 +19,7 @@
 class MLanguage
 {
 	/** @var array $language language array */
-	private $language = array();
+	private $language = [];
 	/** @var string $defaultLang */
 	private $defaultLang = 'en';
 
@@ -28,7 +33,7 @@ class MLanguage
 	 * @throws MException
 	 */
 	public function __construct($filename) {
-		$lang = (!empty(MRegistry::get('lang'))) ? MRegistry::get('lang') : $this->defaultLang;
+		$lang = (MRegistry::get('lang')) ? MRegistry::get('lang') : $this->defaultLang;
 		if (!file_exists($filename.$lang.'.ini')) {
 			throw new MException('Language file '.$filename.$lang.'.ini not exists.');
 		}

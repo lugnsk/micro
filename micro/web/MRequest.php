@@ -1,5 +1,10 @@
 <?php /** MicroRequest */
 
+namespace Micro\web;
+
+use Micro\Micro;
+use Micro\web\MRouter;
+
 /**
  * MRequest class file.
  *
@@ -30,7 +35,7 @@ class MRequest
 	 * @access public
 	 * @param array $routes
 	 */
-	public function __construct($routes = array()) {
+	public function __construct($routes = []) {
 		$this->router = new MRouter($routes['routes']);
 		$this->initialize();
 	}
@@ -56,7 +61,7 @@ class MRequest
 		if (!empty($uriBlocks)) {
 			$uriBlocks = array_values($uriBlocks);
 
-			$gets = array();
+			$gets = [];
 			for ($i = 0; $i < count($uriBlocks); $i=$i+2) {
 				$gets[$uriBlocks[$i]] = $uriBlocks[$i+1];
 			}
@@ -76,7 +81,7 @@ class MRequest
 
 		foreach ($uriBlocks AS $i => $block) {
 			if (file_exists($path . $this->modules . '/modules/' . $block)) {
-				$this->modules .= '/modules/' . $block;
+				$this->modules .= 'modules\\' . $block;
 				unset($uriBlocks[$i]);
 			} else break;
 		}

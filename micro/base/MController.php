@@ -1,5 +1,11 @@
 <?php /** MicroController */
 
+namespace Micro\base;
+
+use Micro\Micro;
+use Micro\base\MRegistry;
+use Micro\web\helpers\MUser;
+
 /**
  * MController class file.
  *
@@ -22,7 +28,7 @@ abstract class MController
 	/** @var boolean $asWidget is a widget? */
 	public $asWidget = false;
 	/** @var array $widgetStack widgets stack */
-	private $widgetStack = array();
+	private $widgetStack = [];
 
 
 	/**
@@ -43,7 +49,7 @@ abstract class MController
 				self::$module = new $path();
 			}
 		}
-		spl_autoload_register(array('MAutoload','autoloaderController'));
+//		spl_autoload_register(array('MAutoload','autoloaderController'));
 	}
 	/**
 	 * Run action
@@ -75,7 +81,7 @@ abstract class MController
 	 * @param array $data
 	 * @return string
 	 */
-	protected function renderPartial($view, $data=array()) {
+	protected function renderPartial($view, $data=[]) {
 		$lay = $this->layout;
 		$wid = $this->asWidget;
 
@@ -98,7 +104,7 @@ abstract class MController
 	 * @param array  $data
 	 * @return string
 	 */
-	protected function render($view, $data=array()) {
+	protected function render($view, $data=[]) {
 		if (empty($view)) { return false; }
 
 		// Get inf of controller
@@ -107,7 +113,7 @@ abstract class MController
 		if (!$this->asWidget) {
 			$module = MRegistry::get('request')->getModules();
 		} else {
-			$reflector = new ReflectionClass(get_called_class());
+			$reflector = new \ReflectionClass(get_called_class());
 			$module = str_replace($appDirectory, '', dirname($reflector->getFileName()));
 			unset($reflector);
 		}
@@ -144,7 +150,7 @@ abstract class MController
 	 * @param array  $data
 	 * @return string
 	 */
-	protected function renderFile($fileName, $data=array()) {
+	protected function renderFile($fileName, $data=[]) {
 		$fileNameLang = substr($fileName, 0, -3);
 		if (file_exists($fileNameLang)) {
 			$lang = new MLanguage($fileNameLang);
@@ -153,7 +159,7 @@ abstract class MController
 
 		extract($data, EXTR_PREFIX_SAME, 'data');
 		ob_start();
-		include $fileName;
+		include str_replace('\\','/',$fileName);
 
 		if (!empty($this->widgetStack)) {
 			throw new MException( count($this->widgetStack).' widgets not endings.');
@@ -199,7 +205,7 @@ abstract class MController
 	 * @return string
 	 * @throws MException
 	 */
-	public function widget($name, $options = array(), $capture=false) {
+	public function widget($name, $options = [], $capture=false) {
 		$name = $name.'Widget';
 
 		if (!class_exists($name)) {
@@ -227,7 +233,7 @@ abstract class MController
 	 * @return mixed
 	 * @throws MException
 	 */
-	public function startWidget($name, $options = array()) {
+	public function startWidget($name, $options = []) {
 		$name = $name.'Widget';
 
 		if (!class_exists($name)) {

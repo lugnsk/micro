@@ -1,5 +1,7 @@
 <?php
 
+use Micro\web\helpers\MHtml;
+
 return array(
 	'description'=>MHtml::heading(2,'Входилка'),
 

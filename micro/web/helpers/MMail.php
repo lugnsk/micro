@@ -1,5 +1,7 @@
 <?php /** MicroMail */
 
+namespace Micro\web\helpers;
+
 /**
  * MMail class file.
  *

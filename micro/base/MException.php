@@ -1,5 +1,7 @@
 <?php /** MicroException */
 
+namespace Micro\base;
+
 /**
  * MException specific exception
  *
@@ -11,7 +13,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MException extends Exception
+class MException extends \Exception
 {
 	/**
 	 * Magic convert object to string

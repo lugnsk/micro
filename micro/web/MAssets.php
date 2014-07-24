@@ -1,5 +1,10 @@
 <?php /** MicroAssets */
 
+namespace Micro\web;
+
+use Micro\Micro;
+use Micro\base\MFile;
+
 /**
  * MAssets class file.
  *

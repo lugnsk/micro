@@ -1,5 +1,11 @@
 <?php /** MicroFormWidget */
 
+namespace Micro\widgets;
+
+use Micro\base\MWidget;
+use Micro\web\helpers\MHtml;
+use Micro\web\MForm;
+
 /**
  * MFormWidget class file.
  *

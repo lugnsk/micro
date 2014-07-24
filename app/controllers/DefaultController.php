@@ -1,6 +1,13 @@
 <?php
 
-class DefaultController extends Controller
+namespace App\controllers;
+
+use Micro\base\MRegistry;
+use Micro\web\MFormBuilder;
+use App\models\LoginFormModel;
+use Micro\Micro;
+
+class DefaultController extends \App\components\Controller
 {
 	public function actionIndex() {
 		echo $this->render('index');

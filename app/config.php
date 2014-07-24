@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 	// Directories
 	'MicroDir' => __DIR__ . '/../micro',
 	'AppDir'   => __DIR__ ,
@@ -10,12 +10,12 @@ return array(
 	'slogan'  => 'simply hmvc php framework',
 
 	// Default import dir
-	'import' => array(
+	'import' => [
 		'extensions',
 		'components',
 		'widgets',
 		'models',
-	),
+	],
 
 	// Print run time
 	'timer' => true,
@@ -23,40 +23,40 @@ return array(
 	'lang' => 'en',
 
 	// Setup components
-	'components' => array(
+	'components' => [
 		// Request manager
-		'request' => array(
-			'class' => 'MRequest',
-			'routes' => array(
+		'request' => [
+			'class' => '\Micro\web\MRequest',
+			'routes' => [
 				'/login'=>'/default/login',
 				'/logout'=>'/default/logout',
 				'/login/<num:\d+>/<type:\w+>/<arr:\d{3}>' => '/default/login',
 
 				'/blog/post/index/<page:\d+>' => '/blog/post',
 				'/blog/post/<id:\d+>' => '/blog/post/view',
-			),
-		),
+			],
+		],
 		// Default session
-		'session' => array(
-			'class' => 'MSession',
+		'session' => [
+			'class' => '\Micro\base\MSession',
 			'autoStart' => true,
-		),
+		],
 		// Flash messages
-		'flash' => array(
-			'class' => 'MFlashMessage',
+		'flash' => [
+			'class' => '\Micro\web\helpers\MFlashMessage',
 			'depends' => 'session'
-		),
+		],
 		// DataBase
-		'db' => array(
-			'class'=> 'MDbConnection',
+		'db' => [
+			'class'=> '\Micro\db\MDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=micro',
 			'username'=>'micro',
 			'password'=>'micro',
 			'charset'=>'utf8'
-		),
-		'user'=>array(
-			'class'=>'MUser',
+		],
+		'user'=>[
+			'class'=>'\Micro\web\helpers\MUser',
 			'depends'=>'session'
-		)
-	)
-);
+		]
+	]
+];

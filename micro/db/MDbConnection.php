@@ -1,5 +1,9 @@
 <?php /** MicroDataBaseConnection */
 
+namespace Micro\db;
+
+use Micro\base\MException;
+
 /**
  * MDbConnection class file.
  *
@@ -26,9 +30,9 @@ class MDbConnection
 	 * @result void
 	 * @throw MException
 	 */
-	public function __construct($config = array()) {
+	public function __construct($config = []) {
 		try {
-			$this->conn = new PDO($config['connectionString'], $config['username'], $config['password']);
+			$this->conn = new \PDO($config['connectionString'], $config['username'], $config['password']);
 		} catch (MException $e) {
 			die('Подключение к БД не удалось: ' . $e->getMessage());
 		}
@@ -51,7 +55,7 @@ class MDbConnection
 	public function listDatabases() {
 		$sth = $this->conn->query('SHOW DATABASES;');
 
-		$result = array();
+		$result = [];
 		foreach ($sth->fetchAll() AS $row) {
 			$result[] = $row[0];
 		}
@@ -66,7 +70,7 @@ class MDbConnection
 	public function infoDatabase($dbName) {
 		$sth = $this->conn->query('SHOW TABLE STATUS FROM '.$dbName.';');
 
-		$result = array();
+		$result = [];
 		foreach ($sth->fetchAll() AS $row) {
 			$result[] = array(
 				'name'      => $row['Name'],
@@ -88,7 +92,7 @@ class MDbConnection
 	public function listTables() {
 		$sth = $this->conn->query('SHOW TABLES;');
 
-		$result = array();
+		$result = [];
 		foreach ($sth->fetchAll() AS $row) {
 			$result[] = $row[0];
 		}
@@ -112,7 +116,7 @@ class MDbConnection
 	 * @param string $params
 	 * @return int
 	 */
-	public function createTable($name, $elements=array(), $params='') {
+	public function createTable($name, $elements=[], $params='') {
 		return $this->conn->exec('CREATE TABLE IF EXISTS '.$name.' ('.implode(',', $elements).') '.$params.';');
 	}
 	/**
@@ -125,7 +129,7 @@ class MDbConnection
 	public function listFields($table) {
 		$sth = $this->conn->query('SHOW COLUMNS FROM '.$table.';');
 
-		$result = array();
+		$result = [];
 		foreach ($sth->fetchAll() as $row) {
 			$result[] = array(
 				'field'   => $row['Field'],

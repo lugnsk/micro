@@ -1,3 +1,7 @@
+<?php
+	use \Micro\web\helpers\MHtml;
+	use \Micro\Micro;
+?>
 <?= MHtml::doctype('html5') ?>
 <html>
 	<head>
@@ -14,7 +18,7 @@
 				<span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
 			</div>
 			<div id="content">
-				<?php $this->widget('Menubar', array('links'=>$this->menu)); ?>
+				<?php $this->widget('App\widgets\Menubar', array('links'=>$this->menu)); ?>
 				<?= $content ?>
 			</div>
 			<div id="footer">

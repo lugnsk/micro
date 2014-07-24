@@ -1,5 +1,10 @@
 <?php /** MicroRegistry */
 
+namespace Micro\base;
+
+use Micro\Micro;
+use Micro\base\MException;
+
 /**
  * MRegistry class file.
  *
@@ -34,7 +39,7 @@ final class MRegistry
 	 * @param string $name
 	 * @return mixed
 	 */
-	public static function get($name) {
+	public static function get($name='') {
 		self::configure($name);
 		return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
 	}

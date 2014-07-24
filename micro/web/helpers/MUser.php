@@ -1,5 +1,7 @@
 <?php /** MicroUser */
 
+namespace Micro\web\helpers;
+
 /**
  * Micro user class file
  *

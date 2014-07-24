@@ -1,5 +1,9 @@
 <?php /** MicroMigration */
 
+namespace Micro\db;
+
+use Micro\base\MRegistry;
+
 /**
  * MMigration class file.
  *

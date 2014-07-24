@@ -1,5 +1,9 @@
 <?php /** MicroForm */
 
+namespace Micro\web;
+
+use Micro\web\helpers\MHtml;
+
 /**
  * MForm class file.
  *
@@ -38,7 +42,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function label($model,$property, $options = array()) {
+	public function label($model,$property, $options = []) {
 		return MHtml::label($model->getLabel($property), get_class($model).'_'.$property, $options);
 	}
 	/**
@@ -50,7 +54,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function textField($model, $property, $options = array()) {
+	public function textField($model, $property, $options = []) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::textField($element['name'], $element['value'], $options);
@@ -65,7 +69,7 @@ class MForm
 	 * @param array $labelOptions
 	 * @return string
 	 */
-	public function textFieldRow($model, $property, $options=array(), $labelOptions=array()) {
+	public function textFieldRow($model, $property, $options=[], $labelOptions=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::openTag('div',array('class'=>'row')).
@@ -82,7 +86,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function buttonField($model, $property, $options=array()) {
+	public function buttonField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::buttonField($element['name'], $element['value'], $options);
@@ -96,7 +100,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function checkBoxField($model, $property, $options=array()) {
+	public function checkBoxField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::checkBoxField($element['name'], $element['value'], $options);
@@ -110,7 +114,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function fileField($model, $property, $options=array()) {
+	public function fileField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::fileField($element['name'], $element['value'], $options);
@@ -124,7 +128,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function hiddenField($model, $property, $options=array()) {
+	public function hiddenField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		return MHtml::hiddenField($element['name'], $element['value'], $options);
 	}
@@ -138,7 +142,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function imageField($model, $property, $imageSource, $options=array()) {
+	public function imageField($model, $property, $imageSource, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::imageField($element['name'], $element['value'], $imageSource, $options);
@@ -152,7 +156,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function passwordField($model, $property, $options=array()) {
+	public function passwordField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::passwordField($element['name'], $element['value'], $options);
@@ -167,7 +171,7 @@ class MForm
 	 * @param array $labelOptions
 	 * @return string
 	 */
-	public function passwordFieldRow($model, $property, $options=array(), $labelOptions=array()) {
+	public function passwordFieldRow($model, $property, $options=[], $labelOptions=[]) {
 		$element = $this->getField($model,$property);
 		return MHtml::openTag('div',array('class'=>'row')).
 		MHtml::label($model->getLabel($property), $element['name'],$labelOptions).
@@ -183,7 +187,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function radioField($model, $property, $options=array()) {
+	public function radioField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::radioField($element['name'], $element['value'], $options);
@@ -197,7 +201,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function emailField($model, $property, $options=array()) {
+	public function emailField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::emailField($element['name'], $element['value'], $options);
@@ -211,7 +215,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function rangeField($model, $property, $options=array()) {
+	public function rangeField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::rangeField($element['name'], $element['value'], $options);
@@ -225,7 +229,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function searchField($model, $property, $options=array()) {
+	public function searchField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::searchField($element['name'], $element['value'], $options);
@@ -239,7 +243,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function telField($model, $property, $options=array()) {
+	public function telField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::telField($element['name'], $element['value'], $options);
@@ -253,7 +257,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function urlField($model, $property, $options=array()) {
+	public function urlField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::urlField($element['name'], $element['value'], $options);
@@ -267,7 +271,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function textArea($model, $property, $options=array()) {
+	public function textArea($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		return MHtml::textArea($element['name'],$element['value'], $options);
@@ -282,7 +286,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function dropDownList($model, $property, $elements=array(), $options=array()) {
+	public function dropDownList($model, $property, $elements=[], $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		$options['selected'] = $element['value'];
@@ -298,7 +302,7 @@ class MForm
 	 * @param array $options
 	 * @return string
 	 */
-	public function listBox($model, $property, $elements=array(), $options=array()) {
+	public function listBox($model, $property, $elements=[], $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		$options['selected'] = $element['value'];
@@ -314,7 +318,7 @@ class MForm
 	 * @param string $format
 	 * @return string
 	 */
-	public function checkBoxList($model, $property, $checkboxes=array(), $format = '<p>%check% %text%</p>') {
+	public function checkBoxList($model, $property, $checkboxes=[], $format = '<p>%check% %text%</p>') {
 		$element = $this->getField($model, $property);
 		return MHtml::checkBoxList($element['name'], $checkboxes, $format, $element['value']);
 	}
@@ -328,7 +332,7 @@ class MForm
 	 * @param string $format
 	 * @return string
 	 */
-	public function radioButtonList($model, $property, $radios=array(), $format ='<p>%radio% %text%</p>') {
+	public function radioButtonList($model, $property, $radios=[], $format ='<p>%radio% %text%</p>') {
 		$element = $this->getField($model, $property);
 		return MHtml::radioButtonList($element['name'],$radios, $format, $element['value']);
 	}

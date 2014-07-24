@@ -1,5 +1,12 @@
 <?php
 
+namespace App\modules\blog\controllers;
+
+use App\components\Controller;
+use Micro\db\MQuery;
+use App\modules\blog\models\Blog;
+
+
 class PostController extends Controller
 {
 	public function actionIndex() {

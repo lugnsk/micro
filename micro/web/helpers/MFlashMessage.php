@@ -1,5 +1,10 @@
 <?php /** MicroFlashMessage */
 
+namespace Micro\web\helpers;
+
+use Micro\base\MRegistry;
+use Micro\base\MException;
+
 /**
  * MFlashMessage is a flash messenger.
  *
@@ -31,7 +36,7 @@ class MFlashMessage
 	 */
 	public function __construct() {
 		try {
-			MRegistry::get('session')->flash = array();
+			MRegistry::get('session')->flash = [];
 		} catch (MException $e) {
 			die('Механизм сессий не активирован: ' . $e->getMessage());
 		}
@@ -99,7 +104,7 @@ class MFlashMessage
 	 */
 	public function getAll() {
 		$result = MRegistry::get('session')->flash;
-		MRegistry::get('session')->flash = array();
+		MRegistry::get('session')->flash = [];
 		return $result;
 	}
 }
