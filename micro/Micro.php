@@ -89,7 +89,7 @@ final class Micro {
 	public function run() {
 		$path   = $this->prepareController();
 		$action = Registry::get('request')->getAction();
-//die($path);
+
 		//require_once $path.'.php';
 		$name = basename($path);
 
