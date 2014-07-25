@@ -13,7 +13,7 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-abstract class MWidget extends \Micro\base\MController
+abstract class MWidget extends Controller
 {
 	/**
 	 * Constructor for widgets

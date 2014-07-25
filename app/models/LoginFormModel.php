@@ -4,7 +4,6 @@ namespace App\models;
 
 use Micro\web\MFormModel;
 use Micro\db\Query;
-use App\models\User;
 
 class LoginFormModel extends MFormModel
 {

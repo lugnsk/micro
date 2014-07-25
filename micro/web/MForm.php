@@ -22,7 +22,7 @@ class MForm
 	 * Get model field data
 	 *
 	 * @access private
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @return array
 	 */
@@ -37,7 +37,7 @@ class MForm
 	 * Render label tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -49,7 +49,7 @@ class MForm
 	 * Render text field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -63,7 +63,7 @@ class MForm
 	 * Render text field row
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @param array $labelOptions
@@ -95,7 +95,7 @@ class MForm
 	 * Render check box field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -109,7 +109,7 @@ class MForm
 	 * Render file field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -123,7 +123,7 @@ class MForm
 	 * Render hidden field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -151,7 +151,7 @@ class MForm
 	 * Render password field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -165,7 +165,7 @@ class MForm
 	 * Render password field row
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @param array $labelOptions
@@ -182,7 +182,7 @@ class MForm
 	 * Render radio field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -196,7 +196,7 @@ class MForm
 	 * Render email field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -210,7 +210,7 @@ class MForm
 	 * Render range field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -224,7 +224,7 @@ class MForm
 	 * Render search field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -238,7 +238,7 @@ class MForm
 	 * Render telephone tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -252,7 +252,7 @@ class MForm
 	 * Render url field tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -266,7 +266,7 @@ class MForm
 	 * Render textarea tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $options
 	 * @return string
@@ -280,7 +280,7 @@ class MForm
 	 * Render drop down list tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $elements
 	 * @param array $options
@@ -296,7 +296,7 @@ class MForm
 	 * Render list box tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $elements
 	 * @param array $options
@@ -312,7 +312,7 @@ class MForm
 	 * Render check box list tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $checkboxes
 	 * @param string $format
@@ -326,7 +326,7 @@ class MForm
 	 * Render radio button list tag
 	 *
 	 * @access public
-	 * @param Model $model
+	 * @param \Micro\db\Model $model
 	 * @param string $property
 	 * @param array $radios
 	 * @param string $format

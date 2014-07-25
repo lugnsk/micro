@@ -18,7 +18,7 @@ use Micro\base\MException;
  */
 class MDbConnection
 {
-	/** @property PDO|null $conn Connection to DB */
+	/** @property \PDO|null $conn Connection to DB */
 	public $conn;
 
 

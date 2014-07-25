@@ -2,7 +2,7 @@
 
 namespace Micro\base;
 /**
- * MCommand class file.
+ * Command class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -13,7 +13,7 @@ namespace Micro\base;
  * @since 1.0
  * @abstract
  */
-abstract class MCommand
+abstract class Command
 {
 	/** @var array $args arguments for command */
 	public $args = [];

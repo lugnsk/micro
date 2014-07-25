@@ -4,7 +4,7 @@ namespace Micro;
 
 use Micro\base\MException;
 use Micro\web\helpers\MHtml;
-use Micro\base\MAutoload;
+use Micro\base\Autoload;
 use Micro\base\Registry;
 
 /**
@@ -67,16 +67,16 @@ final class Micro {
 		$this->config = $config;
 
 		// Register aliases
-		MAutoload::setAlias('Micro',  $config['MicroDir']);
-		MAutoload::setAlias('App',    $config['AppDir']);
+		Autoload::setAlias('Micro',  $config['MicroDir']);
+		Autoload::setAlias('App',    $config['AppDir']);
 
 		// Patch for composer
 		if (isset($config['VendorDir'])) {
-			MAutoload::setAlias('Vendor', $config['VendorDir']);
+			Autoload::setAlias('Vendor', $config['VendorDir']);
 		}
 
 		// Register loader
-		spl_autoload_register(['\Micro\base\MAutoload','loader']);
+		spl_autoload_register(['\Micro\base\Autoload','loader']);
 	}
 	/**
 	 * Running application

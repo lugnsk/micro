@@ -2,10 +2,10 @@
 
 namespace App\components;
 
-use Micro\base\MController;
+use Micro\base\Controller AS BaseController;
 use Micro\base\Registry;
 
-class Controller extends MController
+class Controller extends BaseController
 {
 	public $title = 'Micro';
 	public $layout = 'maket';

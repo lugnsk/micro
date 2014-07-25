@@ -1,6 +1,7 @@
 <?php
 	use \Micro\web\helpers\MHtml;
 	use \Micro\Micro;
+	/** @var string $content */
 ?>
 <?= MHtml::doctype('html5') ?>
 <html>

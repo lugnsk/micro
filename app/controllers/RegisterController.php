@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\components\Controller;
+use App\models\User;
 
 class RegisterController extends Controller
 {

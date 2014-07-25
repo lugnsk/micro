@@ -7,7 +7,7 @@ use Micro\base\Registry;
 use Micro\web\helpers\MUser;
 
 /**
- * MController class file.
+ * Controller class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,7 +17,7 @@ use Micro\web\helpers\MUser;
  * @version 1.0
  * @since 1.0
  */
-abstract class MController
+abstract class Controller
 {
 	/** @var mixed $module module name */
 	public static $module;
@@ -44,12 +44,10 @@ abstract class MController
 			$path = Micro::getInstance()->config['AppDir'] . $module .'/'. ucfirst(basename($module)) .'Module.php';
 
 			if (file_exists($path)) {
-				include $path;
 				$path = substr(basename($path), 0, -4);
 				self::$module = new $path();
 			}
 		}
-//		spl_autoload_register(array('MAutoload','autoloaderController'));
 	}
 	/**
 	 * Run action

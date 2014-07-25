@@ -1,3 +1,4 @@
+<?php use Micro\web\helpers\MHtml; ?>
 <?= MHtml::beginForm(''); ?>
 
 <div class="row">

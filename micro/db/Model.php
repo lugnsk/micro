@@ -5,7 +5,6 @@ namespace Micro\db;
 use Micro\web\MFormModel;
 use Micro\base\Registry;
 use Micro\base\MException;
-use Micro\db\Query;
 
 /**
  * Get public vars into object
@@ -32,7 +31,7 @@ function getVars($object) {
  */
 abstract class Model extends MFormModel
 {
-	/** @var PDO $db pdo connection */
+	/** @var \PDO $db pdo connection */
 	private $db = false;
 	/** @var boolean $_isNewRecord is new record? */
 	private $_isNewRecord = false;
