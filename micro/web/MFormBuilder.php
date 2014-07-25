@@ -25,7 +25,7 @@ class MFormBuilder
 	protected $form;
 	/** @property array $config config array */
 	private $config;
-	/** @property MModel $model model for get data */
+	/** @property Model $model model for get data */
 	private $model;
 
 
@@ -34,7 +34,7 @@ class MFormBuilder
 	 *
 	 * @access public
 	 * @param array $config
-	 * @param MModel $model
+	 * @param Model $model
 	 * @param string $method
 	 * @param string $type
 	 * @param string $action
@@ -81,7 +81,7 @@ class MFormBuilder
 	 * Getting model
 	 *
 	 * @access public
-	 * @return MModel
+	 * @return Model
 	 */
 	public function getModel() {
 		return $this->model;

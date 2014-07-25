@@ -5,7 +5,7 @@ namespace Micro;
 use Micro\base\MException;
 use Micro\web\helpers\MHtml;
 use Micro\base\MAutoload;
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 
 /**
  * Micro class file.
@@ -82,13 +82,13 @@ final class Micro {
 	 * Running application
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @throws MException controller not set
 	 * @return void
 	 */
 	public function run() {
 		$path   = $this->prepareController();
-		$action = MRegistry::get('request')->getAction();
+		$action = Registry::get('request')->getAction();
 //die($path);
 		//require_once $path.'.php';
 		$name = basename($path);
@@ -108,12 +108,12 @@ final class Micro {
 	 * Prepare controller to use
 	 *
 	 * @access private
-	 * @global MRegistry
+	 * @global Registry
 	 * @return string
 	 * @throws MException
 	 */
 	private function prepareController() {
-		$request = MRegistry::get('request');
+		$request = Registry::get('request');
 		if (!$request) {
 			throw new MException('Component request not loaded.');
 		}

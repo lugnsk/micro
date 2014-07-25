@@ -3,7 +3,7 @@
 namespace App\components;
 
 use Micro\base\MController;
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 
 class Controller extends MController
 {
@@ -15,7 +15,7 @@ class Controller extends MController
 	public function __construct() {
 		parent::__construct();
 
-		if (!MRegistry::get('user')->isGuest()) {
+		if (!Registry::get('user')->isGuest()) {
 			$this->menu[] = '<a href="/profile">Профиль</a>';
 			$this->menu[] = ' (<a href="/logout">Выйти</a>)';
 		} else {

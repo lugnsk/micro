@@ -3,10 +3,10 @@
 namespace Micro\db;
 
 use \PDO;
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 
 /**
- * MQuery class file.
+ * Query class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,7 +17,7 @@ use Micro\base\MRegistry;
  * @version 1.0
  * @since 1.0
  */
-class MQuery
+class Query
 {
 	/** @var MDbConnection $_conn Current connect to DB */
 	private $_conn;
@@ -61,11 +61,11 @@ class MQuery
 	 * Get connection to db
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @return void
 	 */
 	public function getDbConnection() {
-		$this->_conn = MRegistry::get('db')->conn;
+		$this->_conn = Registry::get('db')->conn;
 	}
 	/**
 	 * Add where

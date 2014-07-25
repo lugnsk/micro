@@ -2,7 +2,7 @@
 
 namespace Micro\db;
 
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 
 /**
  * MMigration class file.
@@ -34,11 +34,11 @@ class MMigration {
 	 * Get connection to db
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @return void
 	 */
 	public function getDbConnection() {
-		$this->db = MRegistry::get('db')->conn;
+		$this->db = Registry::get('db')->conn;
 	}
 	/**
 	 * Upgrade DB

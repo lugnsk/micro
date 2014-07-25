@@ -2,9 +2,9 @@
 
 namespace App\modules\blog\models;
 
-use Micro\db\MModel;
+use Micro\db\Model;
 
-class Blog extends MModel
+class Blog extends Model
 {
 	public $name;
 	public $content;

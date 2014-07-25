@@ -2,7 +2,7 @@
 
 namespace Micro\base;
 
-use \Micro\base\MRegistry;
+use \Micro\base\Registry;
 use \Micro\base\MException;
 
 /**
@@ -33,7 +33,7 @@ class MLanguage
 	 * @throws MException
 	 */
 	public function __construct($filename) {
-		$lang = (MRegistry::get('lang')) ? MRegistry::get('lang') : $this->defaultLang;
+		$lang = (Registry::get('lang')) ? Registry::get('lang') : $this->defaultLang;
 		if (!file_exists($filename.$lang.'.ini')) {
 			throw new MException('Language file '.$filename.$lang.'.ini not exists.');
 		}

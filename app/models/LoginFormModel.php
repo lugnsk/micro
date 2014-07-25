@@ -3,7 +3,7 @@
 namespace App\models;
 
 use Micro\web\MFormModel;
-use Micro\db\MQuery;
+use Micro\db\Query;
 use App\models\User;
 
 class LoginFormModel extends MFormModel
@@ -24,7 +24,7 @@ class LoginFormModel extends MFormModel
 		);
 	}
 	public function logined() {
-		$query = new MQuery;
+		$query = new Query;
 		$query->addWhere('login = :login');
 		$query->addWhere('pass = :pass');
 

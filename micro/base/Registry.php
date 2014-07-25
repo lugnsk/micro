@@ -6,7 +6,7 @@ use Micro\Micro;
 use Micro\base\MException;
 
 /**
- * MRegistry class file.
+ * Registry class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -16,7 +16,7 @@ use Micro\base\MException;
  * @version 1.0
  * @since 1.0
  */
-final class MRegistry
+final class Registry
 {
 	/**
 	 * Disable construct

@@ -3,9 +3,9 @@
 namespace Micro\db;
 
 use Micro\web\MFormModel;
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 use Micro\base\MException;
-use Micro\db\MQuery;
+use Micro\db\Query;
 
 /**
  * Get public vars into object
@@ -19,7 +19,7 @@ function getVars($object) {
 }
 
 /**
- * MModel class file.
+ * Model class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -30,7 +30,7 @@ function getVars($object) {
  * @version 1.0
  * @since 1.0
  */
-abstract class MModel extends MFormModel
+abstract class Model extends MFormModel
 {
 	/** @var PDO $db pdo connection */
 	private $db = false;
@@ -53,11 +53,11 @@ abstract class MModel extends MFormModel
 	 * Get connection to db
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @return void
 	 */
 	public function getDbConnection() {
-		$this->db = MRegistry::get('db')->conn;
+		$this->db = Registry::get('db')->conn;
 	}
 	/**
 	 * Is new record?
@@ -72,12 +72,12 @@ abstract class MModel extends MFormModel
 	 * Finder data in DB
 	 *
 	 * @access public
-	 * @param MQuery $query
+	 * @param Query $query
 	 * @param boolean $single
 	 * @return mixed One or more data
 	 */
 	public static function finder($query = null, $single = false) {
-		$query = ($query instanceof MQuery) ? $query : new MQuery;
+		$query = ($query instanceof Query) ? $query : new Query;
 		$query->table = static::tableName() . ' `m`';
 		$query->objectName = get_called_class();
 		$query->single = $single;
@@ -122,12 +122,12 @@ abstract class MModel extends MFormModel
 	 * After create actions
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @return void
 	 */
 	public function afterCreate() {
 		// Get ID from created value
-		if (array_search('id', MRegistry::get('db')->listFields($this->tableName()))) {
+		if (array_search('id', Registry::get('db')->listFields($this->tableName()))) {
 			$this->id = $this->db->lastInsertId();
 		}
 	}

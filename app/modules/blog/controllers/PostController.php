@@ -3,14 +3,14 @@
 namespace App\modules\blog\controllers;
 
 use App\components\Controller;
-use Micro\db\MQuery;
+use Micro\db\Query;
 use App\modules\blog\models\Blog;
 
 
 class PostController extends Controller
 {
 	public function actionIndex() {
-		$crt = new MQuery;
+		$crt = new Query;
 		$crt->limit = 10;
 		$crt->order = 'id DESC';
 
@@ -20,7 +20,7 @@ class PostController extends Controller
 		$crt->ofset = $_GET['page'] * $crt->limit;
 
 
-		$crt2 = new MQuery;
+		$crt2 = new Query;
 		$crt2->select = 'COUNT(id)';
 		$crt2->table = Blog::tableName();
 		$crt2->single = true;
@@ -33,7 +33,7 @@ class PostController extends Controller
 	}
 
 	public function actionView() {
-		$crt = new MQuery;
+		$crt = new Query;
 		$crt->addWhere('id = :id');
 		$crt->params = array(
 			':id' => $_GET['id']
@@ -59,7 +59,7 @@ class PostController extends Controller
 	}
 
 	public function actionUpdate() {
-		$crt = new MQuery;
+		$crt = new Query;
 		$crt->addWhere('id = :id');
 		$crt->params = array(
 			':id' => $_GET['id']
@@ -71,7 +71,7 @@ class PostController extends Controller
 	}
 
 	public function actionDelete() {
-		$crt = new MQuery;
+		$crt = new Query;
 		$crt->addWhere('id = :id');
 		$crt->params = array(
 			':id' => $_GET['id']

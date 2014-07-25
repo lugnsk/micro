@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 use Micro\Micro;
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 use Micro\web\helpers\MUser;
 
 /**
@@ -36,11 +36,11 @@ abstract class MController
 	 *
 	 * @access public
 	 * @global Micro
-	 * @global MRegistry
+	 * @global Registry
 	 * @result void
 	 */
 	public function __construct(){
-		if ($module = MRegistry::get('request')->getModules()) {
+		if ($module = Registry::get('request')->getModules()) {
 			$path = Micro::getInstance()->config['AppDir'] . $module .'/'. ucfirst(basename($module)) .'Module.php';
 
 			if (file_exists($path)) {
@@ -99,7 +99,7 @@ abstract class MController
 	 *
 	 * @access protected
 	 * @global Micro
-	 * @global MRegistry
+	 * @global Registry
 	 * @param string $view
 	 * @param array  $data
 	 * @return string
@@ -111,7 +111,7 @@ abstract class MController
 		$appDirectory = Micro::getInstance()->config['AppDir'];
 
 		if (!$this->asWidget) {
-			$module = MRegistry::get('request')->getModules();
+			$module = Registry::get('request')->getModules();
 		} else {
 			$reflector = new \ReflectionClass(get_called_class());
 			$module = str_replace($appDirectory, '', dirname($reflector->getFileName()));
@@ -124,7 +124,7 @@ abstract class MController
 		if ($this->asWidget) {
 			$path .=  '/views/' . $view . '.php';
 		} else {
-			$className = str_replace('controller', '', strtolower(MRegistry::get('request')->getController()));
+			$className = str_replace('controller', '', strtolower(Registry::get('request')->getController()));
 			$path .= 'views/' . $className . '/' . $view . '.php';
 		}
 

@@ -2,9 +2,9 @@
 
 namespace App\models;
 
-use Micro\db\MModel;
+use Micro\db\Model;
 
-class User extends MModel
+class User extends Model
 {
 	static public function tableName() {
 		return 'users';

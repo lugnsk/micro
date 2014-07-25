@@ -3,15 +3,18 @@
 namespace App\controllers;
 
 use App\components\Controller;
+use Micro\base\Registry;
+use App\models\User;
+use Micro\db\Query;
 
 class ProfileController extends Controller
 {
 	public function actionIndex() {
-		if (MRegistry::get('user')->isGuest()) {
+		if (Registry::get('user')->isGuest()) {
 			$this->redirect('/');
 		}
 
-		$query = new MQuery;
+		$query = new Query;
 		$query->addWhere('id = :id');
 		$query->params = array(':id'=>$_SESSION['UserID']);
 

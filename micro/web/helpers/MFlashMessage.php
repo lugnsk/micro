@@ -2,7 +2,7 @@
 
 namespace Micro\web\helpers;
 
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 use Micro\base\MException;
 
 /**
@@ -30,13 +30,13 @@ class MFlashMessage
 	 * Constructor messenger
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @result void
 	 * @catch MException
 	 */
 	public function __construct() {
 		try {
-			MRegistry::get('session')->flash = [];
+			Registry::get('session')->flash = [];
 		} catch (MException $e) {
 			die('Механизм сессий не активирован: ' . $e->getMessage());
 		}
@@ -46,14 +46,14 @@ class MFlashMessage
 	 * Push a new flash
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @param int $type
 	 * @param string $title
 	 * @param string $description
 	 * @return void
 	 */
 	public function push($type = MFlashMessage::TYPE_SUCCESS, $title = '', $description = '') {
-		MRegistry::get('session')->flash[] = array(
+		Registry::get('session')->flash[] = array(
 			'type'=> $type,
 			'title'=> $title,
 			'description'=> $description
@@ -63,12 +63,12 @@ class MFlashMessage
 	 * Has flashes by type
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @param int $type
 	 * @return bool
 	 */
 	public function has($type = MFlashMessage::TYPE_SUCCESS) {
-		foreach (MRegistry::get('session')->flash AS $element) {
+		foreach (Registry::get('session')->flash AS $element) {
 			if (isset($element['type']) && $element['type'] == $type) {
 				return true;
 			}
@@ -80,15 +80,15 @@ class MFlashMessage
 	 * Get flash by type
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @param int $type
 	 * @return array|bool
 	 */
 	public function get($type = MFlashMessage::TYPE_SUCCESS) {
-		foreach (MRegistry::get('session')->flash AS $key=>$element) {
+		foreach (Registry::get('session')->flash AS $key=>$element) {
 			if (isset($element['type']) && $element['type'] == $type) {
 				$result = $element;
-				unset(MRegistry::get('session')->flash[$key]);
+				unset(Registry::get('session')->flash[$key]);
 				return $result;
 			}
 		}
@@ -99,12 +99,12 @@ class MFlashMessage
 	 * Get all flashes
 	 *
 	 * @access public
-	 * @global MRegistry
+	 * @global Registry
 	 * @return mixed
 	 */
 	public function getAll() {
-		$result = MRegistry::get('session')->flash;
-		MRegistry::get('session')->flash = [];
+		$result = Registry::get('session')->flash;
+		Registry::get('session')->flash = [];
 		return $result;
 	}
 }

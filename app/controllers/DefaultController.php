@@ -2,7 +2,7 @@
 
 namespace App\controllers;
 
-use Micro\base\MRegistry;
+use Micro\base\Registry;
 use Micro\web\MFormBuilder;
 use App\models\LoginFormModel;
 use Micro\Micro;
@@ -14,7 +14,7 @@ class DefaultController extends \App\components\Controller
 	}
 
 	public function actionLogin() {
-		if (!MRegistry::get('user')->isGuest()) {
+		if (!Registry::get('user')->isGuest()) {
 			$this->redirect('/');
 		}
 
@@ -34,7 +34,7 @@ class DefaultController extends \App\components\Controller
 	}
 
 	public function actionLogout() {
-		MRegistry::get('session')->destroy();
+		Registry::get('session')->destroy();
 		$this->redirect('/');
 	}
 }
