@@ -124,10 +124,7 @@ final class Micro {
 		}
 		if ($controller = $request->getController()) {
 			$path .= 'controllers\\' . $controller;
-		}/*
-		if (!file_exists($path . '.php')) {
-			throw new MException('File not found in path: ' . $path . '.php');
-		}*/
+		}
 		return $path;
 	}
 }
