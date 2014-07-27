@@ -3,7 +3,7 @@
 namespace Micro\web\helpers;
 
 /**
- * MHtml class file.
+ * Html class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -14,7 +14,7 @@ namespace Micro\web\helpers;
  * @version 1.0
  * @since 1.0
  */
-class MHtml
+class Html
 {
 	// BASIC Elements
 	/**
@@ -294,14 +294,14 @@ class MHtml
 	public static function lists($items = [], $attributes = []) {
 		$result = null;
 		foreach ($items AS $item) {
-			$result .= MHtml::openTag('li', (isset($item['attr'])) ? $item['attr'] : [] );
+			$result .= Html::openTag('li', (isset($item['attr'])) ? $item['attr'] : [] );
 			if (isset($item['parents'])) {
 				$result .= ($item['text']) ? $item['text'] : null;
 				$result .=  self::lists($item['parents'], (isset($item['parentsAttr'])) ? $item['parentsAttr'] : [] );
 			} else {
 				$result .= $item['text'];
 			}
-			$result .= MHtml::closeTag('li');
+			$result .= Html::closeTag('li');
 		}
 		return self::openTag('ul', $attributes) . $result . self::closeTag('ul');
 	}

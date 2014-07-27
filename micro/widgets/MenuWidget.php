@@ -2,11 +2,11 @@
 
 namespace Micro\widgets;
 
-use Micro\base\MWidget;
-use Micro\web\helpers\MHtml;
+use Micro\base\Widget;
+use Micro\web\helpers\Html;
 
 /**
- * MMenuWidget class file.
+ * MenuWidget class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,7 +17,7 @@ use Micro\web\helpers\MHtml;
  * @version 1.0
  * @since 1.0
  */
-class MMenuWidget extends MWidget
+class MenuWidget extends Widget
 {
 	/** @property array $menu */
 	public $menu = [];
@@ -46,7 +46,7 @@ class MMenuWidget extends MWidget
 	 * @return void
 	 */
 	public function run() {
-		echo MHtml::lists($this->menu, $this->attributes);
+		echo Html::lists($this->menu, $this->attributes);
 	}
 	/**
 	 * Initialize widget

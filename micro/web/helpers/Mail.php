@@ -3,7 +3,7 @@
 namespace Micro\web\helpers;
 
 /**
- * MMail class file.
+ * Mail class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -14,7 +14,7 @@ namespace Micro\web\helpers;
  * @version 1.0
  * @since 1.0
  */
-final class MMail
+final class Mail
 {
 	/** @property string $form sender mail */
 	private $from;

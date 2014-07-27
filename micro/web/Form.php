@@ -2,10 +2,10 @@
 
 namespace Micro\web;
 
-use Micro\web\helpers\MHtml;
+use Micro\web\helpers\Html;
 
 /**
- * MForm class file.
+ * Form class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -16,7 +16,7 @@ use Micro\web\helpers\MHtml;
  * @version 1.0
  * @since 1.0
  */
-class MForm
+class Form
 {
 	/**
 	 * Get model field data
@@ -43,7 +43,7 @@ class MForm
 	 * @return string
 	 */
 	public function label($model,$property, $options = []) {
-		return MHtml::label($model->getLabel($property), get_class($model).'_'.$property, $options);
+		return Html::label($model->getLabel($property), get_class($model).'_'.$property, $options);
 	}
 	/**
 	 * Render text field tag
@@ -57,7 +57,7 @@ class MForm
 	public function textField($model, $property, $options = []) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::textField($element['name'], $element['value'], $options);
+		return Html::textField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render text field row
@@ -72,10 +72,10 @@ class MForm
 	public function textFieldRow($model, $property, $options=[], $labelOptions=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::openTag('div',array('class'=>'row')).
-			MHtml::label($model->getLabel($property), $element['name'],$labelOptions).
+		return Html::openTag('div',array('class'=>'row')).
+			Html::label($model->getLabel($property), $element['name'],$labelOptions).
 			$this->textField($model,$property,$options).
-			MHtml::closeTag('div');
+			Html::closeTag('div');
 	}
 	/**
 	 * Render button field tag
@@ -89,7 +89,7 @@ class MForm
 	public function buttonField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::buttonField($element['name'], $element['value'], $options);
+		return Html::buttonField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render check box field tag
@@ -103,7 +103,7 @@ class MForm
 	public function checkBoxField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::checkBoxField($element['name'], $element['value'], $options);
+		return Html::checkBoxField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render file field tag
@@ -117,7 +117,7 @@ class MForm
 	public function fileField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::fileField($element['name'], $element['value'], $options);
+		return Html::fileField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render hidden field tag
@@ -130,7 +130,7 @@ class MForm
 	 */
 	public function hiddenField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
-		return MHtml::hiddenField($element['name'], $element['value'], $options);
+		return Html::hiddenField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render image field tag
@@ -145,7 +145,7 @@ class MForm
 	public function imageField($model, $property, $imageSource, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::imageField($element['name'], $element['value'], $imageSource, $options);
+		return Html::imageField($element['name'], $element['value'], $imageSource, $options);
 	}
 	/**
 	 * Render password field tag
@@ -159,7 +159,7 @@ class MForm
 	public function passwordField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::passwordField($element['name'], $element['value'], $options);
+		return Html::passwordField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render password field row
@@ -173,10 +173,10 @@ class MForm
 	 */
 	public function passwordFieldRow($model, $property, $options=[], $labelOptions=[]) {
 		$element = $this->getField($model,$property);
-		return MHtml::openTag('div',array('class'=>'row')).
-		MHtml::label($model->getLabel($property), $element['name'],$labelOptions).
+		return Html::openTag('div',array('class'=>'row')).
+		Html::label($model->getLabel($property), $element['name'],$labelOptions).
 		$this->passwordField($model,$property,$options).
-		MHtml::closeTag('div');
+		Html::closeTag('div');
 	}
 	/**
 	 * Render radio field tag
@@ -190,7 +190,7 @@ class MForm
 	public function radioField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::radioField($element['name'], $element['value'], $options);
+		return Html::radioField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render email field tag
@@ -204,7 +204,7 @@ class MForm
 	public function emailField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::emailField($element['name'], $element['value'], $options);
+		return Html::emailField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render range field tag
@@ -218,7 +218,7 @@ class MForm
 	public function rangeField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::rangeField($element['name'], $element['value'], $options);
+		return Html::rangeField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render search field tag
@@ -232,7 +232,7 @@ class MForm
 	public function searchField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::searchField($element['name'], $element['value'], $options);
+		return Html::searchField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render telephone tag
@@ -246,7 +246,7 @@ class MForm
 	public function telField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::telField($element['name'], $element['value'], $options);
+		return Html::telField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render url field tag
@@ -260,7 +260,7 @@ class MForm
 	public function urlField($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::urlField($element['name'], $element['value'], $options);
+		return Html::urlField($element['name'], $element['value'], $options);
 	}
 	/**
 	 * Render textarea tag
@@ -274,7 +274,7 @@ class MForm
 	public function textArea($model, $property, $options=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return MHtml::textArea($element['name'],$element['value'], $options);
+		return Html::textArea($element['name'],$element['value'], $options);
 	}
 	/**
 	 * Render drop down list tag
@@ -290,7 +290,7 @@ class MForm
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		$options['selected'] = $element['value'];
-		return MHtml::dropDownList($element['name'], $elements, $options);
+		return Html::dropDownList($element['name'], $elements, $options);
 	}
 	/**
 	 * Render list box tag
@@ -306,7 +306,7 @@ class MForm
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
 		$options['selected'] = $element['value'];
-		return MHtml::listBox($element['name'], $elements, $options);
+		return Html::listBox($element['name'], $elements, $options);
 	}
 	/**
 	 * Render check box list tag
@@ -320,7 +320,7 @@ class MForm
 	 */
 	public function checkBoxList($model, $property, $checkboxes=[], $format = '<p>%check% %text%</p>') {
 		$element = $this->getField($model, $property);
-		return MHtml::checkBoxList($element['name'], $checkboxes, $format, $element['value']);
+		return Html::checkBoxList($element['name'], $checkboxes, $format, $element['value']);
 	}
 	/**
 	 * Render radio button list tag
@@ -334,6 +334,6 @@ class MForm
 	 */
 	public function radioButtonList($model, $property, $radios=[], $format ='<p>%radio% %text%</p>') {
 		$element = $this->getField($model, $property);
-		return MHtml::radioButtonList($element['name'],$radios, $format, $element['value']);
+		return Html::radioButtonList($element['name'],$radios, $format, $element['value']);
 	}
 }

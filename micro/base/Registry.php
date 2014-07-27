@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 use Micro\Micro;
-use Micro\base\MException;
+use Micro\base\Exception AS MException;
 
 /**
  * Registry class file.

@@ -1,18 +1,18 @@
-<?php use Micro\web\helpers\MHtml; ?>
-<?= MHtml::beginForm(''); ?>
+<?php use Micro\web\helpers\Html; ?>
+<?= Html::beginForm(''); ?>
 
 <div class="row">
-	<?= MHtml::label('Название'); ?>
-	<?= MHtml::textField('Blog[name]', $model->name, array('required'=>true)); ?>
+	<?= Html::label('Название'); ?>
+	<?= Html::textField('Blog[name]', $model->name, array('required'=>true)); ?>
 </div>
 
 <div class="row">
-	<?= MHtml::label('Описание'); ?>
-	<?= MHtml::textArea('Blog[content]', $model->content, array('required'=>true)); ?>
+	<?= Html::label('Описание'); ?>
+	<?= Html::textArea('Blog[content]', $model->content, array('required'=>true)); ?>
 </div>
 
 <div class="row actions">
-	<?= MHtml::submitButton( ($model->isNewRecord()) ? 'Создать' : 'Обновить' ); ?>
+	<?= Html::submitButton( ($model->isNewRecord()) ? 'Создать' : 'Обновить' ); ?>
 </div>
 
-<?= MHtml::endForm(); ?>
+<?= Html::endForm(); ?>

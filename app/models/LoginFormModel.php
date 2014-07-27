@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Micro\web\MFormModel;
+use Micro\web\FormModel;
 use Micro\db\Query;
 
-class LoginFormModel extends MFormModel
+class LoginFormModel extends FormModel
 {
 	public $login;
 	public $password;

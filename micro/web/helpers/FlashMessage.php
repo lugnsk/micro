@@ -3,10 +3,10 @@
 namespace Micro\web\helpers;
 
 use Micro\base\Registry;
-use Micro\base\MException;
+use Micro\base\Exception AS MException;
 
 /**
- * MFlashMessage is a flash messenger.
+ * FlashMessage is a flash messenger.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,7 +17,7 @@ use Micro\base\MException;
  * @version 1.0
  * @since 1.0
  */
-class MFlashMessage
+class FlashMessage
 {
 	/** @property integer $TYPE_SUCCESS */
 	const TYPE_SUCCESS = 1;
@@ -52,7 +52,7 @@ class MFlashMessage
 	 * @param string $description
 	 * @return void
 	 */
-	public function push($type = MFlashMessage::TYPE_SUCCESS, $title = '', $description = '') {
+	public function push($type = FlashMessage::TYPE_SUCCESS, $title = '', $description = '') {
 		Registry::get('session')->flash[] = array(
 			'type'=> $type,
 			'title'=> $title,
@@ -67,7 +67,7 @@ class MFlashMessage
 	 * @param int $type
 	 * @return bool
 	 */
-	public function has($type = MFlashMessage::TYPE_SUCCESS) {
+	public function has($type = FlashMessage::TYPE_SUCCESS) {
 		foreach (Registry::get('session')->flash AS $element) {
 			if (isset($element['type']) && $element['type'] == $type) {
 				return true;
@@ -84,7 +84,7 @@ class MFlashMessage
 	 * @param int $type
 	 * @return array|bool
 	 */
-	public function get($type = MFlashMessage::TYPE_SUCCESS) {
+	public function get($type = FlashMessage::TYPE_SUCCESS) {
 		foreach (Registry::get('session')->flash AS $key=>$element) {
 			if (isset($element['type']) && $element['type'] == $type) {
 				$result = $element;

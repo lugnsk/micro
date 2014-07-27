@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 /**
- * MSession is a Session manager
+ * Session is a Session manager
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -13,7 +13,7 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-class MSession
+class Session
 {
 	/**
 	 * Construct for this class

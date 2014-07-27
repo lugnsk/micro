@@ -2,9 +2,9 @@
 
 namespace App\modules\blog\widgets;
 
-use Micro\base\MWidget;
+use Micro\base\Widget;
 
-class TopblogsWidget extends MWidget
+class TopblogsWidget extends Widget
 {
 	public function init() {}
 

@@ -2,12 +2,12 @@
 
 namespace Micro\widgets;
 
-use Micro\base\MWidget;
-use Micro\web\helpers\MHtml;
-use Micro\web\MForm;
+use Micro\base\Widget;
+use Micro\web\helpers\Html;
+use Micro\web\Form;
 
 /**
- * MFormWidget class file.
+ * FormWidget class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -18,7 +18,7 @@ use Micro\web\MForm;
  * @version 1.0
  * @since 1.0
  */
-class MFormWidget extends MWidget
+class FormWidget extends Widget
 {
 	/** @property string $action */
 	public $action = '';
@@ -30,12 +30,12 @@ class MFormWidget extends MWidget
 	 * Initialize widget
 	 *
 	 * @access public
-	 * @return MForm
+	 * @return Form
 	 */
 	public function init() {
 		$this->action = ($this->action) ? $this->action : $_SERVER['REQUEST_URI'];
-		echo MHtml::beginForm($this->action,$this->method,array('type'=>$this->type));
-		return new MForm;
+		echo Html::beginForm($this->action,$this->method,array('type'=>$this->type));
+		return new Form;
 	}
 	/**
 	 * Running widget
@@ -44,6 +44,6 @@ class MFormWidget extends MWidget
 	 * @return void
 	 */
 	public function run() {
-		echo MHtml::endForm();
+		echo Html::endForm();
 	}
 }

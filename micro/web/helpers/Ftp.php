@@ -12,7 +12,7 @@ namespace Micro\web\helpers;
  * @subpackage web\helpers
  * @version 1.0
  */
-final class MFtp {
+final class Ftp {
 	/**
 	 * FTP host
 	 *

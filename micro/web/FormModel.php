@@ -2,10 +2,10 @@
 
 namespace Micro\web;
 
-use Micro\base\MValidator;
+use Micro\base\Validator;
 
 /**
- * Class MFormModel.
+ * Class FormModel.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -16,7 +16,7 @@ use Micro\base\MValidator;
  * @version 1.0
  * @since 1.0
  */
-abstract class MFormModel
+abstract class FormModel
 {
 	/** @property array $errors validation errors */
 	protected $errors=[];
@@ -39,7 +39,7 @@ abstract class MFormModel
 	 */
 	public function validate() {
 		foreach ($this->rules() AS $rule) {
-			$validator = new MValidator($rule);
+			$validator = new Validator($rule);
 
 			if (!$validator->run($this) AND $validator->errors) {
 				$this->errors[] = $validator->errors;

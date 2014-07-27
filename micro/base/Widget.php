@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 /**
- * MWidget class file.
+ * Widget class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -13,7 +13,7 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-abstract class MWidget extends Controller
+abstract class Widget extends Controller
 {
 	/**
 	 * Constructor for widgets

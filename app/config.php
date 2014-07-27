@@ -26,7 +26,7 @@ return [
 	'components' => [
 		// Request manager
 		'request' => [
-			'class' => '\Micro\web\MRequest',
+			'class' => '\Micro\web\Request',
 			'routes' => [
 				'/login'=>'/default/login',
 				'/logout'=>'/default/logout',
@@ -38,24 +38,24 @@ return [
 		],
 		// Default session
 		'session' => [
-			'class' => '\Micro\base\MSession',
+			'class' => '\Micro\base\Session',
 			'autoStart' => true,
 		],
 		// Flash messages
 		'flash' => [
-			'class' => '\Micro\web\helpers\MFlashMessage',
+			'class' => '\Micro\web\helpers\FlashMessage',
 			'depends' => 'session'
 		],
 		// DataBase
 		'db' => [
-			'class'=> '\Micro\db\MDbConnection',
+			'class'=> '\Micro\db\DbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=micro',
 			'username'=>'micro',
 			'password'=>'micro',
 			'charset'=>'utf8'
 		],
 		'user'=>[
-			'class'=>'\Micro\web\helpers\MUser',
+			'class'=>'\Micro\web\helpers\User',
 			'depends'=>'session'
 		]
 	]

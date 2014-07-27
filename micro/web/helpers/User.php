@@ -14,7 +14,7 @@ namespace Micro\web\helpers;
  * @version 1.0
  * @since 1.0
  */
-class MUser
+class User
 {
 	/**
 	 * Get state user

@@ -3,8 +3,9 @@
 namespace Micro\base;
 
 use Micro\Micro;
+use Micro\base\Exception AS MException;
 use Micro\base\Registry;
-use Micro\web\helpers\MUser;
+use Micro\web\helpers\User;
 
 /**
  * Controller class file.
@@ -151,7 +152,7 @@ abstract class Controller
 	protected function renderFile($fileName, $data=[]) {
 		$fileNameLang = substr($fileName, 0, -3);
 		if (file_exists($fileNameLang)) {
-			$lang = new MLanguage($fileNameLang);
+			$lang = new Language($fileNameLang);
 		}
 		unset($fileNameLang);
 

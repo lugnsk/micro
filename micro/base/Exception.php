@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 /**
- * MException specific exception
+ * Exception specific exception
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -13,7 +13,7 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-class MException extends \Exception
+class Exception extends \Exception
 {
 	/**
 	 * Magic convert object to string

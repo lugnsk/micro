@@ -5,7 +5,7 @@ namespace Micro\base;
 use Micro\Micro;
 
 /**
- * MValidator is a runner validation process
+ * Validator is a runner validation process
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -15,7 +15,7 @@ use Micro\Micro;
  * @version 1.0
  * @since 1.0
  */
-class MValidator
+class Validator
 {
 	/** @property array $rule */
 	private $rule=[];
@@ -27,8 +27,8 @@ class MValidator
 	public $params=[];
 	/** @property array $validators */
 	protected $validators=array(
-		'string'	=> 'MStringValidator',
-		'required'	=> 'MRequiredValidator',
+		'string'	=> 'StringValidator',
+		'required'	=> 'RequiredValidator',
 		//		'filter'=>'MFilterValidator',
 		//		'match'=>'MRegularExpressionValidator',
 		//		'email'=>'MEmailValidator',

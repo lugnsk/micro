@@ -2,8 +2,8 @@
 
 namespace Micro;
 
-use Micro\base\MException;
-use Micro\web\helpers\MHtml;
+use Micro\base\Exception AS MException;
+use Micro\web\helpers\Html;
 use Micro\base\Autoload;
 use Micro\base\Registry;
 
@@ -101,7 +101,7 @@ final class Micro {
 
 		// Render timer
 		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-			die(MHtml::openTag('div',array('class'=>'Mruntime')).(microtime(1) - $this->timer).MHtml::closeTag('div'));
+			die(Html::openTag('div',array('class'=>'Mruntime')).(microtime(1) - $this->timer).Html::closeTag('div'));
 		}
 	}
 	/**
@@ -118,12 +118,12 @@ final class Micro {
 			throw new MException('Component request not loaded.');
 		}
 
-		$path = 'App\\';
+		$path = 'App';
 		if ($modules = $request->getModules()) {
-			$path .= $modules . '\\';
+			$path .= $modules;
 		}
 		if ($controller = $request->getController()) {
-			$path .= 'controllers\\' . $controller;
+			$path .= '\\controllers\\' . $controller;
 		}
 		return $path;
 	}

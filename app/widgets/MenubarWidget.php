@@ -2,9 +2,9 @@
 
 namespace App\widgets;
 
-use Micro\base\MWidget;
+use Micro\base\Widget;
 
-class MenubarWidget extends MWidget
+class MenubarWidget extends Widget
 {
 	public function init() {}
 

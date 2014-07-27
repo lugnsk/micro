@@ -19,7 +19,7 @@ use Micro\base\Registry;
  */
 class Query
 {
-	/** @var MDbConnection $_conn Current connect to DB */
+	/** @var DbConnection $_conn Current connect to DB */
 	private $_conn;
 	/** @var string $select selectable columns */
 	public $select		= '*';

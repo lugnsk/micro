@@ -3,7 +3,7 @@
 namespace Micro\web;
 
 /**
- * MRouter class file.
+ * Router class file.
  *
  * Routing user requests
  *
@@ -16,13 +16,10 @@ namespace Micro\web;
  * @version 1.0
  * @since 1.0
  */
-class MRouter
+class Router
 {
 	/** @var array $routes routes for routing */
-	public $routes = array(
-		'<module:\w+>/<controller:\w+>/<action:\w+>' => '/<module>/<controller>/<action>',
-		'<controller:\w+>/<action:\w+>' => '/<controller>/<action>',
-	);
+	public $routes = [];
 
 
 	/**

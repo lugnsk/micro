@@ -2,9 +2,9 @@
 
 namespace Micro\db;
 
-use Micro\web\MFormModel;
+use Micro\web\FormModel;
 use Micro\base\Registry;
-use Micro\base\MException;
+use Micro\base\Exception AS MException;
 
 /**
  * Get public vars into object
@@ -29,7 +29,7 @@ function getVars($object) {
  * @version 1.0
  * @since 1.0
  */
-abstract class Model extends MFormModel
+abstract class Model extends FormModel
 {
 	/** @var \PDO $db pdo connection */
 	private $db = false;

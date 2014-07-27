@@ -1,9 +1,9 @@
 <?php
 
-use Micro\web\helpers\MHtml;
+use Micro\web\helpers\Html;
 
 return array(
-	'description'=>MHtml::heading(2,'Входилка'),
+	'description'=>Html::heading(2,'Входилка'),
 
 	'elements'=>array(
 		'login'=>array('type'=>'textFieldRow'),

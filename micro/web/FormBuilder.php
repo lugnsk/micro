@@ -2,11 +2,11 @@
 
 namespace Micro\web;
 
-use Micro\web\helpers\MHtml;
-use Micro\widgets\MFormWidget;
+use Micro\web\helpers\Html;
+use Micro\widgets\FormWidget;
 
 /**
- * Class MFormBuilder.
+ * Class FormBuilder.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,11 +17,11 @@ use Micro\widgets\MFormWidget;
  * @version 1.0
  * @since 1.0
  */
-class MFormBuilder
+class FormBuilder
 {
-	/** @property MFormWidget $widget widget for render  */
+	/** @property FormWidget $widget widget for render  */
 	protected $widget;
-	/** @property MForm $form generator for elements */
+	/** @property Form $form generator for elements */
 	protected $form;
 	/** @property array $config config array */
 	private $config;
@@ -43,7 +43,7 @@ class MFormBuilder
 	public function __construct($config = [], $model=null, $method='GET', $type='text/plain', $action='') {
 		$this->config = $config;
 		$this->model = $model;
-		$this->widget = new MFormWidget(array('action'=>$action,'method'=>$method,'type'=>$type));
+		$this->widget = new FormWidget(array('action'=>$action,'method'=>$method,'type'=>$type));
 	}
 	/**
 	 * Set model data
@@ -119,19 +119,19 @@ class MFormBuilder
 	public function beginRender() {
 		$this->form = $this->widget->init();
 		if (isset($this->config['legend'])) {
-			echo MHtml::openTag('fieldset');
-			echo MHtml::legend( $this->config['legend'] );
+			echo Html::openTag('fieldset');
+			echo Html::legend( $this->config['legend'] );
 		}
 		if (isset($this->config['description'])) {
-			echo MHtml::openTag('div',array('class'=>'description')), $this->config['description'], MHtml::closeTag('div');
+			echo Html::openTag('div',array('class'=>'description')), $this->config['description'], Html::closeTag('div');
 		}
 		if ($this->model) {
 			if ($errors = $this->getModelErrors()) {
-				echo MHtml::openTag('div',array('class'=>'errors'));
+				echo Html::openTag('div',array('class'=>'errors'));
 				foreach ($errors AS $error) {
-					echo MHtml::openTag('div',array('class'=>'error')), $error, MHtml::closeTag('div');
+					echo Html::openTag('div',array('class'=>'error')), $error, Html::closeTag('div');
 				}
-				echo MHtml::closeTag('div');
+				echo Html::closeTag('div');
 			}
 		}
 	}
@@ -143,7 +143,7 @@ class MFormBuilder
 	 */
 	public function endRender() {
 		if (isset($this->config['legend'])) {
-			echo MHtml::closeTag('fieldset');
+			echo Html::closeTag('fieldset');
 		}
 		$this->widget->run();
 	}
@@ -161,12 +161,12 @@ class MFormBuilder
 		foreach ($conf['elements'] AS $key=>$value) {
 			if (is_array($conf['elements'][$key])) {
 				if ($value['type']=='form') {
-					$subForm = new MFormBuilder($value, (isset($value['model'])) ? $value['model'] : null);
+					$subForm = new FormBuilder($value, (isset($value['model'])) ? $value['model'] : null);
 					echo $subForm;
 				} elseif ($this->model) {
 					echo $this->form->$value['type']($this->model,$key,(isset($value['options'])) ? $value['options'] : []);
 				} else {
-					echo MHtml::$value['type']($key, $value['value'], $value['options']);
+					echo Html::$value['type']($key, $value['value'], $value['options']);
 				}
 			} else {
 				echo $conf['elements'][$key];
@@ -174,7 +174,7 @@ class MFormBuilder
 		}
 		foreach ($this->config['buttons'] AS $button) {
 			$type = $button['type'].'Button';
-			echo MHtml::$type($button['label'], (isset($button['options'])) ? $button['options'] : [] );
+			echo Html::$type($button['label'], (isset($button['options'])) ? $button['options'] : [] );
 		}
 	}
 }

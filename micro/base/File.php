@@ -13,7 +13,7 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-class MFile
+class File
 {
 	/**
 	 * Recursive copy files

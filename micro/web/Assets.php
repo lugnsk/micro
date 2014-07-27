@@ -3,10 +3,10 @@
 namespace Micro\web;
 
 use Micro\Micro;
-use Micro\base\MFile;
+use Micro\base\File AS MFile;
 
 /**
- * MAssets class file.
+ * Assets class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,7 +17,7 @@ use Micro\base\MFile;
  * @version 1.0
  * @since 1.0
  */
-class MAssets
+class Assets
 {
 	/** @property string $assetDir directory for assets */
 	private $assetDir = 'assets';

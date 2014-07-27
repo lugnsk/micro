@@ -2,10 +2,10 @@
 
 namespace Micro\db;
 
-use Micro\base\MException;
+use Micro\base\Exception AS MException;
 
 /**
- * MDbConnection class file.
+ * DbConnection class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -16,7 +16,7 @@ use Micro\base\MException;
  * @version 1.0
  * @since 1.0
  */
-class MDbConnection
+class DbConnection
 {
 	/** @property \PDO|null $conn Connection to DB */
 	public $conn;

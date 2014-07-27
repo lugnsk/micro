@@ -3,10 +3,10 @@
 namespace Micro\base;
 
 use \Micro\base\Registry;
-use \Micro\base\MException;
+use \Micro\base\Exception AS MException;
 
 /**
- * MLanguage getter language tags from *.ini files
+ * Language getter language tags from *.ini files
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -16,7 +16,7 @@ use \Micro\base\MException;
  * @version 1.0
  * @since 1.0
  */
-class MLanguage
+class Language
 {
 	/** @var array $language language array */
 	private $language = [];

@@ -1,7 +1,7 @@
 <?php /** MicroRequiredValidator */
 
 /**
- * MRequiredValidator class file.
+ * RequiredValidator class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -12,7 +12,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MRequiredValidator extends MValidator
+class RequiredValidator extends \Micro\base\Validator
 {
 	/**
 	 * Validate in server

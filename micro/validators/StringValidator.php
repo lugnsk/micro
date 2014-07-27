@@ -1,7 +1,7 @@
 <?php /** MicroStringValidator */
 
 /**
- * MStringValidator class file.
+ * StringValidator class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -12,7 +12,7 @@
  * @version 1.0
  * @since 1.0
  */
-class MStringValidator extends MValidator
+class StringValidator extends \Micro\base\Validator
 {
 	/**
 	 * Validate in server

@@ -3,10 +3,9 @@
 namespace Micro\web;
 
 use Micro\Micro;
-use Micro\web\MRouter;
 
 /**
- * MRequest class file.
+ * Request class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -17,9 +16,9 @@ use Micro\web\MRouter;
  * @version 1.0
  * @since 1.0
  */
-class MRequest
+class Request
 {
-	/** @var MRouter $router router for request */
+	/** @var Router $router router for request */
 	private $router;
 	/** @var string $modules modules in request */
 	private $modules;
@@ -36,7 +35,7 @@ class MRequest
 	 * @param array $routes
 	 */
 	public function __construct($routes = []) {
-		$this->router = new MRouter($routes['routes']);
+		$this->router = new Router( isset($routes['routes']) ? $routes['routes'] : null );
 		$this->initialize();
 	}
 	/**
@@ -49,7 +48,6 @@ class MRequest
 		$uri		= (isset($_GET['r']) OR !empty($_GET['r'])) ? $_GET['r'] : '/';
 		$trustUri	= $this->router->parse($uri);
 		$uriBlocks	= explode('/', $trustUri);
-
 		if ($uri{0} == '/') {
 			array_shift($uriBlocks);
 		}
@@ -81,10 +79,11 @@ class MRequest
 
 		foreach ($uriBlocks AS $i => $block) {
 			if (file_exists($path . $this->modules . '/modules/' . $block)) {
-				$this->modules .= 'modules\\' . $block;
+				$this->modules .= '/modules/' . $block;
 				unset($uriBlocks[$i]);
 			} else break;
 		}
+		$this->modules = str_replace('/','\\',$this->modules);
 	}
 	/**
 	 * Prepare controller

@@ -5,7 +5,7 @@ namespace Micro\db;
 use Micro\base\Registry;
 
 /**
- * MMigration class file.
+ * Migration class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -16,8 +16,8 @@ use Micro\base\Registry;
  * @version 1.0
  * @since 1.0
  */
-class MMigration {
-	/** @var MDbConnection $db connection to db */
+class Migration {
+	/** @var DbConnection $db connection to db */
 	private $db = false;
 
 

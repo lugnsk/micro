@@ -4,7 +4,7 @@ namespace App\controllers;
 
 use Micro\Micro;
 use Micro\base\Registry;
-use Micro\web\MFormBuilder;
+use Micro\web\FormBuilder;
 use App\models\LoginFormModel;
 use App\components\Controller;
 
@@ -19,7 +19,7 @@ class DefaultController extends Controller
 			$this->redirect('/');
 		}
 
-		$form = new MFormBuilder(
+		$form = new FormBuilder(
 			include Micro::getInstance()->config['AppDir'].'/views/default/loginform.php',
 			new LoginFormModel(),
 			'POST'

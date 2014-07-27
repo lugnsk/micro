@@ -1,17 +1,17 @@
 <?php
-	use \Micro\web\helpers\MHtml;
+	use \Micro\web\helpers\Html;
 	use \Micro\Micro;
 	/** @var string $content */
 ?>
-<?= MHtml::doctype('html5') ?>
+<?= Html::doctype('html5') ?>
 <html>
 	<head>
-		<?= MHtml::charset('utf-8') ?>
-		<?= MHtml::meta('language', 'ru') ?>
-		<?= MHtml::cssFile('/css/main.css') ?>
-		<?= MHtml::favicon('/favicon.png'); ?>
-		<?= MHtml::meta('viewport', 'width=device-width, initial-scale=1.0') ?>
-		<?= MHtml::title($this->title) ?>
+		<?= Html::charset('utf-8') ?>
+		<?= Html::meta('language', 'ru') ?>
+		<?= Html::cssFile('/css/main.css') ?>
+		<?= Html::favicon('/favicon.png'); ?>
+		<?= Html::meta('viewport', 'width=device-width, initial-scale=1.0') ?>
+		<?= Html::title($this->title) ?>
 	</head>
 	<body>
 		<div id="container">
