@@ -2,7 +2,6 @@
 
 namespace Micro\base;
 
-use \Micro\base\Registry;
 use \Micro\base\Exception AS MException;
 
 /**

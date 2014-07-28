@@ -1,5 +1,5 @@
 <?php
-	/** @var $this DefaultController */
+	/** @var \App\controllers\DefaultController $this */
 	$this->title .= ' - Главная';
 ?>
 <h1>Simple app</h1>

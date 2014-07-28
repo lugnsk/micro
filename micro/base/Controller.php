@@ -146,6 +146,7 @@ abstract class Controller
 	 * @param string $fileName
 	 * @param array  $data
 	 * @return string
+	 * @throws MException widget not declared
 	 */
 	protected function renderFile($fileName, $data=[]) {
 		$fileNameLang = substr($fileName, 0, -3);
@@ -197,7 +198,7 @@ abstract class Controller
 	 * @param string $name
 	 * @param array $options
 	 * @param bool $capture
-	 * @return string|null
+	 * @return mixed
 	 * @throws MException
 	 */
 	public function widget($name, $options = [], $capture=false) {
@@ -214,11 +215,13 @@ abstract class Controller
 		if ($capture) {
 			ob_start();
 			$widget->run();
-			return ob_get_clean();
+			$result = ob_get_clean();
 		} else {
 			$widget->run();
+			$result = null;
 		}
 		unset($widget);
+		return $result;
 	}
 	/**
 	 * Start render widget
