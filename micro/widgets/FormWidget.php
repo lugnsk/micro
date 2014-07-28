@@ -34,7 +34,7 @@ class FormWidget extends Widget
 	 */
 	public function init() {
 		$this->action = ($this->action) ? $this->action : $_SERVER['REQUEST_URI'];
-		echo Html::beginForm($this->action,$this->method,array('type'=>$this->type));
+		echo Html::beginForm($this->action,$this->method,['type'=>$this->type]);
 		return new Form;
 	}
 	/**

@@ -16,7 +16,7 @@ class ProfileController extends Controller
 
 		$query = new Query;
 		$query->addWhere('id = :id');
-		$query->params = array(':id'=>$_SESSION['UserID']);
+		$query->params = [':id'=>$_SESSION['UserID']];
 
 		$user = User::finder($query, true);
 
@@ -37,6 +37,6 @@ class ProfileController extends Controller
 			$user->save();
 		}
 
-		echo $this->render('index', array('user'=>$user));
+		echo $this->render('index', ['user'=>$user]);
 	}
 }

@@ -11,26 +11,26 @@ class LoginFormModel extends FormModel
 	public $password;
 
 	public function attributeLabels() {
-		return array(
+		return [
 			'login'=>'Логин',
 			'password'=>'Пароль'
-		);
+		];
 	}
 	public function rules() {
-		return array(
-			array('login', 'string', 'min'=>5, 'max'=>16),
-			array('password', 'string', 'min'=>6, 'max'=>32)
-		);
+		return [
+			['login', 'string', 'min'=>5, 'max'=>16],
+			['password', 'string', 'min'=>6, 'max'=>32]
+		];
 	}
 	public function logined() {
 		$query = new Query;
 		$query->addWhere('login = :login');
 		$query->addWhere('pass = :pass');
 
-		$query->params = array(
+		$query->params = [
 			':login' => $this->login,
 			':pass' => md5($this->password),
-		);
+		];
 
 		if ($user = User::finder($query, true)) {
 			$_SESSION['UserID'] = $user->id;

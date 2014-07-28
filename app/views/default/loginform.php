@@ -2,14 +2,11 @@
 
 use Micro\web\helpers\Html;
 
-return array(
+return [
 	'description'=>Html::heading(2,'Входилка'),
 
-	'elements'=>array(
-		'login'=>array('type'=>'textFieldRow'),
-		'password'=>array('type'=>'passwordFieldRow'),
-	),
-	'buttons'=>array(
-		'login'=>array('type'=>'submit','label'=>'Войти'),
-	)
-);
+	'elements'=>[
+		'login'=>['type'=>'textFieldRow'], 'password'=>['type'=>'passwordFieldRow'],
+	],
+	'buttons'=>[ 'login'=>['type'=>'submit','label'=>'Войти'] ]
+];

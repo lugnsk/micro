@@ -72,14 +72,14 @@ class DbConnection
 
 		$result = [];
 		foreach ($sth->fetchAll() AS $row) {
-			$result[] = array(
+			$result[] = [
 				'name'      => $row['Name'],
 				'engine'    => $row['Engine'],
 				'rows'      => $row['Rows'],
 				'length'    => $row['Avg_row_length'],
 				'increment' => $row['Auto_increment'],
 				'collation' => $row['Collation'],
-			);
+			];
 		}
 		return $result;
 	}
@@ -131,14 +131,14 @@ class DbConnection
 
 		$result = [];
 		foreach ($sth->fetchAll() as $row) {
-			$result[] = array(
+			$result[] = [
 				'field'   => $row['Field'],
 				'type'    => $row['Type'],
 				'null'    => $row['Null'],
 				'key'     => $row['Key'],
 				'default' => $row['Default'],
 				'extra'   => $row['Extra'],
-			);
+			];
 		}
 		return $result;
 	}

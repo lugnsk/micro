@@ -111,7 +111,7 @@ class Html
 	 * @return string
 	 */
 	public static function favicon($url) {
-		return self::tag('link', array('href'=>$url, 'rel'=>'shortcut icon', 'type'=>'image/x-icon'));
+		return self::tag('link', ['href'=>$url, 'rel'=>'shortcut icon', 'type'=>'image/x-icon']);
 	}
 	/**
 	 * Render css file
@@ -121,8 +121,7 @@ class Html
 	 * @return string
 	 */
 	public static function cssFile($file) {
-		$attributes = array('href'=>$file, 'rel'=>'stylesheet');
-		return self::tag('link', $attributes);
+		return self::tag('link', ['href'=>$file, 'rel'=>'stylesheet']);
 	}
 	/**
 	 * Render script file
@@ -132,8 +131,7 @@ class Html
 	 * @return string
 	 */
 	public static function scriptFile($file) {
-		$attributes = array('src'=>$file, 'type'=>'text/javascript');
-		return self::openTag('script', $attributes) . self::closeTag('script');
+		return self::openTag('script', ['src'=>$file, 'type'=>'text/javascript']) . self::closeTag('script');
 	}
 	/**
 	 * Render style source
@@ -816,7 +814,7 @@ class Html
 	 * @return string
 	 */
 	public static function charset($name) {
-		return self::tag('meta', array('charset'=>$name));
+		return self::tag('meta', ['charset'=>$name]);
 	}
 	/**
 	 * Render video tag
@@ -831,15 +829,15 @@ class Html
 	public static function video($sources = [], $tracks = [], $attributes = [], $noCodec = '') {
 		$srcs = '';
 		foreach ($sources AS $name => $value) {
-			$srcs .= self::tag('source', array('type'=>$name, 'src'=>$value));
+			$srcs .= self::tag('source', ['type'=>$name, 'src'=>$value]);
 		}
 		foreach ($tracks AS $track) {
-			$srcs .= self::tag('track', array(
+			$srcs .= self::tag('track', [
 				'kind'=>$track['kind'],
 				'src'=>$track['src'],
 				'srclang'=>$track['srclang'],
 				'label'=>$track['label']
-			));
+			]);
 		}
 		return self::openTag('video', $attributes) . $srcs . $noCodec . self::closeTag('video');
 	}
@@ -856,15 +854,15 @@ class Html
 	public static function audio($sources = [], $tracks = [], $attributes = [], $noCodec = '') {
 		$srcs = '';
 		foreach ($sources AS $name => $value) {
-			$srcs .= self::tag('audio', array('type'=>$name, 'src'=>$value));
+			$srcs .= self::tag('audio', ['type'=>$name, 'src'=>$value]);
 		}
 		foreach ($tracks AS $track) {
-			$srcs .= self::tag('track', array(
+			$srcs .= self::tag('track', [
 				'kind'=>$track['kind'],
 				'src'=>$track['src'],
 				'srclang'=>$track['srclang'],
 				'label'=>$track['label']
-			));
+			]);
 		}
 		return self::openTag('audio', $attributes) . $srcs . $noCodec . self::closeTag('audio');
 	}

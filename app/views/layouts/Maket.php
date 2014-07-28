@@ -19,7 +19,7 @@
 				<span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
 			</div>
 			<div id="content">
-				<?php $this->widget('App\widgets\Menubar', array('links'=>$this->menu)); ?>
+				<?php $this->widget('App\widgets\Menubar', ['links'=>$this->menu]); ?>
 				<?= $content ?>
 			</div>
 			<div id="footer">

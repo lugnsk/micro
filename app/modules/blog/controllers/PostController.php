@@ -26,21 +26,21 @@ class PostController extends Controller
 		$crt2->single = true;
 		$num = $crt2->run();
 
-		echo $this->render('index', array(
+		echo $this->render('index', [
 			'blogs'=>Blog::finder($crt),
 			'pages' => ceil($num[0] / 10),
-		));
+		]);
 	}
 
 	public function actionView() {
 		$crt = new Query;
 		$crt->addWhere('id = :id');
-		$crt->params = array(
+		$crt->params = [
 			':id' => $_GET['id']
-		);
+		];
 		$blog = Blog::finder($crt, true);
 
-		echo $this->render('view', array('model'=>$blog));
+		echo $this->render('view', ['model'=>$blog]);
 	}
 
 	public function actionCreate() {
@@ -55,15 +55,13 @@ class PostController extends Controller
 			}
 		}
 
-		echo $this->render('create', array('model'=>$blog));
+		echo $this->render('create', ['model'=>$blog]);
 	}
 
 	public function actionUpdate() {
 		$crt = new Query;
 		$crt->addWhere('id = :id');
-		$crt->params = array(
-			':id' => $_GET['id']
-		);
+		$crt->params = [':id' => $_GET['id']];
 		$blog = Blog::finder($crt, true);
 
 		$blog->name = 'setupher';
@@ -73,9 +71,7 @@ class PostController extends Controller
 	public function actionDelete() {
 		$crt = new Query;
 		$crt->addWhere('id = :id');
-		$crt->params = array(
-			':id' => $_GET['id']
-		);
+		$crt->params = [':id' => $_GET['id']];
 		$blog = Blog::finder($crt, true);
 		$blog->delete();
 	}

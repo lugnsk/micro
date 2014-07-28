@@ -43,7 +43,7 @@ class FormBuilder
 	public function __construct($config = [], $model=null, $method='GET', $type='text/plain', $action='') {
 		$this->config = $config;
 		$this->model = $model;
-		$this->widget = new FormWidget(array('action'=>$action,'method'=>$method,'type'=>$type));
+		$this->widget = new FormWidget(['action'=>$action,'method'=>$method,'type'=>$type]);
 	}
 	/**
 	 * Set model data
@@ -123,13 +123,13 @@ class FormBuilder
 			echo Html::legend( $this->config['legend'] );
 		}
 		if (isset($this->config['description'])) {
-			echo Html::openTag('div',array('class'=>'description')), $this->config['description'], Html::closeTag('div');
+			echo Html::openTag('div',['class'=>'description']), $this->config['description'], Html::closeTag('div');
 		}
 		if ($this->model) {
 			if ($errors = $this->getModelErrors()) {
-				echo Html::openTag('div',array('class'=>'errors'));
+				echo Html::openTag('div',['class'=>'errors']);
 				foreach ($errors AS $error) {
-					echo Html::openTag('div',array('class'=>'error')), $error, Html::closeTag('div');
+					echo Html::openTag('div',['class'=>'error']), $error, Html::closeTag('div');
 				}
 				echo Html::closeTag('div');
 			}

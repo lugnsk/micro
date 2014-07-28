@@ -19,7 +19,7 @@ use Micro\base\Registry;
  */
 class Query
 {
-	/** @var DbConnection $_conn Current connect to DB */
+	/** @var \PDO $_conn Current connect to DB */
 	private $_conn;
 	/** @var string $select selectable columns */
 	public $select		= '*';
@@ -215,10 +215,10 @@ class Query
 	 * @return mixed
 	 */
 	public function run($as = PDO::FETCH_CLASS) {
-		/** @var PDO $query */
+		/** @var \PDOStatement $query */
 		$query = $this->_conn->prepare($this->getQuery().';');
 		if ($as == PDO::FETCH_CLASS) {
-			$query->setFetchMode($as, ucfirst($this->objectName), array('new'=>false));
+			$query->setFetchMode($as, ucfirst($this->objectName), ['new'=>false]);
 		} else {
 			$query->setFetchMode($as);
 		}

@@ -27,11 +27,11 @@ class Form
 	 * @return array
 	 */
 	private function getField($model,$property) {
-		return array(
+		return [
 			'id'=> get_class($model) . '_' . $property,
 			'name'=> get_class($model) . '[' . $property . ']',
 			'value'=> (property_exists($model, $property)) ? $model->$property : null
-		);
+		];
 	}
 	/**
 	 * Render label tag
@@ -72,7 +72,7 @@ class Form
 	public function textFieldRow($model, $property, $options=[], $labelOptions=[]) {
 		$element = $this->getField($model,$property);
 		$options['id'] = $element['id'];
-		return Html::openTag('div',array('class'=>'row')).
+		return Html::openTag('div',['class'=>'row']).
 			Html::label($model->getLabel($property), $element['name'],$labelOptions).
 			$this->textField($model,$property,$options).
 			Html::closeTag('div');
@@ -173,7 +173,7 @@ class Form
 	 */
 	public function passwordFieldRow($model, $property, $options=[], $labelOptions=[]) {
 		$element = $this->getField($model,$property);
-		return Html::openTag('div',array('class'=>'row')).
+		return Html::openTag('div',['class'=>'row']).
 		Html::label($model->getLabel($property), $element['name'],$labelOptions).
 		$this->passwordField($model,$property,$options).
 		Html::closeTag('div');

@@ -26,7 +26,7 @@ class Validator
 	/** @property array $params */
 	public $params=[];
 	/** @property array $validators */
-	protected $validators=array(
+	protected $validators=[
 		'string'	=> 'StringValidator',
 		'required'	=> 'RequiredValidator',
 		//		'filter'=>'MFilterValidator',
@@ -46,7 +46,7 @@ class Validator
 		//		'safe'=>'MSafeValidator',
 		//		'unsafe'=>'MUnsafeValidator',
 		//		'date'=>'MDateValidator',
-	);
+	];
 
 
 	/**

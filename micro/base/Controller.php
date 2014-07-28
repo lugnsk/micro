@@ -4,8 +4,6 @@ namespace Micro\base;
 
 use Micro\Micro;
 use Micro\base\Exception AS MException;
-use Micro\base\Registry;
-use Micro\web\helpers\User;
 
 /**
  * Controller class file.
@@ -136,7 +134,7 @@ abstract class Controller
 		// Render view
 		$output = $this->renderFile($path, $data);
 		if ($layoutPath) {
-			$output = $this->renderFile($layoutPath, array('content'=>$output));
+			$output = $this->renderFile($layoutPath, ['content'=>$output]);
 		}
 
 		return $output;
@@ -151,9 +149,7 @@ abstract class Controller
 	 */
 	protected function renderFile($fileName, $data=[]) {
 		$fileNameLang = substr($fileName, 0, -3);
-		if (file_exists($fileNameLang)) {
-			$lang = new Language($fileNameLang);
-		}
+		$lang = (file_exists($fileNameLang)) ? new Language($fileNameLang) : null;
 		unset($fileNameLang);
 
 		extract($data, EXTR_PREFIX_SAME, 'data');
@@ -201,7 +197,7 @@ abstract class Controller
 	 * @param string $name
 	 * @param array $options
 	 * @param bool $capture
-	 * @return string
+	 * @return string|null
 	 * @throws MException
 	 */
 	public function widget($name, $options = [], $capture=false) {
@@ -211,6 +207,7 @@ abstract class Controller
 			throw new MException('Widget '.$name.' not found.');
 		}
 
+		/** @var \Micro\base\Widget $widget */
 		$widget = new $name($options);
 		$widget->init();
 
@@ -243,6 +240,7 @@ abstract class Controller
 			throw new MException('This widget ('.$name.') already started!');
 		}
 
+		/** @var \Micro\base\Widget $GLOBALS['widgetStack'][$name] */
 		$GLOBALS['widgetStack'][$name] = new $name($options);
 		return $GLOBALS['widgetStack'][$name]->init();
 	}
@@ -261,6 +259,7 @@ abstract class Controller
 			throw new MException('Widget '.$name.' not started.');
 		}
 
+		/** @var \Micro\base\Widget $widget */
 		$widget = $GLOBALS['widgetStack'][$name];
 		unset($GLOBALS['widgetStack'][$name]);
 		$widget->run();

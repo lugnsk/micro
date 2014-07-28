@@ -10,7 +10,7 @@ class Controller extends BaseController
 	public $title = 'Micro';
 	public $layout = 'maket';
 
-	public $menu = array('<a href="/">Главная</a>', '<a href="/blog/post">Блог</a>');
+	public $menu = ['<a href="/">Главная</a>', '<a href="/blog/post">Блог</a>'];
 
 	public function __construct() {
 		parent::__construct();

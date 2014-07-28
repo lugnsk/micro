@@ -53,11 +53,11 @@ class FlashMessage
 	 * @return void
 	 */
 	public function push($type = FlashMessage::TYPE_SUCCESS, $title = '', $description = '') {
-		Registry::get('session')->flash[] = array(
+		Registry::get('session')->flash[] = [
 			'type'=> $type,
 			'title'=> $title,
 			'description'=> $description
-		);
+		];
 	}
 	/**
 	 * Has flashes by type

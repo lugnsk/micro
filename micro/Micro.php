@@ -96,12 +96,13 @@ final class Micro {
 		if (!class_exists($name)) {
 			throw new MException( 'Controller ' . $name . ' not set' );
 		}
+		/** @var \Micro\base\Controller $mvc */
 		$mvc = new $name;
 		$mvc->action($action);
 
 		// Render timer
 		if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-			die(Html::openTag('div',array('class'=>'Mruntime')).(microtime(1) - $this->timer).Html::closeTag('div'));
+			die(Html::openTag('div',['class'=>'Mruntime']).(microtime(1) - $this->timer).Html::closeTag('div'));
 		}
 	}
 	/**

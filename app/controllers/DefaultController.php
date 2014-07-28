@@ -31,7 +31,7 @@ class DefaultController extends Controller
 				$this->redirect('/profile');
 			}
 		}
-		echo $this->render('login', array('form'=>$form));
+		echo $this->render('login', ['form'=>$form]);
 	}
 
 	public function actionLogout() {
