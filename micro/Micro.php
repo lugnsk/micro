@@ -109,7 +109,11 @@ final class Micro
 
         // Render timer
         if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-            die(\Micro\web\helpers\Html::openTag('div', ['class' => 'Mruntime']) . (microtime(1) - $this->timer) . Html::closeTag('div'));
+            die(
+                \Micro\web\helpers\Html::openTag('div', ['class' => 'Mruntime']) .
+                (microtime(1) - $this->timer) .
+                \Micro\web\helpers\Html::closeTag('div')
+            );
         }
     }
 
