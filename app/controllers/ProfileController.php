@@ -9,34 +9,35 @@ use Micro\db\Query;
 
 class ProfileController extends Controller
 {
-	public function actionIndex() {
-		if (Registry::get('user')->isGuest()) {
-			$this->redirect('/');
-		}
+    public function actionIndex()
+    {
+        if (Registry::get('user')->isGuest()) {
+            $this->redirect('/');
+        }
 
-		$query = new Query;
-		$query->addWhere('id = :id');
-		$query->params = [':id'=>$_SESSION['UserID']];
+        $query = new Query;
+        $query->addWhere('id = :id');
+        $query->params = [':id' => $_SESSION['UserID']];
 
-		$user = User::finder($query, true);
+        $user = User::finder($query, true);
 
-		if (!$user) {
-			$this->redirect('/logout');
-		}
+        if (!$user) {
+            $this->redirect('/logout');
+        }
 
-		if (isset($_POST['Setup'])) {
-			$form = $_POST['Setup'];
-			if (!empty($form['pass'])) {
-				$user->pass = md5($form['pass']);
-			}
+        if (isset($_POST['Setup'])) {
+            $form = $_POST['Setup'];
+            if (!empty($form['pass'])) {
+                $user->pass = md5($form['pass']);
+            }
 
-			if (!empty($form['fio'])) {
-				$user->fio = $form['fio'];
-			}
+            if (!empty($form['fio'])) {
+                $user->fio = $form['fio'];
+            }
 
-			$user->save();
-		}
+            $user->save();
+        }
 
-		echo $this->render('index', ['user'=>$user]);
-	}
+        echo $this->render('index', ['user' => $user]);
+    }
 }

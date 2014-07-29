@@ -2,9 +2,6 @@
 
 namespace Micro\widgets;
 
-use Micro\base\Widget;
-use Micro\web\helpers\Html;
-
 /**
  * MenuWidget class file.
  *
@@ -17,42 +14,47 @@ use Micro\web\helpers\Html;
  * @version 1.0
  * @since 1.0
  */
-class MenuWidget extends Widget
+class MenuWidget extends \Micro\base\Widget
 {
-	/** @property array $menu */
-	public $menu = [];
-	/** @property array $attributes */
-	public $attributes = [];
+    /** @property array $menu */
+    public $menu = [];
+    /** @property array $attributes */
+    public $attributes = [];
 
-	/**
-	 * Constructor for widget
-	 *
-	 * @access public
-	 * @param array $items
-	 * @param array $attributes
-	 * @result void
-	 */
-	public function __construct($items=[], $attributes=[]) {
-		parent::__construct();
+    /**
+     * Constructor for widget
+     *
+     * @access public
+     * @param array $items
+     * @param array $attributes
+     * @result void
+     */
+    public function __construct($items = [], $attributes = [])
+    {
+        parent::__construct();
 
-		$this->menu = $items;
-		$this->attributes = $attributes;
-	}
+        $this->menu = $items;
+        $this->attributes = $attributes;
+    }
 
-	/**
-	 * Running widget
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function run() {
-		echo Html::lists($this->menu, $this->attributes);
-	}
-	/**
-	 * Initialize widget
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function init(){}
+    /**
+     * Running widget
+     *
+     * @access public
+     * @return void
+     */
+    public function run()
+    {
+        echo \Micro\web\helpers\Html::lists($this->menu, $this->attributes);
+    }
+
+    /**
+     * Initialize widget
+     *
+     * @access public
+     * @return void
+     */
+    public function init()
+    {
+    }
 }

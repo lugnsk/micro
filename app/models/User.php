@@ -6,7 +6,8 @@ use Micro\db\Model;
 
 class User extends Model
 {
-	static public function tableName() {
-		return 'users';
-	}
+    static public function tableName()
+    {
+        return 'users';
+    }
 }

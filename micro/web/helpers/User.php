@@ -16,13 +16,14 @@ namespace Micro\web\helpers;
  */
 class User
 {
-	/**
-	 * Get state user
-	 *
-	 * @access public
-	 * @return bool
-	 */
-	public function isGuest() {
-		return (!isset($_SESSION['UserID']) OR empty($_SESSION['UserID']));
-	}
+    /**
+     * Get state user
+     *
+     * @access public
+     * @return bool
+     */
+    public function isGuest()
+    {
+        return (!isset($_SESSION['UserID']) OR empty($_SESSION['UserID']));
+    }
 }

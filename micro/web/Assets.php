@@ -19,77 +19,84 @@ use Micro\base\File AS MFile;
  */
 class Assets
 {
-	/** @property string $assetDir directory for assets */
-	private $assetDir = 'assets';
-	/** @property string $hash */
-	private $hash = '';
-	/** @property string $directory */
-	private $directory = '';
-	/** @property string $sourceDir */
-	private $sourceDir = '';
-	/** @property string $publishDir */
-	private $publishDir = '';
+    /** @property string $assetDir directory for assets */
+    private $assetDir = 'assets';
+    /** @property string $hash */
+    private $hash = '';
+    /** @property string $directory */
+    private $directory = '';
+    /** @property string $sourceDir */
+    private $sourceDir = '';
+    /** @property string $publishDir */
+    private $publishDir = '';
 
 
-	/**
-	 * Constructor for class
-	 *
-	 * @access public
-	 * @param string $directory
-	 * @result void
-	 */
-	public function __construct($directory = '') {
-		$this->directory = $directory;
-		$this->hash = md5($this->directory);
+    /**
+     * Constructor for class
+     *
+     * @access public
+     * @param string $directory
+     * @result void
+     */
+    public function __construct($directory = '')
+    {
+        $this->directory = $directory;
+        $this->hash = md5($this->directory);
 
-		$tmp = '/' . $this->assetDir . '/' . $this->hash;
-		$this->publishDir = Micro::getInstance()->config['HtmlDir'] . $tmp;
-		$this->sourceDir = Micro::getInstance()->config['WebDir'] . $tmp;
-	}
-	/**
-	 * Publication directory or files
-	 *
-	 * @access public
-	 * @param string $exclude exclude files
-	 * @return void
-	 */
-	public function publish($exclude='.php') {
-		$hashDir = $this->getSourceDir();
+        $tmp = '/' . $this->assetDir . '/' . $this->hash;
+        $this->publishDir = Micro::getInstance()->config['HtmlDir'] . $tmp;
+        $this->sourceDir = Micro::getInstance()->config['WebDir'] . $tmp;
+    }
 
-		if (!file_exists($hashDir)) {
-			mkdir($hashDir, 0777);
-		}
+    /**
+     * Publication directory or files
+     *
+     * @access public
+     * @param string $exclude exclude files
+     * @return void
+     */
+    public function publish($exclude = '.php')
+    {
+        $hashDir = $this->getSourceDir();
 
-		if (is_dir($this->directory)) {
-			MFile::recurseCopyIfEdited($this->directory, $this->sourceDir);
-		} else {
-			if (substr($hashDir, strlen($hashDir)-strlen($exclude) ) != $exclude) {
-				if (!file_exists($hashDir)) {
-					copy($this->directory, $hashDir);
-					chmod($hashDir, 0666);
-				} elseif (filemtime($this->directory) != filemtime($hashDir)) {
-					copy($this->directory, $hashDir);
-					chmod($hashDir, 0666);
-				}
-			}
-		}
-	}
-	/**
-	 * Get publish directory
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getPublishDir() {
-		return $this->publishDir;
-	}
-	/**
-	 * Get source directory
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getSourceDir() {
-		return $this->sourceDir;
-	}
+        if (!file_exists($hashDir)) {
+            mkdir($hashDir, 0777);
+        }
+
+        if (is_dir($this->directory)) {
+            MFile::recurseCopyIfEdited($this->directory, $this->sourceDir);
+        } else {
+            if (substr($hashDir, strlen($hashDir) - strlen($exclude)) != $exclude) {
+                if (!file_exists($hashDir)) {
+                    copy($this->directory, $hashDir);
+                    chmod($hashDir, 0666);
+                } elseif (filemtime($this->directory) != filemtime($hashDir)) {
+                    copy($this->directory, $hashDir);
+                    chmod($hashDir, 0666);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get publish directory
+     *
+     * @access public
+     * @return string
+     */
+    public function getPublishDir()
+    {
+        return $this->publishDir;
+    }
+
+    /**
+     * Get source directory
+     *
+     * @access public
+     * @return string
+     */
+    public function getSourceDir()
+    {
+        return $this->sourceDir;
+    }
 }

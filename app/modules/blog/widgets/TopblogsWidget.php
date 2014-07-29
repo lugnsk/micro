@@ -6,9 +6,12 @@ use Micro\base\Widget;
 
 class TopblogsWidget extends Widget
 {
-	public function init() {}
+    public function init()
+    {
+    }
 
-	public function run() {
-		echo $this->render('topblogs');
-	}
+    public function run()
+    {
+        echo $this->render('topblogs');
+    }
 }

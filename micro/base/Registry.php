@@ -2,9 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\Micro;
-use Micro\base\Exception AS MException;
-
 /**
  * Registry class file.
  *
@@ -18,111 +15,128 @@ use Micro\base\Exception AS MException;
  */
 final class Registry
 {
-	/**
-	 * Disable construct
-	 *
-	 * @access protected
-	 * @result void
-	 */
-	protected function __construct() { }
-	/**
-	 * Disable clone
-	 *
-	 * @access protected
-	 * @return void
-	 */
-	protected function __clone() { }
-	/**
-	 * Get registry value
-	 *
-	 * @access public
-	 * @param string $name
-	 * @return mixed
-	 */
-	public static function get($name='') {
-		self::configure($name);
-		return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
-	}
-	/**
-	 * Set registry value
-	 *
-	 * @access public
-	 * @param string $name
-	 * @param mixed $value
-	 * @return void
-	 */
-	public static function set($name, $value) {
-		self::configure($name);
-		$GLOBALS[$name] = $value;
-	}
-	/**
-	 * Get all current values
-	 *
-	 * @access public
-	 * @return array
-	 */
-	public static function getAll() {
-		self::configure();
-		return $GLOBALS;
-	}
-	/**
-	 * Get component's
-	 *
-	 * @access public
-	 * @param null $name
-	 * @throws MException
-	 */
-	public static function configure($name=null) {
-		if ($name AND isset($GLOBALS[$name])) {
-			return; // Already defined
-		}
-		$configs = Micro::getInstance()->config['components'];
+    /**
+     * Disable construct
+     *
+     * @access protected
+     * @result void
+     */
+    protected function __construct()
+    {
+    }
 
-		if ($name AND isset($configs[$name])) {
-			if (!self::loadComponent($name, $configs[$name])) {
-				throw new MException('Class '.$name.' error loading.');
-			}
+    /**
+     * Disable clone
+     *
+     * @access protected
+     * @return void
+     */
+    protected function __clone()
+    {
+    }
 
-		} elseif ($name AND !isset($configs[$name])) {
-			throw new MException('Class '.$name.' not configured.');
+    /**
+     * Get registry value
+     *
+     * @access public
+     * @param string $name
+     * @return mixed
+     */
+    public static function get($name = '')
+    {
+        self::configure($name);
+        return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
+    }
 
-		} else {
-			foreach ($configs AS $name => $options) {
-				if (!self::loadComponent($name,$options)) {
-					throw new MException('Class '.$name.' error loading.');
-				}
-			}
-		}
-	}
-	/**
-	 * Load component
-	 *
-	 * @access public
-	 * @param $name
-	 * @param $options
-	 * @return bool
-	 */
-	public static function loadComponent($name, $options) {
-		if (!isset($options['class']) OR empty($options['class'])) {
-			return false;
-		}
+    /**
+     * Set registry value
+     *
+     * @access public
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    public static function set($name, $value)
+    {
+        self::configure($name);
+        $GLOBALS[$name] = $value;
+    }
 
-		if (!class_exists($options['class'])) {
-			return false;
-		}
+    /**
+     * Get all current values
+     *
+     * @access public
+     * @return array
+     */
+    public static function getAll()
+    {
+        self::configure();
+        return $GLOBALS;
+    }
 
-		if (isset($options['depends']) AND $options['depends']) {
-			if (is_array($options['depends'])) {
-				foreach($options['depends'] AS $depend) { self::configure($depend); }
-			} else {
-				self::configure($options['depends']);
-			}
-		}
+    /**
+     * Get component's
+     *
+     * @access public
+     * @param null $name
+     * @throws \Micro\base\Exception
+     */
+    public static function configure($name = null)
+    {
+        if ($name AND isset($GLOBALS[$name])) {
+            return; // Already defined
+        }
+        $configs = \Micro\Micro::getInstance()->config['components'];
 
-		$className = $options['class'];
-		unset($options['class']);
+        if ($name AND isset($configs[$name])) {
+            if (!self::loadComponent($name, $configs[$name])) {
+                throw new \Micro\base\Exception('Class ' . $name . ' error loading.');
+            }
 
-		$GLOBALS[$name] = new $className($options);
-		return true;
-	}
+        } elseif ($name AND !isset($configs[$name])) {
+            throw new \Micro\base\Exception('Class ' . $name . ' not configured.');
+
+        } else {
+            foreach ($configs AS $name => $options) {
+                if (!self::loadComponent($name, $options)) {
+                    throw new \Micro\base\Exception('Class ' . $name . ' error loading.');
+                }
+            }
+        }
+    }
+
+    /**
+     * Load component
+     *
+     * @access public
+     * @param $name
+     * @param $options
+     * @return bool
+     */
+    public static function loadComponent($name, $options)
+    {
+        if (!isset($options['class']) OR empty($options['class'])) {
+            return false;
+        }
+
+        if (!class_exists($options['class'])) {
+            return false;
+        }
+
+        if (isset($options['depends']) AND $options['depends']) {
+            if (is_array($options['depends'])) {
+                foreach ($options['depends'] AS $depend) {
+                    self::configure($depend);
+                }
+            } else {
+                self::configure($options['depends']);
+            }
+        }
+
+        $className = $options['class'];
+        unset($options['class']);
+
+        $GLOBALS[$name] = new $className($options);
+        return true;
+    }
 }

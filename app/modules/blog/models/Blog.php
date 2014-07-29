@@ -11,10 +11,11 @@ use Micro\db\Model;
  */
 class Blog extends Model
 {
-	public $name;
-	public $content;
+    public $name;
+    public $content;
 
-	static public function tableName() {
-		return 'blogs';
-	}
+    static public function tableName()
+    {
+        return 'blogs';
+    }
 }

@@ -15,27 +15,30 @@ namespace Micro\base;
  */
 abstract class Widget extends Controller
 {
-	/**
-	 * Constructor for widgets
-	 *
-	 * @access public
-	 * @param array $args
-	 * @result void
-	 */
-	public function __construct($args = []) {
-		foreach ($args AS $name => $value) {
-			$this->$name = $value;
-		}
-		$this->asWidget = true;
-	}
-	/**
-	 * Initialize widget
-	 * @abstract
-	 */
-	abstract public function init();
-	/**
-	 * Run widget
-	 * @abstract
-	 */
-	abstract public function run();
+    /**
+     * Constructor for widgets
+     *
+     * @access public
+     * @param array $args
+     * @result void
+     */
+    public function __construct($args = [])
+    {
+        foreach ($args AS $name => $value) {
+            $this->$name = $value;
+        }
+        $this->asWidget = true;
+    }
+
+    /**
+     * Initialize widget
+     * @abstract
+     */
+    abstract public function init();
+
+    /**
+     * Run widget
+     * @abstract
+     */
+    abstract public function run();
 }

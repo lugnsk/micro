@@ -15,13 +15,14 @@ namespace Micro\base;
  */
 class Exception extends \Exception
 {
-	/**
-	 * Magic convert object to string
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function __toString() {
-		return '<h1>Ошибка ' . $this->getCode() . '</h1><p>' . $this->getMessage() . '</p>';
-	}
+    /**
+     * Magic convert object to string
+     *
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<h1>Ошибка ' . $this->getCode() . '</h1><p>' . $this->getMessage() . '</p>';
+    }
 }

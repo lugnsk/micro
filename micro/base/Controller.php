@@ -2,7 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\Micro;
 use Micro\base\Exception AS MException;
 
 /**
@@ -18,254 +17,272 @@ use Micro\base\Exception AS MException;
  */
 abstract class Controller
 {
-	/** @var mixed $module module name */
-	public static $module;
-	/** @var string $layout layout name */
-	public $layout;
-	/** @var string $defaultAction default run action */
-	public $defaultAction = 'index';
-	/** @var boolean $asWidget is a widget? */
-	public $asWidget = false;
-	/** @var array $widgetStack widgets stack */
-	private $widgetStack = [];
+    /** @var mixed $module module name */
+    public static $module;
+    /** @var string $layout layout name */
+    public $layout;
+    /** @var string $defaultAction default run action */
+    public $defaultAction = 'index';
+    /** @var boolean $asWidget is a widget? */
+    public $asWidget = false;
+    /** @var array $widgetStack widgets stack */
+    private $widgetStack = [];
 
 
-	/**
-	 * Constructor for this class
-	 *
-	 * @access public
-	 * @global Micro
-	 * @global Registry
-	 * @result void
-	 */
-	public function __construct(){
-		if ($module = Registry::get('request')->getModules()) {
-			$path = Micro::getInstance()->config['AppDir'] . $module .'/'. ucfirst(basename($module)) .'Module.php';
+    /**
+     * Constructor for this class
+     *
+     * @access public
+     * @global Micro
+     * @global Registry
+     * @result void
+     */
+    public function __construct()
+    {
+        if ($module = Registry::get('request')->getModules()) {
+            $path = \Micro\Micro::getInstance()->config['AppDir'] . $module . '/' . ucfirst(basename($module)) . 'Module.php';
 
-			if (file_exists($path)) {
-				$path = substr(basename($path), 0, -4);
-				self::$module = new $path();
-			}
-		}
-	}
-	/**
-	 * Run action
-	 *
-	 * @access public
-	 * @param string $name
-	 * @return void
-	 * @throws MException method not declared
-	 */
-	public function action($name = 'index') {
-		$action = 'action' . ucfirst($name);
+            if (file_exists($path)) {
+                $path = substr(basename($path), 0, -4);
+                self::$module = new $path();
+            }
+        }
+    }
 
-		if (!method_exists($this, $action)) {
-			$action = 'action' . ucfirst($this->defaultAction);
+    /**
+     * Run action
+     *
+     * @access public
+     * @param string $name
+     * @return void
+     * @throws MException method not declared
+     */
+    public function action($name = 'index')
+    {
+        $action = 'action' . ucfirst($name);
 
-			if (!method_exists($this, $action)) {
-				throw new MException('Method ' . $name . ' is not declared.');
-			}
-		}
+        if (!method_exists($this, $action)) {
+            $action = 'action' . ucfirst($this->defaultAction);
 
-		$this->$action();
-	}
+            if (!method_exists($this, $action)) {
+                throw new MException('Method ' . $name . ' is not declared.');
+            }
+        }
 
-	/**
-	 * Render partial a view
-	 *
-	 * @access protected
-	 * @param string $view view name
-	 * @param array $data
-	 * @return string
-	 */
-	protected function renderPartial($view, $data=[]) {
-		$lay = $this->layout;
-		$wid = $this->asWidget;
+        $this->$action();
+    }
 
-		$this->layout = null;
-		$this->asWidget = false;
-		$output = $this->render($view, $data);
-		$this->layout = $lay;
-		$this->asWidget = $wid;
+    /**
+     * Render partial a view
+     *
+     * @access protected
+     * @param string $view view name
+     * @param array $data
+     * @return string
+     */
+    protected function renderPartial($view, $data = [])
+    {
+        $lay = $this->layout;
+        $wid = $this->asWidget;
 
-		return $output;
-	}
+        $this->layout = null;
+        $this->asWidget = false;
+        $output = $this->render($view, $data);
+        $this->layout = $lay;
+        $this->asWidget = $wid;
 
-	/**
-	 * Render view
-	 *
-	 * @access protected
-	 * @global Micro
-	 * @global Registry
-	 * @param string $view
-	 * @param array  $data
-	 * @return string
-	 */
-	protected function render($view, $data=[]) {
-		if (empty($view)) { return false; }
+        return $output;
+    }
 
-		// Get inf of controller
-		$appDirectory = Micro::getInstance()->config['AppDir'];
+    /**
+     * Render view
+     *
+     * @access protected
+     * @global Micro
+     * @global Registry
+     * @param string $view
+     * @param array $data
+     * @return string
+     */
+    protected function render($view, $data = [])
+    {
+        if (empty($view)) {
+            return false;
+        }
 
-		if (!$this->asWidget) {
-			$module = Registry::get('request')->getModules();
-		} else {
-			$reflector = new \ReflectionClass(get_called_class());
-			$module = str_replace($appDirectory, '', dirname($reflector->getFileName()));
-			unset($reflector);
-		}
+        // Get inf of controller
+        $appDirectory = \Micro\Micro::getInstance()->config['AppDir'];
 
-		// Calculate path to view
-		$path  = $appDirectory . '/' . (($module) ? $module . '/' : null );
+        if (!$this->asWidget) {
+            $module = Registry::get('request')->getModules();
+        } else {
+            $reflector = new \ReflectionClass(get_called_class());
+            $module = str_replace($appDirectory, '', dirname($reflector->getFileName()));
+            unset($reflector);
+        }
 
-		if ($this->asWidget) {
-			$path .=  '/views/' . $view . '.php';
-		} else {
-			$className = str_replace('controller', '', strtolower(Registry::get('request')->getController()));
-			$path .= 'views/' . $className . '/' . $view . '.php';
-		}
+        // Calculate path to view
+        $path = $appDirectory . '/' . (($module) ? $module . '/' : null);
 
-		// Generate layout path
-		$layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, $module) : null;
-		if (!file_exists($layoutPath)) {
-			$layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, '') : null;
-		}
+        if ($this->asWidget) {
+            $path .= '/views/' . $view . '.php';
+        } else {
+            $className = str_replace('controller', '', strtolower(Registry::get('request')->getController()));
+            $path .= 'views/' . $className . '/' . $view . '.php';
+        }
 
-		// Render view
-		$output = $this->renderFile($path, $data);
-		if ($layoutPath) {
-			$output = $this->renderFile($layoutPath, ['content'=>$output]);
-		}
+        // Generate layout path
+        $layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, $module) : null;
+        if (!file_exists($layoutPath)) {
+            $layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, '') : null;
+        }
 
-		return $output;
-	}
-	/**
-	 * Render file by path
-	 *
-	 * @access protected
-	 * @param string $fileName
-	 * @param array  $data
-	 * @return string
-	 * @throws MException widget not declared
-	 */
-	protected function renderFile($fileName, $data=[]) {
-		$fileNameLang = substr($fileName, 0, -3);
-		$lang = (file_exists($fileNameLang)) ? new Language($fileNameLang) : null;
-		unset($fileNameLang);
+        // Render view
+        $output = $this->renderFile($path, $data);
+        if ($layoutPath) {
+            $output = $this->renderFile($layoutPath, ['content' => $output]);
+        }
 
-		extract($data, EXTR_PREFIX_SAME, 'data');
-		ob_start();
-		include str_replace('\\','/',$fileName);
+        return $output;
+    }
 
-		if (!empty($this->widgetStack)) {
-			throw new MException( count($this->widgetStack).' widgets not endings.');
-		}
-		return ob_get_clean();
-	}
-	/**
-	 * Get layout path
-	 *
-	 * @access protected
-	 * @param string $baseDir
-	 * @param string $module
-	 * @return string
-	 */
-	protected function getLayoutFile($baseDir, $module) {
-		$layout = $baseDir . '/' . (($module) ? $module.'/' : $module);
-		$afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
+    /**
+     * Render file by path
+     *
+     * @access protected
+     * @param string $fileName
+     * @param array $data
+     * @return string
+     * @throws MException widget not declared
+     */
+    protected function renderFile($fileName, $data = [])
+    {
+        $fileNameLang = substr($fileName, 0, -3);
+        $lang = (file_exists($fileNameLang)) ? new Language($fileNameLang) : null;
+        unset($fileNameLang);
 
-		if (!file_exists($layout . $afterPath)) {
-			return false;
-		}
-		return $layout . $afterPath;
-	}
-	/**
-	 * Redirect user to path
-	 *
-	 * @access public
-	 * @param string $path
-	 * @return void
-	 */
-	public function redirect($path) {
-		header('Location: '.$path);
-		exit();
-	}
-	// Widgets:
-	/**
-	 * Render a widget
-	 *
-	 * @access public
-	 * @param string $name
-	 * @param array $options
-	 * @param bool $capture
-	 * @return mixed
-	 * @throws MException
-	 */
-	public function widget($name, $options = [], $capture=false) {
-		$name = $name.'Widget';
+        extract($data, EXTR_PREFIX_SAME, 'data');
+        ob_start();
+        include str_replace('\\', '/', $fileName);
 
-		if (!class_exists($name)) {
-			throw new MException('Widget '.$name.' not found.');
-		}
+        if (!empty($this->widgetStack)) {
+            throw new MException(count($this->widgetStack) . ' widgets not endings.');
+        }
+        return ob_get_clean();
+    }
 
-		/** @var \Micro\base\Widget $widget */
-		$widget = new $name($options);
-		$widget->init();
+    /**
+     * Get layout path
+     *
+     * @access protected
+     * @param string $baseDir
+     * @param string $module
+     * @return string
+     */
+    protected function getLayoutFile($baseDir, $module)
+    {
+        $layout = $baseDir . '/' . (($module) ? $module . '/' : $module);
+        $afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
 
-		if ($capture) {
-			ob_start();
-			$widget->run();
-			$result = ob_get_clean();
-		} else {
-			$widget->run();
-			$result = null;
-		}
-		unset($widget);
-		return $result;
-	}
-	/**
-	 * Start render widget
-	 *
-	 * @access public
-	 * @param $name
-	 * @param array $options
-	 * @return mixed
-	 * @throws MException
-	 */
-	public function startWidget($name, $options = []) {
-		$name = $name.'Widget';
+        if (!file_exists($layout . $afterPath)) {
+            return false;
+        }
+        return $layout . $afterPath;
+    }
 
-		if (!class_exists($name)) {
-			throw new MException('Widget '.$name.' not found.');
-		}
+    /**
+     * Redirect user to path
+     *
+     * @access public
+     * @param string $path
+     * @return void
+     */
+    public function redirect($path)
+    {
+        header('Location: ' . $path);
+        exit();
+    }
+    // Widgets:
+    /**
+     * Render a widget
+     *
+     * @access public
+     * @param string $name
+     * @param array $options
+     * @param bool $capture
+     * @return mixed
+     * @throws MException
+     */
+    public function widget($name, $options = [], $capture = false)
+    {
+        $name = $name . 'Widget';
 
-		if (isset($GLOBALS['widgetStack'][$name])) {
-			throw new MException('This widget ('.$name.') already started!');
-		}
+        if (!class_exists($name)) {
+            throw new MException('Widget ' . $name . ' not found.');
+        }
 
-		/** @var \Micro\base\Widget $GLOBALS['widgetStack'][$name] */
-		$GLOBALS['widgetStack'][$name] = new $name($options);
-		return $GLOBALS['widgetStack'][$name]->init();
-	}
-	/**
-	 * End of widget
-	 *
-	 * @access public
-	 * @param string $name
-	 * @return void
-	 * @throws MException
-	 */
-	public function endWidget($name){
-		$name = $name.'Widget';
+        /** @var \Micro\base\Widget $widget */
+        $widget = new $name($options);
+        $widget->init();
 
-		if (!class_exists($name) OR !isset($GLOBALS['widgetStack'][$name])) {
-			throw new MException('Widget '.$name.' not started.');
-		}
+        if ($capture) {
+            ob_start();
+            $widget->run();
+            $result = ob_get_clean();
+        } else {
+            $widget->run();
+            $result = null;
+        }
+        unset($widget);
+        return $result;
+    }
 
-		/** @var \Micro\base\Widget $widget */
-		$widget = $GLOBALS['widgetStack'][$name];
-		unset($GLOBALS['widgetStack'][$name]);
-		$widget->run();
-		unset($widget);
-	}
+    /**
+     * Start render widget
+     *
+     * @access public
+     * @param $name
+     * @param array $options
+     * @return mixed
+     * @throws MException
+     */
+    public function startWidget($name, $options = [])
+    {
+        $name = $name . 'Widget';
+
+        if (!class_exists($name)) {
+            throw new MException('Widget ' . $name . ' not found.');
+        }
+
+        if (isset($GLOBALS['widgetStack'][$name])) {
+            throw new MException('This widget (' . $name . ') already started!');
+        }
+
+        /** @var \Micro\base\Widget $GLOBALS ['widgetStack'][$name] */
+        $GLOBALS['widgetStack'][$name] = new $name($options);
+        return $GLOBALS['widgetStack'][$name]->init();
+    }
+
+    /**
+     * End of widget
+     *
+     * @access public
+     * @param string $name
+     * @return void
+     * @throws MException
+     */
+    public function endWidget($name)
+    {
+        $name = $name . 'Widget';
+
+        if (!class_exists($name) OR !isset($GLOBALS['widgetStack'][$name])) {
+            throw new MException('Widget ' . $name . ' not started.');
+        }
+
+        /** @var \Micro\base\Widget $widget */
+        $widget = $GLOBALS['widgetStack'][$name];
+        unset($GLOBALS['widgetStack'][$name]);
+        $widget->run();
+        unset($widget);
+    }
 }

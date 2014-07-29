@@ -15,27 +15,29 @@ namespace Micro\base;
  */
 abstract class Command
 {
-	/** @var array $args arguments for command */
-	public $args = [];
-	/** @var bool $result status of execute command */
-	public $result = false;
-	/** @var string $message status message of execute command */
-	public $message = '';
+    /** @var array $args arguments for command */
+    public $args = [];
+    /** @var bool $result status of execute command */
+    public $result = false;
+    /** @var string $message status message of execute command */
+    public $message = '';
 
 
-	/**
-	 * Set arguments class
-	 *
-	 * @access public
-	 * @param array $args
-	 * @result void
-	 */
-	public function __construct($args = []) {
-		$this->args = $args;
-	}
-	/**
-	 * Execute command
-	 * @abstract
-	 */
-	public abstract function execute();
+    /**
+     * Set arguments class
+     *
+     * @access public
+     * @param array $args
+     * @result void
+     */
+    public function __construct($args = [])
+    {
+        $this->args = $args;
+    }
+
+    /**
+     * Execute command
+     * @abstract
+     */
+    public abstract function execute();
 }

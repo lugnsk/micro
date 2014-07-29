@@ -2,8 +2,6 @@
 
 namespace Micro\db;
 
-use Micro\base\Registry;
-
 /**
  * Migration class file.
  *
@@ -16,44 +14,52 @@ use Micro\base\Registry;
  * @version 1.0
  * @since 1.0
  */
-class Migration {
-	/** @var DbConnection $db connection to db */
-	private $db = false;
+class Migration
+{
+    /** @var DbConnection $db connection to db */
+    private $db = false;
 
 
-	/**
-	 * Constructor for model
-	 *
-	 * @access public
-	 * @result void
-	 */
-	public function __construct() {
-		$this->getDbConnection();
-	}
-	/**
-	 * Get connection to db
-	 *
-	 * @access public
-	 * @global Registry
-	 * @return void
-	 */
-	public function getDbConnection() {
-		$this->db = Registry::get('db')->conn;
-	}
-	/**
-	 * Upgrade DB
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function up() {
-	}
-	/**
-	 * Downgrade DB
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function down() {
-	}
+    /**
+     * Constructor for model
+     *
+     * @access public
+     * @result void
+     */
+    public function __construct()
+    {
+        $this->getDbConnection();
+    }
+
+    /**
+     * Get connection to db
+     *
+     * @access public
+     * @global Registry
+     * @return void
+     */
+    public function getDbConnection()
+    {
+        $this->db = \Micro\base\Registry::get('db')->conn;
+    }
+
+    /**
+     * Upgrade DB
+     *
+     * @access public
+     * @return void
+     */
+    public function up()
+    {
+    }
+
+    /**
+     * Downgrade DB
+     *
+     * @access public
+     * @return void
+     */
+    public function down()
+    {
+    }
 }

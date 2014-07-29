@@ -2,8 +2,6 @@
 
 namespace Micro\base;
 
-use \Micro\base\Exception AS MException;
-
 /**
  * Language getter language tags from *.ini files
  *
@@ -17,35 +15,38 @@ use \Micro\base\Exception AS MException;
  */
 class Language
 {
-	/** @var array $language language array */
-	private $language = [];
-	/** @var string $defaultLang */
-	private $defaultLang = 'en';
+    /** @var array $language language array */
+    private $language = [];
+    /** @var string $defaultLang */
+    private $defaultLang = 'en';
 
 
-	/**
-	 * Constructor language
-	 *
-	 * @access public
-	 * @param string $filename
-	 * @result void
-	 * @throws MException
-	 */
-	public function __construct($filename) {
-		$lang = (Registry::get('lang')) ? Registry::get('lang') : $this->defaultLang;
-		if (!file_exists($filename.$lang.'.ini')) {
-			throw new MException('Language file '.$filename.$lang.'.ini not exists.');
-		}
-		$this->language = parse_ini_file($filename.'ini', true);
-	}
-	/**
-	 * Get param value
-	 *
-	 * @access public
-	 * @param string $name
-	 * @return mixed
-	 */
-	public function __get($name) {
-		return $this->language[$name];
-	}
+    /**
+     * Constructor language
+     *
+     * @access public
+     * @param string $filename
+     * @result void
+     * @throws \Micro\base\Exception
+     */
+    public function __construct($filename)
+    {
+        $lang = (Registry::get('lang')) ? Registry::get('lang') : $this->defaultLang;
+        if (!file_exists($filename . $lang . '.ini')) {
+            throw new \Micro\base\Exception('Language file ' . $filename . $lang . '.ini not exists.');
+        }
+        $this->language = parse_ini_file($filename . 'ini', true);
+    }
+
+    /**
+     * Get param value
+     *
+     * @access public
+     * @param string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this->language[$name];
+    }
 }

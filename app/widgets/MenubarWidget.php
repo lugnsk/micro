@@ -6,9 +6,12 @@ use Micro\base\Widget;
 
 class MenubarWidget extends Widget
 {
-	public function init() {}
+    public function init()
+    {
+    }
 
-	public function run() {
-		echo $this->render('menubar');
-	}
+    public function run()
+    {
+        echo $this->render('menubar');
+    }
 }
