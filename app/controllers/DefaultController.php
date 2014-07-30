@@ -12,6 +12,8 @@ class DefaultController extends Controller
 {
     public function actionIndex()
     {
+        Registry::get('logger')->send('notice', 'open start page');
+
         echo $this->render('index');
     }
 

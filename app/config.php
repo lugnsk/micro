@@ -36,6 +36,17 @@ return [
                 '/blog/post/<id:\d+>' => '/blog/post/view',
             ],
         ],
+        // Logging
+        'logger' => [
+            'class' => '\Micro\base\Logger',
+            'loggers' => [
+                'file' => [
+                    'class' => '\Micro\loggers\FileLogger',
+                    'levels' => 'notice, error, emergency, critical, alert, warning, info, debug',
+                    'filename' => __DIR__ . '/temp/application.log',
+                ]
+            ]
+        ],
         // Default session
         'session' => [
             'class' => '\Micro\base\Session',
