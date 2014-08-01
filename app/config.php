@@ -41,9 +41,9 @@ return [
             'class' => '\Micro\base\Logger',
             'loggers' => [
                 'file' => [
-                    'class' => '\Micro\loggers\FileLogger',
+                    'class' => '\Micro\loggers\DbLogger',
                     'levels' => 'notice, error, emergency, critical, alert, warning, info, debug',
-                    'filename' => __DIR__ . '/temp/application.log',
+                    'table' => 'logs',
                 ]
             ]
         ],

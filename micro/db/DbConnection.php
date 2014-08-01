@@ -128,7 +128,7 @@ class DbConnection
      */
     public function createTable($name, $elements = [], $params = '')
     {
-        return $this->conn->exec('CREATE TABLE IF EXISTS ' . $name . ' (' . implode(',', $elements) . ') ' . $params . ';');
+        return $this->conn->exec('CREATE TABLE IF NOT EXISTS ' . $name . ' (' . implode(',', $elements) . ') ' . $params . ';');
     }
 
     /**
