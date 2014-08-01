@@ -207,4 +207,34 @@ class DbConnection
     {
         return $this->conn->lastInsertId();
     }
+
+    public function insert($table, $line=[]) {
+        $fields      = implode(', ', array_keys($line));
+        $bind_fields = ':' . implode(', :', array_keys($line));
+
+        return $this->conn->query(
+            'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $bind_fields . ');'
+        )->execute($line);
+    }
+
+    public function update($table, $elements=[], $conditions = '') {
+        $valstr = array();
+        foreach (array_keys($elements) as $key)
+        {
+            $valstr[] = '`' . $key . '`=:' . $key;
+        }
+        if ( ! empty($conditions) ) {
+            $conditions = 'WHERE ' . $conditions;
+        }
+
+        return $this->conn->query(
+            'UPDATE ' . $table . ' SET ' . implode(', ', $valstr) . ' ' . $conditions
+        )->execute($elements);
+    }
+
+    public function delete($table, $conditions, $ph=[]) {
+        return $this->conn->query(
+            'DELETE FROM ' . $table . ' WHERE ' . $conditions
+        )->execute($ph);
+    }
 }
