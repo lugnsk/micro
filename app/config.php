@@ -47,6 +47,10 @@ return [
                 ]
             ]
         ],
+        // FORM Files
+        'files' => [
+            'class' => '\Micro\web\Uploader'
+        ],
         // Default session
         'session' => [
             'class' => '\Micro\base\Session',
