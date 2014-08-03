@@ -2,8 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\Micro;
-
 /**
  * Validator is a runner validation process
  *
@@ -38,14 +36,11 @@ class Validator
         //		'compare'=>'MCompareValidator',
         //		'in'=>'MRangeValidator',
         //		'numerical'=>'MNumberValidator',
-        //		'captcha'=>'MCaptchaValidator',
         //		'type'=>'MTypeValidator',
         //		'file'=>'MFileValidator',
-        //		'default'=>'MDefaultValueValidator',
-        //		'exist'=>'MExistValidator',
-        //		'safe'=>'MSafeValidator',
-        //		'unsafe'=>'MUnsafeValidator',
         //		'date'=>'MDateValidator',
+        //		'captcha'=>'MCaptchaValidator',
+        //		'default'=>'MDefaultValueValidator',
     ];
 
 
@@ -92,6 +87,7 @@ class Validator
      * @param $model
      * @param bool $client
      * @return bool|string
+     * @throws \Micro\base\Exception
      */
     public function run($model, $client = false)
     {
@@ -100,9 +96,9 @@ class Validator
 
         $filename = false;
         if (isset($this->validators[$name])) {
-            $filename = Micro::getInstance()->config['MicroDir'] . '/validators/' . $this->validators[$name] . '.php';
-        } elseif (file_exists(Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
-            $filename = Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php';
+            $filename = \Micro\Micro::getInstance()->config['MicroDir'] . '/validators/' . $this->validators[$name] . '.php';
+        } elseif (file_exists(\Micro\Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
+            $filename = \Micro\Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php';
         }
 
         if ($filename) {

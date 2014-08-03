@@ -18,13 +18,13 @@ class StringValidator extends \Micro\base\Validator
      * Validate in server
      *
      * @access public
-     * @param $model
+     * @param \Micro\db\Model $model
      * @return bool
      */
     public function validate($model)
     {
         foreach ($this->elements AS $element) {
-            if (!method_exists($model, $element)) {
+            if (!property_exists($model, $element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
                 return false;
             }
@@ -56,6 +56,15 @@ class StringValidator extends \Micro\base\Validator
     public function client($model)
     {
         $js = '';
+
+        if (isset($this->params['min'])) {
+            $js .= ' if (value.length < '.$this->params['min'].') { /*action*/ }';
+        }
+
+        if (isset($this->params['max'])) {
+            $js .= ' if (value.length > '.$this->params['max'].') { /*action*/ }';
+        }
+
         return $js;
     }
 }

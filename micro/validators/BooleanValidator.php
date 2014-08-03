@@ -1,7 +1,7 @@
-<?php /** MicroRequiredValidator */
+<?php /** MicroBooleanValidator */
 
 /**
- * RequiredValidator class file.
+ * BooleanValidator class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -12,8 +12,23 @@
  * @version 1.0
  * @since 1.0
  */
-class RequiredValidator extends \Micro\base\Validator
+class BooleanValidator extends \Micro\base\Validator
 {
+    /**
+     * Initial validator
+     *
+     * @access public
+     * @param array $rule
+     * @result void
+     */
+    public function __construct($rule=[])
+    {
+        parent::__construct($rule);
+
+        $this->params['true'] = true;
+        $this->params['false'] = false;
+    }
+
     /**
      * Validate in server
      *
@@ -30,7 +45,7 @@ class RequiredValidator extends \Micro\base\Validator
             }
             $elementValue = $model->$element;
 
-            if (empty($elementValue)) {
+            if (($elementValue !== $this->params['true']) AND ($elementValue !== $this->params['false'])) {
                 $this->errors[] = $element . ' error: required element is empty.';
                 return false;
             }
@@ -47,6 +62,6 @@ class RequiredValidator extends \Micro\base\Validator
      */
     public function client($model)
     {
-        return ' if (value=="") { /*action*/ }';
+        return ' if (value != '.$this->params['true'].' AND value != '.$this->params['false'].') { /*action*/ }';
     }
 }
