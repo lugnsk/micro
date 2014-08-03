@@ -21,6 +21,11 @@ class LoginFormModel extends FormModel
     public function rules()
     {
         return [
+            // Web security
+            ['login, password', 'trim'],
+            ['login, password', 'strip_tags'],
+            ['login, password', 'htmlspecialchars'],
+            // check value elements
             ['login', 'string', 'min' => 5, 'max' => 16],
             ['password', 'string', 'min' => 6, 'max' => 32]
         ];

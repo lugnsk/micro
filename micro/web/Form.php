@@ -28,9 +28,11 @@ class Form
      */
     private function getField($model, $property)
     {
+        $cl = get_class($model);
+        $smallName = substr($cl, strrpos($cl, '\\')+1);
         return [
-            'id' => get_class($model) . '_' . $property,
-            'name' => get_class($model) . '[' . $property . ']',
+            'id' => $smallName . '_' . $property,
+            'name' => $smallName . '[' . $property . ']',
             'value' => (property_exists($model, $property)) ? $model->$property : null
         ];
     }

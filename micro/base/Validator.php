@@ -27,8 +27,9 @@ class Validator
     public $params = [];
     /** @property array $validators */
     protected $validators = [
-        'string' => 'StringValidator',
-        'required' => 'RequiredValidator',
+        'string'    => 'StringValidator',
+        'required'  => 'RequiredValidator',
+        'boolean'   => 'BooleanValidator',
         //		'filter'=>'MFilterValidator',
         //		'match'=>'MRegularExpressionValidator',
         //		'email'=>'MEmailValidator',
@@ -42,7 +43,6 @@ class Validator
         //		'file'=>'MFileValidator',
         //		'default'=>'MDefaultValueValidator',
         //		'exist'=>'MExistValidator',
-        //		'boolean'=>'MBooleanValidator',
         //		'safe'=>'MSafeValidator',
         //		'unsafe'=>'MUnsafeValidator',
         //		'date'=>'MDateValidator',
@@ -98,13 +98,26 @@ class Validator
         $elements = explode(',', str_replace(' ', '', array_shift($this->rule)));
         $name = array_shift($this->rule);
 
-        $filename = Micro::getInstance()->config['MicroDir'] . '/validators/' . $this->validators[$name] . '.php';
-        $extFilename = Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php';
+        $filename = false;
+        if (isset($this->validators[$name])) {
+            $filename = Micro::getInstance()->config['MicroDir'] . '/validators/' . $this->validators[$name] . '.php';
+        } elseif (file_exists(Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
+            $filename = Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php';
+        }
 
-        if (file_exists($filename)) {
+        if ($filename) {
             include_once $filename;
-        } elseif (file_exists($extFilename)) {
-            include_once $extFilename;
+        } else {
+            if (function_exists($name)) {
+                foreach ($elements AS $element) {
+                    if (property_exists($model, $element)) {
+                        $model->$element = call_user_func($name, $model->$element);
+                    }
+                }
+                return true;
+            } else {
+                throw new \Micro\base\Exception('Validator '.$name.' not defined.');
+            }
         }
 
         $valid = new $this->validators[$name];
