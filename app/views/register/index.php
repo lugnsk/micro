@@ -1,13 +1,23 @@
+<?php
+/** @var App\controllers\RegisterController $this */
+/** @var App\models\User $model */
+
+echo \Micro\web\helpers\Html::script( $model->getClient() );
+?>
 <h2>Регистрация</h2>
 
-<form action="/register/post" method="post" name="Register_form">
-    <p><label>Email</label><input type="email" name="Register[email]"/></p>
 
-    <p><label>Логин</label><input type="text" name="Register[login]"/></p>
+<?php
+    /** @var \Micro\web\Form $form */
+    $form = $this->beginWidget('\Micro\widgets\FormWidget',[
+        'method'=>'post',
+        'action'=>'/register/post'
+    ]);
 
-    <p><label>Пароль</label><input type="password" name="Register[pass]"/></p>
+    echo $form->textFieldRow($model, 'email');
+    echo $form->textFieldRow($model, 'login');
+    echo $form->passwordFieldRow($model, 'pass');
+    echo $form->textFieldRow($model, 'fio');
+    echo \Micro\web\helpers\Html::submitButton('Зарегистрироваться');
 
-    <p><label>ФИО</label><input type="text" name="Register[fio]"/></p>
-
-    <p><input type="submit" value="Зарегистрироваться"/></p>
-</form>
+    $this->endWidget('\Micro\widgets\FormWidget'); ?>

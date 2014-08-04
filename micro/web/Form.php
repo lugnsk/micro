@@ -81,10 +81,11 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['name'], $labelOptions) .
-        $this->textField($model, $property, $options) .
-        Html::closeTag('div');
+            Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+            $this->textField($model, $property, $options) .
+            Html::closeTag('div');
     }
 
     /**
@@ -197,7 +198,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['name'], $labelOptions) .
+        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
         $this->passwordField($model, $property, $options) .
         Html::closeTag('div');
     }

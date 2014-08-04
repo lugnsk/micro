@@ -75,7 +75,7 @@ class Html
      */
     private static function field($type, $name, $value = null, $attributes = [])
     {
-        $attributes['id'] = $name;
+        $attributes['id'] = (isset($attributes['id'])) ? $attributes['id'] : $name;
         $attributes['type'] = $type;
         $attributes['name'] = $name;
         $attributes['value'] = $value;

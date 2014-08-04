@@ -49,6 +49,34 @@ abstract class FormModel
         return true;
     }
 
+    public function getClient()
+    {
+        $result = '';
+
+        foreach ($this->rules() AS $rule) {
+            $validator = new \Micro\base\Validator($rule);
+            $result .= $validator->run($this, true);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Set model data
+     *
+     * Loading data in model from array
+     *
+     * @access public
+     * @param array $data
+     * @return void
+     */
+    public function setModelData($data = [])
+    {
+        foreach ($data AS $key => $value) {
+            $this->$key = $value;
+        }
+    }
+
     /**
      * Add error model
      *

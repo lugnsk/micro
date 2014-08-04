@@ -47,6 +47,27 @@ class RequiredValidator extends \Micro\base\Validator
      */
     public function client($model)
     {
-        return ' if (value=="") { /*action*/ }';
+        $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
+
+        $result = 'jQuery(document).ready(function(){';
+        foreach ($this->elements AS $element) {
+            $id = $object . '_' . $element;
+
+            $result .= '
+jQuery("#'.$id.'").bind("change", function(e){
+    if (!this.value) {
+        e.preventDefault();
+        this.focus();
+    }
+});
+jQuery("#'.$id.'").bind("submit", function(e){
+    if (!this.value) {
+        e.preventDefault();
+        this.focus();
+    }
+});
+';
+        }
+        return $result.'});';
     }
 }

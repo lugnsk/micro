@@ -2,7 +2,7 @@
 
 namespace Micro\base;
 
-use Micro\base\Exception AS MException;
+use Micro\Micro;
 
 /**
  * Controller class file.
@@ -55,7 +55,7 @@ abstract class Controller
      * @access public
      * @param string $name
      * @return void
-     * @throws MException method not declared
+     * @throws Exception method not declared
      */
     public function action($name = 'index')
     {
@@ -65,7 +65,7 @@ abstract class Controller
             $action = 'action' . ucfirst($this->defaultAction);
 
             if (!method_exists($this, $action)) {
-                throw new MException('Method ' . $name . ' is not declared.');
+                throw new Exception('Method ' . $name . ' is not declared.');
             }
         }
 
@@ -109,32 +109,14 @@ abstract class Controller
         if (empty($view)) {
             return false;
         }
+        $path = $this->getViewFile($view);
 
-        // Get inf of controller
-        $appDirectory = \Micro\Micro::getInstance()->config['AppDir'];
-
-        if (!$this->asWidget) {
-            $module = Registry::get('request')->getModules();
-        } else {
-            $reflector = new \ReflectionClass(get_called_class());
-            $module = str_replace($appDirectory, '', dirname($reflector->getFileName()));
-            unset($reflector);
-        }
-
-        // Calculate path to view
-        $path = $appDirectory . '/' . (($module) ? $module . '/' : null);
-
-        if ($this->asWidget) {
-            $path .= '/views/' . $view . '.php';
-        } else {
-            $className = str_replace('controller', '', strtolower(Registry::get('request')->getController()));
-            $path .= 'views/' . $className . '/' . $view . '.php';
-        }
-
-        // Generate layout path
-        $layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, $module) : null;
-        if (!file_exists($layoutPath)) {
-            $layoutPath = ($this->layout) ? $this->getLayoutFile($appDirectory, '') : null;
+        $layoutPath = null;
+        if (!$this->asWidget AND $this->layout) {
+            $layoutPath = $this->getLayoutFile(
+                Micro::getInstance()->config['AppDir'],
+                Registry::get('request')->getModules()
+            );
         }
 
         // Render view
@@ -146,6 +128,28 @@ abstract class Controller
         return $output;
     }
 
+    private function getViewFile($view)
+    {
+
+        // Calculate path to view
+        if ( substr(get_called_class(), 0, strpos(get_called_class(), '\\')) == 'App' ) {
+            $path = Micro::getInstance()->config['AppDir'];
+        } else {
+            $path = Micro::getInstance()->config['MicroDir'];
+        }
+
+        $cl = strtolower(dirname(str_replace('\\','/', get_called_class())));
+
+        $cl = substr($cl, strpos($cl, '/'));
+        if ($this->asWidget) {
+            $path .= $cl . '/views/' . $view . '.php';
+        } else {
+            $className = str_replace('controller', '', strtolower(Registry::get('request')->getController()));
+            $path .= dirname($cl) . '/views/' . $className . '/' . $view . '.php';
+        }
+        return $path;
+    }
+
     /**
      * Render file by path
      *
@@ -153,7 +157,7 @@ abstract class Controller
      * @param string $fileName
      * @param array $data
      * @return string
-     * @throws MException widget not declared
+     * @throws Exception widget not declared
      */
     protected function renderFile($fileName, $data = [])
     {
@@ -166,7 +170,7 @@ abstract class Controller
         include str_replace('\\', '/', $fileName);
 
         if (!empty($this->widgetStack)) {
-            throw new MException(count($this->widgetStack) . ' widgets not endings.');
+            throw new Exception(count($this->widgetStack) . ' widgets not endings.');
         }
         return ob_get_clean();
     }
@@ -178,6 +182,7 @@ abstract class Controller
      * @param string $baseDir
      * @param string $module
      * @return string
+     * @throws Exception
      */
     protected function getLayoutFile($baseDir, $module)
     {
@@ -185,7 +190,10 @@ abstract class Controller
         $afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
 
         if (!file_exists($layout . $afterPath)) {
-            return false;
+            if (file_exists($baseDir . '/' . $afterPath)) {
+                return $baseDir . '/' . $afterPath;
+            }
+            throw new Exception('Layout '.ucfirst($this->layout).' not found.');
         }
         return $layout . $afterPath;
     }
@@ -202,7 +210,9 @@ abstract class Controller
         header('Location: ' . $path);
         exit();
     }
+
     // Widgets:
+
     /**
      * Render a widget
      *
@@ -211,14 +221,12 @@ abstract class Controller
      * @param array $options
      * @param bool $capture
      * @return mixed
-     * @throws MException
+     * @throws Exception
      */
     public function widget($name, $options = [], $capture = false)
     {
-        $name = $name . 'Widget';
-
         if (!class_exists($name)) {
-            throw new MException('Widget ' . $name . ' not found.');
+            throw new Exception('Widget ' . $name . ' not found.');
         }
 
         /** @var \Micro\base\Widget $widget */
@@ -244,21 +252,19 @@ abstract class Controller
      * @param $name
      * @param array $options
      * @return mixed
-     * @throws MException
+     * @throws Exception
      */
-    public function startWidget($name, $options = [])
+    public function beginWidget($name, $options = [])
     {
-        $name = $name . 'Widget';
-
         if (!class_exists($name)) {
-            throw new MException('Widget ' . $name . ' not found.');
+            throw new Exception('Widget ' . $name . ' not found.');
         }
 
         if (isset($GLOBALS['widgetStack'][$name])) {
-            throw new MException('This widget (' . $name . ') already started!');
+            throw new Exception('This widget (' . $name . ') already started!');
         }
 
-        /** @var \Micro\base\Widget $GLOBALS ['widgetStack'][$name] */
+        /** @var \Micro\base\Widget $GLOBALS['widgetStack'][$name] */
         $GLOBALS['widgetStack'][$name] = new $name($options);
         return $GLOBALS['widgetStack'][$name]->init();
     }
@@ -269,19 +275,18 @@ abstract class Controller
      * @access public
      * @param string $name
      * @return void
-     * @throws MException
+     * @throws Exception
      */
     public function endWidget($name)
     {
-        $name = $name . 'Widget';
-
         if (!class_exists($name) OR !isset($GLOBALS['widgetStack'][$name])) {
-            throw new MException('Widget ' . $name . ' not started.');
+            throw new Exception('Widget ' . $name . ' not started.');
         }
 
         /** @var \Micro\base\Widget $widget */
         $widget = $GLOBALS['widgetStack'][$name];
         unset($GLOBALS['widgetStack'][$name]);
+
         $widget->run();
         unset($widget);
     }

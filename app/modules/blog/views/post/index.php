@@ -1,4 +1,9 @@
-<?php $this->widget('App\modules\blog\widgets\Topblogs'); ?>
+<?php
+/** @var array $blogs */
+/** @var integer $pages */
+/** @var \Micro\base\Language $lang */
+?>
+<?php $this->widget('App\modules\blog\widgets\TopblogsWidget'); ?>
 <a href="/blog/post/create">создать</a>
 
 <?php if (!$blogs): ?>

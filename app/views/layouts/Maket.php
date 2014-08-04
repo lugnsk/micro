@@ -10,7 +10,8 @@ use \Micro\Micro;
     <?= Html::charset('utf-8') ?>
     <?= Html::meta('language', 'ru') ?>
     <?= Html::cssFile('/css/main.css') ?>
-    <?= Html::favicon('/favicon.png'); ?>
+    <?= Html::scriptFile('/css/jquery.js') ?>
+    <?= Html::favicon('/favicon.png') ?>
     <?= Html::meta('viewport', 'width=device-width, initial-scale=1.0') ?>
     <?= Html::title($this->title) ?>
 </head>
@@ -20,7 +21,7 @@ use \Micro\Micro;
         <span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
     </div>
     <div id="content">
-        <?php $this->widget('App\widgets\Menubar', ['links' => $this->menu]); ?>
+        <?php $this->widget('App\widgets\MenubarWidget', ['links' => $this->menu]); ?>
         <?= $content ?>
     </div>
     <div id="footer">

@@ -57,9 +57,7 @@ class FormBuilder
      */
     public function setModelData($data = [])
     {
-        foreach ($data AS $key => $value) {
-            $this->model->$key = $value;
-        }
+        $this->model->setModelData($data);
     }
 
     /**

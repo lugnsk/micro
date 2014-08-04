@@ -2,6 +2,10 @@
 
 namespace Micro\widgets;
 
+use \Micro\web\helpers\Html;
+use \Micro\web\Form;
+use \Micro\base\Widget;
+
 /**
  * FormWidget class file.
  *
@@ -14,7 +18,7 @@ namespace Micro\widgets;
  * @version 1.0
  * @since 1.0
  */
-class FormWidget extends \Micro\base\Widget
+class FormWidget extends Widget
 {
     /** @property string $action */
     public $action = '';
@@ -32,8 +36,8 @@ class FormWidget extends \Micro\base\Widget
     public function init()
     {
         $this->action = ($this->action) ? $this->action : $_SERVER['REQUEST_URI'];
-        echo \Micro\web\helpers\Html::beginForm($this->action, $this->method, ['type' => $this->type]);
-        return new \Micro\web\Form;
+        echo Html::beginForm($this->action, $this->method, ['type' => $this->type]);
+        return new Form;
     }
 
     /**
@@ -44,6 +48,6 @@ class FormWidget extends \Micro\base\Widget
      */
     public function run()
     {
-        echo \Micro\web\helpers\Html::endForm();
+        echo Html::endForm();
     }
 }
