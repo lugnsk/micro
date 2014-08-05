@@ -208,6 +208,14 @@ class DbConnection
         return $this->conn->lastInsertId();
     }
 
+    /**
+     * Insert row into table
+     *
+     * @access public
+     * @param string $table
+     * @param array $line
+     * @return bool
+     */
     public function insert($table, $line=[]) {
         $fields      = implode(', ', array_keys($line));
         $bind_fields = ':' . implode(', :', array_keys($line));
@@ -217,21 +225,39 @@ class DbConnection
         )->execute($line);
     }
 
+    /**
+     * Update row in table
+     *
+     * @access public
+     * @param string $table
+     * @param array $elements
+     * @param string $conditions
+     * @return bool
+     */
     public function update($table, $elements=[], $conditions = '') {
-        $valstr = array();
+        $valStr = [];
         foreach (array_keys($elements) as $key)
         {
-            $valstr[] = '`' . $key . '`=:' . $key;
+            $valStr[] = '`' . $key . '`=:' . $key;
         }
         if ( ! empty($conditions) ) {
             $conditions = 'WHERE ' . $conditions;
         }
 
         return $this->conn->query(
-            'UPDATE ' . $table . ' SET ' . implode(', ', $valstr) . ' ' . $conditions
+            'UPDATE ' . $table . ' SET ' . implode(', ', $valStr) . ' ' . $conditions
         )->execute($elements);
     }
 
+    /**
+     * Delete row from table
+     *
+     * @access public
+     * @param string $table
+     * @param string $conditions
+     * @param array $ph
+     * @return bool
+     */
     public function delete($table, $conditions, $ph=[]) {
         return $this->conn->query(
             'DELETE FROM ' . $table . ' WHERE ' . $conditions
