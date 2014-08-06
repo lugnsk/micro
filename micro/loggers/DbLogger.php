@@ -41,7 +41,7 @@ class DbLogger extends LogInterface
         )->execute(array(
             'level'=>$level,
             'message'=>$message,
-            'date_create'=>time(),
+            'date_create'=>$_SERVER['REQUEST_TIME'],
         ));
     }
 }

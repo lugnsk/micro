@@ -44,11 +44,11 @@ class Autoload
             $namespace = substr($className, 0, $lastNsPos);
             $className = substr($className, $lastNsPos + 1);
             // Add in path
-            $path .= str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+            $path .= strtr($namespace, '\\', DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         }
 
         // result path
-        $path .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
+        $path .= strtr($className, '_', DIRECTORY_SEPARATOR) . '.php';
         require $path;
     }
 }

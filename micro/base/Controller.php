@@ -130,15 +130,16 @@ abstract class Controller
 
     private function getViewFile($view)
     {
+        $calledClass = get_called_class();
 
         // Calculate path to view
-        if ( substr(get_called_class(), 0, strpos(get_called_class(), '\\')) == 'App' ) {
+        if ( substr($calledClass, 0, strpos($calledClass, '\\')) == 'App' ) {
             $path = Micro::getInstance()->config['AppDir'];
         } else {
             $path = Micro::getInstance()->config['MicroDir'];
         }
 
-        $cl = strtolower(dirname(str_replace('\\','/', get_called_class())));
+        $cl = strtolower(dirname(strtr($calledClass, '\\', '/')));
 
         $cl = substr($cl, strpos($cl, '/'));
         if ($this->asWidget) {

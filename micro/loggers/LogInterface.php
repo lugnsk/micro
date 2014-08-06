@@ -8,7 +8,7 @@ abstract class LogInterface
 
     public function __construct($params = [])
     {
-        $levels = explode(',', str_replace(' ', '', strtolower($params['levels'])));
+        $levels = explode(',', strtr(strtolower($params['levels']), ' ', ''));
         foreach ($levels AS $level) {
             if (array_search($level, \Micro\base\Logger::$supportedLevels)) {
                 $this->supportedLevels[] = $level;

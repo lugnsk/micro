@@ -671,7 +671,7 @@ class Html
                 $checkbox['attributes']['selected'] = 'selected';
             }
             $check = self::checkboxField($name, $checkbox['value'], $checkbox['attributes']);
-            $checks .= str_replace('%text%', $checkbox['text'], str_replace('%check%', $check, $format));
+            $checks .= strtr(strtr($format, '%check%', $check), '%text%', $checkbox['text']);
         }
         return $checks;
     }
@@ -694,7 +694,7 @@ class Html
                 $radio['attributes']['selected'] = 'selected';
             }
             $rad = self::radioField($name, $radio['value'], $radio['attributes']);
-            $rads .= str_replace('%text%', $radio['text'], str_replace('%radio%', $rad, $format));
+            $rads .= strtr(strtr($format, '%radio%', $rad), '%text%', $radio['text']);
         }
         return $rads;
     }

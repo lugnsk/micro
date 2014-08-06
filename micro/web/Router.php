@@ -113,7 +113,8 @@ class Router
     {
         $attr = [];
 
-        for ($i = 0; $i < count($uriBlocks); $i++) {
+        $countUriBlocks = count($uriBlocks);
+        for ($i = 0; $i < $countUriBlocks; $i++) {
             if ($patBlocks[$i]{0} == '<') {
                 $cut = strpos($patBlocks[$i], ':');
 
@@ -140,7 +141,8 @@ class Router
     {
         $result = null;
 
-        for ($i = 0; $i < count($repBlocks); $i++) {
+        $countRepBlocks = count($repBlocks);
+        for ($i = 0; $i < $countRepBlocks; $i++) {
             if ($repBlocks[$i]{0} == '<') {
                 $val = substr($repBlocks[$i], 1, strlen($repBlocks[$i]) - 1);
 

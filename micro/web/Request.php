@@ -59,9 +59,10 @@ class Request
 
         if (!empty($uriBlocks)) {
             $uriBlocks = array_values($uriBlocks);
+            $countUriBlocks = count($uriBlocks);
 
             $gets = [];
-            for ($i = 0; $i < count($uriBlocks); $i = $i + 2) {
+            for ($i = 0; $i < $countUriBlocks; $i = $i + 2) {
                 $gets[$uriBlocks[$i]] = $uriBlocks[$i + 1];
             }
             $_GET = array_merge($_GET, $gets);
@@ -86,7 +87,7 @@ class Request
                 unset($uriBlocks[$i]);
             } else break;
         }
-        $this->modules = str_replace('/', '\\', $this->modules);
+        $this->modules = strtr($this->modules, '/', '\\');
     }
 
     /**
