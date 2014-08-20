@@ -2,6 +2,8 @@
 
 namespace Micro\web\helpers;
 
+use Micro\base\Registry;
+
 /**
  * Micro user class file
  *
@@ -24,6 +26,34 @@ class User
      */
     public function isGuest()
     {
-        return (!isset($_SESSION['UserID']) OR empty($_SESSION['UserID']));
+        return ((!Registry::get('session')) OR empty(Registry::get('session')->UserID));
+    }
+
+    /**
+     * Get user ID
+     *
+     * @access public
+     * @return bool|integer
+     */
+    public function getID()
+    {
+        return (!$this->isGuest()) ? Registry::get('session')->UserID : false;
+    }
+
+    /**
+     * Check access by current user
+     *
+     * @access public
+     * @param string $action
+     * @param array $data
+     * @return bool
+     */
+    public function check($action, $data=[])
+    {
+        if (!$this->isGuest()) {
+            return Registry::get('permissions')->check($this->getID(), $action, $data);
+        } else {
+            return false;
+        }
     }
 }

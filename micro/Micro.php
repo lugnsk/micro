@@ -5,6 +5,7 @@ namespace Micro;
 use Micro\base\Exception AS MException;
 use Micro\base\Autoload;
 use Micro\base\Registry;
+use Micro\web\helpers\Html;
 
 /**
  * Micro class file.
@@ -96,13 +97,12 @@ final class Micro
     {
         $path = $this->prepareController();
         $action = Registry::get('request')->getAction();
-
-        //require_once $path.'.php';
         $name = basename($path);
 
         if (!class_exists($name)) {
             throw new MException('Controller ' . $name . ' not set');
         }
+
         /** @var \Micro\base\Controller $mvc */
         $mvc = new $name;
         $mvc->action($action);
@@ -110,9 +110,9 @@ final class Micro
         // Render timer
         if (isset($this->config['timer']) AND $this->config['timer'] == true) {
             die(
-                \Micro\web\helpers\Html::openTag('div', ['class' => 'Mruntime']) .
+                Html::openTag('div', ['class' => 'Mruntime']) .
                 (microtime(1) - $this->timer) .
-                \Micro\web\helpers\Html::closeTag('div')
+                Html::closeTag('div')
             );
         }
     }

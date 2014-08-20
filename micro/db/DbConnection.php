@@ -2,6 +2,8 @@
 
 namespace Micro\db;
 
+use \Micro\base\Exception;
+
 /**
  * DbConnection class file.
  *
@@ -26,13 +28,13 @@ class DbConnection
      * @access public
      * @param array $config
      * @result void
-     * @throw \Micro\base\Exception
+     * @throw Exception
      */
     public function __construct($config = [])
     {
         try {
             $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password']);
-        } catch (\Micro\base\Exception $e) {
+        } catch (Exception $e) {
             die('Подключение к БД не удалось: ' . $e->getMessage());
         }
     }
@@ -262,5 +264,24 @@ class DbConnection
         return $this->conn->query(
             'DELETE FROM ' . $table . ' WHERE ' . $conditions
         )->execute($ph);
+    }
+
+    /**
+     * Exists element value in the table
+     *
+     * @access public
+     * @param string $table
+     * @param string $element
+     * @param string $value
+     * @return bool
+     */
+    public function exists($table, $element, $value)
+    {
+        $sth = $this->conn->query(
+            'SELECT '.$element.' FROM '.$table.' WHERE '.$element.'="'.$value.'" LIMIT 1;'
+        );
+        $sth->execute();
+
+        return (bool)$sth->rowCount();
     }
 }

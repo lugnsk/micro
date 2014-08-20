@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 /**
- * MAutoload class file.
+ * Autoload class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro

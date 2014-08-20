@@ -69,9 +69,15 @@ return [
             'password' => 'micro',
             'charset' => 'utf8'
         ],
+        // User
         'user' => [
             'class' => '\Micro\web\helpers\User',
             'depends' => 'session'
+        ],
+        // Roles
+        'permission' => [
+            'class' => '\Micro\auth\DbRbac',
+            'roles' => include __DIR__ . '/roles.php'
         ]
     ]
 ];

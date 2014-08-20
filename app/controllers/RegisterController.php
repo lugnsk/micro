@@ -4,6 +4,8 @@ namespace App\controllers;
 
 use App\components\Controller;
 use App\models\User;
+use Micro\auth\FileRbac;
+use Micro\base\Registry;
 
 class RegisterController extends Controller
 {
@@ -12,6 +14,10 @@ class RegisterController extends Controller
         if (isset($_SESSION['UserID']) AND !empty($_SESSION['UserID'])) {
             $this->redirect('/profile');
         }
+
+        /** @var FileRbac $rbac */
+        $rbac = Registry::get('permission');
+        $rbac->check(1, 'register'); // hack
 
         echo $this->render('index', ['model'=>new User]);
     }

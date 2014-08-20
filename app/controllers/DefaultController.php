@@ -12,7 +12,9 @@ class DefaultController extends Controller
 {
     public function actionIndex()
     {
-        Registry::get('logger')->send('notice', 'open start page');
+        if (Registry::get('permission')->check(1, 'open_index')) { // hack
+            Registry::get('logger')->send('notice', 'Logined user open start page');
+        }
 
         echo $this->render('index');
     }
