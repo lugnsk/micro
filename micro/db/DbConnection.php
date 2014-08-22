@@ -220,10 +220,10 @@ class DbConnection
      */
     public function insert($table, $line=[]) {
         $fields      = implode(', ', array_keys($line));
-        $bind_fields = ':' . implode(', :', array_keys($line));
+        $values = '"' . implode('", "', array_values($line)).'"';
 
         return $this->conn->query(
-            'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $bind_fields . ');'
+            'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
         )->execute($line);
     }
 
@@ -278,10 +278,11 @@ class DbConnection
     {
         $keys = [];
         foreach ($params AS $key=>$val) {
-            $keys[] = $key.'='.$val;
+            $keys[] = '`'.$table.'`.`'.$key.'`="'.$val.'"';
         }
+
         $sth = $this->conn->query(
-            'SELECT * FROM '.$table.' WHERE '.implode(' AND ', $keys).'" LIMIT 1;'
+            'SELECT * FROM '.$table.' WHERE '.implode(' AND ', $keys).' LIMIT 1;'
         );
         $sth->execute();
 

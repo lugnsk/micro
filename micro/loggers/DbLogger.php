@@ -75,10 +75,10 @@ class DbLogger extends LogInterface
      */
     public function sendMessage($level, $message)
     {
-        $this->connect->insert('logs',[
+        $this->connect->insert($this->tableName, [
             'level'=>$level,
             'message'=>$message,
-            'data_create'=>$_SERVER['REQUEST_TIME']
+            'date_create'=>$_SERVER['REQUEST_TIME'],
         ]);
     }
 }
