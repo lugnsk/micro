@@ -49,7 +49,7 @@ class DbRbac extends Rbac
      */
     public function assign($userId, $name)
     {
-        if ($this->conn->exists('rbac_role', 'name', $name) AND $this->conn->exists('user', 'id', $userId)) {
+        if ($this->conn->exists('rbac_role', ['name'=>$name]) AND $this->conn->exists('user', ['id'=>$userId])) {
             return $this->conn->insert('rbac_user', ['role'=>$name, 'user'=>$userId]);
         }
         return false;
@@ -82,7 +82,7 @@ class DbRbac extends Rbac
      */
     public function check($userId, $action, $data=[])
     {
-        if (!$this->conn->exists('rbac_role', 'name', $action)) {
+        if (!$this->conn->exists('rbac_role', ['name'=>$action])) {
             return false;
         }
 
@@ -101,11 +101,11 @@ class DbRbac extends Rbac
      */
     public function create($name, $type = self::TYPE_ROLE, $based=null, $data=null)
     {
-        if ($this->conn->exists('rbac_role', 'name', $name)) {
+        if ($this->conn->exists('rbac_role', ['name'=>$name])) {
             return false;
         }
 
-        if (!empty($based) AND !$this->conn->exists('rbac_role', 'name', $based)) {
+        if (!empty($based) AND !$this->conn->exists('rbac_role', ['name'=>$based])) {
             return false;
         }
 

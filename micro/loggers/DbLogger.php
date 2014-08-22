@@ -1,7 +1,23 @@
-<?php
+<?php /** MicroDbLogger */
 
 namespace Micro\loggers;
 
+use Micro\base\Registry;
+
+/**
+ * DB logger class file.
+ *
+ * Writer logs in DB
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage loggers
+ * @version 1.0
+ * @since 1.0
+ */
 class DbLogger extends LogInterface
 {
     /** @var \Micro\db\DbConnection $conn */
@@ -9,6 +25,13 @@ class DbLogger extends LogInterface
     /** @var string $tableName */
     public $tableName;
 
+    /**
+     * Constructor prepare DB
+     *
+     * @access public
+     * @param array $params
+     * @result void
+     */
     public function __construct($params=[])
     {
         parent::__construct($params);
@@ -30,18 +53,32 @@ class DbLogger extends LogInterface
             );
         }
     }
+
+    /**
+     * Get connect to database
+     *
+     * @access public
+     * @return void
+     */
     public function getConnect()
     {
-        $this->connect = \Micro\base\Registry::get('db');
+        $this->connect = Registry::get('db');
     }
+
+    /**
+     * Send log message into DB
+     *
+     * @access public
+     * @param integer $level
+     * @param string $message
+     * @return void
+     */
     public function sendMessage($level, $message)
     {
-        $this->connect->conn->prepare(
-            'INSERT INTO '.$this->tableName.' (`level`,`message`,`date_create`) VALUES (:level,:message,:date_create);'
-        )->execute(array(
+        $this->connect->insert('logs',[
             'level'=>$level,
             'message'=>$message,
-            'date_create'=>$_SERVER['REQUEST_TIME'],
-        ));
+            'data_create'=>$_SERVER['REQUEST_TIME']
+        ]);
     }
 }

@@ -267,18 +267,21 @@ class DbConnection
     }
 
     /**
-     * Exists element value in the table
+     * Exists element in the table by params
      *
      * @access public
      * @param string $table
-     * @param string $element
-     * @param string $value
+     * @param array $params
      * @return bool
      */
-    public function exists($table, $element, $value)
+    public function exists($table, $params=[])
     {
+        $keys = [];
+        foreach ($params AS $key=>$val) {
+            $keys[] = $key.'='.$val;
+        }
         $sth = $this->conn->query(
-            'SELECT '.$element.' FROM '.$table.' WHERE '.$element.'="'.$value.'" LIMIT 1;'
+            'SELECT * FROM '.$table.' WHERE '.implode(' AND ', $keys).'" LIMIT 1;'
         );
         $sth->execute();
 

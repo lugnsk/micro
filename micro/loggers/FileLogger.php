@@ -1,7 +1,23 @@
-<?php
+<?php /** MicroFileLogger */
 
 namespace Micro\loggers;
 
+use Micro\base\Exception;
+
+/**
+ * File logger class file.
+ *
+ * Writer logs in file
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage loggers
+ * @version 1.0
+ * @since 1.0
+ */
 class FileLogger extends LogInterface
 {
     /** @var resource $connect File handler */
@@ -14,7 +30,7 @@ class FileLogger extends LogInterface
      * @access public
      * @param array $params
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function __construct($params=[])
     {
@@ -23,7 +39,7 @@ class FileLogger extends LogInterface
         if (is_writeable($params['filename']) OR is_writeable(dirname($params['filename']))) {
             $this->connect = fopen($params['filename'], 'a+');
         } else {
-            throw new \Micro\base\Exception('Directory or file "'.$params['filename'].'" is read-only');
+            throw new Exception('Directory or file "'.$params['filename'].'" is read-only');
         }
     }
 
@@ -34,14 +50,14 @@ class FileLogger extends LogInterface
      * @param string $level
      * @param string $message
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function sendMessage($level, $message)
     {
         if (is_resource($this->connect)) {
             fwrite($this->connect, '['.date('H:i:s d.m.Y').'] '.ucfirst($level).": {$message}\n");
         } else {
-            throw new \Micro\base\Exception('Error write log in file.');
+            throw new Exception('Error write log in file.');
         }
     }
 

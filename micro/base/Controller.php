@@ -40,7 +40,7 @@ abstract class Controller
     public function __construct()
     {
         if ($module = Registry::get('request')->getModules()) {
-            $path = \Micro\Micro::getInstance()->config['AppDir'] . $module . '/' . ucfirst(basename($module)) . 'Module.php';
+            $path = Micro::getInstance()->config['AppDir'] . $module . '/' . ucfirst(basename($module)) . 'Module.php';
 
             if (file_exists($path)) {
                 $path = substr(basename($path), 0, -4);

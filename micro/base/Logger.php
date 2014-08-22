@@ -1,11 +1,24 @@
-<?php
+<?php /** MicroLogger */
 
 namespace Micro\base;
 
+/**
+ * Logger manager
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @version 1.0
+ * @since 1.0
+ */
 class Logger
 {
-    protected $loggers = array(); // Подключенные логеры
+    /** @var array $loggers */
+    protected $loggers = array();
 
+    /** @var array $supportedLevels */
     public static $supportedLevels = array(
         'emergency', // Авария
         'alert',     // Тревога
