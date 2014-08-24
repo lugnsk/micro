@@ -16,15 +16,15 @@ namespace Micro\web\helpers;
  */
 final class Mail
 {
-    /** @property string $form sender mail */
+    /** @var string $form sender mail */
     private $from;
-    /** @property string $fromName sender name */
+    /** @var string $fromName sender name */
     private $fromName = "";
-    /** @property string $type type of message */
+    /** @var string $type type of message */
     private $type = "text/html";
-    /** @property string $encoding encoding */
+    /** @var string $encoding encoding */
     private $encoding = "utf-8";
-    /** @property bool $notify notification of read */
+    /** @var bool $notify notification of read */
     private $notify = false;
 
     /**

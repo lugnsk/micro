@@ -128,6 +128,13 @@ abstract class Controller
         return $output;
     }
 
+    /**
+     * Get view file
+     *
+     * @access private
+     * @param $view
+     * @return string
+     */
     private function getViewFile($view)
     {
         $calledClass = get_called_class();

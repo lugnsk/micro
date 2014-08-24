@@ -1,7 +1,8 @@
-<?php /** MicroRoleBasedAccessControl */
+<?php /** MicroRBAC */
 
 namespace Micro\auth;
 
+use Micro\db\DbConnection;
 use Micro\base\Registry;
 use Micro\db\Query;
 
@@ -22,7 +23,7 @@ abstract class Rbac {
     const TYPE_PERMISSION = 1;
     const TYPE_OPERATION  = 2;
 
-    /** @var \Micro\db\DbConnection $conn */
+    /** @var DbConnection $conn connection DB */
     protected $conn;
 
     /**
@@ -64,6 +65,7 @@ abstract class Rbac {
      * @return bool
      */
     abstract public function assign($userId, $name);
+
     /**
      * Get raw roles
      *
@@ -156,6 +158,9 @@ abstract class Rbac {
     }
 
     /**
+     * Revoke RBAC element from user
+     *
+     * @access public
      * @param integer $userId
      * @param string $name
      * @return bool

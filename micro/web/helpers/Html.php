@@ -328,6 +328,14 @@ class Html
     }
 
     // LIST Elements // marklist, numlist, deplist
+    /**
+     * List elements generator
+     *
+     * @access public
+     * @param array $items lists multiple array
+     * @param array $attributes attributes of lists
+     * @return string
+     */
     public static function lists($items = [], $attributes = [])
     {
         $result = null;

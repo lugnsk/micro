@@ -19,15 +19,15 @@ use Micro\base\File AS MFile;
  */
 class Assets
 {
-    /** @property string $assetDir directory for assets */
+    /** @var string $assetDir directory for assets */
     private $assetDir = 'assets';
-    /** @property string $hash */
+    /** @var string $hash hash for asset path */
     private $hash = '';
-    /** @property string $directory */
+    /** @var string $directory asset directory */
     private $directory = '';
-    /** @property string $sourceDir */
+    /** @var string $sourceDir source asset dir */
     private $sourceDir = '';
-    /** @property string $publishDir */
+    /** @var string $publishDir public of project dir */
     private $publishDir = '';
 
 

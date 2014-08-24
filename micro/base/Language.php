@@ -2,6 +2,8 @@
 
 namespace Micro\base;
 
+use \Micro\base\Exception;
+
 /**
  * Language getter language tags from *.ini files
  *
@@ -17,7 +19,7 @@ class Language
 {
     /** @var array $language language array */
     private $language = [];
-    /** @var string $defaultLang */
+    /** @var string $defaultLang default language  */
     private $defaultLang = 'en';
 
 
@@ -27,13 +29,13 @@ class Language
      * @access public
      * @param string $filename
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function __construct($filename)
     {
         $lang = (Registry::get('lang')) ? Registry::get('lang') : $this->defaultLang;
         if (!file_exists($filename . $lang . '.ini')) {
-            throw new \Micro\base\Exception('Language file ' . $filename . $lang . '.ini not exists.');
+            throw new Exception('Language file ' . $filename . $lang . '.ini not exists.');
         }
         $this->language = parse_ini_file($filename . 'ini', true);
     }

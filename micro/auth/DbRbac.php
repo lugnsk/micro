@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroDbRBAC */
 
 namespace Micro\auth;
 

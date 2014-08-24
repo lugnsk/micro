@@ -15,15 +15,15 @@ namespace Micro\base;
  */
 class Validator
 {
-    /** @property array $rule */
+    /** @var array $rule current rule */
     private $rule = [];
-    /** @property array $errors */
+    /** @var array $errors errors summary */
     public $errors = [];
-    /** @property array $elements */
+    /** @var array $elements validation elements */
     public $elements = [];
-    /** @property array $params */
+    /** @var array $params validation parameters */
     public $params = [];
-    /** @property array $validators */
+    /** @var array $validators supported validations */
     protected $validators = [
         'string'    => 'StringValidator',
         'required'  => 'RequiredValidator',

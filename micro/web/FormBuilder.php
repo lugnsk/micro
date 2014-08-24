@@ -3,6 +3,8 @@
 namespace Micro\web;
 
 use Micro\web\helpers\Html;
+use \Micro\db\Model;
+use \Micro\widgets\FormWidget;
 
 /**
  * Class FormBuilder.
@@ -18,13 +20,13 @@ use Micro\web\helpers\Html;
  */
 class FormBuilder
 {
-    /** @property \Micro\widgets\FormWidget $widget widget for render */
+    /** @var FormWidget $widget widget for render */
     protected $widget;
-    /** @property Form $form generator for elements */
+    /** @var Form $form generator for elements */
     protected $form;
-    /** @property array $config config array */
+    /** @var array $config config array */
     private $config;
-    /** @property \Micro\db\Model $model model for get data */
+    /** @var Model $model model for get data */
     private $model;
 
 
@@ -43,7 +45,7 @@ class FormBuilder
     {
         $this->config = $config;
         $this->model = $model;
-        $this->widget = new \Micro\widgets\FormWidget(['action' => $action, 'method' => $method, 'type' => $type]);
+        $this->widget = new FormWidget(['action' => $action, 'method' => $method, 'type' => $type]);
     }
 
     /**

@@ -15,10 +15,10 @@ namespace Micro\base;
  */
 class Logger
 {
-    /** @var array $loggers */
+    /** @var array $loggers defined loggers */
     protected $loggers = array();
 
-    /** @var array $supportedLevels */
+    /** @var array $supportedLevels supported logger levels */
     public static $supportedLevels = array(
         'emergency', // Авария
         'alert',     // Тревога

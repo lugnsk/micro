@@ -21,7 +21,7 @@ use Micro\base\Exception;
  */
 abstract class LogInterface
 {
-    /** @var array $supportedLevels */
+    /** @var array $supportedLevels supported log levels */
     protected $supportedLevels = array();
 
     /**

@@ -20,9 +20,9 @@ use Micro\base\Registry;
  */
 class DbLogger extends LogInterface
 {
-    /** @var \Micro\db\DbConnection $conn */
+    /** @var \Micro\db\DbConnection $conn connect to DB */
     private $connect;
-    /** @var string $tableName */
+    /** @var string $tableName logger table name */
     public $tableName;
 
     /**

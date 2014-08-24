@@ -18,7 +18,7 @@ use \Micro\base\Exception;
  */
 class DbConnection
 {
-    /** @property \PDO|null $conn Connection to DB */
+    /** @var \PDO|null $conn Connection to DB */
     public $conn;
 
 

@@ -20,13 +20,13 @@ use Micro\web\helpers\Mail;
  */
 class EmailLogger extends LogInterface
 {
-    /** @var string $from */
+    /** @var string $from email for sender attribute */
     private $from;
-    /** @var string $type */
+    /** @var string $type message attribute */
     private $type = 'text/plain';
-    /** @var string $to */
+    /** @var string $to message recipient */
     private $to;
-    /** @var string $subject */
+    /** @var string $subject message theme */
     private $subject;
 
     /**

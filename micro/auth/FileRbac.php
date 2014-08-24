@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroFileRBAC */
 
 namespace Micro\auth;
 
@@ -16,7 +16,7 @@ namespace Micro\auth;
  */
 class FileRbac extends Rbac
 {
-    /** @var array $roles */
+    /** @var array $roles RBAC role tree */
     private $roles = [];
 
     /**

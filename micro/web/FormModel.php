@@ -2,6 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\Validator;
+
 /**
  * Class FormModel.
  *
@@ -16,7 +18,7 @@ namespace Micro\web;
  */
 abstract class FormModel
 {
-    /** @property array $errors validation errors */
+    /** @var array $errors validation errors */
     protected $errors = [];
 
 
@@ -40,7 +42,7 @@ abstract class FormModel
     public function validate()
     {
         foreach ($this->rules() AS $rule) {
-            $validator = new \Micro\base\Validator($rule);
+            $validator = new Validator($rule);
 
             if (!$validator->run($this) AND $validator->errors) {
                 $this->errors[] = $validator->errors;
@@ -49,12 +51,16 @@ abstract class FormModel
         return true;
     }
 
+    /**
+     * Get client code for validation
+     * @return string
+     */
     public function getClient()
     {
         $result = '';
 
         foreach ($this->rules() AS $rule) {
-            $validator = new \Micro\base\Validator($rule);
+            $validator = new Validator($rule);
             $result .= $validator->run($this, true);
         }
 

@@ -20,11 +20,11 @@ use \Micro\base\Widget;
  */
 class FormWidget extends Widget
 {
-    /** @property string $action */
+    /** @var string $action action url */
     public $action = '';
-    /** @property string $method */
+    /** @var string $method send form method */
     public $method = 'GET';
-    /** @property string $type */
+    /** @var string $type type of form */
     public $type = 'text/plain';
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\Micro;
+
 /**
  * Request class file.
  *
@@ -31,6 +33,7 @@ class Request
      *
      * @access public
      * @param array $routes
+     * @result void
      */
     public function __construct($routes = [])
     {
@@ -42,7 +45,7 @@ class Request
      * Initialize request object
      *
      * @access public
-     * return void
+     * @return void
      */
     private function initialize()
     {
@@ -79,7 +82,7 @@ class Request
      */
     private function prepareModules(&$uriBlocks)
     {
-        $path = \Micro\Micro::getInstance()->config['AppDir'];
+        $path = Micro::getInstance()->config['AppDir'];
 
         foreach ($uriBlocks AS $i => $block) {
             if (file_exists($path . $this->modules . '/modules/' . $block)) {

@@ -18,7 +18,7 @@ namespace Micro\web;
  */
 class Uploader
 {
-    /** @var array $files */
+    /** @var array $files upload files */
     public $files = [];
 
     /**

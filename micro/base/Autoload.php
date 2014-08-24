@@ -15,13 +15,29 @@ namespace Micro\base;
  */
 class Autoload
 {
+    /** @var array $aliases aliases for base dirs */
     private static $aliases = [];
 
+    /**
+     * Setting or installing new alias
+     *
+     * @access public
+     * @param $alias
+     * @param $realPath
+     * @return void
+     */
     public static function setAlias($alias, $realPath)
     {
         self::$aliases[$alias] = $realPath;
     }
 
+    /**
+     * Loader classes
+     *
+     * @access public
+     * @param $className
+     * @return void
+     */
     public static function loader($className)
     {
         // Patch prev backslash

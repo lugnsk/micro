@@ -2,6 +2,9 @@
 
 namespace Micro\widgets;
 
+use \Micro\web\helpers\Html;
+use \Micro\base\Widget;
+
 /**
  * MenuWidget class file.
  *
@@ -14,11 +17,11 @@ namespace Micro\widgets;
  * @version 1.0
  * @since 1.0
  */
-class MenuWidget extends \Micro\base\Widget
+class MenuWidget extends Widget
 {
-    /** @property array $menu */
+    /** @var array $menu multiple menu array */
     public $menu = [];
-    /** @property array $attributes */
+    /** @var array $attributes attributes of menu */
     public $attributes = [];
 
     /**
@@ -45,7 +48,7 @@ class MenuWidget extends \Micro\base\Widget
      */
     public function run()
     {
-        echo \Micro\web\helpers\Html::lists($this->menu, $this->attributes);
+        echo Html::lists($this->menu, $this->attributes);
     }
 
     /**
