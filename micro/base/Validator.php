@@ -2,6 +2,9 @@
 
 namespace Micro\base;
 
+use \Micro\base\Exception;
+use \Micro\Micro;
+
 /**
  * Validator is a runner validation process
  *
@@ -87,23 +90,20 @@ class Validator
      * @param $model
      * @param bool $client
      * @return bool|string
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function run($model, $client = false)
     {
         $elements = explode(',', strtr(array_shift($this->rule), ' ', ''));
         $name = array_shift($this->rule);
+        $className = null;
 
-        $filename = false;
         if (isset($this->validators[$name])) {
-            $filename = \Micro\Micro::getInstance()->config['MicroDir'] . '/validators/' . $this->validators[$name] . '.php';
-        } elseif (file_exists(\Micro\Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
-            $filename = \Micro\Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php';
-        }
-
-        if ($filename) {
-            include_once $filename;
+            $className = '\\Micro\\validators\\' . $this->validators[$name];
+        } elseif (file_exists(Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
+            $className = '\\App\\validators\\' . $name . '.php';
         } else {
+            // hook - function as validator
             if (function_exists($name)) {
                 foreach ($elements AS $element) {
                     if (property_exists($model, $element)) {
@@ -112,11 +112,11 @@ class Validator
                 }
                 return true;
             } else {
-                throw new \Micro\base\Exception('Validator '.$name.' not defined.');
+                throw new Exception('Validator '.$name.' not defined.');
             }
         }
 
-        $valid = new $this->validators[$name];
+        $valid = new $className;
         $valid->elements = $elements;
         $valid->params = $this->rule;
         if ($client) {

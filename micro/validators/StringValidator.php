@@ -1,5 +1,10 @@
 <?php /** MicroStringValidator */
 
+namespace Micro\validators;
+
+use Micro\base\Validator;
+use Micro\db\Model;
+
 /**
  * StringValidator class file.
  *
@@ -12,13 +17,13 @@
  * @version 1.0
  * @since 1.0
  */
-class StringValidator extends \Micro\base\Validator
+class StringValidator extends Validator
 {
     /**
      * Validate in server
      *
      * @access public
-     * @param \Micro\db\Model $model
+     * @param Model $model
      * @return bool
      */
     public function validate($model)
@@ -50,7 +55,7 @@ class StringValidator extends \Micro\base\Validator
      * Validate in client
      *
      * @access public
-     * @param $model
+     * @param Model $model
      * @return string
      */
     public function client($model)

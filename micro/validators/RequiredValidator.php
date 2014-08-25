@@ -1,5 +1,10 @@
 <?php /** MicroRequiredValidator */
 
+namespace Micro\validators;
+
+use Micro\base\Validator;
+use Micro\db\Model;
+
 /**
  * RequiredValidator class file.
  *
@@ -12,13 +17,13 @@
  * @version 1.0
  * @since 1.0
  */
-class RequiredValidator extends \Micro\base\Validator
+class RequiredValidator extends Validator
 {
     /**
      * Validate in server
      *
      * @access public
-     * @param $model
+     * @param Model $model
      * @return bool
      */
     public function validate($model)
@@ -42,7 +47,7 @@ class RequiredValidator extends \Micro\base\Validator
      * Validate in client
      *
      * @access public
-     * @param $model
+     * @param Model $model
      * @return string
      */
     public function client($model)

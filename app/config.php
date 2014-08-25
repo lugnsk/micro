@@ -53,7 +53,7 @@ return [
         ],
         // Default session
         'session' => [
-            'class' => '\Micro\base\Session',
+            'class' => '\Micro\web\Session',
             'autoStart' => true,
         ],
         // Flash messages

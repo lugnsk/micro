@@ -1,6 +1,6 @@
 <?php /** MicroSession */
 
-namespace Micro\base;
+namespace Micro\web;
 
 /**
  * Session is a Session manager

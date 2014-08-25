@@ -1,5 +1,10 @@
 <?php /** MicroBooleanValidator */
 
+namespace Micro\validators;
+
+use Micro\base\Validator;
+use Micro\db\Model;
+
 /**
  * BooleanValidator class file.
  *
@@ -12,7 +17,7 @@
  * @version 1.0
  * @since 1.0
  */
-class BooleanValidator extends \Micro\base\Validator
+class BooleanValidator extends Validator
 {
     /**
      * Initial validator
@@ -33,7 +38,7 @@ class BooleanValidator extends \Micro\base\Validator
      * Validate in server
      *
      * @access public
-     * @param $model
+     * @param Model $model
      * @return bool
      */
     public function validate($model)
@@ -57,7 +62,7 @@ class BooleanValidator extends \Micro\base\Validator
      * Validate in client
      *
      * @access public
-     * @param $model
+     * @param Model $model
      * @return string
      */
     public function client($model)

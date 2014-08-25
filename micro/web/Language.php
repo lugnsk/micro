@@ -1,6 +1,6 @@
 <?php /** MicroLanguage */
 
-namespace Micro\base;
+namespace Micro\web;
 
 use \Micro\base\Exception;
 
