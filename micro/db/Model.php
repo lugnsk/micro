@@ -31,9 +31,9 @@ function getVars($object)
 abstract class Model extends \Micro\web\FormModel
 {
     /** @var \PDO $db pdo connection */
-    private $db = false;
+    protected $db = false;
     /** @var boolean $_isNewRecord is new record? */
-    private $_isNewRecord = false;
+    protected $_isNewRecord = false;
 
 
     /**

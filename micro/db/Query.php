@@ -19,7 +19,7 @@ use Micro\base\Registry;
 class Query
 {
     /** @var \PDO $_conn Current connect to DB */
-    private $_conn;
+    protected $_conn;
     /** @var string $select selectable columns */
     public $select = '*';
     /** @var boolean $distinct unique rows */

@@ -17,7 +17,7 @@ namespace Micro\db;
 class Migration
 {
     /** @var DbConnection $db connection to db */
-    private $db = false;
+    protected $db = false;
 
 
     /**
