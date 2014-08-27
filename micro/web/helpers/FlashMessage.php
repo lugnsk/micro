@@ -32,7 +32,7 @@ class FlashMessage
      * @access public
      * @global Registry
      * @result void
-     * @catch MException
+     * @throws MException
      */
     public function __construct()
     {

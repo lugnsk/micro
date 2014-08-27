@@ -20,8 +20,8 @@ use Micro\base\Registry;
  */
 class DbLogger extends LogInterface
 {
-    /** @var \Micro\db\DbConnection $conn connect to DB */
-    private $connect;
+    /** @var \Micro\db\DbConnection $connect connect to DB */
+    protected $connect;
     /** @var string $tableName logger table name */
     public $tableName;
 

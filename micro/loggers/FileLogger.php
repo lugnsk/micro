@@ -21,7 +21,7 @@ use Micro\base\Exception;
 class FileLogger extends LogInterface
 {
     /** @var resource $connect File handler */
-    private $connect;
+    protected $connect;
 
 
     /**
