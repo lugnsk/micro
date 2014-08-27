@@ -2,6 +2,8 @@
 
 namespace Micro\base;
 
+use \Micro\Micro;
+
 /**
  * Registry class file.
  *
@@ -86,20 +88,25 @@ final class Registry
         if ($name AND isset($GLOBALS[$name])) {
             return; // Already defined
         }
-        $configs = \Micro\Micro::getInstance()->config['components'];
+
+        if (isset(Micro::getInstance()->config['components'])) {
+            $configs = Micro::getInstance()->config['components'];
+        } else {
+            throw new Exception('Components not configured');
+        }
 
         if ($name AND isset($configs[$name])) {
             if (!self::loadComponent($name, $configs[$name])) {
-                throw new \Micro\base\Exception('Class ' . $name . ' error loading.');
+                throw new Exception('Class ' . $name . ' error loading.');
             }
 
         } elseif ($name AND !isset($configs[$name])) {
-            throw new \Micro\base\Exception('Class ' . $name . ' not configured.');
+            throw new Exception('Class ' . $name . ' not configured.');
 
         } else {
             foreach ($configs AS $name => $options) {
                 if (!self::loadComponent($name, $options)) {
-                    throw new \Micro\base\Exception('Class ' . $name . ' error loading.');
+                    throw new Exception('Class ' . $name . ' error loading.');
                 }
             }
         }

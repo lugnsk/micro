@@ -16,13 +16,11 @@ namespace Micro\auth;
  */
 class FileAcl extends Acl
 {
-    public function createList($name, $based=null)
+    public $roles=[];
+
+    public function rawRoles()
     {
-        //
-    }
-    public function removeList($name)
-    {
-        //
+        return $this->roles;
     }
 
     public function assignList($userId, $list)
@@ -30,15 +28,6 @@ class FileAcl extends Acl
         //
     }
     public function revokeList($userId, $list)
-    {
-        //
-    }
-
-    public function addPermissionToList($permission, $list)
-    {
-        //
-    }
-    public function removePermissionFromList($permission, $list)
     {
         //
     }

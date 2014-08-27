@@ -15,14 +15,12 @@ namespace Micro\auth;
  * @since 1.0
  */
 abstract class Acl {
-    abstract public function createList($name, $based=null);
-    abstract public function removeList($name);
+    public $useGroups=false;
+
+    abstract public function rawRoles();
 
     abstract public function assignList($userId, $list);
     abstract public function revokeList($userId, $list);
-
-    abstract public function addPermissionToList($permission, $list);
-    abstract public function removePermissionFromList($permission, $list);
 
     abstract public function addedPermissions($list);
     abstract public function assignedUsers($list);

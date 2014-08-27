@@ -37,7 +37,7 @@ class Request
      */
     public function __construct($routes = [])
     {
-        $this->router = new Router(isset($routes['routes']) ? $routes['routes'] : null);
+        $this->router = new Router(isset($routes['routes']) ? $routes['routes'] : []);
         $this->initialize();
     }
 

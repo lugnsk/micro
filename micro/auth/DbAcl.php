@@ -16,6 +16,10 @@ namespace Micro\auth;
  */
 class DbAcl extends Acl
 {
+    public function rawRoles()
+    {
+        //
+    }
     public function createList($name, $based=null)
     {
         //
