@@ -11,7 +11,8 @@ class RegisterController extends Controller
 {
     public function actionIndex()
     {
-        if (isset($_SESSION['UserID']) AND !empty($_SESSION['UserID'])) {
+        $uid = Registry::get('session')->UserID;
+        if ($uid AND !$uid) {
             $this->redirect('/profile');
         }
 

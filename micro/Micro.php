@@ -2,7 +2,7 @@
 
 namespace Micro;
 
-use Micro\base\Exception AS MException;
+use Micro\base\Exception;
 use Micro\base\Autoload;
 use Micro\base\Registry;
 use Micro\web\helpers\Html;
@@ -90,7 +90,7 @@ final class Micro
      *
      * @access public
      * @global Registry
-     * @throws MException controller not set
+     * @throws Exception controller not set
      * @return void
      */
     public function run()
@@ -100,7 +100,7 @@ final class Micro
         $name = basename($path);
 
         if (!class_exists($name)) {
-            throw new MException('Controller ' . $name . ' not set');
+            throw new Exception('Controller ' . $name . ' not set');
         }
 
         /** @var \Micro\base\Controller $mvc */
@@ -123,13 +123,13 @@ final class Micro
      * @access private
      * @global Registry
      * @return string
-     * @throws MException
+     * @throws Exception
      */
     private function prepareController()
     {
         $request = Registry::get('request');
         if (!$request) {
-            throw new MException('Component request not loaded.');
+            throw new Exception('Component request not loaded.');
         }
 
         $path = 'App';

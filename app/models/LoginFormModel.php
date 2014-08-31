@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Micro\base\Registry;
 use Micro\web\FormModel;
 use Micro\db\Query;
 
@@ -43,7 +44,7 @@ class LoginFormModel extends FormModel
         ];
 
         if ($user = User::finder($query, true)) {
-            $_SESSION['UserID'] = $user->id;
+            Registry::get('session')->UserID = $user->id;
             return true;
         } else {
             $this->addError('Логин или пароль не верны.');

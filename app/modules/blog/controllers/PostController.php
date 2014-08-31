@@ -14,11 +14,7 @@ class PostController extends Controller
         $crt = new Query;
         $crt->limit = 10;
         $crt->order = 'id DESC';
-
-        if (!isset($_GET['page'])) {
-            $_GET['page'] = 0;
-        }
-        $crt->ofset = $_GET['page'] * $crt->limit;
+        $crt->ofset = (isset($_GET['page']) ? $_GET['page'] : 0) * $crt->limit;
 
 
         $crt2 = new Query;
@@ -69,7 +65,7 @@ class PostController extends Controller
         $blog = Blog::finder($crt, true);
 
         $blog->name = 'setupher';
-        $blog->save();
+        return $blog->save();
     }
 
     public function actionDelete()
@@ -78,6 +74,6 @@ class PostController extends Controller
         $crt->addWhere('id = :id');
         $crt->params = [':id' => $_GET['id']];
         $blog = Blog::finder($crt, true);
-        $blog->delete();
+        return $blog->delete();
     }
 }

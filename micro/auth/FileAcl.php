@@ -2,6 +2,8 @@
 
 namespace Micro\auth;
 
+use Micro\db\Query;
+
 /**
  * File ACL class file.
  *
@@ -16,33 +18,83 @@ namespace Micro\auth;
  */
 class FileAcl extends Acl
 {
-    public $roles=[];
+    /** @var array $roles configured roles */
+    protected $roles;
+    /** @var array $perms configured perms */
+    protected $perms;
+    /** @var array $rolePermsCompare compare of permissions in roles */
+    protected $rolePermsCompare;
 
-    public function rawRoles()
+
+    /**
+     * Configured ACL with files
+     *
+     * @access public
+     * @param array $params
+     * @result void
+     */
+    public function __construct($params = [])
     {
-        return $this->roles;
+        parent::__construct($params);
+
+        $roles = (isset($params['roles'])) ? $params['roles'] : [];
+        $this->roles = isset($roles['roles']) ? $roles['roles']: [];
+        $this->perms = isset($roles['perms']) ? $roles['perms']: [];
+        $this->rolePermsCompare = isset($roles['role_perms']) ? $roles['role_perms']: [];
     }
 
-    public function assignList($userId, $list)
+    /**
+     * Get assigned elements
+     *
+     * @access public
+     * @param $userId
+     * @return mixed
+     */
+    public function assigned($userId)
     {
-        //
-    }
-    public function revokeList($userId, $list)
-    {
-        //
+        $query = new Query;
+        $query->select = '*';
+        $query->table = 'acl_user';
+        $query->addWhere('`user`='.$userId);
+        $query->single = false;
+        return $query->run();
     }
 
-    public function addedPermissions($list)
+    /**
+     * Get permissions in role
+     *
+     * @access private
+     * @param integer $role
+     * @return array
+     */
+    protected function rolePerms($role)
     {
-        //
-    }
-    public function assignedUsers($list)
-    {
-        //
+        return $this->rolePermsCompare[$role];
     }
 
-    public function checkAccess($user,$permission)
+    /**
+     * Check user access to permission
+     *
+     * @access public
+     * @param integer $userId user id
+     * @param string $permission checked permission
+     * @return bool
+     */
+    public function check($userId, $permission)
     {
-        //
+        $permissionId = array_search($permission, $this->perms);
+        $assigned = $this->assigned($userId);
+        if (!$assigned) {
+            return false;
+        }
+
+        foreach ($assigned AS $assign) {
+            if ($assign['perm'] AND $assign['perm']==$permissionId) {
+                return true;
+            } elseif ($assign['role'] AND in_array($permissionId, $this->rolePerms($assign['role']))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

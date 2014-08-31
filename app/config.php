@@ -76,7 +76,7 @@ return [
         ],
         // Roles
         'permission' => [
-            'class' => '\Micro\auth\DbRbac',
+            'class' => '\Micro\auth\DbAcl',
             'roles' => include __DIR__ . '/roles.php'
         ]
     ]

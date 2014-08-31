@@ -1,4 +1,7 @@
-<a href="/blog/post/">назад</a>
-<h1><?= $model->name; ?></h1>
+<?php
 
-<p><?= $model->content; ?></p>
+use \Micro\web\helpers\Html;
+
+echo Html::link('назад', '/blog/post');
+echo Html::heading(1, $model->name);
+echo Html::openTag('p'), $model->content, Html::closeTag('p');

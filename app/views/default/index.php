@@ -1,8 +1,8 @@
 <?php
+use \Micro\web\helpers\Html;
+
 /** @var \App\controllers\DefaultController $this */
 $this->title .= ' - Главная';
 ?>
-<h1>Simple app</h1>
-<p>
-    This site is a simple
-</p>
+<?= Html::heading(1, 'Simple app') ?>
+<?= Html::openTag('p') ?>This site is a simple<?= Html::closeTag('p') ?>

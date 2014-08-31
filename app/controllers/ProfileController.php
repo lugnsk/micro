@@ -17,7 +17,7 @@ class ProfileController extends Controller
 
         $query = new Query;
         $query->addWhere('id = :id');
-        $query->params = [':id' => $_SESSION['UserID']];
+        $query->params = [':id' => Registry::get('session')->UserID];
 
         $user = User::finder($query, true);
 

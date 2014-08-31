@@ -2,6 +2,9 @@
 
 namespace Micro\auth;
 
+use Micro\base\Registry;
+use \Micro\db\DbConnection;
+
 /**
  * Abstract ACL class file.
  *
@@ -15,15 +18,64 @@ namespace Micro\auth;
  * @since 1.0
  */
 abstract class Acl {
-    public $useGroups=false;
+    /** @var string $groupTable name of group table */
+    protected $groupTable;
+    /** @var DbConnection $conn connection to DB */
+    protected $conn;
 
-    abstract public function rawRoles();
 
-    abstract public function assignList($userId, $list);
-    abstract public function revokeList($userId, $list);
+    /**
+     * Base constructor for ACL
+     *
+     * @access public
+     * @param array $params config array
+     * @result void
+     */
+    public function __construct($params = [])
+    {
+        $this->getConnect();
 
-    abstract public function addedPermissions($list);
-    abstract public function assignedUsers($list);
+        if (isset($params['groupTable'])) {
+            $this->groupTable = $params['groupTable'];
+        }
+        if (!$this->conn->tableExists('acl_user')) {
+            $this->conn->createTable('acl_user', [
+                '`id` int(10) unsigned NOT NULL AUTO_INCREMENT',
+                '`user` int(11) unsigned NOT NULL',
+                '`role` int(11) unsigned DEFAULT NULL',
+                '`perm` int(11) unsigned DEFAULT NULL',
+                'PRIMARY KEY (`id`)'
+            ], 'ENGINE=MyISAM DEFAULT CHARSET=utf8');
+        }
+    }
 
-    abstract public function checkAccess($user,$permission);
+    /**
+     * Get current connection from registry
+     *
+     * @access public
+     * @return void
+     */
+    public function getConnect()
+    {
+        $this->conn = Registry::get('db');
+    }
+
+    /**
+     * Get permissions in role
+     *
+     * @access protected
+     * @param string $role role name
+     * @return array
+     */
+    abstract protected function rolePerms($role);
+
+    /**
+     * Check user access to permission
+     *
+     * @access public
+     * @param integer $userId user id
+     * @param string $permission checked permission
+     * @return bool
+     */
+    abstract public function check($userId, $permission);
 }

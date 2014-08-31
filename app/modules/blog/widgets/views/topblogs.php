@@ -1,1 +1,1 @@
-<h1>hello heloo</h1>
+<?= \Micro\web\helpers\Html::heading(1, 'Hello, world!') ?>

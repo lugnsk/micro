@@ -1,4 +1,7 @@
-<?php /** @var Micro\db\Model $model */ ?>
-    <h1>Создание статьи</h1>
+<?php
 
-<?= $this->renderPartial('_form', ['model' => $model]); ?>
+/** @var Micro\db\Model $model */
+
+echo \Micro\web\helpers\Html::heading(1, 'Создание статьи');
+
+echo $this->renderPartial('_form', ['model' => $model]);

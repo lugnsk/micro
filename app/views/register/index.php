@@ -1,23 +1,24 @@
 <?php
+
+use \Micro\web\helpers\Html;
+
 /** @var App\controllers\RegisterController $this */
 /** @var App\models\User $model */
 
-echo \Micro\web\helpers\Html::script( $model->getClient() );
-?>
-<h2>Регистрация</h2>
+echo Html::script( $model->getClient() );
 
+echo Html::heading(2, 'Регистрация');
 
-<?php
-    /** @var \Micro\web\Form $form */
-    $form = $this->beginWidget('\Micro\widgets\FormWidget',[
-        'method'=>'post',
-        'action'=>'/register/post'
-    ]);
+/** @var \Micro\web\Form $form */
+$form = $this->beginWidget('\Micro\widgets\FormWidget',[
+    'method'=>'post',
+    'action'=>'/register/post'
+]);
 
-    echo $form->textFieldRow($model, 'email');
-    echo $form->textFieldRow($model, 'login');
-    echo $form->passwordFieldRow($model, 'pass');
-    echo $form->textFieldRow($model, 'fio');
-    echo \Micro\web\helpers\Html::submitButton('Зарегистрироваться');
+echo $form->textFieldRow($model, 'email');
+echo $form->textFieldRow($model, 'login');
+echo $form->passwordFieldRow($model, 'pass');
+echo $form->textFieldRow($model, 'fio');
+echo \Micro\web\helpers\Html::submitButton('Зарегистрироваться');
 
-    $this->endWidget('\Micro\widgets\FormWidget'); ?>
+$this->endWidget('\Micro\widgets\FormWidget');
