@@ -2,7 +2,9 @@
 
 namespace Micro\db;
 
-use Micro\base\Registry;
+use \Micro\base\Registry;
+use \Micro\web\FormModel;
+use \Micro\base\Exception;
 
 /**
  * Get public vars into object
@@ -28,7 +30,7 @@ function getVars($object)
  * @version 1.0
  * @since 1.0
  */
-abstract class Model extends \Micro\web\FormModel
+abstract class Model extends FormModel
 {
     /** @var \PDO $db pdo connection */
     protected $db = false;
@@ -201,7 +203,7 @@ abstract class Model extends \Micro\web\FormModel
      *
      * @access public
      * @param string $where
-     * @throws \Micro\base\Exception
+     * @throws Exception
      * @return boolean
      */
     public function update($where = null)
@@ -225,7 +227,7 @@ abstract class Model extends \Micro\web\FormModel
                 } elseif (isset($this->id) AND !empty($this->id)) {
                     $query .= ' WHERE id = :id';
                 } else {
-                    throw new \Micro\base\Exception ('In table ' . $this->tableName() . ' option `id` not defined/not use.');
+                    throw new Exception ('In table ' . $this->tableName() . ' option `id` not defined/not use.');
                 }
                 $sth = $this->db->prepare($query);
 

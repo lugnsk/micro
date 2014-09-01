@@ -3,6 +3,7 @@
 namespace Micro\web;
 
 use \Micro\base\Exception;
+use \Micro\base\Registry;
 
 /**
  * Language getter language tags from *.ini files

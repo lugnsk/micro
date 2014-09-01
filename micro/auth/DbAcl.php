@@ -1,6 +1,7 @@
 <?php /** MicroDbACL */
 
 namespace Micro\auth;
+
 use Micro\db\Query;
 
 /**
@@ -184,9 +185,9 @@ class DbAcl extends Acl
             $this->conn->insert('acl_user', ['user'=>$userId, 'perm'=>$privilege]);
         }
     }
-    //
+/*    //
     public function forbidPrivilege()
     {
         //
     }
-}
+*/}

@@ -2,6 +2,8 @@
 
 namespace Micro\db;
 
+use \Micro\base\Registry;
+
 /**
  * Migration class file.
  *
@@ -40,7 +42,7 @@ class Migration
      */
     public function getDbConnection()
     {
-        $this->db = \Micro\base\Registry::get('db')->conn;
+        $this->db = Registry::get('db')->conn;
     }
 
     /**

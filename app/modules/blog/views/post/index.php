@@ -1,10 +1,11 @@
 <?php
 
 use \Micro\web\helpers\Html;
+use \Micro\web\Language;
 
 /** @var array $blogs */
 /** @var integer $pages */
-/** @var \Micro\base\Language $lang */
+/** @var Language $lang */
 
 $this->widget('App\modules\blog\widgets\TopblogsWidget');
 echo Html::link('создать', '/blog/post/create');

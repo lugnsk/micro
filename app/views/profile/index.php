@@ -1,3 +1,6 @@
+<?php
+/** @var \App\models\User $user */
+?>
 <h1>Личный кабинет (<?= $user->login; ?>)
     <small><?= $user->fio; ?></small>
 </h1>

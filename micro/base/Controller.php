@@ -2,7 +2,8 @@
 
 namespace Micro\base;
 
-use Micro\Micro;
+use \Micro\Micro;
+use \Micro\web\Language;
 
 /**
  * Controller class file.
