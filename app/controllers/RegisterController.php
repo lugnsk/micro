@@ -12,7 +12,7 @@ class RegisterController extends Controller
     public function actionIndex()
     {
         $uid = Registry::get('session')->UserID;
-        if ($uid AND !$uid) {
+        if (!$uid) {
             $this->redirect('/profile');
         }
 
