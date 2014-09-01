@@ -28,22 +28,18 @@ class Validator
     public $params = [];
     /** @var array $validators supported validations */
     protected $validators = [
-        'string'    => 'StringValidator',
-        'required'  => 'RequiredValidator',
-        'boolean'   => 'BooleanValidator',
-        //		'filter'=>'MFilterValidator',
-        //		'match'=>'MRegularExpressionValidator',
-        //		'email'=>'MEmailValidator',
-        //		'url'=>'MUrlValidator',
-        //		'unique'=>'MUniqueValidator',
-        //		'compare'=>'MCompareValidator',
-        //		'in'=>'MRangeValidator',
-        //		'numerical'=>'MNumberValidator',
-        //		'type'=>'MTypeValidator',
-        //		'file'=>'MFileValidator',
-        //		'date'=>'MDateValidator',
-        //		'captcha'=>'MCaptchaValidator',
-        //		'default'=>'MDefaultValueValidator',
+        'required'  => 'RequiredValidator', // обязательный
+        'captcha'   => 'CaptchaValidator', // каптча
+        'boolean'   => 'BooleanValidator', // трю ор фелс
+        'compare'   => 'CompareValidator', // сверка с ...
+        'string'    => 'StringValidator', // строка
+        'regexp'    => 'RegexpValidator', // регулярка
+        'number'    => 'NumberValidator', // число
+        'unique'    => 'UniqueValidator', // уникальность
+        'range'     => 'RangeValidator', // от ... до
+        'email'     => 'EmailValidator', // емайл
+        'url'       => 'UrlValidator', // урл
+        'file'      => 'FileValidator', // файл
     ];
 
 
