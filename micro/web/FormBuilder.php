@@ -45,7 +45,7 @@ class FormBuilder
     {
         $this->config = $config;
         $this->model = $model;
-        $this->widget = new FormWidget(['action' => $action, 'method' => $method, 'type' => $type]);
+        $this->widget = new FormWidget(['action' => $action, 'method' => $method, 'type' => $type, 'client'=>$model->getClient()]);
     }
 
     /**

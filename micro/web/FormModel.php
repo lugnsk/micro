@@ -57,14 +57,16 @@ abstract class FormModel
      */
     public function getClient()
     {
-        $result = '';
+        $result = 'jQuery(document).ready(function(){ ';
 
         foreach ($this->rules() AS $rule) {
             $validator = new Validator($rule);
-            $result .= $validator->run($this, true);
+            if (is_string($js = $validator->run($this,true))) {
+                $result .= $js;
+            }
         }
 
-        return $result;
+        return $result.'});';
     }
 
     /**

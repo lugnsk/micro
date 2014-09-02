@@ -5,14 +5,13 @@ use \Micro\web\helpers\Html;
 /** @var App\controllers\RegisterController $this */
 /** @var App\models\User $model */
 
-echo Html::script( $model->getClient() );
-
 echo Html::heading(2, 'Регистрация');
 
 /** @var \Micro\web\Form $form */
 $form = $this->beginWidget('\Micro\widgets\FormWidget',[
     'method'=>'post',
-    'action'=>'/register/post'
+    'action'=>'/register/post',
+    'client'=>$model->getClient(),
 ]);
 
 echo $form->textFieldRow($model, 'email');

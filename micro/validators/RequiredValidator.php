@@ -54,25 +54,14 @@ class RequiredValidator extends Validator
     {
         $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
 
-        $result = 'jQuery(document).ready(function(){';
+        $result = null;
         foreach ($this->elements AS $element) {
             $id = $object . '_' . $element;
+            $action = 'if (!this.value) { e.preventDefault(); this.focus(); }';
 
-            $result .= '
-jQuery("#'.$id.'").bind("change", function(e){
-    if (!this.value) {
-        e.preventDefault();
-        this.focus();
-    }
-});
-jQuery("#'.$id.'").bind("submit", function(e){
-    if (!this.value) {
-        e.preventDefault();
-        this.focus();
-    }
-});
-';
+            $result .= 'jQuery("#'.$id.'").bind("change", function(e){ '.$action.'});'.
+                'jQuery("#'.$id.'").bind("submit", function(e){ '.$action.'});';
         }
-        return $result.'});';
+        return $result;
     }
 }

@@ -99,7 +99,6 @@ class Validator
         } elseif (file_exists(Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
             $className = '\\App\\validators\\' . $name . '.php';
         } else {
-            // hook - function as validator
             if (function_exists($name)) {
                 foreach ($elements AS $element) {
                     if (property_exists($model, $element)) {

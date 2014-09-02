@@ -26,6 +26,8 @@ class FormWidget extends Widget
     public $method = 'GET';
     /** @var string $type type of form */
     public $type = 'text/plain';
+    /** @var string $client client js code */
+    public $client = '';
 
     /**
      * Initialize widget
@@ -49,5 +51,8 @@ class FormWidget extends Widget
     public function run()
     {
         echo Html::endForm();
+        if ($this->client) {
+            echo Html::script($this->client);
+        }
     }
 }

@@ -67,6 +67,16 @@ class BooleanValidator extends Validator
      */
     public function client($model)
     {
-        return ' if (value != '.$this->params['true'].' AND value != '.$this->params['false'].') { /*action*/ }';
+        $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
+
+        $result = null;
+        foreach ($this->elements AS $element) {
+            $id = $object . '_' . $element;
+            $action = 'if (value != '.$this->params['true'].' AND value != '.$this->params['false'].') { /*action*/ }';
+
+            $result .= 'jQuery("#'.$id.'").bind("change", function(e){ '.$action.'});'.
+                'jQuery("#'.$id.'").bind("submit", function(e){ '.$action.'});';
+        }
+        return $result;
     }
 }
