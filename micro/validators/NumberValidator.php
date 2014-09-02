@@ -49,6 +49,6 @@ class NumberValidator extends Validator
      */
     public function client($model)
     {
-        return 'if (! ((this.value ^ 0) === this.value) ) { alert(\'Value is not number\'); }';
+        return 'if (! ((this.value ^ 0) === this.value) ) { e.preventDefault(); this.focus(); alert(\'Value is not number\'); }';
     }
 }
