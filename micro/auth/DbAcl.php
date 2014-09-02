@@ -87,7 +87,7 @@ class DbAcl extends Acl
      * Create new role
      *
      * @access public
-     * @param string $name
+     * @param string $name role name
      * @return void
      */
     public function createRole($name)
@@ -101,7 +101,7 @@ class DbAcl extends Acl
      * Create new permission
      *
      * @access public
-     * @param string $name
+     * @param string $name permission name
      * @return void
      */
     public function createPermission($name)
@@ -115,7 +115,7 @@ class DbAcl extends Acl
      * Delete permission by name
      *
      * @access public
-     * @param $name
+     * @param string $name permission name
      * @return void
      */
     public function deletePermission($name)
@@ -124,8 +124,10 @@ class DbAcl extends Acl
     }
 
     /**
+     * Delete role by name
+     *
      * @access public
-     * @param $name
+     * @param string $name role name
      * @return void
      */
     public function deleteRole($name)
@@ -137,8 +139,10 @@ class DbAcl extends Acl
     }
 
     /**
+     * Get role perms
+     *
      * @access public
-     * @param $role
+     * @param string $role role name
      * @return array
      */
     protected function rolePerms($role)
@@ -152,8 +156,11 @@ class DbAcl extends Acl
     }
 
     /**
-     * @param $role
-     * @param $permission
+     * Assign role permission
+     *
+     * @access public
+     * @param string $role role name
+     * @param string $permission permission name
      * @return void
      */
     public function assignRolePermission($role, $permission)
@@ -162,8 +169,11 @@ class DbAcl extends Acl
     }
 
     /**
-     * @param $role
-     * @param $permission
+     * Revoke role permission
+     *
+     * @access public
+     * @param string $role role name
+     * @param string $permission permission name
      * @return void
      */
     public function revokeRolePermission($role, $permission)
@@ -172,9 +182,12 @@ class DbAcl extends Acl
     }
 
     /**
-     * @param $userId
-     * @param null $privilege
-     * @param boolean $asRole
+     * Grant privilege to user
+     *
+     * @access public
+     * @param integer $userId user ID
+     * @param integer $privilege privilege ID
+     * @param boolean $asRole as role?
      * @return void
      */
     public function grantPrivilege($userId, $privilege=null, $asRole=true)
@@ -185,9 +198,18 @@ class DbAcl extends Acl
             $this->conn->insert('acl_user', ['user'=>$userId, 'perm'=>$privilege]);
         }
     }
-/*    //
-    public function forbidPrivilege()
+
+    /**
+     * @param integer $userId user ID
+     * @param integer $privilege privilege ID
+     * @param bool $asRole as role?
+     */
+    public function forbidPrivilege($userId, $privilege=null, $asRole=true)
     {
-        //
+        if ($asRole) {
+            $this->conn->delete('acl_user', '`user`="'.$userId.'" AND `role`="'.$privilege.'"');
+        } else {
+            $this->conn->delete('acl_user', '`user`="'.$userId.'" AND `perm`="'.$privilege.'"');
+        }
     }
-*/}
+}
