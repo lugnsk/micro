@@ -19,7 +19,6 @@ use Micro\db\Model;
  */
 class RequiredValidator extends Validator
 {
-
     /**
      * Validate on server, make rule
      *
@@ -30,7 +29,7 @@ class RequiredValidator extends Validator
     public function validate($model)
     {
         foreach ($this->elements AS $element) {
-            if (!method_exists($model, $element)) {
+            if (!property_exists($model, $element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
                 return false;
             }
