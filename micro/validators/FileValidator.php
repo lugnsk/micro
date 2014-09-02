@@ -37,17 +37,4 @@ class FileValidator extends Validator
         }
         return true;
     }
-
-    /**
-     * Client-side validation, make js rule
-     *
-     * @access public
-     * @param Model $model model from elements
-     * @return string
-     */
-    public function client($model)
-    {
-        $js = '';
-        return $js;
-    }
 }

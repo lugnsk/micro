@@ -114,7 +114,7 @@ class Validator
         $valid = new $className;
         $valid->elements = $elements;
         $valid->params = $this->rule;
-        if ($client) {
+        if ($client AND method_exists($valid, 'client')) {
             $result = $valid->clientValidate($model);
         } else {
             $result = $valid->validate($model);

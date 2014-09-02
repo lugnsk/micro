@@ -28,12 +28,26 @@ class RangeValidator extends Validator
      */
     public function validate($model)
     {
+        if (!isset($this->params['min']) OR empty($this->params['min'])) {
+            $this->errors[] = 'Minimal value not declared to Range validator';
+        }
+        if (!isset($this->params['max']) OR empty($this->params['max'])) {
+            $this->errors[] = 'Maximal value not declared to Range validator';
+        }
+        $step = (isset($this->params['step']) AND !empty($this->params['step'])) ? $this->params['step'] : 1;
+
+        $rang = range($this->params['min'], $this->params['max'], $step);
+
         foreach ($this->elements AS $element) {
             if (!property_exists($model, $element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
                 return false;
             }
-            $elementValue = $model->$element;
+            if (!in_array($model->$element, $rang)) {
+                $this->errors[] = 'Parameter ' . $element . ' not find in rage ' .
+                    $this->params['min'] . '..' . $this->params['max'];
+                return false;
+            }
         }
         return true;
     }
@@ -47,7 +61,8 @@ class RangeValidator extends Validator
      */
     public function client($model)
     {
-        $js = '';
+        $js = 'if (this.value < ' . $this->params['min'] . ' OR this.value > ' . $this->params['max'] . ') {'.
+            '}';
         return $js;
     }
 }

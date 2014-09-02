@@ -67,6 +67,7 @@ class BooleanValidator extends Validator
      */
     public function client($model)
     {
-        return 'if (this.value != '.$this->params['true'].' AND this.value != '.$this->params['false'].') { alert(\'Value not compatible\'); }';
+        return 'if (this.value != '.$this->params['true'].' AND this.value != '.$this->params['false'].') {'.
+        ' e.preventDefault(); this.focus(); alert(\'Value not compatible\'); }';
     }
 }
