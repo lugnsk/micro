@@ -19,7 +19,6 @@ use Micro\db\Model;
  */
 class StringValidator extends Validator
 {
-
     /**
      * Validate on server, make rule
      *
@@ -63,12 +62,12 @@ class StringValidator extends Validator
     {
         $action = '';
         if (isset($this->params['min'])) {
-            $action .= ' if (this.value.length < '.$this->params['min'].') {'.
+            $action .= ' if (this.value.length < '.$this->params['min'].') { e.preventDefault(); this.focus();'.
                 ' alert(\'Value lowest, minimum '.$this->params['min'].' symbols\'); }';
         }
         if (isset($this->params['max'])) {
-            $action .= ' if (this.value.length > '.$this->params['max'].') {'.
-                ' alert(\'Value highest, minimum '.$this->params['max'].' symbols\'); }';
+            $action .= ' if (this.value.length > '.$this->params['max'].') { e.preventDefault(); this.focus();'.
+                ' alert(\'Value highest, maximum '.$this->params['max'].' symbols\'); }';
         }
         return $action;
     }
