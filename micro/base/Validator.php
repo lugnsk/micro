@@ -115,13 +115,24 @@ class Validator
         $valid->elements = $elements;
         $valid->params = $this->rule;
         if ($client) {
-            $result = $valid->client($model);
+            $result = $valid->clientValidate($model);
         } else {
             $result = $valid->validate($model);
         }
 
         if ($valid->errors) {
             $this->errors[] = $valid->errors;
+        }
+        return $result;
+    }
+
+    public function clientValidate($model) {
+        $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
+
+        $result = null;
+        foreach ($this->elements AS $element) {
+            $id = $object . '_' . $element;
+            $result .= 'jQuery("#'.$id.'").bind("change blur submit", function(e){ '.$this->client($model).' });';
         }
         return $result;
     }

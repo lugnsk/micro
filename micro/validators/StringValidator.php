@@ -60,24 +60,13 @@ class StringValidator extends Validator
      */
     public function client($model)
     {
-        $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
-        $result = null;
-
-        foreach ($this->elements AS $element) {
-            $id = $object . '_' . $element;
-            $action = '';
-
-            if (isset($this->params['min'])) {
-                $action .= 'if (value.length < '.$this->params['min'].') { /*action*/ }';
-            }
-            if (isset($this->params['max'])) {
-                $action .= ' if (value.length > '.$this->params['max'].') { /*action*/ }';
-            }
-
-            $result .= 'jQuery("#'.$id.'").bind("change", function(e){ '.$action.' });'.
-                'jQuery("#'.$id.'").bind("submit", function(e){ '.$action.' });';
+        $action = '';
+        if (isset($this->params['min'])) {
+            $action .= ' if (value.length < '.$this->params['min'].') { /*action*/ }';
         }
-
-        return $result;
+        if (isset($this->params['max'])) {
+            $action .= ' if (value.length > '.$this->params['max'].') { /*action*/ }';
+        }
+        return $action;
     }
 }
