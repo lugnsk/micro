@@ -11,15 +11,6 @@ class RegisterController extends Controller
 {
     public function actionIndex()
     {
-        $uid = Registry::get('session')->UserID;
-        if (!$uid) {
-            $this->redirect('/profile');
-        }
-
-        /** @var FileRbac $rbac */
-        $rbac = Registry::get('permission');
-        $rbac->check(1, 'register'); // hack
-
         echo $this->render('index', ['model'=>new User]);
     }
 
