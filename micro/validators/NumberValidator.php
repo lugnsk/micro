@@ -33,7 +33,9 @@ class NumberValidator extends Validator
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
                 return false;
             }
-            $elementValue = $model->$element;
+            if (!is_numeric($model->$element)) {
+                $this->errors[] = 'Parameter ' . $element . ' is not a numeric';
+            }
         }
         return true;
     }
