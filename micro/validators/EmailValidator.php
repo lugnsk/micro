@@ -19,7 +19,6 @@ use Micro\db\Model;
  */
 class EmailValidator extends Validator
 {
-
     /**
      * Validate on server, make rule
      *
@@ -30,7 +29,14 @@ class EmailValidator extends Validator
     public function validate($model)
     {
         foreach ($this->elements AS $element) {
-            return false;
+            if (!property_exists($model, $element)) {
+                $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+                return false;
+            }
+            if (filter_var($model->$element, FILTER_VALIDATE_EMAIL) === FALSE) {
+                $this->errors[] = 'Parameter ' . $element . ' is not a valid E-mail address';
+                return false;
+            }
         }
         return true;
     }
@@ -44,7 +50,8 @@ class EmailValidator extends Validator
      */
     public function client($model)
     {
-        $js = '';
+        $js = 'if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value) != true) {'.
+            ' e.preventDefault(); this.focus(); alert(\'Value is not a valid e-mail\'); }';
         return $js;
     }
 }
