@@ -7,8 +7,13 @@ use \Micro\web\Language;
 /** @var integer $pages */
 /** @var Language $lang */
 
+$currPage = 0;
+if (isset($_GET['page'])) {
+    $currPage = $_GET['page'];
+}
+
 $this->widget('App\modules\blog\widgets\TopblogsWidget');
-echo Html::link('создать', '/blog/post/create');
+echo Html::href('создать', '/blog/post/create');
 
 if (!$blogs) {
     ?><p>Ничего не найдено</p><?php
@@ -20,16 +25,16 @@ if (!$blogs) {
     <?php endforeach; ?>
     <p>
         <?php for ($page = 0; $page < $pages; $page++): ?>
-            <?php if ($page != $_GET['page']): ?>
-                <?= Html::openTag('a', ['href'=>'/blog/post/index/'.$blog]) ?>
+            <?php if ($page != $currPage): ?>
+                <?= Html::openTag('a', ['href'=>'/blog/post/index/'.$page]) ?>
             <?php endif; ?>
 
             <?= $page + 1; ?>
 
-            <?php if ($page != $_GET['page']): ?>
+            <?php if ($page != $currPage): ?>
                 <?= Html::closeTag('a') ?>
             <?php endif; ?>
         <?php endfor; ?>
     </p>
-    <p><?= $lang->hello; ?></p>
+    <p><?= $lang['hello']; ?></p>
 <?php } ?>

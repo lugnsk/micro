@@ -19,7 +19,6 @@ use Micro\db\Model;
  */
 class FileValidator extends Validator
 {
-
     /**
      * Validate on server, make rule
      *
@@ -30,7 +29,11 @@ class FileValidator extends Validator
     public function validate($model)
     {
         foreach ($this->elements AS $element) {
-            return false;
+            if (!property_exists($model, $element)) {
+                $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+                return false;
+            }
+            $elementValue = $model->$element;
         }
         return true;
     }

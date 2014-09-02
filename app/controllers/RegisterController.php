@@ -4,8 +4,6 @@ namespace App\controllers;
 
 use App\components\Controller;
 use App\models\User;
-use Micro\auth\FileRbac;
-use Micro\base\Registry;
 
 class RegisterController extends Controller
 {

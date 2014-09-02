@@ -2,8 +2,8 @@
 
 namespace Micro\base;
 
-use \Micro\base\Exception;
-use \Micro\Micro;
+use Micro\base\Exception;
+use Micro\Micro;
 
 /**
  * Validator is a runner validation process

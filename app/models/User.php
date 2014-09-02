@@ -9,7 +9,8 @@ class User extends Model
     public function rules()
     {
         return [
-            ['email,login', 'required']
+            ['email,login', 'required'],
+            ['email', 'email']
         ];
     }
     public function attributeLabels()
