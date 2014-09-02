@@ -19,8 +19,9 @@ use Micro\db\Model;
  */
 class StringValidator extends Validator
 {
+
     /**
-     * Validate in server
+     * Validate on server, make rule
      *
      * @access public
      * @param Model $model
@@ -52,10 +53,10 @@ class StringValidator extends Validator
     }
 
     /**
-     * Validate in client
+     * Client-side validation, make js rule
      *
      * @access public
-     * @param Model $model
+     * @param Model $model model from elements
      * @return string
      */
     public function client($model)
