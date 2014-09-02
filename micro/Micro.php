@@ -96,16 +96,13 @@ final class Micro
     public function run()
     {
         $path = $this->prepareController();
-        $action = Registry::get('request')->getAction();
-        $name = basename($path);
-
-        if (!class_exists($name)) {
-            throw new Exception('Controller ' . $name . ' not set');
+        if (!class_exists($path)) {
+            throw new Exception('Controller ' . $path . ' not set');
         }
 
         /** @var \Micro\base\Controller $mvc */
-        $mvc = new $name;
-        $mvc->action($action);
+        $mvc = new $path;
+        $mvc->action(Registry::get('request')->getAction());
 
         // Render timer
         if (isset($this->config['timer']) AND $this->config['timer'] == true) {
