@@ -47,7 +47,7 @@ class UniqueValidator extends Validator
      */
     public function client($model)
     {
-        $js = '';
+        $js = 'if (false) { e.preventDefault(); this.focus(); alert(\'\'); }';
         return $js;
     }
 }
