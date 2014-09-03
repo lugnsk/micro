@@ -4,6 +4,7 @@ namespace Micro\validators;
 
 use Micro\base\Validator;
 use Micro\db\Model;
+use Micro\db\Query;
 
 /**
  * UniqueValidator class file.
@@ -34,20 +35,18 @@ class UniqueValidator extends Validator
                 return false;
             }
             $elementValue = $model->$element;
+
+            $query = new Query;
+            $query->select = $this->params['attribute'];
+            $query->table = $this->params['table'];
+            $query->addWhere($this->params['attribute'] . '="' . $elementValue . '"');
+            $query->limit = 1;
+            $query->single = true;
+
+            if ($query->run()) {
+                return false;
+            }
         }
         return true;
-    }
-
-    /**
-     * Client-side validation, make js rule
-     *
-     * @access public
-     * @param Model $model model from elements
-     * @return string
-     */
-    public function client($model)
-    {
-        $js = 'if (false) { e.preventDefault(); this.focus(); alert(\'\'); }';
-        return $js;
     }
 }
