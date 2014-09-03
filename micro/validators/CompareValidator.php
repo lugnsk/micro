@@ -23,7 +23,7 @@ class CompareValidator extends Validator
      * Initial validator
      *
      * @access public
-     * @param array $rule
+     * @param array $rule validation rule
      * @result void
      */
     public function __construct($rule=[])
@@ -38,7 +38,7 @@ class CompareValidator extends Validator
      * Validate on server, make rule
      *
      * @access public
-     * @param Model $model
+     * @param Model $model checked model
      * @return bool
      */
     public function validate($model)
@@ -68,7 +68,7 @@ class CompareValidator extends Validator
      * Client-side validation, make js rule
      *
      * @access public
-     * @param Model $model model from elements
+     * @param Model $model checked model
      * @return string
      */
     public function client($model)

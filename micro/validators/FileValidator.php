@@ -24,7 +24,7 @@ class FileValidator extends Validator
      * Validate on server, make rule
      *
      * @access public
-     * @param Model $model
+     * @param Model $model checked model
      * @return bool
      */
     public function validate($model)

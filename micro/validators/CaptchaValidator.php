@@ -25,8 +25,10 @@ class CaptchaValidator extends Validator
 
 
     /**
+     * Constructor validator
+     *
      * @access public
-     * @param array $rule
+     * @param array $rule validation rule
      * @result void
      */
     public function __construct($rule=[])
@@ -40,7 +42,7 @@ class CaptchaValidator extends Validator
      * Validate on server, make rule
      *
      * @access public
-     * @param Model $model
+     * @param Model $model checked model
      * @return bool
      */
     public function validate($model)
