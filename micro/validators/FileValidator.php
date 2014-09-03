@@ -34,6 +34,9 @@ class FileValidator extends Validator
                 return false;
             }
             $elementValue = $model->$element;
+            // types
+            // min size
+            // max size
         }
         return true;
     }
