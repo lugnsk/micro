@@ -2,6 +2,7 @@
 
 namespace Micro\validators;
 
+use Micro\base\Registry;
 use Micro\base\Validator;
 use Micro\db\Model;
 
@@ -19,6 +20,22 @@ use Micro\db\Model;
  */
 class CaptchaValidator extends Validator
 {
+    /** @var string $captcha compiled captcha */
+    protected $captcha='';
+
+
+    /**
+     * @access public
+     * @param array $rule
+     * @result void
+     */
+    public function __construct($rule=[])
+    {
+        parent::__construct($rule);
+
+        $this->captcha = Registry::get('user')->getCaptcha();
+    }
+
     /**
      * Validate on server, make rule
      *
@@ -33,21 +50,12 @@ class CaptchaValidator extends Validator
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
                 return false;
             }
-            $elementValue = $model->$element;
+
+            $convert = Registry::get('user')->makeCaptcha($model->$element);
+            if ($convert != $this->captcha) {
+                return false;
+            }
         }
         return true;
-    }
-
-    /**
-     * Client-side validation, make js rule
-     *
-     * @access public
-     * @param Model $model model from elements
-     * @return string
-     */
-    public function client($model)
-    {
-        $js = 'if (false) { e.preventDefault(); this.focus(); alert(\'\'); }';
-        return $js;
     }
 }
