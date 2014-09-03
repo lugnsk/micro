@@ -34,6 +34,10 @@ class RegexpValidator extends Validator
                 return false;
             }
             $elementValue = $model->$element;
+            if (preg_match($this->params['pattern'], $elementValue) === FALSE) {
+                $this->errors[] = 'Parameter ' . $element . ' not valid with regular expression';
+                return false;
+            }
         }
         return true;
     }
@@ -47,7 +51,8 @@ class RegexpValidator extends Validator
      */
     public function client($model)
     {
-        $js = 'if (false) { e.preventDefault(); this.focus(); alert(\'\'); }';
+        $js = 'if (!this.value.match('.$this->params['pattern'].')) {'.
+            ' e.preventDefault(); this.focus(); alert(\'Value not valid with regular expression\'); }';
         return $js;
     }
 }
