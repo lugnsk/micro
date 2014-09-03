@@ -126,6 +126,13 @@ class Validator
         return $result;
     }
 
+    /**
+     * Client validation making
+     *
+     * @access public
+     * @param $model
+     * @return string
+     */
     public function clientValidate($model) {
         $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
 
