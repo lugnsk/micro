@@ -200,6 +200,9 @@ class DbAcl extends Acl
     }
 
     /**
+     * Forbid privilege
+     *
+     * @access public
      * @param integer $userId user ID
      * @param integer $privilege privilege ID
      * @param bool $asRole as role?
