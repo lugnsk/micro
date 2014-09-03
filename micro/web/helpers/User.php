@@ -56,4 +56,27 @@ class User
             return false;
         }
     }
+
+    /**
+     * Get captcha code
+     *
+     * @access public
+     * @return string
+     */
+    public function getCaptcha()
+    {
+        return Registry::get('session')->captchaCode;
+    }
+
+    /**
+     * Make captcha from source
+     *
+     * @access public
+     * @param string $code source captcha
+     * @return string
+     */
+    public function makeCaptcha($code)
+    {
+        return md5($code);
+    }
 }
