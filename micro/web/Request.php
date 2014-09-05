@@ -20,6 +20,8 @@ class Request
 {
     /** @var Router $router router for request */
     private $router;
+    /** @var string $extensions extensions in request */
+    private $extensions;
     /** @var string $modules modules in request */
     private $modules;
     /** @var string $controller controller to run */
@@ -56,6 +58,7 @@ class Request
             array_shift($uriBlocks);
         }
 
+        $this->prepareExtensions($uriBlocks);
         $this->prepareModules($uriBlocks);
         $this->prepareController($uriBlocks);
         $this->prepareAction($uriBlocks);
@@ -73,6 +76,33 @@ class Request
     }
 
     /**
+     * Prepare extensions
+     * @access private
+     * @param $uriBlocks
+     * @return bool
+     */
+    private function prepareExtensions(&$uriBlocks)
+    {
+        $extensions = [];
+        if (isset(Micro::getInstance()->config['extensions'])) {
+            $extensions = Micro::getInstance()->config['extensions'];
+        }
+        if (!$extensions) {
+            return false;
+        }
+
+        $path = Micro::getInstance()->config['AppDir'];
+
+        foreach ($uriBlocks AS $i => $block) {
+            if (file_exists($path . $this->extensions . '/extensions/' . $block)) {
+                $this->extensions .= '/extensions/' . $block;
+                unset($uriBlocks[$i]);
+            } else break;
+        }
+        $this->extensions = strtr($this->extensions, '/', '\\');
+    }
+
+    /**
      * Prepare modules
      *
      * @access private
@@ -83,6 +113,10 @@ class Request
     private function prepareModules(&$uriBlocks)
     {
         $path = Micro::getInstance()->config['AppDir'];
+
+        if ($this->extensions) {
+            $path .= $this->extensions;
+        }
 
         foreach ($uriBlocks AS $i => $block) {
             if (file_exists($path . $this->modules . '/modules/' . $block)) {
@@ -115,6 +149,17 @@ class Request
     private function prepareAction(&$uriBlocks)
     {
         $this->action = ($str = array_shift($uriBlocks)) ? $str : 'index';
+    }
+
+    /**
+     * Get extensions from request
+     *
+     * @access public
+     * @return string
+     */
+    public function getExtensions()
+    {
+        return $this->extensions;
     }
 
     /**

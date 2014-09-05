@@ -124,12 +124,16 @@ final class Micro
      */
     private function prepareController()
     {
+        /** @var \Micro\web\Request $request */
         $request = Registry::get('request');
         if (!$request) {
             throw new Exception('Component request not loaded.');
         }
 
         $path = 'App';
+        if ($extensions = $request->getExtensions()) {
+            $path .= $extensions;
+        }
         if ($modules = $request->getModules()) {
             $path .= $modules;
         }
