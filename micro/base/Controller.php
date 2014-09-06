@@ -3,6 +3,7 @@
 namespace Micro\base;
 
 use \Micro\Micro;
+use Micro\web\helpers\Html;
 use \Micro\web\Language;
 
 /**
@@ -24,6 +25,8 @@ abstract class Controller
     public $layout;
     /** @var string $defaultAction default run action */
     public $defaultAction = 'index';
+    /** @var array $styleScripts styles and scripts for head and body */
+    private $styleScripts = [];
     /** @var boolean $asWidget is a widget? */
     public $asWidget = false;
     /** @var array $widgetStack widgets stack */
@@ -181,7 +184,34 @@ abstract class Controller
         if (!empty($this->widgetStack)) {
             throw new Exception(count($this->widgetStack) . ' widgets not endings.');
         }
-        return ob_get_clean();
+
+        return $this->insertStyleScripts(ob_get_clean());
+    }
+
+    protected function insertStyleScripts($cache)
+    {
+        $heads = '';
+        $ends = '';
+        $result = '';
+
+        foreach ($this->styleScripts AS $element) {
+            if ($element['isHead']) {
+                $heads .= $element['body'];
+            } else {
+                $ends .= $element['body'];
+            }
+        }
+
+        $positionHead = strpos($cache, '</head>');
+        $positionBody = strpos($cache, '</body>', $positionHead);
+
+        $result .= substr($cache, 0, $positionHead);
+        $result .= $heads;
+        $result .= substr($cache, $positionHead, $positionBody);
+        $result .= $ends;
+        $result .= substr($cache, $positionHead+$positionBody);
+
+        return $result;
     }
 
     /**
@@ -218,6 +248,72 @@ abstract class Controller
     {
         header('Location: ' . $path);
         exit();
+    }
+
+    // Styles and Scripts
+
+    /**
+     * Register JS script
+     *
+     * @access public
+     * @param string $source filename
+     * @param bool $isHead is head block
+     * @return void
+     */
+    public function registerScript($source, $isHead=true)
+    {
+        $this->styleScripts[] = [
+            'isHead'=>$isHead,
+            'body'=>Html::script($source)
+        ];
+    }
+
+    /**
+     * Register JS file
+     *
+     * @access public
+     * @param string $source filename
+     * @param bool $isHead is head block
+     * @return void
+     */
+    public function registerScriptFile($source, $isHead=true)
+    {
+        $this->styleScripts[] = [
+            'isHead'=>$isHead,
+            'body'=>Html::scriptFile($source)
+        ];
+    }
+
+    /**
+     * Register CSS code
+     *
+     * @access public
+     * @param string $source filename
+     * @param bool $isHead is head block
+     * @return void
+     */
+    public function registerCss($source, $isHead=true)
+    {
+        $this->styleScripts[] = [
+            'isHead'=>$isHead,
+            'body'=>Html::css($source)
+        ];
+    }
+
+    /**
+     * Register CSS file
+     *
+     * @access public
+     * @param string $source filename
+     * @param bool $isHead is head block
+     * @return void
+     */
+    public function registerCssFile($source, $isHead=true)
+    {
+        $this->styleScripts[] = [
+            'isHead'=>$isHead,
+            'body'=>Html::cssFile($source)
+        ];
     }
 
     // Widgets:

@@ -3,14 +3,16 @@ use \Micro\web\helpers\Html;
 use \Micro\Micro;
 
 /** @var string $content */
+/** @var \App\components\Controller $this */
+
+$this->registerScriptFile('/css/jquery.js');
+$this->registerCssFile('/css/main.css');
 ?>
 <?= Html::doctype('html5') ?>
 <html>
 <head>
     <?= Html::charset('utf-8') ?>
     <?= Html::meta('language', 'ru') ?>
-    <?= Html::cssFile('/css/main.css') ?>
-    <?= Html::scriptFile('/css/jquery.js') ?>
     <?= Html::favicon('/favicon.png') ?>
     <?= Html::meta('viewport', 'width=device-width, initial-scale=1.0') ?>
     <?= Html::title($this->title) ?>
