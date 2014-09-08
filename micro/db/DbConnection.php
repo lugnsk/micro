@@ -288,4 +288,13 @@ class DbConnection
 
         return (bool)$sth->rowCount();
     }
+
+    public function count($conditions='')
+    {
+        $sth = $this->conn->query('SELECT COUNT(*) FROM ('.$conditions.') AS m;');
+        if ($sth->execute()) {
+            return $sth->fetchColumn();
+        }
+        return false;
+    }
 }
