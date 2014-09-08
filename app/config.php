@@ -9,14 +9,6 @@ return [
     'company' => 'Micro',
     'slogan' => 'simply hmvc php framework',
 
-    // Default import dir
-    'import' => [
-        'extensions',
-        'components',
-        'widgets',
-        'models',
-    ],
-
     // Print run time
     'timer' => true,
     // Language
