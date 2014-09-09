@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroGridViewWidget */
 
 namespace Micro\widgets;
 
@@ -7,12 +7,30 @@ use Micro\base\Registry;
 use Micro\base\Widget;
 use Micro\db\DbConnection;
 
+/**
+ * GridViewWidget class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage widgets
+ * @version 1.0
+ * @since 1.0
+ */
 class GridViewWidget extends Widget
 {
     /** @var string $query query for get lines */
     public $query;
     /** @var array $labels Labels for columns */
     public $labels;
+    /** @var int $limit Limit current rows */
+    public $limit = 10;
+    /** @var int $page Current page on table */
+    public $page = 1;
+    /** @var array $paginationConfig parameters for PaginationWidget */
+    public $paginationConfig = [];
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
     /** @var array Rows table */
@@ -23,6 +41,14 @@ class GridViewWidget extends Widget
     protected $conn;
 
 
+    /**
+     * Redeclare widget constructor
+     *
+     * @access public
+     * @param array $args arguments
+     * @result void
+     * @throws Exception
+     */
     public function __construct($args=[])
     {
         parent::__construct($args);
@@ -33,24 +59,55 @@ class GridViewWidget extends Widget
         $this->getConnect();
     }
 
+    /**
+     * Get connect to DB
+     *
+     * @access public
+     * @return void
+     */
     public function getConnect()
     {
         $this->conn = Registry::get('db');
     }
 
+    /**
+     * Initialize widget
+     *
+     * @access public
+     * @result void
+     */
     public function init()
     {
+        if (($position = strpos($this->query, 'LIMIT')) !== FALSE) {
+            $this->query = substr($this->query, 0, $position);
+        }
+
         $st = $this->conn->conn->query($this->query);
         $st->execute();
 
-        $firstLine = $st->fetch(\PDO::FETCH_ASSOC);
-
-        $this->keys = array_keys($firstLine);
-        $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
-        array_unshift($this->rows, $firstLine);
-
+        $this->keys = array_keys($st->fetch(\PDO::FETCH_ASSOC));
         $this->rowCount = $this->conn->count($this->query);
+
+        $st = $this->conn->conn->query($this->query.' LIMIT '.($this->limit*$this->page).','.$this->limit);
+        $st->execute();
+
+        $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($this->limit < 10) {
+            $this->limit = 10;
+        }
+
+        $this->paginationConfig['countRows'] = $this->rowCount;
+        $this->paginationConfig['limit'] = $this->limit;
+        $this->paginationConfig['currentPage'] = $this->page;
     }
+
+    /**
+     * Running widget
+     *
+     * @access public
+     * @return void
+     */
     public function run()
     {
         $table = [];
@@ -75,9 +132,17 @@ class GridViewWidget extends Widget
             'table'=>$table,
             'attributes'=>['border'=>1, 'width'=>'100%'],
             'attributesCounter'=>['style'=>'text-align:right'],
-            'counterText'=>'Всего: '
+            'counterText'=>'Всего: ',
+            'paginationConfig'=>$this->paginationConfig
         ]);
     }
+
+    /**
+     * Returning labels for keys
+     *
+     * @access public
+     * @return array
+     */
     public function attributeLabels()
     {
         $result = [];

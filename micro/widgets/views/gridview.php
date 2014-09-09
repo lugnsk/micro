@@ -3,3 +3,4 @@
 <?=\Micro\web\helpers\Html::closeTag('div')?>
 
 <?=\Micro\web\helpers\Html::table($table, $attributes)?>
+<?=$this->widget('Micro\widgets\PaginationWidget',$paginationConfig)?>
