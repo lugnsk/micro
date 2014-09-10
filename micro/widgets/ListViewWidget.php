@@ -35,17 +35,21 @@ class ListViewWidget extends Widget
         if (!$this->controller OR !$this->view) {
             throw new Exception('Controller or view not defined');
         }
+        if ($this->limit < 10) {
+            $this->limit = 10;
+        }
 
         $cls = str_replace('\\','/', get_class($this->controller));
-        $this->pathView = str_replace('App', Micro::getInstance()->config['AppDir'], dirname($cls)).'/../views/';
-        $this->pathView .= strtolower(str_replace('Controller','',basename($cls))).'/'.$this->view.'.php';
+        $this->pathView = str_replace('App', Micro::getInstance()->config['AppDir'], dirname($cls));
+        $this->pathView .= '/../views/'.strtolower(str_replace('Controller','',basename($cls)));
+        $this->pathView .= '/'.$this->view.'.php';
 
         if (!file_exists($this->pathView)) {
             throw new Exception('View path not valid: '.$this->pathView);
         }
-        if ($this->limit < 10) {
-            $this->limit = 10;
-        }
+
+        $this->rows = $this->query->run(\PDO::FETCH_ASSOC);
+        $this->rowCount = count($this->rows);
 
         $this->paginationConfig['countRows'] = $this->rowCount;
         $this->paginationConfig['limit'] = $this->limit;
@@ -53,8 +57,14 @@ class ListViewWidget extends Widget
     }
     public function run()
     {
-        foreach ($this->query->run() AS $element) {
-            include $this->pathView;
+        $st = $i = $this->page * $this->limit;
+
+        for ( ; $i < ($st + $this->limit); $i++) {
+            if (isset($this->rows[$i])) {
+                $element = $this->rows[$i];
+                include $this->pathView;
+            }
         }
+        echo $this->widget('Micro\widgets\PaginationWidget', $this->paginationConfig);
     }
 }
