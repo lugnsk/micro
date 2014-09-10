@@ -31,6 +31,7 @@ class GridViewWidget extends Widget
     public $page = 1;
     /** @var array $paginationConfig parameters for PaginationWidget */
     public $paginationConfig = [];
+
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
     /** @var array Rows table */
@@ -42,7 +43,7 @@ class GridViewWidget extends Widget
 
 
     /**
-     * Redeclare widget constructor
+     * Re-declare widget constructor
      *
      * @access public
      * @param array $args arguments

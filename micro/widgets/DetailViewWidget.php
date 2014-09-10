@@ -6,6 +6,7 @@ use Micro\base\Registry;
 use Micro\base\Widget;
 use Micro\db\Model;
 use Micro\db\Query;
+use Micro\web\helpers\Html;
 
 class DetailViewWidget extends Widget
 {
@@ -17,11 +18,18 @@ class DetailViewWidget extends Widget
     public $condition='';
     /** @var array $keys Keys for render */
     public $keys = [];
+    /** @var array $attributes attributes for dl */
+    public $attributes = [];
+    /** @var array $attributesElement attributes for dt */
+    public $attributesElement = [];
+    /** @var array $attributesValue attributes for dd */
+    public $attributesValue = [];
     /** @var array $attributeLabels labels for attributes */
     public $attributeLabels = [];
 
     /** @var \Micro\db\DbConnection $conn connect to database */
     protected $conn = null;
+    /** @var array $statement elements from data */
     protected $statement = [];
 
 
@@ -81,13 +89,18 @@ class DetailViewWidget extends Widget
      */
     public function run()
     {
-        $result = '<dl>';
+        $result = Html::openTag('dl', $this->attributes);
         foreach ($this->statement AS $key=>$value) {
             if (in_array($key, $this->keys)) {
-                $result .= '<dt>'.$this->getAttributeLabel($key).'</dt><dd>'.$value.'</dd>';
+                $result .= Html::openTag('dt',$this->attributesElement);
+                $result .= $this->getAttributeLabel($key);
+                $result .= Html::closeTag('dt');
+                $result .= Html::openTag('dd',$this->attributesValue);
+                $result .= $value;
+                $result .= Html::closeTag('dd');
             }
         }
-        echo $result , '</dl>';
+        echo $result , Html::closeTag('dl');
     }
 
     /**
