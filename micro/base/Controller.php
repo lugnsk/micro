@@ -188,6 +188,13 @@ abstract class Controller
         return $this->insertStyleScripts(ob_get_clean());
     }
 
+    /**
+     * Insert styles and scripts into cache
+     *
+     * @access protected
+     * @param string $cache cache of generated page
+     * @return string
+     */
     protected function insertStyleScripts($cache)
     {
         $heads = '';

@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroDetailViewWidget */
 
 namespace Micro\widgets;
 
@@ -8,6 +8,18 @@ use Micro\db\Model;
 use Micro\db\Query;
 use Micro\web\helpers\Html;
 
+/**
+ * DetailViewWidget class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage widgets
+ * @version 1.0
+ * @since 1.0
+ */
 class DetailViewWidget extends Widget
 {
     /** @var Model $model Model for details */
@@ -34,13 +46,24 @@ class DetailViewWidget extends Widget
 
 
     /**
+     * Re-declare constructor class
+     *
+     * @access public
      * @param array $args arguments
+     * @result void
      */
     public function __construct($args=[])
     {
         parent::__construct($args);
         $this->getConnect();
     }
+
+    /**
+     * Get connect to DB
+     *
+     * @access public
+     * @return void
+     */
     public function getConnect()
     {
         $this->conn = Registry::get('db');

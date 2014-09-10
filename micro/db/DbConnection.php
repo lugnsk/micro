@@ -289,9 +289,16 @@ class DbConnection
         return (bool)$sth->rowCount();
     }
 
-    public function count($conditions='')
+    /**
+     * Count element in sub-query
+     *
+     * @access public
+     * @param string $subQuery
+     * @return bool|integer
+     */
+    public function count($subQuery='')
     {
-        $sth = $this->conn->query('SELECT COUNT(*) FROM ('.$conditions.') AS m;');
+        $sth = $this->conn->query('SELECT COUNT(*) FROM ('.$subQuery.') AS m;');
         if ($sth->execute()) {
             return $sth->fetchColumn();
         }
