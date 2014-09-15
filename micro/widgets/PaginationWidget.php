@@ -94,8 +94,8 @@ class PaginationWidget extends Widget
                     ];
                 } else {
                     $items[] = [
-                        'text'=>$i+1,
-                        'attr'=>$this->attributesElement
+                        'text'=>Html::href( $i+1, $this->url.$i, $this->attributesLink),
+                        'attr'=>$this->attributesElement + ['class'=>'active']
                     ];
                 }
             }
