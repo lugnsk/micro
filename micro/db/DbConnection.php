@@ -51,6 +51,18 @@ class DbConnection
     }
 
     /**
+     * Send RAW query to DB
+     *
+     * @access public
+     * @param string $query raw query to db
+     * @return \PDOStatement
+     */
+    public function rawQuery($query='')
+    {
+        return $this->conn->query($query);
+    }
+
+    /**
      * List database names on this connection
      *
      * @access public
