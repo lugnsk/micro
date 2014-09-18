@@ -23,14 +23,20 @@ class GridViewWidget extends Widget
 {
     /** @var string $query query for get lines */
     public $query;
-    /** @var array $labels Labels for columns */
-    public $labels;
     /** @var int $limit Limit current rows */
     public $limit = 10;
     /** @var int $page Current page on table */
     public $page = 1;
     /** @var array $paginationConfig parameters for PaginationWidget */
     public $paginationConfig = [];
+    /** @var array $tableConfig table configuration */
+    public $tableConfig  = [];
+    /** @var array $attributes attributes for table */
+    public $attributes = [];
+    /** @var array $attributesCounter attributes for counter */
+    public $attributesCounter = [];
+    /** @var string $textCounter text for before counter */
+    public $textCounter = 'Всего: ';
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
@@ -85,17 +91,41 @@ class GridViewWidget extends Widget
 
         $st = $this->conn->conn->query($this->query);
         $st->execute();
-
         $this->keys = array_keys($st->fetch(\PDO::FETCH_ASSOC));
         $this->rowCount = $this->conn->count($this->query);
 
         $st = $this->conn->conn->query($this->query.' LIMIT '.($this->limit*$this->page).','.$this->limit);
         $st->execute();
-
         $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
 
         if ($this->limit < 10) {
             $this->limit = 10;
+        }
+
+        /**
+         * Table configuration
+         *
+         * Basic example:
+         * <?php
+         *  $this->tableConfig = [
+         *      'name' => [
+         *          'header'=>'',
+         *          'filter'=>'',
+         *          'type'=>'',
+         *          'value'=>''
+         *      ],
+         * ];
+         * ?>
+         */
+        if (!$this->tableConfig) {
+            foreach ($this->keys AS $key) {
+                $this->tableConfig[$key] = [
+                    'header'=>$key,
+                    'type'=>'string',
+                    'value'=>null,
+                    'class'=>null,
+                ];
+            }
         }
 
         $this->paginationConfig['countRows'] = $this->rowCount;
@@ -111,50 +141,15 @@ class GridViewWidget extends Widget
      */
     public function run()
     {
-        $table = [];
-
-        $headerCells = [];
-        foreach ($this->attributeLabels() AS $key) {
-            $headerCells[] = ['value'=>$key];
-        }
-        $table[] = [ 'cells'=>$headerCells, 'header'=>true ];
-
-        foreach ($this->rows AS $row) {
-            $compileRow = [];
-            foreach ($row AS $cell) {
-                $compileRow[] = ['value'=>$cell];
-            }
-            $table[] = ['cells'=>$compileRow];
-        }
-
-
         echo $this->render('gridview',[
+            'keys'=>$this->keys,
+            'rows'=>$this->rows,
             'rowCount'=>$this->rowCount,
-            'table'=>$table,
-            'attributes'=>['border'=>1, 'width'=>'100%'],
-            'attributesCounter'=>['style'=>'text-align:right'],
-            'counterText'=>'Всего: ',
-            'paginationConfig'=>$this->paginationConfig
+            'paginationConfig'=>$this->paginationConfig,
+            'tableConfig'=>$this->tableConfig,
+            'attributes'=>$this->attributes,
+            'attributesCounter'=>$this->attributesCounter,
+            'textCounter'=>$this->textCounter
         ]);
-    }
-
-    /**
-     * Returning labels for keys
-     *
-     * @access public
-     * @return array
-     */
-    public function attributeLabels()
-    {
-        $result = [];
-
-        foreach ($this->keys AS $num=>$key) {
-            if (isset($this->labels[$key])) {
-                $result[$num] = $this->labels[$key];
-            } else {
-                $result[$num] = $key;
-            }
-        }
-        return $result;
     }
 }
