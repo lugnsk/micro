@@ -2,7 +2,6 @@
 
 namespace Micro\widgets;
 
-use Micro\base\Exception;
 use Micro\web\helpers\Html;
 
 /**
@@ -18,7 +17,6 @@ class ActionsGridColumn extends GridColumn
      *
      * @access public
      * @return mixed
-     * @throws \Micro\base\Exception
      */
     public function __toString()
     {

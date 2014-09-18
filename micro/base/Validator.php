@@ -2,7 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\base\Exception;
 use Micro\Micro;
 
 /**
