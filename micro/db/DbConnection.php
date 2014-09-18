@@ -157,7 +157,7 @@ class DbConnection
         $sth = $this->conn->query('SHOW COLUMNS FROM ' . $table . ';');
 
         $result = [];
-        foreach ($sth->fetchAll() as $row) {
+        foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             $result[] = [
                 'field' => $row['Field'],
                 'type' => $row['Type'],

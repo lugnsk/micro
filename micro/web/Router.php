@@ -124,6 +124,8 @@ class Router
 
             } elseif ($uriBlocks[$i] != $patBlocks[$i]) {
                 return false;
+            } else {
+                $attr[$uriBlocks[$i]]= $patBlocks[$i];
             }
         }
         return $attr;
@@ -140,19 +142,18 @@ class Router
     private function buildResult(&$attr, $repBlocks)
     {
         $result = null;
-
-        $countRepBlocks = count($repBlocks);
-        for ($i = 0; $i < $countRepBlocks; $i++) {
-            if ($repBlocks[$i]{0} == '<') {
-                $val = substr($repBlocks[$i], 1, strlen($repBlocks[$i]) - 1);
-
-                if (isset($attr[$val])) {
-                    $result .= '/' . $attr[$val];
-                    unset($attr[$val]);
-                } else return false;
-
+        foreach ($repBlocks AS $value) {
+            if ($value{0} != '<') {
+                $result .= '/'.$attr[$value];
+                unset($attr[$value]);
             } else {
-                $result .= '/' . $repBlocks[$i];
+                $element = substr($value, 1, -1);
+                if (isset($attr[$element])) {
+                    $result .= '/'.$attr[$element];
+                    unset($attr[$element]);
+                } else {
+                    return false;
+                }
             }
         }
 

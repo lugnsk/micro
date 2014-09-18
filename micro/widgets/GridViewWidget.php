@@ -37,6 +37,8 @@ class GridViewWidget extends Widget
     public $attributesCounter = [];
     /** @var string $textCounter text for before counter */
     public $textCounter = 'Всего: ';
+    /** @var bool $filters rendered filters */
+    public $filters = false;
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
@@ -102,29 +104,21 @@ class GridViewWidget extends Widget
             $this->limit = 10;
         }
 
-        /**
-         * Table configuration
-         *
-         * Basic example:
-         * <?php
-         *  $this->tableConfig = [
-         *      'name' => [
-         *          'header'=>'',
-         *          'filter'=>'',
-         *          'type'=>'',
-         *          'value'=>''
-         *      ],
-         * ];
-         * ?>
-         */
         if (!$this->tableConfig) {
             foreach ($this->keys AS $key) {
                 $this->tableConfig[$key] = [
                     'header'=>$key,
-                    'type'=>'string',
+                    'filter'=>'<input type="text" name="'.$key.'" value="" />',
                     'value'=>null,
                     'class'=>null,
                 ];
+            }
+        }
+
+        foreach ($this->tableConfig AS $conf) {
+            if (isset($conf['filter'])) {
+                $this->filters = true;
+                break;
             }
         }
 
@@ -144,6 +138,7 @@ class GridViewWidget extends Widget
         echo $this->render('gridview',[
             'keys'=>$this->keys,
             'rows'=>$this->rows,
+            'filters'=>$this->filters,
             'rowCount'=>$this->rowCount,
             'paginationConfig'=>$this->paginationConfig,
             'tableConfig'=>$this->tableConfig,
