@@ -37,6 +37,7 @@ class Autoload
      * @access public
      * @param $className
      * @return void
+     * @throws Exception
      */
     public static function loader($className)
     {
@@ -65,6 +66,9 @@ class Autoload
 
         // result path
         $path .= strtr($className, '_', DIRECTORY_SEPARATOR) . '.php';
+        if (!file_exists($path)) {
+            throw new Exception($className . ' not found.');
+        }
         require $path;
     }
 }
