@@ -29,20 +29,19 @@ foreach ($this->rows AS $row) {
     $table[] = ['cells'=>$compileRow];
 }
 */
-echo Html::openTag('div', $attributesCounter);
-echo $textCounter;
-echo $rowCount;
-echo Html::closeTag('div');
-echo Html::openTag('table', $attributes);
-echo Html::openTag('tr');
-
-foreach ($tableConfig as $key=>$row) {
-	echo Html::openTag('th');
-	echo isset($row['header']) ? $row['header'] : $key;
-	echo Html::closeTag('th');
+function headTable($tableConfig) 
+{
+	echo Html::openTag('tr');
+	foreach ($tableConfig as $key=>$row) 
+	{
+		echo Html::openTag('th');
+		echo isset($row['header']) ? $row['header'] : $key;
+		echo Html::closeTag('th');
+	}
+	echo Html::closeTag('tr');
 }
-echo Html::closeTag('tr');
-if ($filters) {
+function filtersTable($tableConfig) 
+{
 	echo Html::openTag('tr');
 	foreach ($tableConfig as $key=>$row) 
 	{
@@ -51,6 +50,18 @@ if ($filters) {
 		echo Html::closeTag('td');
 	}
 	echo Html::closeTag('tr');
+}
+/////////////////////////////////////////////
+echo Html::openTag('div', $attributesCounter);
+echo $textCounter;
+echo $rowCount;
+echo Html::closeTag('div');
+echo Html::openTag('table', $attributes);
+
+headTable($tableConfig);
+
+if ($filters) {
+	filtersTable($tableConfig);
 }
 foreach ($rows as $elem) 
 {
