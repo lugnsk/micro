@@ -97,13 +97,13 @@ final class Micro
     {
         $path = $this->prepareController();
         if (!class_exists($path)) {
-            if (isset($this->config['errorRoute']) AND $this->config['errorRoute']) {
-                if (!Autoload::loader($this->config['errorRoute'])) {
-                    throw new Exception('Error route not valid');
+            if (isset($this->config['errorController']) AND $this->config['errorController']) {
+                if (!Autoload::loader($this->config['errorController'])) {
+                    throw new Exception('Error controller not valid');
                 }
-                $path = $this->config['errorRoute'];
+                $path = $this->config['errorController'];
             } else {
-                throw new Exception('ErrorRoute not defined or empty');
+                throw new Exception('ErrorController not defined or empty');
             }
         }
 
