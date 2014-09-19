@@ -63,6 +63,13 @@ abstract class Controller
      */
     public function action($name = 'index')
     {
+        $config = Micro::getInstance()->config;
+        if (get_class($this) == $config['errorRoute']) {
+            if (isset($config['errorAction']) AND $config['errorAction']) {
+                $name = $config['errorAction'];
+            }
+        }
+
         $action = 'action' . ucfirst($name);
 
         if (!method_exists($this, $action)) {
@@ -156,7 +163,7 @@ abstract class Controller
         if ($this->asWidget) {
             $path .= $cl . '/views/' . $view . '.php';
         } else {
-            $className = str_replace('controller', '', strtolower(Registry::get('request')->getController()));
+            $className = str_replace('controller', '', strtolower(basename(str_replace('\\', '/', '/'.get_called_class()))));
             $path .= dirname($cl) . '/views/' . $className . '/' . $view . '.php';
         }
         return $path;
