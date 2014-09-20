@@ -97,7 +97,14 @@ final class Micro
     {
         $path = $this->prepareController();
         if (!class_exists($path)) {
-            throw new Exception('Controller ' . $path . ' not set');
+            if (isset($this->config['errorController']) AND $this->config['errorController']) {
+                if (!Autoload::loader($this->config['errorController'])) {
+                    throw new Exception('Error controller not valid');
+                }
+                $path = $this->config['errorController'];
+            } else {
+                throw new Exception('ErrorController not defined or empty');
+            }
         }
 
         /** @var \Micro\base\Controller $mvc */
