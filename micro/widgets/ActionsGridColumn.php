@@ -5,10 +5,16 @@ namespace Micro\widgets;
 use Micro\web\helpers\Html;
 
 /**
- * Class ActionsGridColumn
+ * Actions grid column class file.
  *
- * @package Micro
- * @subpackage web\widgets
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage widgets
+ * @version 1.0
+ * @since 1.0
  */
 class ActionsGridColumn extends GridColumn
 {
