@@ -40,13 +40,13 @@ class GridViewWidget extends Widget
     public $textCounter = 'Всего: ';
     /** @var bool $filters rendered filters */
     public $filters = false;
+    /** @var array Rows table */
+    public $rows = [];
+    /** @var array Keys table */
+    public $keys = [];
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
-    /** @var array Rows table */
-    protected $rows = [];
-    /** @var array Keys table */
-    protected $keys = [];
     /** @var DbConnection current connection to db */
     protected $conn;
 
@@ -57,15 +57,10 @@ class GridViewWidget extends Widget
      * @access public
      * @param array $args arguments
      * @result void
-     * @throws Exception
      */
     public function __construct($args=[])
     {
         parent::__construct($args);
-
-        if (!$this->query) {
-            throw new Exception('Grid view initialize error, query not set or empty');
-        }
         $this->getConnect();
     }
 
@@ -88,6 +83,40 @@ class GridViewWidget extends Widget
      */
     public function init()
     {
+        if ($this->limit < 1) {
+            $this->limit = 1;
+        }
+
+        if (!$this->query AND $this->rows) {
+            $this->rowCount = count($this->rows);
+            $this->keys = array_keys($this->rows[0]);
+
+            if ($this->rowCount > $this->limit) {
+                $this->rows = array_slice($this->rows, ($this->page * $this->limit), $this->limit);
+            }
+        } elseif ($this->query AND $this->rows) {
+            $this->query = null;
+            $this->init();
+            return;
+        } else {
+            $this->makeRows();
+        }
+
+        $this->makeTableConfig();
+
+        $this->paginationConfig['countRows'] = $this->rowCount;
+        $this->paginationConfig['limit'] = $this->limit;
+        $this->paginationConfig['currentPage'] = $this->page;
+    }
+
+    /**
+     * Make rows from sql
+     *
+     * @access private
+     * @return void
+     */
+    private function makeRows()
+    {
         if (($position = strpos($this->query, 'LIMIT')) !== FALSE) {
             $this->query = substr($this->query, 0, $position);
         }
@@ -100,16 +129,6 @@ class GridViewWidget extends Widget
         $st = $this->conn->conn->query($this->query.' LIMIT '.($this->limit*$this->page).','.$this->limit);
         $st->execute();
         $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
-
-        if ($this->limit < 10) {
-            $this->limit = 10;
-        }
-
-        $this->makeTableConfig();
-
-        $this->paginationConfig['countRows'] = $this->rowCount;
-        $this->paginationConfig['limit'] = $this->limit;
-        $this->paginationConfig['currentPage'] = $this->page;
     }
 
     /**
@@ -209,7 +228,6 @@ class GridViewWidget extends Widget
         return $result;
     }
 
-
     /**
      * Render rows
      *
@@ -224,9 +242,13 @@ class GridViewWidget extends Widget
             foreach ($this->tableConfig AS $key=>$row) {
                 $result .= Html::openTag('td');
                 if (isset($row['class']) AND is_subclass_of($row['class'], 'Micro\widgets\GridColumn')) {
-                    $result .= new $row['class']($row + ['str'=>isset($elem) ? $elem : null , 'key'=>$elem['id']]);
+                    $primaryKey = $elem[isset($row['key']) ? $row['key'] : 'id'];
+                    $result .= new $row['class'](
+                        $row + [ 'str'=>isset($elem) ? $elem : null, 'pKey'=>$primaryKey ]
+                    );
                 } elseif (isset($row['value'])) {
-                    $result .= eval('return "'.$row['value'].'";');
+                    $data = $elem;
+                    $result .= eval('return '.$row['value'].';');
                 } else {
                     $result .= isset($elem[$key]) ? $elem[$key] : null;
                 }

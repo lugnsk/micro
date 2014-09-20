@@ -35,15 +35,15 @@ class ActionsGridColumn extends GridColumn
 
         $r = Html::href(
             'view',
-            $this->params['link'].'/'.$this->params['key']
+            $this->params['link'].'/'.$this->params['pKey']
         );
         $w = Html::href(
             'edit',
-            $this->params['link'].'/edit/'.$this->params['key']
+            $this->params['link'].'/edit/'.$this->params['pKey']
         );
         $d = Html::href(
             'delete',
-            $this->params['link'].'/delete/'.$this->params['key'],
+            $this->params['link'].'/delete/'.$this->params['pKey'],
             ['onclick'=>'Are you sure?']
         );
 

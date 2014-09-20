@@ -69,6 +69,9 @@ class Request
 
             $gets = [];
             for ($i = 0; $i < $countUriBlocks; $i = $i + 2) {
+                if (!isset($uriBlocks[$i+1])) {
+                    return;
+                }
                 $gets[$uriBlocks[$i]] = $uriBlocks[$i + 1];
             }
             $_GET = array_merge($_GET, $gets);
