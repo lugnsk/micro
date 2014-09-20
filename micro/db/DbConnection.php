@@ -55,11 +55,14 @@ class DbConnection
      *
      * @access public
      * @param string $query raw query to db
+     * @param array $params params for query
      * @return \PDOStatement
      */
-    public function rawQuery($query='')
+    public function rawQuery($query='',$params=[])
     {
-        return $this->conn->query($query);
+        $st = $this->conn->query($query);
+        $st->execute($params);
+        return $st;
     }
 
     /**

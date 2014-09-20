@@ -87,17 +87,17 @@ class GridViewWidget extends Widget
             $this->limit = 1;
         }
 
-        if (!$this->query AND $this->rows) {
+        if ($this->rows) {
+            if ($this->query) {
+                $this->query = null;
+            }
+
             $this->rowCount = count($this->rows);
             $this->keys = array_keys($this->rows[0]);
 
             if ($this->rowCount > $this->limit) {
                 $this->rows = array_slice($this->rows, ($this->page * $this->limit), $this->limit);
             }
-        } elseif ($this->query AND $this->rows) {
-            $this->query = null;
-            $this->init();
-            return;
         } else {
             $this->makeRows();
         }
@@ -121,13 +121,11 @@ class GridViewWidget extends Widget
             $this->query = substr($this->query, 0, $position);
         }
 
-        $st = $this->conn->conn->query($this->query);
-        $st->execute();
+        $st = $this->conn->rawQuery($this->query);
         $this->keys = array_keys($st->fetch(\PDO::FETCH_ASSOC));
         $this->rowCount = $this->conn->count($this->query);
 
-        $st = $this->conn->conn->query($this->query.' LIMIT '.($this->limit*$this->page).','.$this->limit);
-        $st->execute();
+        $st = $this->conn->rawQuery($this->query.' LIMIT '.($this->limit*$this->page).','.$this->limit);
         $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
     }
 
