@@ -6,6 +6,7 @@ use Micro\base\Exception;
 use Micro\base\Registry;
 use Micro\base\Widget;
 use Micro\db\DbConnection;
+use Micro\web\helpers\Html;
 
 /**
  * GridViewWidget class file.
@@ -104,6 +105,21 @@ class GridViewWidget extends Widget
             $this->limit = 10;
         }
 
+        $this->makeTableConfig();
+
+        $this->paginationConfig['countRows'] = $this->rowCount;
+        $this->paginationConfig['limit'] = $this->limit;
+        $this->paginationConfig['currentPage'] = $this->page;
+    }
+
+    /**
+     * Make table configuration
+     *
+     * @access public
+     * @return void
+     */
+    private function makeTableConfig()
+    {
         if (!$this->tableConfig) {
             foreach ($this->keys AS $key) {
                 $this->tableConfig[$key] = [
@@ -121,10 +137,6 @@ class GridViewWidget extends Widget
                 break;
             }
         }
-
-        $this->paginationConfig['countRows'] = $this->rowCount;
-        $this->paginationConfig['limit'] = $this->limit;
-        $this->paginationConfig['currentPage'] = $this->page;
     }
 
     /**
@@ -135,16 +147,93 @@ class GridViewWidget extends Widget
      */
     public function run()
     {
-        echo $this->render('gridview',[
-            'keys'=>$this->keys,
-            'rows'=>$this->rows,
-            'filters'=>$this->filters,
-            'rowCount'=>$this->rowCount,
-            'paginationConfig'=>$this->paginationConfig,
-            'tableConfig'=>$this->tableConfig,
-            'attributes'=>$this->attributes,
-            'attributesCounter'=>$this->attributesCounter,
-            'textCounter'=>$this->textCounter
-        ]);
+        echo $this->renderCounter();
+        echo Html::openTag('table', $this->attributes);
+        echo $this->renderHeading();
+        echo $this->renderFilters();
+        echo $this->renderRows();
+        echo Html::closeTag('table');
+        echo $this->widget('Micro\widgets\PaginationWidget',$this->paginationConfig);
+    }
+
+    /**
+     * Render counter
+     *
+     * @access private
+     * @return string
+     */
+    private function renderCounter()
+    {
+        $result  = Html::openTag('div', $this->attributesCounter);
+        $result .= $this->textCounter . $this->rowCount;
+        $result .= Html::closeTag('div');
+        return $result;
+    }
+
+    /**
+     * Render heading rows
+     *
+     * @access private
+     * @return string
+     */
+    private function renderHeading()
+    {
+        $result = Html::openTag('tr');
+        foreach ($this->tableConfig AS $key=>$row) {
+            $result .= Html::openTag('th');
+            $result .= isset($row['header']) ? $row['header'] : $key;
+            $result .= Html::closeTag('th');
+        }
+        $result .= Html::closeTag('tr');
+        return $result;
+    }
+
+    /**
+     * Render filters
+     *
+     * @access private
+     * @return string
+     */
+    private function renderFilters()
+    {
+        $result = null;
+        if ($this->filters) {
+            $result .= Html::openTag('tr');
+            foreach ($this->tableConfig AS $key=>$row) {
+                $result .= Html::openTag('td');
+                $result .= isset($row['filter']) ? $row['filter'] : null;
+                $result .= Html::closeTag('td');
+            }
+            $result .= Html::closeTag('tr');
+        }
+        return $result;
+    }
+
+
+    /**
+     * Render rows
+     *
+     * @access private
+     * @return string
+     */
+    private function renderRows()
+    {
+        $result = null;
+        foreach ($this->rows AS $elem) {
+            $result .= Html::openTag('tr');
+            foreach ($this->tableConfig AS $key=>$row) {
+                $result .= Html::openTag('td');
+                if (isset($row['class']) AND is_subclass_of($row['class'], 'Micro\widgets\GridColumn')) {
+                    $result .= new $row['class']($row + ['str'=>isset($elem) ? $elem : null , 'key'=>$elem['id']]);
+                } elseif (isset($row['value'])) {
+                    $result .= eval('return "'.$row['value'].'";');
+                } else {
+                    $result .= isset($elem[$key]) ? $elem[$key] : null;
+                }
+                $result .= Html::closeTag('td');
+            }
+            $result .= Html::closeTag('tr');
+        }
+        return $result;
     }
 }
