@@ -16,6 +16,31 @@ namespace Micro\base;
 class File
 {
     /**
+     * Directory size
+     *
+     * @access public
+     * @param string $dirName directory name
+     * @return integer
+     */
+    public static function dirSize($dirName) {
+        $totalSize=0;
+        if ($dirStream = @opendir($dirName)) {
+            while (false !== ($fileName = readdir($dirStream))) {
+                if ($fileName!='.' && $fileName!='..')
+                {
+                    if (is_file($dirName."/".$fileName)) {
+                        $totalSize += filesize($dirName . '/' . $fileName);
+                    }
+                    if (is_dir($dirName."/".$fileName)) {
+                        $totalSize += self::dirSize($dirName . '/' . $fileName);
+                    }
+                }
+            }
+        }
+        closedir($dirStream);
+        return $totalSize;
+    }
+    /**
      * Recursive copy files
      *
      * @access public
