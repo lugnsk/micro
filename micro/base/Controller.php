@@ -71,12 +71,20 @@ abstract class Controller
         }
 
         $action = 'action' . ucfirst($name);
-
         if (!method_exists($this, $action)) {
             $action = 'action' . ucfirst($this->defaultAction);
 
             if (!method_exists($this, $action)) {
-                throw new Exception('Method ' . $name . ' is not declared.');
+                if (isset($config['errorController']) AND $config['errorController']) {
+                    if (isset($config['errorAction']) AND $config['errorAction']) {
+                        /** @var Controller $cls recreate controller */
+                        $cls = new $config['errorController'];
+                        $cls->action($config['errorAction']);
+                        return;
+
+                    }
+                }
+                throw new Exception('Method ' . $name . ' is not declared in '.get_class($this).'.');
             }
         }
 
