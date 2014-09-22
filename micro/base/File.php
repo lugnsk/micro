@@ -40,6 +40,22 @@ class File
         closedir($dirStream);
         return $totalSize;
     }
+
+    /**
+     * Recursive remove dir
+     *
+     * @access public
+     * @param $path
+     * @return void
+     */
+    public static function removeDir($path) {
+        if (is_file($path)) {
+            @unlink($path);
+        } else {
+            array_map('removeDir',glob('/*')) == @rmdir($path);
+        }
+        @rmdir($path);
+    }
     /**
      * Recursive copy files
      *
