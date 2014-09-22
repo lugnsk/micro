@@ -64,7 +64,7 @@ abstract class Controller
     public function action($name = 'index')
     {
         $config = Micro::getInstance()->config;
-        if (get_class($this) == $config['errorController']) {
+        if (isset($config['errorController']) AND (get_class($this) == $config['errorController'])) {
             if (isset($config['errorAction']) AND $config['errorAction']) {
                 $name = $config['errorAction'];
             }
