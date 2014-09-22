@@ -14,6 +14,9 @@ return [
     // Language
     'lang' => 'en',
 
+    'errorController'=>'\App\controllers\DefaultController',
+    'errorAction'=>'error',
+
     // Setup components
     'components' => [
         // Request manager
