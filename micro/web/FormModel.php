@@ -48,6 +48,9 @@ abstract class FormModel
                 $this->errors[] = $validator->errors;
             }
         }
+        if ($this->errors) {
+            return false;
+        }
         return true;
     }
 
@@ -57,12 +60,12 @@ abstract class FormModel
      */
     public function getClient()
     {
-        $result = 'jQuery(document).ready(function(){ ';
+        $result = 'jQuery(document).ready(function(){';
 
         foreach ($this->rules() AS $rule) {
             $validator = new Validator($rule);
             if (is_string($js = $validator->run($this,true))) {
-                $result .= $js;
+                $result .= ' '.$js;
             }
         }
 

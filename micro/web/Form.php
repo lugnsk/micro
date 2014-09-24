@@ -68,27 +68,6 @@ class Form
     }
 
     /**
-     * Render text field row
-     *
-     * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
-     * @param array $labelOptions
-     * @return string
-     */
-    public function textFieldRow($model, $property, $options = [], $labelOptions = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', ['class' => 'row']) .
-            Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-            $this->textField($model, $property, $options) .
-            Html::closeTag('div');
-    }
-
-    /**
      * Render button field tag
      *
      * @access public
@@ -185,25 +164,6 @@ class Form
     }
 
     /**
-     * Render password field row
-     *
-     * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
-     * @param array $labelOptions
-     * @return string
-     */
-    public function passwordFieldRow($model, $property, $options = [], $labelOptions = [])
-    {
-        $element = $this->getField($model, $property);
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-        $this->passwordField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
      * Render radio field tag
      *
      * @access public
@@ -249,6 +209,22 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
         return Html::rangeField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render number field tag
+     *
+     * @access public
+     * @param \Micro\db\Model $model
+     * @param string $property
+     * @param array $options
+     * @return string
+     */
+    public function numberField($model, $property, $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+        return Html::numberField($element['name'], $element['value'], $options);
     }
 
     /**
@@ -313,6 +289,67 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
         return Html::textArea($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render text field row
+     *
+     * @access public
+     * @param \Micro\db\Model $model
+     * @param string $property
+     * @param array $options
+     * @param array $labelOptions
+     * @return string
+     */
+    public function textFieldRow($model, $property, $options = [], $labelOptions = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', ['class' => 'row']) .
+        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $this->textField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render text field row
+     *
+     * @access public
+     * @param \Micro\db\Model $model
+     * @param string $property
+     * @param array $options
+     * @param array $labelOptions
+     * @return string
+     */
+    public function numberFieldRow($model, $property, $options = [], $labelOptions = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', ['class' => 'row']) .
+            Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+            $this->numberField($model, $property, $options) .
+            Html::closeTag('div');
+    }
+
+    /**
+     * Render password field row
+     *
+     * @access public
+     * @param \Micro\db\Model $model
+     * @param string $property
+     * @param array $options
+     * @param array $labelOptions
+     * @return string
+     */
+    public function passwordFieldRow($model, $property, $options = [], $labelOptions = [])
+    {
+        $element = $this->getField($model, $property);
+        return Html::openTag('div', ['class' => 'row']) .
+            Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+            $this->passwordField($model, $property, $options) .
+            Html::closeTag('div');
     }
 
     /**

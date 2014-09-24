@@ -183,7 +183,12 @@ class DbConnection
      */
     public function fieldExists($field, $table)
     {
-        return (bool)array_search($field, $this->listFields($table));
+        foreach ($this->listFields($table) AS $tbl) {
+            if ($tbl['field'] == $field) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -218,11 +223,12 @@ class DbConnection
      * Return last insert row ID
      *
      * @access public
+     * @param string $field auto increment field name
      * @return integer
      */
-    public function lastInsertId()
+    public function lastInsertId($field = null)
     {
-        return $this->conn->lastInsertId();
+        return $this->conn->lastInsertId($field);
     }
 
     /**

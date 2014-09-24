@@ -3,7 +3,7 @@
 namespace Micro\web\helpers;
 
 use Micro\base\Registry;
-use Micro\base\Exception AS MException;
+use Micro\base\Exception;
 
 /**
  * FlashMessage is a flash messenger.
@@ -19,12 +19,17 @@ use Micro\base\Exception AS MException;
  */
 class FlashMessage
 {
-    /** @property integer $TYPE_SUCCESS */
+    /** @property integer $TYPE_SUCCESS success */
     const TYPE_SUCCESS = 1;
-    /** @property integer $TYPE_NOTICE */
-    const TYPE_NOTICE = 2;
-    /** @property integer $TYPE_ERROR */
-    const TYPE_ERROR = 3;
+    /** @property integer $TYPE_NOTICE notice */
+    const TYPE_INFO = 2;
+    /** @property integer $TYPE_WARNING warning */
+    const TYPE_WARNING = 3;
+    /** @property integer TYPE_DANGER danger */
+    const TYPE_DANGER = 4;
+
+    /** @var \Micro\web\Session $session current session */
+    protected $session;
 
     /**
      * Constructor messenger
@@ -32,15 +37,41 @@ class FlashMessage
      * @access public
      * @global Registry
      * @result void
-     * @throws MException
+     * @throws Exception
      */
     public function __construct()
     {
         if (Registry::get('session') != NULL) {
-            Registry::get('session')->flash = [];
+            $this->session = Registry::get('session');
         } else {
-            throw new MException('Механизм сессий не активирован.');
+            throw new Exception('Sessions not activated');
         }
+    }
+
+    /**
+     * Get labels for types
+     *
+     * @access public
+     * @return array
+     */
+    public static function getTypeLabels() {
+        return [
+            self::TYPE_SUCCESS => 'success',
+            self::TYPE_INFO => 'info',
+            self::TYPE_WARNING => 'warning',
+            self::TYPE_DANGER => 'danger'
+        ];
+    }
+
+    /**
+     * Get label for type by id
+     *
+     * @access public
+     * @param int $type type id
+     * @return mixed
+     */
+    public static function getTypeLabel($type = self::TYPE_SUCCESS) {
+        return self::getTypeLabels()[$type];
     }
 
     /**
@@ -55,11 +86,13 @@ class FlashMessage
      */
     public function push($type = FlashMessage::TYPE_SUCCESS, $title = '', $description = '')
     {
-        Registry::get('session')->flash[] = [
+        $flashes = $this->session->flash;
+        $flashes[] = [
             'type' => $type,
             'title' => $title,
             'description' => $description
         ];
+        $this->session->flash = $flashes;
     }
 
     /**
@@ -72,7 +105,7 @@ class FlashMessage
      */
     public function has($type = FlashMessage::TYPE_SUCCESS)
     {
-        foreach (Registry::get('session')->flash AS $element) {
+        foreach ($this->session->flash AS $element) {
             if (isset($element['type']) && $element['type'] == $type) {
                 return true;
             }
@@ -90,7 +123,7 @@ class FlashMessage
      */
     public function get($type = FlashMessage::TYPE_SUCCESS)
     {
-        foreach (Registry::get('session')->flash AS $key => $element) {
+        foreach ($this->session->flash AS $key => $element) {
             if (isset($element['type']) && $element['type'] == $type) {
                 $result = $element;
                 unset(Registry::get('session')->flash[$key]);
@@ -109,8 +142,8 @@ class FlashMessage
      */
     public function getAll()
     {
-        $result = Registry::get('session')->flash;
-        Registry::get('session')->flash = [];
+        $result = $this->session->flash;
+        $this->session->flash = [];
         return $result;
     }
 }

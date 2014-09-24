@@ -139,9 +139,10 @@ abstract class Model extends FormModel
      */
     public function afterCreate()
     {
-        // Get ID from created value
-        if (array_search('id', Registry::get('db')->listFields($this->tableName()))) {
-            $this->id = $this->db->lastInsertId();
+        $pKey = isset($this->primaryKey) ? $this->primaryKey : 'id';
+
+        if (property_exists($this, $pKey)) {
+            $this->$pKey = $this->db->lastInsertId($pKey);
         }
     }
 
