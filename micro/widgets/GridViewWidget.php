@@ -44,6 +44,7 @@ class GridViewWidget extends Widget
     public $rows = [];
     /** @var array Keys table */
     public $keys = [];
+    public $emptyText = 'Elements not found!';
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
@@ -122,6 +123,9 @@ class GridViewWidget extends Widget
         }
 
         $st = $this->conn->rawQuery($this->query);
+        if (!$st->rowCount()) {
+            return;
+        }
         $this->keys = array_keys($st->fetch(\PDO::FETCH_ASSOC));
         $this->rowCount = $this->conn->count($this->query);
 
@@ -196,10 +200,14 @@ class GridViewWidget extends Widget
     private function renderHeading()
     {
         $result = Html::openTag('tr');
-        foreach ($this->tableConfig AS $key=>$row) {
-            $result .= Html::openTag('th');
-            $result .= isset($row['header']) ? $row['header'] : $key;
-            $result .= Html::closeTag('th');
+        if ($this->tableConfig) {
+            foreach ($this->tableConfig AS $key => $row) {
+                $result .= Html::openTag('th');
+                $result .= isset($row['header']) ? $row['header'] : $key;
+                $result .= Html::closeTag('th');
+            }
+        } else {
+            $result .= Html::openTag('td',['style'=>'text-align:center']) . $this->emptyText . Html::closeTag('td');
         }
         $result .= Html::closeTag('tr');
         return $result;

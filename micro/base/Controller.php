@@ -114,11 +114,9 @@ abstract class Controller
     }
 
     /**
-     * Render view
+     * Render insert data into view
      *
      * @access protected
-     * @global Micro
-     * @global Registry
      * @param string $view
      * @param array $data
      * @return string
@@ -128,8 +126,19 @@ abstract class Controller
         if (empty($view)) {
             return false;
         }
-        $path = $this->getViewFile($view);
+        return $this->renderRawData($this->renderFile($this->getViewFile($view), $data));
+    }
 
+    /**
+     * Render raw data in layout
+     *
+     * @access protected
+     * @global Micro
+     * @global Registry
+     * @param string $data
+     * @return string
+     */
+    protected function renderRawData($data='') {
         $layoutPath = null;
         if (!$this->asWidget AND $this->layout) {
             $layoutPath = $this->getLayoutFile(
@@ -138,13 +147,10 @@ abstract class Controller
             );
         }
 
-        // Render view
-        $output = $this->renderFile($path, $data);
         if ($layoutPath) {
-            $output = $this->renderFile($layoutPath, ['content' => $output]);
+            $data = $this->renderFile($layoutPath, ['content' => $data]);
         }
-
-        return $output;
+        return $data;
     }
 
     /**

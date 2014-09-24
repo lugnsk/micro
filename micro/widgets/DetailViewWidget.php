@@ -2,6 +2,7 @@
 
 namespace Micro\widgets;
 
+use Micro\base\Exception;
 use Micro\base\Registry;
 use Micro\base\Widget;
 use Micro\db\Model;
@@ -88,6 +89,10 @@ class DetailViewWidget extends Widget
             $query->limit = 1;
             $query->single = true;
             $this->statement = $query->run(\PDO::FETCH_ASSOC);
+        }
+
+        if (!$this->statement) {
+            throw new Exception('Elements for render not found');
         }
 
         $fields = $this->conn->listFields($this->table);

@@ -1,6 +1,7 @@
 <?php /** MicroException */
 
 namespace Micro\base;
+use Micro\Micro;
 
 /**
  * Exception specific exception
@@ -23,6 +24,15 @@ class Exception extends \Exception
      */
     public function __toString()
     {
-        return '<h1>Ошибка ' . $this->getCode() . '</h1><p>' . $this->getMessage() . '</p>';
+        if (defined('DEBUG_MICRO')) {
+            $_POST['errors'] = [ 'Error - '.$this->getMessage() ];
+
+            $config = Micro::getInstance()->config;
+            $mvc = new $config['errorController'];
+            $mvc->action($config['errorAction']);
+            error_reporting(0);
+        } else {
+            return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';
+        }
     }
 }
