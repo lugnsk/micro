@@ -881,6 +881,20 @@ class Html
     }
 
     /**
+     * Render input number tag
+     *
+     * @access public
+     * @param  string $name
+     * @param  string $value
+     * @param  array $attributes
+     * @return string
+     */
+    public static function numberField($name, $value = null, $attributes = [])
+    {
+        return self::field('number', $name, $value, $attributes);
+    }
+
+    /**
      * Render input search tag
      *
      * @access public
