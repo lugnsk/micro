@@ -33,21 +33,26 @@ class ActionsGridColumn extends GridColumn
             $this->params['template'] = '{view} {edit} {delete}';
         }
 
+        $viewLink = (isset($this->params['viewLink']) ? $this->params['viewLink'] : $this->params['link'] . '/');
         $r = Html::href(
             isset($this->params['viewText']) ? $this->params['viewText'] : 'view',
-            $this->params['link'].'/'.$this->params['pKey']
-        );
-        $w = Html::href(
-            isset($this->params['editText']) ? $this->params['editText'] : 'edit',
-            $this->params['link'].'/edit/'.$this->params['pKey']
-        );
-        $d = Html::href(
-            isset($this->params['deleteText']) ? $this->params['deleteText'] : 'delete',
-            $this->params['link'].'/delete/'.$this->params['pKey'],
-            ['onclick'=>'Are you sure?']
+            $viewLink . $this->params['pKey']
         );
 
-        return str_replace('view', $r, str_replace('{edit}', $w,
+        $editLink = (isset($this->params['editLink']) ? $this->params['editLink'] : $this->params['link'] . '/edit/');
+        $w = Html::href(
+            isset($this->params['editText']) ? $this->params['editText'] : 'edit',
+            $editLink . $this->params['pKey']
+        );
+
+        $deleteLink = (isset($this->params['deleteLink']) ? $this->params['deleteLink'] : $this->params['link'].'/del/');
+        $d = Html::href(
+            isset($this->params['deleteText']) ? $this->params['deleteText'] : 'delete',
+            $deleteLink . $this->params['pKey'],
+            ['onclick'=>'return confirm(\'Are you sure?\')']
+        );
+
+        return str_replace('{view}', $r, str_replace('{edit}', $w,
             str_replace('{delete}', $d, $this->params['template'])
         ));
     }

@@ -33,9 +33,9 @@ class DbConnection
     public function __construct($config = [])
     {
         try {
-            $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password']);
+            $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password'], $config['options']);
         } catch (Exception $e) {
-            die('Подключение к БД не удалось: ' . $e->getMessage());
+            die('Connect to DB failed: ' . $e->getMessage());
         }
     }
 
@@ -282,7 +282,7 @@ class DbConnection
      * @return bool
      */
     public function delete($table, $conditions, $ph=[]) {
-        return $this->conn->query(
+        return $this->conn->prepare(
             'DELETE FROM ' . $table . ' WHERE ' . $conditions
         )->execute($ph);
     }

@@ -44,6 +44,7 @@ class GridViewWidget extends Widget
     public $rows = [];
     /** @var array Keys table */
     public $keys = [];
+    /** @var string $emptyText text to render if rows not found */
     public $emptyText = 'Elements not found!';
 
     /** @var int $rowCount summary lines */
@@ -129,7 +130,7 @@ class GridViewWidget extends Widget
         $this->keys = array_keys($st->fetch(\PDO::FETCH_ASSOC));
         $this->rowCount = $this->conn->count($this->query);
 
-        $st = $this->conn->rawQuery($this->query.' LIMIT '.($this->limit*$this->page).','.$this->limit);
+        $st = $this->conn->rawQuery($this->query.' LIMIT '.($this->page*$this->limit).','.$this->limit);
         $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
     }
 

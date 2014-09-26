@@ -144,7 +144,7 @@ class Router
         $result = null;
         foreach ($repBlocks AS $value) {
             if ($value{0} != '<') {
-                $result .= '/'.$attr[$value];
+                $result .= '/'.$value;
                 unset($attr[$value]);
             } else {
                 $element = substr($value, 1, -1);
