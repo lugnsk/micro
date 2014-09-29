@@ -37,10 +37,11 @@ class Router
      * Parsing uri
      *
      * @access public
-     * @param string $uri
+     * @param string $uri current check URI
+     * @param string $method current Request method
      * @return string
      */
-    public function parse($uri)
+    public function parse($uri, $method='GET')
     {
         // default path
         if ($uri == '/' OR $uri == '') {
@@ -48,7 +49,17 @@ class Router
         }
 
         // scan routes
-        foreach ($this->routes AS $condition => $replacement) {
+        foreach ($this->routes AS $condition => $config) {
+            if (is_array($config) AND isset($config['route'])) {
+                if (isset($config['verb']) AND ($config['verb'] != $method)) {
+                    continue;
+                }
+                $replacement = $config['route'];
+            } elseif (is_string($config)) {
+                $replacement = $config;
+            } else {
+                continue;
+            }
             // slice path
             if ($uri == $condition) {
                 return $replacement;

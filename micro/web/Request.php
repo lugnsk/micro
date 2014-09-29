@@ -43,6 +43,11 @@ class Request
         $this->initialize();
     }
 
+    public function getMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+
     /**
      * Initialize request object
      *
@@ -52,8 +57,10 @@ class Request
     private function initialize()
     {
         $uri = (isset($_GET['r']) OR !empty($_GET['r'])) ? $_GET['r'] : '/';
-        $trustUri = $this->router->parse($uri);
+
+        $trustUri = $this->router->parse($uri, $this->getMethod());
         $uriBlocks = explode('/', $trustUri);
+
         if ($uri{0} == '/') {
             array_shift($uriBlocks);
         }
