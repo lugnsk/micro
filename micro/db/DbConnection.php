@@ -33,6 +33,9 @@ class DbConnection
     public function __construct($config = [])
     {
         try {
+            if (!isset($config['options'])) {
+                $config['options'] = null;
+            }
             $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password'], $config['options']);
         } catch (Exception $e) {
             die('Connect to DB failed: ' . $e->getMessage());
