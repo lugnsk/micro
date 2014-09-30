@@ -52,7 +52,12 @@ class File
         if (is_file($path)) {
             @unlink($path);
         } else {
-            array_map('removeDir',glob('/*')) == @rmdir($path);
+            foreach (scandir($path) as $dir) {
+                if ($dir != '.' AND $dir != '..') {
+                    self::removeDir($path.'/'.$dir);
+                }
+            }
+            @unlink($path);
         }
         @rmdir($path);
     }
