@@ -40,16 +40,16 @@ class GridViewWidget extends Widget
     public $textCounter = 'Всего: ';
     /** @var bool $filters rendered filters */
     public $filters = false;
-    /** @var array Rows table */
+    /** @var array $rows Rows table */
     public $rows = [];
-    /** @var array Keys table */
+    /** @var array $keys Keys table */
     public $keys = [];
     /** @var string $emptyText text to render if rows not found */
     public $emptyText = 'Elements not found!';
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
-    /** @var DbConnection current connection to db */
+    /** @var DbConnection $conn current connection to db */
     protected $conn;
 
 

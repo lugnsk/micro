@@ -46,7 +46,7 @@ final class Micro
      * Get application singleton instance
      *
      * @access public
-     * @param  array $config
+     * @param  array $config configuration array
      * @return Micro this
      */
     public static function getInstance($config = [])
@@ -62,7 +62,8 @@ final class Micro
      * Constructor application
      *
      * @access private
-     * @param array $config
+     * @param array $config configuration array
+     * @result void
      */
     private function __construct($config = [])
     {
@@ -90,8 +91,8 @@ final class Micro
      *
      * @access public
      * @global Registry
-     * @throws Exception controller not set
      * @return void
+     * @throws Exception controller not set
      */
     public function run()
     {
@@ -107,7 +108,7 @@ final class Micro
             }
         }
 
-        /** @var \Micro\base\Controller $mvc */
+        /** @var \Micro\base\Controller $mvc ModelViewController */
         $mvc = new $path;
         $mvc->action(Registry::get('request')->getAction());
 
@@ -127,11 +128,11 @@ final class Micro
      * @access private
      * @global Registry
      * @return string
-     * @throws Exception
+     * @throws Exception request not loaded
      */
     private function prepareController()
     {
-        /** @var \Micro\web\Request $request */
+        /** @var \Micro\web\Request $request current request */
         $request = Registry::get('request');
         if (!$request) {
             throw new Exception('Component request not loaded.');

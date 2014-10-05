@@ -41,7 +41,7 @@ class ListViewWidget extends Widget
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
-    /** @var array Rows table */
+    /** @var array $rows Rows table */
     protected $rows = [];
     /** @var string $pathView Generate path to view file */
     protected $pathView='';

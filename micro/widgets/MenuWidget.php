@@ -28,8 +28,8 @@ class MenuWidget extends Widget
      * Constructor for widget
      *
      * @access public
-     * @param array $items
-     * @param array $attributes
+     * @param array $items menu items
+     * @param array $attributes menu attributes
      * @result void
      */
     public function __construct($items = [], $attributes = [])
