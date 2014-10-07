@@ -41,7 +41,7 @@ final class Registry
      * Get registry value
      *
      * @access public
-     * @param string $name
+     * @param string $name element name
      * @return mixed
      */
     public static function get($name = '')
@@ -54,8 +54,8 @@ final class Registry
      * Set registry value
      *
      * @access public
-     * @param string $name
-     * @param mixed $value
+     * @param string $name element name
+     * @param mixed $value element value
      * @return void
      */
     public static function set($name, $value)
@@ -80,13 +80,13 @@ final class Registry
      * Get component's
      *
      * @access public
-     * @param null $name
+     * @param null $name name element to initialize
      * @throws \Micro\base\Exception
      */
     public static function configure($name = null)
     {
         if ($name AND isset($GLOBALS[$name])) {
-            return; // Already defined
+            return;
         }
 
         if (isset(Micro::getInstance()->config['components'])) {
@@ -116,8 +116,8 @@ final class Registry
      * Load component
      *
      * @access public
-     * @param $name
-     * @param $options
+     * @param string $name component name
+     * @param array $options component configs
      * @return bool
      */
     public static function loadComponent($name, $options)

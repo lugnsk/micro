@@ -57,7 +57,7 @@ abstract class Controller
      * Run action
      *
      * @access public
-     * @param string $name
+     * @param string $name action name to run
      * @return void
      * @throws Exception method not declared
      */
@@ -96,7 +96,7 @@ abstract class Controller
      *
      * @access protected
      * @param string $view view name
-     * @param array $data
+     * @param array $data arguments array
      * @return string
      */
     protected function renderPartial($view, $data = [])
@@ -117,8 +117,8 @@ abstract class Controller
      * Render insert data into view
      *
      * @access protected
-     * @param string $view
-     * @param array $data
+     * @param string $view view name
+     * @param array $data arguments array
      * @return string
      */
     protected function render($view, $data = [])
@@ -135,7 +135,7 @@ abstract class Controller
      * @access protected
      * @global Micro
      * @global Registry
-     * @param string $data
+     * @param string $data arguments array
      * @return string
      */
     protected function renderRawData($data='') {
@@ -157,7 +157,7 @@ abstract class Controller
      * Get view file
      *
      * @access private
-     * @param $view
+     * @param string $view view file name
      * @return string
      */
     private function getViewFile($view)
@@ -187,8 +187,8 @@ abstract class Controller
      * Render file by path
      *
      * @access protected
-     * @param string $fileName
-     * @param array $data
+     * @param string $fileName file name
+     * @param array $data arguments array
      * @return string
      * @throws Exception widget not declared
      */
@@ -246,8 +246,8 @@ abstract class Controller
      * Get layout path
      *
      * @access protected
-     * @param string $baseDir
-     * @param string $module
+     * @param string $baseDir path to base dir
+     * @param string $module module name
      * @return string
      * @throws Exception
      */
@@ -269,7 +269,7 @@ abstract class Controller
      * Redirect user to path
      *
      * @access public
-     * @param string $path
+     * @param string $path path to redirect
      * @return void
      */
     public function redirect($path)
@@ -284,7 +284,7 @@ abstract class Controller
      * Register JS script
      *
      * @access public
-     * @param string $source filename
+     * @param string $source file name
      * @param bool $isHead is head block
      * @return void
      */
@@ -300,7 +300,7 @@ abstract class Controller
      * Register JS file
      *
      * @access public
-     * @param string $source filename
+     * @param string $source file name
      * @param bool $isHead is head block
      * @return void
      */
@@ -316,7 +316,7 @@ abstract class Controller
      * Register CSS code
      *
      * @access public
-     * @param string $source filename
+     * @param string $source file name
      * @param bool $isHead is head block
      * @return void
      */
@@ -332,7 +332,7 @@ abstract class Controller
      * Register CSS file
      *
      * @access public
-     * @param string $source filename
+     * @param string $source file name
      * @param bool $isHead is head block
      * @return void
      */
@@ -350,9 +350,9 @@ abstract class Controller
      * Render a widget
      *
      * @access public
-     * @param string $name
-     * @param array $options
-     * @param bool $capture
+     * @param string $name widget name
+     * @param array $options widget options
+     * @param bool $capture capture output?
      * @return mixed
      * @throws Exception
      */
@@ -362,7 +362,7 @@ abstract class Controller
             throw new Exception('Widget ' . $name . ' not found.');
         }
 
-        /** @var \Micro\base\Widget $widget */
+        /** @var \Micro\base\Widget $widget widget */
         $widget = new $name($options);
         $widget->init();
 
@@ -382,8 +382,8 @@ abstract class Controller
      * Start render widget
      *
      * @access public
-     * @param $name
-     * @param array $options
+     * @param string $name widget name
+     * @param array $options widget options
      * @return mixed
      * @throws Exception
      */
@@ -397,7 +397,7 @@ abstract class Controller
             throw new Exception('This widget (' . $name . ') already started!');
         }
 
-        /** @var \Micro\base\Widget $GLOBALS['widgetStack'][$name] */
+        /** @var \Micro\base\Widget $GLOBALS['widgetStack'][$name] widget */
         $GLOBALS['widgetStack'][$name] = new $name($options);
         return $GLOBALS['widgetStack'][$name]->init();
     }
@@ -406,7 +406,7 @@ abstract class Controller
      * End of widget
      *
      * @access public
-     * @param string $name
+     * @param string $name widget name
      * @return void
      * @throws Exception
      */
@@ -416,7 +416,7 @@ abstract class Controller
             throw new Exception('Widget ' . $name . ' not started.');
         }
 
-        /** @var \Micro\base\Widget $widget */
+        /** @var \Micro\base\Widget $widget widget */
         $widget = $GLOBALS['widgetStack'][$name];
         unset($GLOBALS['widgetStack'][$name]);
 

@@ -28,8 +28,11 @@ class Exception extends \Exception
             $_POST['errors'] = [ 'Error - '.$this->getMessage() ];
 
             $config = Micro::getInstance()->config;
+
+            /** @var Controller $mvc controller */
             $mvc = new $config['errorController'];
             $mvc->action($config['errorAction']);
+
             error_reporting(0);
         } else {
             return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';

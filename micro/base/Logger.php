@@ -20,14 +20,14 @@ class Logger
 
     /** @var array $supportedLevels supported logger levels */
     public static $supportedLevels = array(
-        'emergency', // Авария
-        'alert',     // Тревога
-        'critical',  // Критично
-        'error',     // Ошибка
-        'warning',   // Предупреждение
-        'notice',    // Замечание
-        'info',      // Информация
-        'debug'      // Отладка
+        'emergency',
+        'alert',
+        'critical',
+        'error',
+        'warning',
+        'notice',
+        'info',
+        'debug'
     );
 
 
@@ -35,7 +35,7 @@ class Logger
      * Export loggers
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration array
      * @result void
      */
     public function __construct($params=[])
@@ -57,14 +57,14 @@ class Logger
      * Send message to loggers
      *
      * @access public
-     * @param string $level
-     * @param string $message
+     * @param string $level logger level
+     * @param string $message message to write
      * @result void
      */
     public function send($level, $message)
     {
         foreach ($this->loggers AS $log) {
-            /** @var \Micro\loggers\LogInterface $log */
+            /** @var \Micro\loggers\LogInterface $log logger */
             if ($log->isSupportedLevel($level)) {
                 $log->sendMessage($level, $message);
             }

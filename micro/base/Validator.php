@@ -27,18 +27,18 @@ class Validator
     public $params = [];
     /** @var array $validators supported validations */
     protected $validators = [
-        'required'  => 'RequiredValidator', // обязательный
-        'captcha'   => 'CaptchaValidator', // каптча
-        'boolean'   => 'BooleanValidator', // трю ор фелс
-        'compare'   => 'CompareValidator', // сверка с ...
-        'string'    => 'StringValidator', // строка
-        'regexp'    => 'RegexpValidator', // регулярка
-        'number'    => 'NumberValidator', // число
-        'unique'    => 'UniqueValidator', // уникальность
-        'range'     => 'RangeValidator', // от ... до
-        'email'     => 'EmailValidator', // емайл
-        'url'       => 'UrlValidator', // урл
-        'file'      => 'FileValidator', // файл
+        'required'  => 'RequiredValidator',
+        'captcha'   => 'CaptchaValidator',
+        'boolean'   => 'BooleanValidator',
+        'compare'   => 'CompareValidator',
+        'string'    => 'StringValidator',
+        'regexp'    => 'RegexpValidator',
+        'number'    => 'NumberValidator',
+        'unique'    => 'UniqueValidator',
+        'range'     => 'RangeValidator',
+        'email'     => 'EmailValidator',
+        'url'       => 'UrlValidator',
+        'file'      => 'FileValidator',
     ];
 
 
@@ -46,7 +46,7 @@ class Validator
      * Constructor validator object
      *
      * @access public
-     * @param array $rule
+     * @param array $rule configuration array
      * @result void
      */
     public function __construct($rule = [])
@@ -58,8 +58,8 @@ class Validator
      * Check is empty property
      *
      * @access protected
-     * @param $value
-     * @param bool $trim
+     * @param mixed $value check value is empty
+     * @param bool $trim run trim?
      * @return bool
      */
     protected function isEmpty($value, $trim = false)
@@ -82,8 +82,8 @@ class Validator
      * Running validation process
      *
      * @access public
-     * @param $model
-     * @param bool $client
+     * @param \Micro\web\FormModel $model model
+     * @param bool $client run on client side?
      * @return bool|string
      * @throws Exception
      */
@@ -129,7 +129,7 @@ class Validator
      * Client validation making
      *
      * @access public
-     * @param $model
+     * @param \Micro\web\FormModel $model model
      * @return string
      */
     public function clientValidate($model) {

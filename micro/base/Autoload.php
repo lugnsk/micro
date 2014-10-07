@@ -22,8 +22,8 @@ class Autoload
      * Setting or installing new alias
      *
      * @access public
-     * @param $alias
-     * @param $realPath
+     * @param string $alias name for new alias
+     * @param string $realPath path of alias
      * @return void
      */
     public static function setAlias($alias, $realPath)
@@ -35,7 +35,7 @@ class Autoload
      * Loader classes
      *
      * @access public
-     * @param $className
+     * @param string $className search class name
      * @return bool
      */
     public static function loader($className)

@@ -19,7 +19,7 @@ abstract class Widget extends Controller
      * Constructor for widgets
      *
      * @access public
-     * @param array $args
+     * @param array $args arguments array
      * @result void
      */
     public function __construct($args = [])

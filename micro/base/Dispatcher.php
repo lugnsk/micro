@@ -23,8 +23,8 @@ class Dispatcher
      * Add listener on event
      *
      * @access public
-     * @param $listener
-     * @param $event
+     * @param string $listener listener name
+     * @param string $event event name
      * @return void
      */
     public function addListener($listener, $event) {
@@ -40,8 +40,8 @@ class Dispatcher
      * Send signal to run event
      *
      * @access public
-     * @param $event
-     * @param array|null $args
+     * @param string $event event name
+     * @param array|null $args event arguments
      * @return void
      */
     public function signal($event, $args=null) {

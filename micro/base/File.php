@@ -45,7 +45,7 @@ class File
      * Recursive remove dir
      *
      * @access public
-     * @param $path
+     * @param string $path path to remove
      * @return void
      */
     public static function removeDir($path) {
@@ -65,8 +65,8 @@ class File
      * Recursive copy files
      *
      * @access public
-     * @param string $src
-     * @param string $dst
+     * @param string $src source path
+     * @param string $dst destination path
      * @return void
      */
     public static function recurseCopy($src, $dst)
@@ -91,9 +91,9 @@ class File
      * Recursive copy files if edited
      *
      * @access public
-     * @param string $src
-     * @param string $dst
-     * @param string $exc
+     * @param string $src source path
+     * @param string $dst destination path
+     * @param string $exc exception name
      * @return void
      */
     public static function recurseCopyIfEdited($src = '', $dst = '', $exc = '.php')

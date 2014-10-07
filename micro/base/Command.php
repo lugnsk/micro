@@ -27,7 +27,7 @@ abstract class Command
      * Set arguments class
      *
      * @access public
-     * @param array $args
+     * @param array $args configuration array
      * @result void
      */
     public function __construct($args = [])
