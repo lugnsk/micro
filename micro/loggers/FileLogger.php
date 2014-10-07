@@ -28,7 +28,7 @@ class FileLogger extends LogInterface
      * Open file for write messages
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration params
      * @result void
      * @throws Exception
      */
@@ -47,10 +47,10 @@ class FileLogger extends LogInterface
      * Send message in file log
      *
      * @access public
-     * @param string $level
-     * @param string $message
+     * @param integer $level level number
+     * @param string $message message to write
      * @result void
-     * @throws Exception
+     * @throws Exception error write to log
      */
     public function sendMessage($level, $message)
     {

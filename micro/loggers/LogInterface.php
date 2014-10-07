@@ -28,7 +28,7 @@ abstract class LogInterface
      * Constructor is a initialize loggers
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration params
      * @throws Exception
      * @result void
      */
@@ -49,7 +49,7 @@ abstract class LogInterface
      * Check support level
      *
      * @access public
-     * @param $level
+     * @param integer $level level number
      * @return bool
      */
     public function isSupportedLevel($level)
@@ -61,8 +61,8 @@ abstract class LogInterface
      * Send log message
      *
      * @access public
-     * @param $level
-     * @param $message
+     * @param integer $level level number
+     * @param string $message message to write
      * @return void
      */
     abstract public function sendMessage($level, $message);

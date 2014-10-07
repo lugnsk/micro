@@ -33,7 +33,7 @@ class EmailLogger extends LogInterface
      * Constructor initialize logger
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration params
      * @result void
      */
     public function __construct($params=[])
@@ -49,8 +49,8 @@ class EmailLogger extends LogInterface
      * Send log message
      *
      * @access public
-     * @param $level
-     * @param $message
+     * @param integer $level level number
+     * @param string $message message to write
      * @return void
      */
     public function sendMessage($level, $message)

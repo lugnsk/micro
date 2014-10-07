@@ -29,7 +29,7 @@ class DbLogger extends LogInterface
      * Constructor prepare DB
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration params
      * @result void
      */
     public function __construct($params=[])
@@ -69,8 +69,8 @@ class DbLogger extends LogInterface
      * Send log message into DB
      *
      * @access public
-     * @param integer $level
-     * @param string $message
+     * @param integer $level level number
+     * @param string $message message to write
      * @return void
      */
     public function sendMessage($level, $message)
