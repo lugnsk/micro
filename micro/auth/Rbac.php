@@ -60,8 +60,8 @@ abstract class Rbac {
      * Assign RBAC element into user
      *
      * @access public
-     * @param integer $userId
-     * @param string $name
+     * @param integer $userId user id
+     * @param string $name element name
      * @return bool
      */
     abstract public function assign($userId, $name);
@@ -78,9 +78,9 @@ abstract class Rbac {
      * Check privileges to operation
      *
      * @access public
-     * @param integer $userId
-     * @param string $action
-     * @param array $data
+     * @param integer $userId user id
+     * @param string $action acton name
+     * @param array $data action params
      * @return boolean
      */
     public function check($userId, $action, $data=[])
@@ -101,8 +101,8 @@ abstract class Rbac {
      * Build tree from RBAC rules
      *
      * @access public
-     * @param array $elements
-     * @param int $parentId
+     * @param array $elements elemens array
+     * @param int $parentId parent ID
      * @return array
      */
     public function tree(&$elements, $parentId = 0)
@@ -125,8 +125,8 @@ abstract class Rbac {
      * Execute rule
      *
      * @access public
-     * @param array $role
-     * @param array $data
+     * @param array $role element
+     * @param array $data action params
      * @return bool
      */
     public function execute($role, $data) {
@@ -142,7 +142,7 @@ abstract class Rbac {
      * Get assigned to user RBAC elements
      *
      * @access public
-     * @param integer $userId
+     * @param integer $userId user ID
      * @return mixed
      */
     public function assigned($userId)
@@ -161,8 +161,8 @@ abstract class Rbac {
      * Revoke RBAC element from user
      *
      * @access public
-     * @param integer $userId
-     * @param string $name
+     * @param integer $userId user id
+     * @param string $name element name
      * @return bool
      */
     public function revoke($userId, $name)
@@ -174,8 +174,8 @@ abstract class Rbac {
      * Recursive search in roles array
      *
      * @access public
-     * @param array $roles
-     * @param string $finder
+     * @param array $roles elements
+     * @param string $finder element name to search
      * @return bool|array
      */
     protected function searchRoleRecursive($roles, $finder)
