@@ -34,7 +34,7 @@ class Request
      * Constructor Request
      *
      * @access public
-     * @param array $routes
+     * @param array $routes routes array
      * @result void
      */
     public function __construct($routes = [])
@@ -88,7 +88,7 @@ class Request
     /**
      * Prepare extensions
      * @access private
-     * @param $uriBlocks
+     * @param array $uriBlocks uri blocks from URL
      * @return bool
      */
     private function prepareExtensions(&$uriBlocks)
@@ -117,7 +117,7 @@ class Request
      *
      * @access private
      * @global Micro
-     * @param array $uriBlocks
+     * @param array $uriBlocks uri blocks from URL
      * @return void
      */
     private function prepareModules(&$uriBlocks)
@@ -141,7 +141,7 @@ class Request
      * Prepare controller
      *
      * @access private
-     * @param array $uriBlocks
+     * @param array $uriBlocks uri blocks from URL
      * @return void
      */
     private function prepareController(&$uriBlocks)
@@ -153,7 +153,7 @@ class Request
      * Prepare action
      *
      * @access private
-     * @param array $uriBlocks
+     * @param array $uriBlocks uri blocks from URL
      * @return void
      */
     private function prepareAction(&$uriBlocks)

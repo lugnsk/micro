@@ -36,9 +36,9 @@ class FormBuilder
      * @access public
      * @param array $config
      * @param \Micro\db\Model $model
-     * @param string $method
-     * @param string $type
-     * @param string $action
+     * @param string $method method of request
+     * @param string $type type data
+     * @param string $action path URL action
      * @result void
      */
     public function __construct($config = [], $model = null, $method = 'GET', $type = 'text/plain', $action = '')
@@ -54,7 +54,7 @@ class FormBuilder
      * Loading data in model from array
      *
      * @access public
-     * @param array $data
+     * @param array $data array to change
      * @return void
      */
     public function setModelData($data = [])
@@ -168,7 +168,7 @@ class FormBuilder
      * Render form elements
      *
      * @access public
-     * @param null|array $conf
+     * @param null|array $conf configuration array
      * @return void
      */
     public function contentRender($conf = null)

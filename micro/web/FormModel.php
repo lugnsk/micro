@@ -56,6 +56,8 @@ abstract class FormModel
 
     /**
      * Get client code for validation
+     *
+     * @access public
      * @return string
      */
     public function getClient()
@@ -78,7 +80,7 @@ abstract class FormModel
      * Loading data in model from array
      *
      * @access public
-     * @param array $data
+     * @param array $data array to change
      * @return void
      */
     public function setModelData($data = [])
@@ -92,7 +94,7 @@ abstract class FormModel
      * Add error model
      *
      * @access public
-     * @param string $description
+     * @param string $description error text
      * @return void
      */
     public function addError($description)
@@ -115,7 +117,7 @@ abstract class FormModel
      * Convert results array to single array
      *
      * @access protected
-     * @param array $errors
+     * @param array $errors merge errors
      * @return array
      */
     private function convertMultiArrayToArray($errors)
@@ -146,7 +148,7 @@ abstract class FormModel
      * Get element label
      *
      * @access public
-     * @param $property
+     * @param string $property property name
      * @return null
      */
     public function getLabel($property)

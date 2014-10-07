@@ -35,7 +35,7 @@ class Assets
      * Constructor for class
      *
      * @access public
-     * @param string $directory
+     * @param string $directory directory of assets
      * @result void
      */
     public function __construct($directory = '')

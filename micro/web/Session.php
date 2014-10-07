@@ -19,7 +19,7 @@ class Session
      * Construct for this class
      *
      * @access public
-     * @param array $config
+     * @param array $config configuration array
      * @result void
      */
     public function __construct($config = [])
@@ -60,7 +60,7 @@ class Session
      * Getter session element
      *
      * @access public
-     * @param string $name
+     * @param string $name element name
      * @return mixed
      */
     public function __get($name)
@@ -72,8 +72,8 @@ class Session
      * Setter session element
      *
      * @access public
-     * @param string $name
-     * @param mixed $value
+     * @param string $name element name
+     * @param mixed $value element value
      * @return void
      */
     public function __set($name, $value)
@@ -85,7 +85,7 @@ class Session
      * Is set session element
      *
      * @access public
-     * @param string $name
+     * @param string $name element name
      * @return boolean
      */
     public function __isset($name)
@@ -97,7 +97,7 @@ class Session
      * Unset session element
      *
      * @access public
-     * @param string $name
+     * @param string $name element name
      * @return void
      */
     public function __unset($name)

@@ -77,9 +77,9 @@ class Router
      * Validated router rule
      *
      * @access private
-     * @param string $uri
-     * @param string $pattern
-     * @param string $replacement
+     * @param string $uri uri to validation
+     * @param string $pattern checking pattern
+     * @param string $replacement replacement for pattern
      * @return string
      */
     private function validatedRule($uri, $pattern, $replacement)
@@ -116,8 +116,8 @@ class Router
      * Match patBlocks in uriBlocks
      *
      * @access private
-     * @param array $uriBlocks
-     * @param array $patBlocks
+     * @param array $uriBlocks uri blocks from URL
+     * @param array $patBlocks pattern blocks from valid URL
      * @return array|bool
      */
     private function parseUri($uriBlocks = [], $patBlocks = [])
@@ -146,8 +146,8 @@ class Router
      * Replacement $result with repBlocks
      *
      * @access private
-     * @param $attr
-     * @param $repBlocks
+     * @param array $attr elements of valid URL
+     * @param array $repBlocks replacement blocks from valid URL
      * @return bool|null|string
      */
     private function buildResult(&$attr, $repBlocks)

@@ -28,24 +28,24 @@ class Language
      * Constructor language
      *
      * @access public
-     * @param string $filename
+     * @param string $viewname  name of view
      * @result void
      * @throws Exception
      */
-    public function __construct($filename)
+    public function __construct($viewname)
     {
         $lang = (Registry::get('lang')) ? Registry::get('lang') : $this->defaultLang;
-        if (!file_exists($filename . $lang . '.ini')) {
-            throw new Exception('Language file ' . $filename . $lang . '.ini not exists.');
+        if (!file_exists($viewname . $lang . '.ini')) {
+            throw new Exception('Language file ' . $viewname . $lang . '.ini not exists.');
         }
-        $this->language = parse_ini_file($filename . 'ini', true);
+        $this->language = parse_ini_file($viewname . 'ini', true);
     }
 
     /**
      * Get param value
      *
      * @access public
-     * @param string $name
+     * @param string $name element name
      * @return mixed
      */
     public function __get($name)

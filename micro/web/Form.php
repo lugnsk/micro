@@ -22,8 +22,8 @@ class Form
      * Get model field data
      *
      * @access private
-     * @param \Micro\db\Model $model
-     * @param string $property
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
      * @return array
      */
     private function getField($model, $property)
@@ -41,9 +41,9 @@ class Form
      * Render label tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function label($model, $property, $options = [])
@@ -55,9 +55,9 @@ class Form
      * Render text field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function textField($model, $property, $options = [])
@@ -71,9 +71,9 @@ class Form
      * Render button field tag
      *
      * @access public
-     * @param $model
-     * @param $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function buttonField($model, $property, $options = [])
@@ -87,9 +87,9 @@ class Form
      * Render check box field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function checkBoxField($model, $property, $options = [])
@@ -103,9 +103,9 @@ class Form
      * Render file field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function fileField($model, $property, $options = [])
@@ -119,9 +119,9 @@ class Form
      * Render hidden field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function hiddenField($model, $property, $options = [])
@@ -134,10 +134,10 @@ class Form
      * Render image field tag
      *
      * @access public
-     * @param $model
-     * @param $property
-     * @param $imageSource
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param string $imageSource path to image
+     * @param array $options attributes array
      * @return string
      */
     public function imageField($model, $property, $imageSource, $options = [])
@@ -151,9 +151,9 @@ class Form
      * Render password field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function passwordField($model, $property, $options = [])
@@ -167,9 +167,9 @@ class Form
      * Render radio field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function radioField($model, $property, $options = [])
@@ -183,9 +183,9 @@ class Form
      * Render email field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function emailField($model, $property, $options = [])
@@ -199,9 +199,9 @@ class Form
      * Render range field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function rangeField($model, $property, $options = [])
@@ -215,9 +215,9 @@ class Form
      * Render number field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function numberField($model, $property, $options = [])
@@ -231,9 +231,9 @@ class Form
      * Render search field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function searchField($model, $property, $options = [])
@@ -247,9 +247,9 @@ class Form
      * Render telephone tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function telField($model, $property, $options = [])
@@ -263,9 +263,9 @@ class Form
      * Render url field tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function urlField($model, $property, $options = [])
@@ -279,9 +279,9 @@ class Form
      * Render textarea tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
      * @return string
      */
     public function textArea($model, $property, $options = [])
@@ -295,10 +295,10 @@ class Form
      * Render text field row
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
-     * @param array $labelOptions
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     * @param array $labelOptions attribute array for label
      * @return string
      */
     public function textFieldRow($model, $property, $options = [], $labelOptions = [])
@@ -316,10 +316,10 @@ class Form
      * Render text field row
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
-     * @param array $labelOptions
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     * @param array $labelOptions attribute array for label
      * @return string
      */
     public function numberFieldRow($model, $property, $options = [], $labelOptions = [])
@@ -337,10 +337,10 @@ class Form
      * Render password field row
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $options
-     * @param array $labelOptions
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     * @param array $labelOptions attribute array for label
      * @return string
      */
     public function passwordFieldRow($model, $property, $options = [], $labelOptions = [])
@@ -356,10 +356,10 @@ class Form
      * Render drop down list tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $elements
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $elements elements array
+     * @param array $options attribute array
      * @return string
      */
     public function dropDownList($model, $property, $elements = [], $options = [])
@@ -374,10 +374,10 @@ class Form
      * Render list box tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $elements
-     * @param array $options
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $elements elements array
+     * @param array $options attrubtes array
      * @return string
      */
     public function listBox($model, $property, $elements = [], $options = [])
@@ -392,10 +392,10 @@ class Form
      * Render check box list tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $checkboxes
-     * @param string $format
+     * @param \Micro\web\FormModel $model model
+     * @param string $property property model
+     * @param array $checkboxes checkBoxes array
+     * @param string $format format for render
      * @return string
      */
     public function checkBoxList($model, $property, $checkboxes = [], $format = '<p>%check% %text%</p>')
@@ -408,10 +408,10 @@ class Form
      * Render radio button list tag
      *
      * @access public
-     * @param \Micro\db\Model $model
-     * @param string $property
-     * @param array $radios
-     * @param string $format
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $radios radios array
+     * @param string $format format for render
      * @return string
      */
     public function radioButtonList($model, $property, $radios = [], $format = '<p>%radio% %text%</p>')
