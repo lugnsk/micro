@@ -23,7 +23,7 @@ class FileRbac extends Rbac
      * Redefine constructor for RBAC
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration array
      * @result void
      */
     public function __construct($params=[])
@@ -39,8 +39,8 @@ class FileRbac extends Rbac
      * Assign RBAC element into user
      *
      * @access public
-     * @param integer $userId
-     * @param string $name
+     * @param integer $userId user id
+     * @param string $name element name
      * @return bool
      */
     public function assign($userId, $name)
