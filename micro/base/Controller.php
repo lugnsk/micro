@@ -148,7 +148,7 @@ abstract class Controller
         }
 
         if ($layoutPath) {
-            $data = $this->renderFile($layoutPath, ['content' => $data]);
+            $data = $this->insertStyleScripts($this->renderFile($layoutPath, ['content' => $data]));
         }
         return $data;
     }
@@ -206,7 +206,7 @@ abstract class Controller
             throw new Exception(count($this->widgetStack) . ' widgets not endings.');
         }
 
-        return $this->insertStyleScripts(ob_get_clean());
+        return ob_get_clean();
     }
 
     /**
@@ -230,8 +230,8 @@ abstract class Controller
             }
         }
 
-        $positionHead = strpos($cache, '</head>');
-        $positionBody = strpos($cache, '</body>', $positionHead);
+        $positionHead = strpos($cache, Html::closeTag('head'));
+        $positionBody = strpos($cache, Html::closeTag('body'), $positionHead);
 
         $result .= substr($cache, 0, $positionHead);
         $result .= $heads;

@@ -16,13 +16,13 @@ namespace Micro\widgets;
  */
 abstract class GridColumn
 {
-    /** @var array $params  */
+    /** @var array $params configuration array */
     public $params = [];
 
 
     /**
      * @access public
-     * @param $params
+     * @param array $params grid column configuration
      * @result void
      */
     public function __construct($params)
