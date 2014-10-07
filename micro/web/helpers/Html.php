@@ -21,8 +21,8 @@ class Html
      * Render tag
      *
      * @access public
-     * @param  string $name
-     * @param  array $attributes
+     * @param  string $name tag name
+     * @param  array $attributes tag attributes
      * @return string
      */
     public static function tag($name, $attributes = [])
@@ -38,8 +38,8 @@ class Html
      * Render open tag
      *
      * @access public
-     * @param  string $name
-     * @param  array $attributes
+     * @param  string $name tag name
+     * @param  array $attributes tag attributes
      * @return string
      */
     public static function openTag($name, $attributes = [])
@@ -55,7 +55,7 @@ class Html
      * Render close tag
      *
      * @access public
-     * @param  string $name
+     * @param  string $name tag name
      * @return string
      */
     public static function closeTag($name)
@@ -67,10 +67,10 @@ class Html
      * Base field tag
      *
      * @access private
-     * @param  string $type
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $type type of element
+     * @param  string $name name of element
+     * @param  string $value value of element
+     * @param  array $attributes attributes tag
      * @return string
      */
     private static function field($type, $name, $value = null, $attributes = [])
@@ -87,9 +87,9 @@ class Html
      * Render link tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $url
-     * @param  array $attributes
+     * @param  string $name name of element
+     * @param  string $url url path
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function link($name, $url, $attributes = [])
@@ -102,9 +102,9 @@ class Html
      * Render meta tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $content
-     * @param  array $attributes
+     * @param  string $name name of element
+     * @param  string $content content of element
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function meta($name, $content, $attributes = [])
@@ -118,7 +118,7 @@ class Html
      * Render favicon file
      *
      * @access public
-     * @param string $url
+     * @param string $url path to favicon
      * @return string
      */
     public static function favicon($url)
@@ -130,7 +130,7 @@ class Html
      * Render css file
      *
      * @access public
-     * @param  string $file
+     * @param  string $file path to css
      * @return string
      */
     public static function cssFile($file)
@@ -142,7 +142,7 @@ class Html
      * Render script file
      *
      * @access public
-     * @param  string $file
+     * @param  string $file path to script
      * @return string
      */
     public static function scriptFile($file)
@@ -155,7 +155,7 @@ class Html
      *
      * @access public
      * @param  string $text style
-     * @param  array $attributes
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function css($text, $attributes = [])
@@ -169,7 +169,7 @@ class Html
      *
      * @access public
      * @param  string $text script
-     * @param  array $attributes
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function script($text, $attributes = [])
@@ -182,7 +182,7 @@ class Html
      * Render docType tag
      *
      * @access public
-     * @param  string $name
+     * @param  string $name doctype name
      * @return string|boolean
      */
     public static function doctype($name)
@@ -208,7 +208,7 @@ class Html
      * Render title tag
      *
      * @access public
-     * @param string $name
+     * @param string $name title name
      * @return string
      */
     public static function title($name)
@@ -221,11 +221,11 @@ class Html
      * Render BR tag
      *
      * @access public
-     * @param integer $num
-     * @param array $attributes
+     * @param integer $num number of render BR's
+     * @param array $attributes attributes tag
      * @return string
      */
-    public static function br($num, $attributes = [])
+    public static function br($num=1, $attributes = [])
     {
         $str = '';
         for ($i = 0; $i < $num; $i++) {
@@ -238,9 +238,9 @@ class Html
      * Render image file
      *
      * @access public
-     * @param  string $name
-     * @param  string $file
-     * @param  array $attributes
+     * @param  string $name name of image
+     * @param  string $file path image file
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function image($name, $file, $attributes = [])
@@ -254,9 +254,9 @@ class Html
      * Render mail a tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $email
-     * @param  array $attributes
+     * @param  string $name name of e-mail
+     * @param  string $email e-mail path
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function mailto($name, $email, $attributes = [])
@@ -269,9 +269,9 @@ class Html
      * Render link
      *
      * @access public
-     * @param $name
-     * @param $url
-     * @param array $attributes
+     * @param string $name name to link
+     * @param string $url path to link
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function href($name, $url, $attributes = [])
@@ -284,9 +284,9 @@ class Html
      * Render H{1-N} tag
      *
      * @access public
-     * @param  string $num
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $num H number
+     * @param  string $value H value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function heading($num, $value = null, $attributes = [])
@@ -333,7 +333,7 @@ class Html
      *
      * @access public
      * @param array $items lists multiple array
-     * @param array $attributes attributes of lists
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function lists($items = [], $attributes = [])
@@ -368,8 +368,8 @@ class Html
      * )
      *
      * @access public
-     * @param array $elements
-     * @param array $attributes
+     * @param array $elements table elements
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function table($elements = [], $attributes = [])
@@ -389,7 +389,7 @@ class Html
      * Render begin table element
      *
      * @access public
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function beginTable($attributes = [])
@@ -412,8 +412,8 @@ class Html
      * Render table caption element
      *
      * @access public
-     * @param string $text
-     * @param array $attributes
+     * @param string $text table caption text
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function tableCaption($text, $attributes = [])
@@ -426,8 +426,8 @@ class Html
      *
      * @access public
      * @param array $elements array(value, attributes)
-     * @param boolean $isHeading
-     * @param array $attributes
+     * @param boolean $isHeading row is heading?
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function tableRow($elements = [], $isHeading = false, $attributes = [])
@@ -452,8 +452,9 @@ class Html
     /**
      * Render table heading tag
      *
-     * @param string $text
-     * @param array $attributes
+     * @access public
+     * @param string $text table heading text
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function tableHeading($text, $attributes = [])
@@ -465,8 +466,8 @@ class Html
      * Render table cell element
      *
      * @access public
-     * @param string $text
-     * @param array $attributes
+     * @param string $text table cell text
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function tableCell($text, $attributes = [])
@@ -479,9 +480,9 @@ class Html
      * Render begin form tag
      *
      * @access public
-     * @param  string $action
-     * @param  string $method
-     * @param  array $attributes
+     * @param  string $action path to URL action
+     * @param  string $method method of request
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function beginForm($action, $method = 'POST', $attributes = [])
@@ -506,8 +507,8 @@ class Html
      * Render button tag
      *
      * @access public
-     * @param  string $text
-     * @param  array $attributes
+     * @param  string $text text for button
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function button($text, $attributes = [])
@@ -519,10 +520,10 @@ class Html
      * Render image button tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $file
-     * @param  array $attributesButton
-     * @param  array $attributesImage
+     * @param  string $name image name
+     * @param  string $file image file path
+     * @param  array $attributesButton attributes for button
+     * @param  array $attributesImage attributes for image
      * @return string
      */
     public static function imageButton($name, $file, $attributesButton = [], $attributesImage = [])
@@ -534,9 +535,9 @@ class Html
      * Render textArea tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $text
-     * @param  array $attributes
+     * @param  string $name textArea name
+     * @param  string $text textArea text
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function textArea($name, $text, $attributes = [])
@@ -550,8 +551,8 @@ class Html
      * Render legend tag
      *
      * @access public
-     * @param  string $text
-     * @param  array $attributes
+     * @param  string $text legend text
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function legend($text, $attributes = [])
@@ -563,9 +564,9 @@ class Html
      * Render label tag
      *
      * @access public
-     * @param string $name
-     * @param string $elemId
-     * @param array $attributes
+     * @param string $name label name
+     * @param string $elemId element ID
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function label($name, $elemId = '', $attributes = [])
@@ -578,9 +579,9 @@ class Html
      * Render option tag
      *
      * @access public
-     * @param string $value
-     * @param string $text
-     * @param array $attributes
+     * @param string $value option value
+     * @param string $text label for option
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function option($value, $text, $attributes = [])
@@ -593,9 +594,9 @@ class Html
      * Render optGroup tag
      *
      * @access public
-     * @param string $label
+     * @param string $label label for options group
      * @param array $options format array(value, text, attributes) OR array(label, options, attributes)
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function optGroup($label, $options = [], $attributes = [])
@@ -616,9 +617,9 @@ class Html
      * Render dropDownList (select tag)
      *
      * @access public
-     * @param string $name
+     * @param string $name dropDown name
      * @param array $options format array(value, text, attributes) OR array(label, options, attributes)
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function dropDownList($name, $options = [], $attributes = [])
@@ -632,9 +633,9 @@ class Html
      * Render listBox (select tag)
      *
      * @access public
-     * @param string $name
+     * @param string $name listBox name
      * @param array $options format array(value, text, attributes) OR array(label, options, attributes)
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @return string
      */
     public static function listBox($name, $options = [], $attributes = [])
@@ -665,10 +666,10 @@ class Html
      * Render checkBoxList (input checkbox tags)
      *
      * @access public
-     * @param string $name
+     * @param string $name name for checkBox'es in list
      * @param array $checkboxes format array(text, value, attributes)
      * @param string $format %check% - checkbox , %text% - text
-     * @param string $selected
+     * @param string $selected name selected element
      * @return string
      */
     public static function checkBoxList($name, $checkboxes = [], $format = '<p>%check% %text%</p>', $selected = '')
@@ -688,10 +689,10 @@ class Html
      * Render radio button list tag
      *
      * @access public
-     * @param string $name
+     * @param string $name radio name
      * @param array $radios format array(text, value, attributes)
      * @param string $format %radio% - radio , %text% - text
-     * @param string $selected
+     * @param string $selected name selected element
      * @return string
      */
     public static function radioButtonList($name, $radios = [], $format = '<p>%radio% %text%</p>', $selected = '')
@@ -712,8 +713,8 @@ class Html
      * Render reset button tag
      *
      * @access public
-     * @param  string $label
-     * @param  array $attributes
+     * @param  string $label text for label on button
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function resetButton($label = 'Reset', $attributes = [])
@@ -727,8 +728,8 @@ class Html
      * Render submit button tag
      *
      * @access public
-     * @param  string $label
-     * @param  array $attributes
+     * @param  string $label text for label on button
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function submitButton($label = 'Submit', $attributes = [])
@@ -742,9 +743,9 @@ class Html
      * Render input button tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name button name
+     * @param  string $value button value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function buttonField($name, $value = null, $attributes = [])
@@ -756,9 +757,9 @@ class Html
      * Render input checkbox tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name checkBox name
+     * @param  string $value checkBox value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function checkBoxField($name, $value = null, $attributes = [])
@@ -770,9 +771,9 @@ class Html
      * Render input file tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name file name
+     * @param  string $value file value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function fileField($name, $value = null, $attributes = [])
@@ -784,9 +785,9 @@ class Html
      * Render input hidden tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name hidden name
+     * @param  string $value hidden value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function hiddenField($name, $value = null, $attributes = [])
@@ -798,10 +799,10 @@ class Html
      * Render input image tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  string $srcFile
-     * @param  array $attributes
+     * @param  string $name image name
+     * @param  string $value image value
+     * @param  string $srcFile path to image
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function imageField($name, $value = null, $srcFile, $attributes = [])
@@ -814,9 +815,9 @@ class Html
      * Render input password tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name password name
+     * @param  string $value password value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function passwordField($name, $value = null, $attributes = [])
@@ -828,9 +829,9 @@ class Html
      * Render input radio tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name radio name
+     * @param  string $value radio value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function radioField($name, $value = null, $attributes = [])
@@ -842,9 +843,9 @@ class Html
      * Render input text tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name text name
+     * @param  string $value text value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function textField($name, $value = null, $attributes = [])
@@ -856,9 +857,9 @@ class Html
      * Render input email tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name email name
+     * @param  string $value email value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function emailField($name, $value = null, $attributes = [])
@@ -870,9 +871,9 @@ class Html
      * Render input range tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name range name
+     * @param  string $value range value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function rangeField($name, $value = null, $attributes = [])
@@ -884,9 +885,9 @@ class Html
      * Render input number tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name number name
+     * @param  string $value number value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function numberField($name, $value = null, $attributes = [])
@@ -898,9 +899,9 @@ class Html
      * Render input search tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name search name
+     * @param  string $value search value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function searchField($name, $value = null, $attributes = [])
@@ -912,9 +913,9 @@ class Html
      * Render input tel tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name telephone name
+     * @param  string $value telephone value
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function telField($name, $value = null, $attributes = [])
@@ -926,9 +927,9 @@ class Html
      * Render input url tag
      *
      * @access public
-     * @param  string $name
-     * @param  string $value
-     * @param  array $attributes
+     * @param  string $name url name
+     * @param  string $value url path
+     * @param  array $attributes attributes tag
      * @return string
      */
     public static function urlField($name, $value = null, $attributes = [])
@@ -941,7 +942,7 @@ class Html
      * Render charset tag
      *
      * @access public
-     * @param  string $name
+     * @param  string $name charset name
      * @return string
      */
     public static function charset($name)
@@ -955,7 +956,7 @@ class Html
      * @access public
      * @param array $sources format type=>src
      * @param array $tracks format array(kind, src, srclang, label)
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @param string $noCodec text
      * @return string
      */
@@ -982,7 +983,7 @@ class Html
      * @access public
      * @param array $sources format type=>src
      * @param array $tracks format array(kind, src, srclang, label)
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @param string $noCodec text
      * @return string
      */
@@ -1007,7 +1008,7 @@ class Html
      * Render canvas tag
      *
      * @access public
-     * @param array $attributes
+     * @param array $attributes attributes tag
      * @param string $noCodec text
      * @return string
      */

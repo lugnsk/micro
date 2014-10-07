@@ -79,9 +79,9 @@ class FlashMessage
      *
      * @access public
      * @global Registry
-     * @param int $type
-     * @param string $title
-     * @param string $description
+     * @param int $type type id
+     * @param string $title title flash
+     * @param string $description description flash
      * @return void
      */
     public function push($type = FlashMessage::TYPE_SUCCESS, $title = '', $description = '')
@@ -100,7 +100,7 @@ class FlashMessage
      *
      * @access public
      * @global Registry
-     * @param int $type
+     * @param int $type type of flash
      * @return bool
      */
     public function has($type = FlashMessage::TYPE_SUCCESS)
@@ -118,7 +118,7 @@ class FlashMessage
      *
      * @access public
      * @global Registry
-     * @param int $type
+     * @param int $type type of flash
      * @return array|bool
      */
     public function get($type = FlashMessage::TYPE_SUCCESS)

@@ -31,7 +31,7 @@ final class Mail
      * Constructor for class
      *
      * @access public
-     * @param string $from
+     * @param string $from sender e-mail
      * @result void
      */
     public function __construct($from = '')
@@ -55,7 +55,7 @@ final class Mail
      * Setting attribute from name
      *
      * @access public
-     * @param string $name
+     * @param string $name name for e-mail
      * @result void
      */
     public function setFromName($name)
@@ -78,7 +78,7 @@ final class Mail
     /**
      * Setting attribute notification
      * @access public
-     * @param boolean $notify
+     * @param boolean $notify target read email notify?
      * @result void
      */
     public function setNotify($notify)
@@ -90,7 +90,7 @@ final class Mail
      * Setting attribute encoding
      *
      * @access public
-     * @param string $encoding
+     * @param string $encoding set email encoding
      * @result void
      */
     public function setEncoding($encoding)
@@ -102,9 +102,9 @@ final class Mail
      * Sending message
      *
      * @access public
-     * @param string $to
-     * @param string $subject
-     * @param string $message
+     * @param string $to e-mail recipient
+     * @param string $subject subject for message
+     * @param string $message message text
      * @return boolean
      */
     public function send($to, $subject, $message)

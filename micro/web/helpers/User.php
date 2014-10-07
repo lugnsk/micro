@@ -44,8 +44,8 @@ class User
      * Check access by current user
      *
      * @access public
-     * @param string $action
-     * @param array $data
+     * @param string $action action to check
+     * @param array $data arguments
      * @return bool
      */
     public function check($action, $data=[])
