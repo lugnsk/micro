@@ -30,7 +30,7 @@ class FileAcl extends Acl
      * Configured ACL with files
      *
      * @access public
-     * @param array $params
+     * @param array $params configuration array
      * @result void
      */
     public function __construct($params = [])
@@ -47,7 +47,7 @@ class FileAcl extends Acl
      * Get assigned elements
      *
      * @access public
-     * @param $userId
+     * @param integer $userId user ID
      * @return mixed
      */
     public function assigned($userId)
@@ -64,7 +64,7 @@ class FileAcl extends Acl
      * Get permissions in role
      *
      * @access private
-     * @param integer $role
+     * @param integer $role role name
      * @return array
      */
     protected function rolePerms($role)
