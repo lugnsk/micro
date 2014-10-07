@@ -43,8 +43,8 @@ class DbRbac extends Rbac
      * Assign RBAC element into user
      *
      * @access public
-     * @param integer $userId
-     * @param string $name
+     * @param integer $userId user ID
+     * @param string $name assign element name
      * @return bool
      */
     public function assign($userId, $name)
@@ -59,7 +59,7 @@ class DbRbac extends Rbac
      * Get raw roles
      *
      * @access public
-     * @param int $pdo
+     * @param int $pdo PHPDataObject fetch key
      * @return mixed
      */
     public function rawRoles($pdo = \PDO::FETCH_ASSOC)
@@ -75,9 +75,9 @@ class DbRbac extends Rbac
      * Check privileges to operation
      *
      * @access public
-     * @param integer $userId
-     * @param string $action
-     * @param array $data
+     * @param integer $userId user id
+     * @param string $action checked action
+     * @param array $data action params
      * @return boolean
      */
     public function check($userId, $action, $data=[])
@@ -93,10 +93,10 @@ class DbRbac extends Rbac
      * Add new element into RBAC rules
      *
      * @access public
-     * @param $name
-     * @param int $type
-     * @param string $based
-     * @param string $data
+     * @param string $name element name
+     * @param int $type element type
+     * @param string $based based element name
+     * @param string $data element params
      * @return bool
      */
     public function create($name, $type = self::TYPE_ROLE, $based=null, $data=null)
@@ -126,7 +126,7 @@ class DbRbac extends Rbac
      * Delete element from RBAC rules
      *
      * @access public
-     * @param string $name
+     * @param string $name element name
      * @result void
      */
     public function delete($name)
@@ -141,7 +141,7 @@ class DbRbac extends Rbac
      * Recursive delete roles from array
      *
      * @access public
-     * @param $tree
+     * @param array $tree elements tree
      * @return void
      */
     public function recursiveDelete(&$tree) {
