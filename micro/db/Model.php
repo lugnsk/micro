@@ -42,7 +42,7 @@ abstract class Model extends FormModel
      * Constructor for model
      *
      * @access public
-     * @param boolean $new
+     * @param boolean $new is new model?
      * @result void
      */
     public function __construct($new = true)
@@ -78,8 +78,8 @@ abstract class Model extends FormModel
      * Finder data in DB
      *
      * @access public
-     * @param Query $query
-     * @param boolean $single
+     * @param Query $query query to search
+     * @param boolean $single is single
      * @return mixed One or more data
      */
     public static function finder($query = null, $single = false)
@@ -203,7 +203,7 @@ abstract class Model extends FormModel
      * Update changes
      *
      * @access public
-     * @param string $where
+     * @param string $where condition for search
      * @throws Exception
      * @return boolean
      */

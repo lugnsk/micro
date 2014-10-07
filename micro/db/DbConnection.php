@@ -26,7 +26,7 @@ class DbConnection
      * Construct for this class
      *
      * @access public
-     * @param array $config
+     * @param array $config configuration array
      * @result void
      * @throw Exception
      */
@@ -88,7 +88,8 @@ class DbConnection
     /**
      * Info of database
      *
-     * @param $dbName
+     * @access public
+     * @param string $dbName database name
      * @return array
      */
     public function infoDatabase($dbName)
@@ -130,7 +131,7 @@ class DbConnection
      * Table exists in db
      *
      * @access public
-     * @param string $table
+     * @param string $table table name
      * @return bool
      */
     public function tableExists($table)
@@ -141,9 +142,9 @@ class DbConnection
     /**
      * Create a new table
      *
-     * @param $name
-     * @param array $elements
-     * @param string $params
+     * @param string $name table name
+     * @param array $elements table elements
+     * @param string $params table params
      * @return int
      */
     public function createTable($name, $elements = [], $params = '')
@@ -155,7 +156,7 @@ class DbConnection
      * Get array fields into table
      *
      * @access public
-     * @param string $table
+     * @param string $table table name
      * @return array
      */
     public function listFields($table)
@@ -180,8 +181,8 @@ class DbConnection
      * Field exists in table
      *
      * @access public
-     * @param string $field
-     * @param string $table
+     * @param string $field field name
+     * @param string $table table name
      * @return boolean
      */
     public function fieldExists($field, $table)
@@ -198,8 +199,8 @@ class DbConnection
      * Get info of a field
      *
      * @access public
-     * @param string $field
-     * @param string $table
+     * @param string $field field name
+     * @param string $table table name
      * @return array
      */
     public function fieldInfo($field, $table)
@@ -212,7 +213,7 @@ class DbConnection
      * Set current database
      *
      * @access public
-     * @param string $dbName
+     * @param string $dbName database name
      * @return boolean
      */
     public function switchDatabase($dbName)
@@ -238,8 +239,8 @@ class DbConnection
      * Insert row into table
      *
      * @access public
-     * @param string $table
-     * @param array $line
+     * @param string $table table name
+     * @param array $line lines to added
      * @return bool
      */
     public function insert($table, $line=[]) {
@@ -255,9 +256,9 @@ class DbConnection
      * Update row in table
      *
      * @access public
-     * @param string $table
-     * @param array $elements
-     * @param string $conditions
+     * @param string $table table name
+     * @param array $elements elements to update
+     * @param string $conditions conditions for search
      * @return bool
      */
     public function update($table, $elements=[], $conditions = '') {
@@ -279,9 +280,9 @@ class DbConnection
      * Delete row from table
      *
      * @access public
-     * @param string $table
-     * @param string $conditions
-     * @param array $ph
+     * @param string $table table name
+     * @param string $conditions conditions to search
+     * @param array $ph params array
      * @return bool
      */
     public function delete($table, $conditions, $ph=[]) {
@@ -294,8 +295,8 @@ class DbConnection
      * Exists element in the table by params
      *
      * @access public
-     * @param string $table
-     * @param array $params
+     * @param string $table table name
+     * @param array $params params array
      * @return bool
      */
     public function exists($table, $params=[])
@@ -317,7 +318,7 @@ class DbConnection
      * Count element in sub-query
      *
      * @access public
-     * @param string $subQuery
+     * @param string $subQuery subject query
      * @return bool|integer
      */
     public function count($subQuery='')

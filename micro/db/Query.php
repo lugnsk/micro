@@ -74,8 +74,8 @@ class Query
      * Add where
      *
      * @access public
-     * @param string $sql
-     * @param string $operand
+     * @param string $sql condition element
+     * @param string $operand before added element
      * @return void
      */
     public function addWhere($sql, $operand = 'AND')
@@ -87,10 +87,10 @@ class Query
      * Add search where
      *
      * @access public
-     * @param string $column
-     * @param string $keyword
-     * @param boolean $escaped
-     * @param string $operand
+     * @param string $column column name
+     * @param string $keyword keyword for search
+     * @param boolean $escaped escaping keyword?
+     * @param string $operand before added element
      * @return void
      */
     public function addSearch($column, $keyword, $escaped = false, $operand = 'AND')
@@ -103,10 +103,10 @@ class Query
      * Add not search where
      *
      * @access public
-     * @param string $column
-     * @param string $keyword
-     * @param boolean $escaped
-     * @param string $operand
+     * @param string $column column name
+     * @param string $keyword keyword for search
+     * @param boolean $escaped escaping keyword?
+     * @param string $operand before added element
      * @return void
      */
     public function addNotSearch($column, $keyword, $escaped, $operand = 'AND')
@@ -119,9 +119,9 @@ class Query
      * Add in where
      *
      * @access public
-     * @param string $column
-     * @param array|string $params
-     * @param string $operand
+     * @param string $column column name
+     * @param array|string $params array values or string
+     * @param string $operand before added element
      * @return void
      */
     public function addIn($column, $params, $operand = 'AND')
@@ -137,9 +137,9 @@ class Query
      * Add not in where
      *
      * @access public
-     * @param string $column
-     * @param array|string $params
-     * @param string $operand
+     * @param string $column column name
+     * @param array|string $params array values or string
+     * @param string $operand before added element
      * @return void
      */
     public function addNotIn($column, $params, $operand = 'AND')
@@ -155,10 +155,10 @@ class Query
      * Add between where
      *
      * @access public
-     * @param string $column
-     * @param mixed $start
-     * @param mixed $stop
-     * @param string $operand
+     * @param string $column column name
+     * @param mixed $start start value
+     * @param mixed $stop stop value
+     * @param string $operand before added element
      * @return void
      */
     public function addBetween($column, $start, $stop, $operand = 'AND')
@@ -170,10 +170,10 @@ class Query
      * Add not between where
      *
      * @access public
-     * @param string $column
-     * @param mixed $start
-     * @param mixed $stop
-     * @param string $operand
+     * @param string $column column name
+     * @param mixed $start start value
+     * @param mixed $stop stop value
+     * @param string $operand before added element
      * @return void
      */
     public function addNotBetween($column, $start, $stop, $operand = 'AND')
@@ -185,9 +185,9 @@ class Query
      * Add join
      *
      * @access public
-     * @param string $table
-     * @param string $condition
-     * @param string $type
+     * @param string $table table name
+     * @param string $condition condition to search
+     * @param string $type type join
      * @return void
      */
     public function addJoin($table, $condition, $type = 'LEFT')
@@ -232,12 +232,12 @@ class Query
      * Running this query
      *
      * @access public
-     * @param integer $as
+     * @param integer $as result as?
      * @return mixed
      */
     public function run($as = \PDO::FETCH_CLASS)
     {
-        /** @var \PDOStatement $query */
+        /** @var \PDOStatement $query query */
         $query = $this->_conn->prepare($this->getQuery() . ';');
         if ($as == \PDO::FETCH_CLASS) {
             $query->setFetchMode($as, ucfirst($this->objectName), ['new' => false]);
