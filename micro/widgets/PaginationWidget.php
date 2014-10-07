@@ -27,7 +27,6 @@ class PaginationWidget extends Widget
     public $currentPage = 1;
     /** @var string $url url for pagination links */
     public $url = '';
-
     /** @var array $attributes attributes for list */
     public $attributes = [];
     /** @var array $attributesElement attributes for list element */
