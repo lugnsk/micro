@@ -189,13 +189,6 @@ abstract class Threads {
         }
     }
     /**
-     * Running thread
-     *
-     * @access public
-     * @return void
-     */
-    abstract public function run();
-    /**
      * Set thread name
      *
      * @access public
@@ -264,6 +257,14 @@ abstract class Threads {
 
         return $success;
     }
+
+    /**
+     * Running thread
+     *
+     * @access public
+     * @return void
+     */
+    abstract public function run();
 
     /**
      * Clean thread context
