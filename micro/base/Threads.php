@@ -1,9 +1,20 @@
-<?php
+<?php /** MicroThreads */
 
 namespace base;
 
 use Micro\base\Exception;
 
+/**
+ * Threads class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @version 1.0
+ * @since 1.0
+ */
 abstract class Threads {
     /** @var string $name */
     private $name;
@@ -197,7 +208,10 @@ abstract class Threads {
     }
     /**
      * Start
+     *
      * @access public
+     * @return void
+     * @throws Exception
      */
     public function start()
     {
