@@ -1,8 +1,6 @@
 <?php /** MicroThreads */
 
-namespace base;
-
-use Micro\base\Exception;
+namespace Micro\base;
 
 /**
  * Threads class file.
