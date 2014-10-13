@@ -48,9 +48,14 @@ abstract class Threads {
      * @param int $puid
      * @param int $guid
      * @param int $umask
+     * @result void
+     * @throws Exception
      */
     public function __construct($name, $puid = 0, $guid = 0, $umask = -1)
     {
+        if (!isset($_SERVER['argc'])) {
+            throw new Exception('Threads are permitted only for CLI');
+        }
         $this->name = $name;
         $this->guid = $guid;
         $this->puid = $puid;
