@@ -24,35 +24,25 @@ class Dispatcher
      *
      * @access public
      * @param string $listener listener name
-     * @param string $event event name
+     * @param array $event ['Object', 'method']
      * @return void
      */
-    public function addListener($listener, $event) {
-        if (!isset($this->listeners[$event])) {
-            $this->listeners[$event] = [];
-        }
-        if (!array_search($listener, $this->listeners[$event])) {
-            $this->listeners[$event][] = $listener;
-        }
+    public function addListener($listener, $event=[]) {
+        $this->listeners[$listener][] = $event;
     }
 
     /**
      * Send signal to run event
      *
      * @access public
-     * @param string $event event name
-     * @param array|null $args event arguments
+     * @param string $listener listener name
      * @return void
      */
-    public function signal($event, $args=null) {
-        foreach ( $this->listeners AS $key => $objs ) {
-            if ($key == $event) {
-                foreach ($objs AS $obj) {
-                    if ($args) {
-                        $obj->{$event}($args);
-                    } else {
-                        $obj->{$event}();
-                    }
+    public function signal($listener) {
+        if ($this->listeners) {
+            foreach ( $this->listeners AS $key => $obj ) {
+                if ($key == $listener) {
+                    call_user_func($obj);
                 }
             }
         }
