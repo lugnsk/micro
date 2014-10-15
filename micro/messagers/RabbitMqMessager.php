@@ -14,7 +14,7 @@ namespace Micro\messagers;
  * @version 1.0
  * @since 1.0
  */
-class RabbitMqMesager
+class RabbitMqMessager
 {
     /** @var AMQPConnection $connect connect to broker */
     protected $connect;
