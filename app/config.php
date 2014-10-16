@@ -53,7 +53,7 @@ return [
         ],
         // Flash messages
         'flash' => [
-            'class' => '\Micro\web\helpers\FlashMessage',
+            'class' => '\Micro\web\FlashMessage',
             'depends' => 'session'
         ],
         // DataBase
@@ -66,7 +66,7 @@ return [
         ],
         // User
         'user' => [
-            'class' => '\Micro\web\helpers\User',
+            'class' => '\Micro\web\User',
             'depends' => 'session'
         ],
         // Roles
