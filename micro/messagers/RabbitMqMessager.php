@@ -16,9 +16,9 @@ namespace Micro\messagers;
  */
 class RabbitMqMessager
 {
-    /** @var AMQPConnection $connect connect to broker */
+    /** @var \AMQPConnection $connect connect to broker */
     protected $connect;
-    /** @var AMQPChannel $channel channel of connection */
+    /** @var \AMQPChannel $channel channel of connection */
     protected $channel;
 
 
@@ -30,10 +30,10 @@ class RabbitMqMessager
      * @result void
      */
     public function __construct($params = []) {
-        $this->connect = new AMQPConnection($params);
+        $this->connect = new \AMQPConnection($params);
         $this->connect->connect();
 
-        $this->channel = new AMQPChannel($this->connect);
+        $this->channel = new \AMQPChannel($this->connect);
     }
 
     /**
@@ -56,7 +56,7 @@ class RabbitMqMessager
      * @return void
      */
     public function send($message, $route, $chat) {
-        $exchange = new AMQPExchange($this->channel);
+        $exchange = new \AMQPExchange($this->channel);
         $exchange->setName($chat);
         $exchange->publish($message, $route);
     }
@@ -68,10 +68,10 @@ class RabbitMqMessager
      * @param string $chat name chatroom
      * @param string $route name route
      * @param string $nameReader name queue
-     * @return AMQPEnvelope|bool
+     * @return \AMQPEnvelope|bool
      */
     public function read($chat, $route, $nameReader='random') {
-        $queue = new AMQPQueue($this->channel);
+        $queue = new \AMQPQueue($this->channel);
         $queue->setName($nameReader);
         $queue->declare();
         $queue->bind($chat, $route);
@@ -94,7 +94,7 @@ class RabbitMqMessager
      * @return array
      */
     public function readAll($chat, $route, $nameReader) {
-        $queue = new AMQPQueue($this->channel);
+        $queue = new \AMQPQueue($this->channel);
         $queue->setName($nameReader);
         $queue->declare();
         $queue->bind($chat, $route);
