@@ -1,6 +1,6 @@
 <?php /** MicroMail */
 
-namespace Micro\web\helpers;
+namespace Micro\wrappers;
 
 /**
  * Mail class file.
@@ -10,7 +10,7 @@ namespace Micro\web\helpers;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
- * @subpackage web\helpers
+ * @subpackage wrappers
  * @version 1.0
  * @since 1.0
  */

@@ -1,6 +1,6 @@
 <?php /** MicroFTP */
 
-namespace Micro\web\helpers;
+namespace Micro\wrappers;
 
 /**
  * Simple FTP Class
@@ -9,7 +9,7 @@ namespace Micro\web\helpers;
  * @link shayanderson.com
  * @license http://www.gnu.org/licenses/gpl.html GPL License
  * @package micro
- * @subpackage web\helpers
+ * @subpackage wrappers
  * @version 1.0
  */
 final class Ftp

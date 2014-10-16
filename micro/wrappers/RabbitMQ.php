@@ -1,20 +1,20 @@
-<?php /** MicroRabbitMqMessenger */
+<?php /** MicroRabbitMQ */
 
-namespace Micro\messagers;
+namespace Micro\wrappers;
 
 /**
- * RabbitMQ Messenger class file.
+ * RabbitMQ class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
- * @subpackage messagers
+ * @subpackage wrappers
  * @version 1.0
  * @since 1.0
  */
-class RabbitMqMessager
+class RabbitMQ
 {
     /** @var \AMQPConnection $connect connect to broker */
     protected $connect;

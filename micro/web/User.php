@@ -1,6 +1,6 @@
 <?php /** MicroUser */
 
-namespace Micro\web\helpers;
+namespace Micro\web;
 
 use Micro\base\Registry;
 

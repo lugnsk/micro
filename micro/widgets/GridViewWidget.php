@@ -5,7 +5,7 @@ namespace Micro\widgets;
 use Micro\base\Registry;
 use Micro\base\Widget;
 use Micro\db\DbConnection;
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 
 /**
  * GridViewWidget class file.

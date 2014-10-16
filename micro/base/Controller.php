@@ -3,7 +3,7 @@
 namespace Micro\base;
 
 use \Micro\Micro;
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 use \Micro\web\Language;
 
 /**

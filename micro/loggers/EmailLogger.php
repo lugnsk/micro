@@ -2,7 +2,7 @@
 
 namespace Micro\loggers;
 
-use Micro\web\helpers\Mail;
+use Micro\wrappers\Mail;
 
 /**
  * Email logger class file.

@@ -1,5 +1,5 @@
 <?php
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 
 /** @var \App\modules\Blog\models\Blog $model */
 ?>

@@ -1,5 +1,5 @@
 <?php
-use \Micro\web\helpers\Html;
+use \Micro\wrappers\Html;
 use \Micro\Micro;
 
 /** @var string $content */

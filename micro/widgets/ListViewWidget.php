@@ -6,7 +6,7 @@ use Micro\base\Exception;
 use Micro\base\Widget;
 use Micro\db\Query;
 use Micro\Micro;
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 
 /**
  * ListViewWidget class file.

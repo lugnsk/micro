@@ -1,6 +1,6 @@
 <?php /** MicroFlashMessage */
 
-namespace Micro\web\helpers;
+namespace Micro\web;
 
 use Micro\base\Registry;
 use Micro\base\Exception;

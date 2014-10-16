@@ -1,1 +1,1 @@
-<?= \Micro\web\helpers\Html::heading(1, 'Hello, world!') ?>
+<?= \Micro\wrappers\Html::heading(1, 'Hello, world!') ?>

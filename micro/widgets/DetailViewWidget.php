@@ -7,7 +7,7 @@ use Micro\base\Registry;
 use Micro\base\Widget;
 use Micro\db\Model;
 use Micro\db\Query;
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 
 /**
  * DetailViewWidget class file.

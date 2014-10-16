@@ -1,6 +1,6 @@
 <?php
 
-use \Micro\web\helpers\Html;
+use \Micro\wrappers\Html;
 
 /** @var App\controllers\RegisterController $this */
 /** @var App\models\User $model */
@@ -18,6 +18,6 @@ echo $form->textFieldRow($model, 'email');
 echo $form->textFieldRow($model, 'login');
 echo $form->passwordFieldRow($model, 'pass');
 echo $form->textFieldRow($model, 'fio');
-echo \Micro\web\helpers\Html::submitButton('Зарегистрироваться');
+echo Html::submitButton('Зарегистрироваться');
 
 $this->endWidget('\Micro\widgets\FormWidget');

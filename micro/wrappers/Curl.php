@@ -1,6 +1,6 @@
 <?php /** MicroCurl */
 
-namespace Micro\web\helpers;
+namespace Micro\wrappers;
 
 use Micro\base\Exception;
 
@@ -12,7 +12,7 @@ use Micro\base\Exception;
  * @copyright Copyright &copy; 2013 php-mod
  * @license https://github.com/php-mod/curl/blob/master/LICENSE
  * @package micro
- * @subpackage web\helpers
+ * @subpackage wrappers
  * @version 1.1.5
  * @since 1.0
  */

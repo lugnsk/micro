@@ -2,7 +2,7 @@
 
 namespace Micro\web;
 
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 use \Micro\db\Model;
 use \Micro\widgets\FormWidget;
 

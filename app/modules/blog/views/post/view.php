@@ -1,6 +1,6 @@
 <?php
 
-use \Micro\web\helpers\Html;
+use \Micro\wrappers\Html;
 
 /** @var \App\modules\blog\models\Blog $model */
 

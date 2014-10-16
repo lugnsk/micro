@@ -5,7 +5,7 @@ namespace Micro;
 use Micro\base\Exception;
 use Micro\base\Autoload;
 use Micro\base\Registry;
-use Micro\web\helpers\Html;
+use Micro\wrappers\Html;
 
 /**
  * Micro class file.
