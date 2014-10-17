@@ -16,14 +16,23 @@ class MongoDbConnection {
     public $conn;
     /** @var string $dbName Database name */
     private $dbName;
+    /** @var array $collection lazy load collections */
+    protected $collections=[];
 
     /**
      * @access protected
      * @param string $collectionName collection name
+     * @param boolean $force is a force load
      * @return \MongoCollection
      */
-    protected function getCollection($collectionName){
-        return $this->conn->selectCollection($this->dbName, $collectionName);
+    protected function getCollection($collectionName, $force=false){
+        if ($force) {
+            return $this->conn->selectCollection($this->dbName, $collectionName);
+        }
+        if (!isset($this->collections[$collectionName])) {
+            $this->collections[$collectionName] = $this->conn->selectCollection($this->dbName, $collectionName);
+        }
+        return $this->collections[$collectionName];
     }
 
     /**
