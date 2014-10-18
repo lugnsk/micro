@@ -36,5 +36,5 @@ if (!$blogs) {
             <?php endif; ?>
         <?php endfor; ?>
     </p>
-    <p><?= $lang['hello']; ?></p>
+    <p><?= $lang->hello; ?></p>
 <?php } ?>

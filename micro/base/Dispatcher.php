@@ -18,17 +18,21 @@ class Dispatcher
     /** @var array $listeners listeners objects on events */
     protected $listeners = [];
 
-
     /**
      * Add listener on event
      *
      * @access public
      * @param string $listener listener name
      * @param array $event ['Object', 'method']
+     * @param int|null $prior priority
      * @return void
      */
-    public function addListener($listener, $event=[]) {
-        $this->listeners[$listener][] = $event;
+    public function addListener($listener, $event=[], $prior=null) {
+        if (!$prior) {
+            $this->listeners[$listener][] = $event;
+        } else {
+            array_splice($this->listeners, $prior, 0, $event);
+        }
     }
 
     /**
