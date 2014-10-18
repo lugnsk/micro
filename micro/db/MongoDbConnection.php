@@ -20,6 +20,8 @@ class MongoDbConnection {
     protected $collections=[];
 
     /**
+     * Get collection
+     *
      * @access protected
      * @param string $collectionName collection name
      * @param boolean $force is a force load
@@ -71,6 +73,100 @@ class MongoDbConnection {
         $this->conn = null;
     }
     /**
+     * Aggregate
+     *
+     * @access public
+     * @param string $collectionName collection name
+     * @param array $params params
+     * @param array $options options
+     * @return array
+     */
+    public function aggregate($collectionName, array $params=[], array $options=[]) {
+        return $this->getCollection($collectionName)->aggregate($params, $options);
+    }
+    /**
+     * Add indexes into collection
+     *
+     * @access public
+     * @param string $collectionName collection name
+     * @param array $keys indexes
+     * @param array $options options
+     * @return bool
+     */
+    public function addIndexes($collectionName, array $keys=[], array $options=[]) {
+        if ($keys) {
+            foreach ($keys as $col => $val){
+                if($val == -1 || $val === FALSE || strtolower($val) == 'desc'){
+                    $keys[$col] = -1;
+                }else{
+                    $keys[$col] = 1;
+                }
+            }
+            return $this->getCollection($collectionName)->ensureIndex($keys, $options);
+        }
+        return FALSE;
+    }
+    /**
+     * List indexes into collection
+     *
+     * @access public
+     * @param string $collectionName collection name
+     * @return array
+     */
+    public function listIndexes($collectionName) {
+        return $this->getCollection($collectionName)->getIndexInfo();
+    }
+    /**
+     * Remove index(es) from collection
+     *
+     * @access public
+     * @param string $collectionName collection name
+     * @param array $keys indexes
+     * @return array
+     */
+    public function removeIndexes($collectionName, $keys=[]) {
+        if ($keys){
+            return $this->getCollection($collectionName)->deleteIndex($keys);
+        }
+        return $this->getCollection($collectionName)->deleteIndexes();
+    }
+    /**
+     * Create reference into collection
+     *
+     * @access public
+     * @param string $collectionName collection name
+     * @param string $idObject id object
+     * @return array
+     */
+    public function createReference($collectionName, $idObject) {
+        return \MongoDBRef::create($collectionName, $idObject, $this->dbName);
+    }
+    /**
+     * Get reference from collection
+     *
+     * @access public
+     * @param \MongoDB $dbObject document object
+     * @param array $referenceArray reference array
+     * @return array|null
+     */
+    public function getReference(\MongoDB $dbObject, array $referenceArray) {
+        return \MongoDBRef::get($dbObject, $referenceArray);
+    }
+    /**
+     * Send raw query
+     *
+     * @access public
+     * @param string $collectionName collection name
+     * @param bool $single return single document?
+     * @param array $params params
+     * @param array $fields fields
+     * @return array|\MongoCursor|null
+     */
+    public function rawQuery($collectionName, $single=false, $params=[],$fields=[])  {
+        $collect = $this->getCollection($collectionName);
+        return $single ? $collect->findOne($params,$fields) : $collect->find($params,$fields);
+    }
+    /**
      * List databases into MongoDB server
      *
      * @access public
@@ -88,6 +184,10 @@ class MongoDbConnection {
      * @return array
      */
     public function deleteTable($collectionName) {
+        if (isset($this->collections[$collectionName])) {
+            unset($this->collections[$collectionName]);
+        }
+
         return $this->getCollection($collectionName)->drop();
     }
     /**
