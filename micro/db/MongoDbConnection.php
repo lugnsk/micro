@@ -162,12 +162,12 @@ class MongoDbConnection {
      *
      * @access public
      * @param string $collectionName collection name
-     * @param bool $single return single document?
      * @param array $params params
      * @param array $fields fields
+     * @param bool $single return single document?
      * @return array|\MongoCursor|null
      */
-    public function rawQuery($collectionName, $single=false, $params=[],$fields=[])  {
+    public function rawQuery($collectionName, $params=[],$fields=[], $single=false)  {
         $collect = $this->getCollection($collectionName);
         return $single ? $collect->findOne($params,$fields) : $collect->find($params,$fields);
     }
