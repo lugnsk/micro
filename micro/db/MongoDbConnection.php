@@ -1,16 +1,21 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: casper
- * Date: 17.10.14
- * Time: 9:14
- */
+<?php /** MongoDbConnectionMicro */
 
 namespace Micro\db;
 
-
 use Micro\base\Exception;
 
+/**
+ * MongoDB Connection class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage db
+ * @version 1.0
+ * @since 1.0
+ */
 class MongoDbConnection {
     /** @var \MongoClient $conn Connection to MongoDB */
     public $conn;
