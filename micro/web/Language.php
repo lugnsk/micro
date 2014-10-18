@@ -4,6 +4,7 @@ namespace Micro\web;
 
 use \Micro\base\Exception;
 use \Micro\base\Registry;
+use Micro\Micro;
 
 /**
  * Language getter language tags from *.ini files
@@ -28,17 +29,20 @@ class Language
      * Constructor language
      *
      * @access public
-     * @param string $viewname  name of view
+     * @param string $viewNameFile  path to view
      * @result void
-     * @throws Exception
      */
-    public function __construct($viewname)
+    public function __construct($viewNameFile)
     {
-        $lang = (Registry::get('lang')) ? Registry::get('lang') : $this->defaultLang;
-        if (!file_exists($viewname . $lang . '.ini')) {
-            throw new Exception('Language file ' . $viewname . $lang . '.ini not exists.');
+        $viewName = substr($viewNameFile, 0, -3);
+        $config = Micro::getInstance()->config;
+        $lang = (isset($config['lang'])) ? $config['lang'] : $this->defaultLang;
+
+        if (!file_exists($viewName . $lang . '.ini')) {
+            return;
         }
-        $this->language = parse_ini_file($viewname . 'ini', true);
+
+        $this->language = parse_ini_file($viewName . $lang . '.ini', true);
     }
 
     /**
@@ -46,10 +50,15 @@ class Language
      *
      * @access public
      * @param string $name element name
+     * @throws Exception
      * @return mixed
      */
     public function __get($name)
     {
-        return $this->language[$name];
+        if (isset($this->language[$name])) {
+            return $this->language[$name];
+        } else {
+            throw new Exception($name . ' not defined into lang file');
+        }
     }
 }

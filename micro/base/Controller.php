@@ -194,9 +194,7 @@ abstract class Controller
      */
     protected function renderFile($fileName, $data = [])
     {
-        $fileNameLang = substr($fileName, 0, -3);
-        $lang = (file_exists($fileNameLang)) ? new Language($fileNameLang) : null;
-        unset($fileNameLang);
+        $lang = new Language($fileName);
 
         extract($data, EXTR_PREFIX_SAME, 'data');
         ob_start();
