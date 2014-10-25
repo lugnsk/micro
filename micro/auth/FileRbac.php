@@ -26,7 +26,7 @@ class FileRbac extends Rbac
      * @param array $params configuration array
      * @result void
      */
-    public function __construct($params=[])
+    public function __construct($params = [])
     {
         parent::__construct();
 
@@ -46,8 +46,8 @@ class FileRbac extends Rbac
     public function assign($userId, $name)
     {
         if ($this->searchRoleRecursive($this->roles, $name)) {
-            if (!$this->conn->exists('rbac_user',['user'=>$userId, 'role'=>$name])) {
-                return $this->conn->insert('rbac_user', ['role'=>$name, 'user'=>$userId]);
+            if (!$this->conn->exists('rbac_user', ['user' => $userId, 'role' => $name])) {
+                return $this->conn->insert('rbac_user', ['role' => $name, 'user' => $userId]);
             }
         }
         return false;

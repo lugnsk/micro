@@ -41,7 +41,7 @@ abstract class LogInterface
             }
         }
         if (!$levels) {
-            throw new Exception('Logger '.get_class($this).' empty levels.');
+            throw new Exception('Logger ' . get_class($this) . ' empty levels.');
         }
     }
 
@@ -54,7 +54,7 @@ abstract class LogInterface
      */
     public function isSupportedLevel($level)
     {
-        return (array_search($level, $this->supportedLevels)===FALSE) ? false : true;
+        return (array_search($level, $this->supportedLevels) === false) ? false : true;
     }
 
     /**

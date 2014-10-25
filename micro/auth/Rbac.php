@@ -18,10 +18,11 @@ use Micro\db\Query;
  * @version 1.0
  * @since 1.0
  */
-abstract class Rbac {
-    const TYPE_ROLE       = 0;
+abstract class Rbac
+{
+    const TYPE_ROLE = 0;
     const TYPE_PERMISSION = 1;
-    const TYPE_OPERATION  = 2;
+    const TYPE_OPERATION = 2;
 
     /** @var DbConnection $conn connection DB */
     protected $conn;
@@ -83,12 +84,12 @@ abstract class Rbac {
      * @param array $data action params
      * @return boolean
      */
-    public function check($userId, $action, $data=[])
+    public function check($userId, $action, $data = [])
     {
         $tree = $this->tree($this->rawRoles());
 
         foreach ($this->assigned($userId) AS $role) {
-            if ( $actionRole = $this->searchRoleRecursive($tree, $role['name']) ) {
+            if ($actionRole = $this->searchRoleRecursive($tree, $role['name'])) {
                 if ($trustRole = $this->searchRoleRecursive($actionRole, $action)) {
                     return $this->execute($trustRole[$action], $data);
                 }
@@ -108,7 +109,7 @@ abstract class Rbac {
     public function tree(&$elements, $parentId = 0)
     {
         $branch = [];
-        foreach ($elements AS $key=>$element) {
+        foreach ($elements AS $key => $element) {
             if ($element['based'] == $parentId) {
                 $children = $this->tree($elements, $element['name']);
                 if ($children) {
@@ -129,7 +130,8 @@ abstract class Rbac {
      * @param array $data action params
      * @return bool
      */
-    public function execute($role, $data) {
+    public function execute($role, $data)
+    {
         if (!$role['data']) {
             return true;
         } else {
@@ -151,7 +153,7 @@ abstract class Rbac {
         $query->distinct = true;
         $query->select = '`role` AS `name`';
         $query->table = '`rbac_user`';
-        $query->addWhere('`user`='.$userId);
+        $query->addWhere('`user`=' . $userId);
         $query->single = false;
 
         return $query->run(\PDO::FETCH_ASSOC);
@@ -167,7 +169,7 @@ abstract class Rbac {
      */
     public function revoke($userId, $name)
     {
-        return $this->conn->delete('rbac_user', 'name=:name AND user=:user', ['name'=>$name, 'user'=>$userId]);
+        return $this->conn->delete('rbac_user', 'name=:name AND user=:user', ['name' => $name, 'user' => $userId]);
     }
 
     /**
@@ -181,8 +183,8 @@ abstract class Rbac {
     protected function searchRoleRecursive($roles, $finder)
     {
         $result = false;
-        foreach ($roles AS $id=>$role) {
-            if ($id==$finder) {
+        foreach ($roles AS $id => $role) {
+            if ($id == $finder) {
                 $result = [$id => $role];
                 break;
             } else {

@@ -4,19 +4,15 @@ return [
     // Directories
     'MicroDir' => __DIR__ . '/../micro',
     'AppDir' => __DIR__,
-
     // Sitename
     'company' => 'Micro',
     'slogan' => 'simply hmvc php framework',
-
     // Print run time
     'timer' => true,
     // Language
     'lang' => 'en',
-
-    'errorController'=>'\App\controllers\DefaultController',
-    'errorAction'=>'error',
-
+    'errorController' => '\App\controllers\DefaultController',
+    'errorAction' => 'error',
     // Setup components
     'components' => [
         // Request manager
@@ -26,7 +22,6 @@ return [
                 '/login' => '/default/login',
                 '/logout' => '/default/logout',
                 '/login/<num:\d+>/<type:\w+>/<arr:\d{3}>' => '/default/login',
-
                 '/blog/post/index/<page:\d+>' => '/blog/post',
                 '/blog/post/<id:\d+>' => '/blog/post/view',
             ],
@@ -62,7 +57,7 @@ return [
             'connectionString' => 'mysql:host=localhost;dbname=micro',
             'username' => 'micro',
             'password' => 'micro',
-            'options'=>[PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES \'UTF8\'']
+            'options' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'']
         ],
         // User
         'user' => [

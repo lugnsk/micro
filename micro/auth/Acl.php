@@ -17,7 +17,8 @@ use \Micro\db\DbConnection;
  * @version 1.0
  * @since 1.0
  */
-abstract class Acl {
+abstract class Acl
+{
     /** @var string $groupTable name of group table */
     protected $groupTable;
     /** @var DbConnection $conn connection to DB */

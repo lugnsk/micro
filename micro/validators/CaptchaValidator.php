@@ -21,7 +21,7 @@ use Micro\db\Model;
 class CaptchaValidator extends Validator
 {
     /** @var string $captcha compiled captcha */
-    protected $captcha='';
+    protected $captcha = '';
 
 
     /**
@@ -31,7 +31,7 @@ class CaptchaValidator extends Validator
      * @param array $rule validation rule
      * @result void
      */
-    public function __construct($rule=[])
+    public function __construct($rule = [])
     {
         parent::__construct($rule);
 

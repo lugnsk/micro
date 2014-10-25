@@ -13,16 +13,18 @@ class User extends Model
             ['email', 'email']
         ];
     }
+
     public function attributeLabels()
     {
         return [
-            'email'=>'E-mail',
-            'login'=>'Логин',
-            'pass'=>'Пароль',
-            'fio'=>'ФИО',
+            'email' => 'E-mail',
+            'login' => 'Логин',
+            'pass' => 'Пароль',
+            'fio' => 'ФИО',
 
         ];
     }
+
     static public function tableName()
     {
         return 'users';

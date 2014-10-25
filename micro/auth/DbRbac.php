@@ -49,8 +49,8 @@ class DbRbac extends Rbac
      */
     public function assign($userId, $name)
     {
-        if ($this->conn->exists('rbac_role', ['name'=>$name]) AND $this->conn->exists('user', ['id'=>$userId])) {
-            return $this->conn->insert('rbac_user', ['role'=>$name, 'user'=>$userId]);
+        if ($this->conn->exists('rbac_role', ['name' => $name]) AND $this->conn->exists('user', ['id' => $userId])) {
+            return $this->conn->insert('rbac_user', ['role' => $name, 'user' => $userId]);
         }
         return false;
     }
@@ -80,9 +80,9 @@ class DbRbac extends Rbac
      * @param array $data action params
      * @return boolean
      */
-    public function check($userId, $action, $data=[])
+    public function check($userId, $action, $data = [])
     {
-        if (!$this->conn->exists('rbac_role', ['name'=>$action])) {
+        if (!$this->conn->exists('rbac_role', ['name' => $action])) {
             return false;
         }
 
@@ -99,13 +99,13 @@ class DbRbac extends Rbac
      * @param string $data element params
      * @return bool
      */
-    public function create($name, $type = self::TYPE_ROLE, $based=null, $data=null)
+    public function create($name, $type = self::TYPE_ROLE, $based = null, $data = null)
     {
-        if ($this->conn->exists('rbac_role', ['name'=>$name])) {
+        if ($this->conn->exists('rbac_role', ['name' => $name])) {
             return false;
         }
 
-        if (!empty($based) AND !$this->conn->exists('rbac_role', ['name'=>$based])) {
+        if (!empty($based) AND !$this->conn->exists('rbac_role', ['name' => $based])) {
             return false;
         }
 
@@ -119,7 +119,7 @@ class DbRbac extends Rbac
                 break;
         }
 
-        return $this->conn->insert('rbac_role', ['name'=>$name, 'type'=>$type, 'based'=>$based, 'data'=>$data]);
+        return $this->conn->insert('rbac_role', ['name' => $name, 'type' => $type, 'based' => $based, 'data' => $data]);
     }
 
     /**
@@ -131,7 +131,7 @@ class DbRbac extends Rbac
      */
     public function delete($name)
     {
-        $tree = $this->searchRoleRecursive($this->tree($this->rawRoles()),$name);
+        $tree = $this->searchRoleRecursive($this->tree($this->rawRoles()), $name);
         if ($tree) {
             $this->recursiveDelete($tree, $name);
         }
@@ -144,10 +144,11 @@ class DbRbac extends Rbac
      * @param array $tree elements tree
      * @return void
      */
-    public function recursiveDelete(&$tree) {
-        foreach ($tree AS $key=>$element) {
-            $this->conn->delete('rbac_user', 'role=:name', [ 'name'=>$element['name'] ]);
-            $this->conn->delete('rbac_role', 'name=:name', [ 'name'=>$element['name'] ]);
+    public function recursiveDelete(&$tree)
+    {
+        foreach ($tree AS $key => $element) {
+            $this->conn->delete('rbac_user', 'role=:name', ['name' => $element['name']]);
+            $this->conn->delete('rbac_role', 'name=:name', ['name' => $element['name']]);
 
             if (isset($tree['childs'])) {
                 $this->recursiveDelete($element['childs']);

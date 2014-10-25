@@ -66,12 +66,12 @@ abstract class FormModel
 
         foreach ($this->rules() AS $rule) {
             $validator = new Validator($rule);
-            if (is_string($js = $validator->run($this,true))) {
-                $result .= ' '.$js;
+            if (is_string($js = $validator->run($this, true))) {
+                $result .= ' ' . $js;
             }
         }
 
-        return $result.'});';
+        return $result . '});';
     }
 
     /**

@@ -22,16 +22,16 @@ class File
      * @param string $dirName directory name
      * @return integer
      */
-    public static function dirSize($dirName) {
-        $totalSize=0;
+    public static function dirSize($dirName)
+    {
+        $totalSize = 0;
         if ($dirStream = @opendir($dirName)) {
             while (false !== ($fileName = readdir($dirStream))) {
-                if ($fileName!='.' && $fileName!='..')
-                {
-                    if (is_file($dirName."/".$fileName)) {
+                if ($fileName != '.' && $fileName != '..') {
+                    if (is_file($dirName . "/" . $fileName)) {
                         $totalSize += filesize($dirName . '/' . $fileName);
                     }
-                    if (is_dir($dirName."/".$fileName)) {
+                    if (is_dir($dirName . "/" . $fileName)) {
                         $totalSize += self::dirSize($dirName . '/' . $fileName);
                     }
                 }
@@ -48,19 +48,21 @@ class File
      * @param string $path path to remove
      * @return void
      */
-    public static function removeDir($path) {
+    public static function removeDir($path)
+    {
         if (is_file($path)) {
             @unlink($path);
         } else {
             foreach (scandir($path) as $dir) {
                 if ($dir != '.' AND $dir != '..') {
-                    self::removeDir($path.'/'.$dir);
+                    self::removeDir($path . '/' . $dir);
                 }
             }
             @unlink($path);
         }
         @rmdir($path);
     }
+
     /**
      * Recursive copy files
      *

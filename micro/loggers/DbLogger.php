@@ -32,12 +32,12 @@ class DbLogger extends LogInterface
      * @param array $params configuration params
      * @result void
      */
-    public function __construct($params=[])
+    public function __construct($params = [])
     {
         parent::__construct($params);
         $this->getConnect();
 
-        $this->tableName = (isset($params['table']) AND !empty($params['table'])) ? $params['table']: 'logs';
+        $this->tableName = (isset($params['table']) AND !empty($params['table'])) ? $params['table'] : 'logs';
 
         if (!$this->connect->tableExists($this->tableName)) {
             $this->connect->createTable(
@@ -76,9 +76,9 @@ class DbLogger extends LogInterface
     public function sendMessage($level, $message)
     {
         $this->connect->insert($this->tableName, [
-            'level'=>$level,
-            'message'=>$message,
-            'date_create'=>$_SERVER['REQUEST_TIME'],
+            'level' => $level,
+            'message' => $message,
+            'date_create' => $_SERVER['REQUEST_TIME'],
         ]);
     }
 }

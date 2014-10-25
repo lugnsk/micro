@@ -45,11 +45,11 @@ class ActionsGridColumn extends GridColumn
             $editLink . $this->params['pKey']
         );
 
-        $deleteLink = (isset($this->params['deleteLink']) ? $this->params['deleteLink'] : $this->params['link'].'/del/');
+        $deleteLink = (isset($this->params['deleteLink']) ? $this->params['deleteLink'] : $this->params['link'] . '/del/');
         $d = Html::href(
             isset($this->params['deleteText']) ? $this->params['deleteText'] : 'delete',
             $deleteLink . $this->params['pKey'],
-            ['onclick'=>'return confirm(\'Are you sure?\')']
+            ['onclick' => 'return confirm(\'Are you sure?\')']
         );
 
         return str_replace('{view}', $r, str_replace('{edit}', $w,

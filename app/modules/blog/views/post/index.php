@@ -18,15 +18,15 @@ echo Html::href('создать', '/blog/post/create');
 if (!$blogs) {
     ?><p>Ничего не найдено</p><?php
 } else {
-?>
+    ?>
     <?php foreach ($blogs AS $blog): ?>
-        <?= Html::heading(1, Html::link($blog->name, '/blog/post/'.$blog->id)) ?>
+        <?= Html::heading(1, Html::link($blog->name, '/blog/post/' . $blog->id)) ?>
         <p><?= $blog->content ?></p>
     <?php endforeach; ?>
     <p>
         <?php for ($page = 0; $page < $pages; $page++): ?>
             <?php if ($page != $currPage): ?>
-                <?= Html::openTag('a', ['href'=>'/blog/post/index/'.$page]) ?>
+                <?= Html::openTag('a', ['href' => '/blog/post/index/' . $page]) ?>
             <?php endif; ?>
 
             <?= $page + 1; ?>

@@ -26,7 +26,7 @@ class BooleanValidator extends Validator
      * @param array $rule validation rule
      * @result void
      */
-    public function __construct($rule=[])
+    public function __construct($rule = [])
     {
         parent::__construct($rule);
 
@@ -67,7 +67,7 @@ class BooleanValidator extends Validator
      */
     public function client($model)
     {
-        return 'if (this.value != '.$this->params['true'].' AND this.value != '.$this->params['false'].') {'.
+        return 'if (this.value != ' . $this->params['true'] . ' AND this.value != ' . $this->params['false'] . ') {' .
         ' e.preventDefault(); this.focus(); alert(\'Value not compatible\'); }';
     }
 }

@@ -27,7 +27,8 @@ class Dispatcher
      * @param int|null $prior priority
      * @return void
      */
-    public function addListener($listener, $event=[], $prior=null) {
+    public function addListener($listener, $event = [], $prior = null)
+    {
         if (!$prior) {
             $this->listeners[$listener][] = $event;
         } else {
@@ -42,9 +43,10 @@ class Dispatcher
      * @param string $listener listener name
      * @return void
      */
-    public function signal($listener) {
+    public function signal($listener)
+    {
         if ($this->listeners) {
-            foreach ( $this->listeners AS $key => $obj ) {
+            foreach ($this->listeners AS $key => $obj) {
                 if ($key == $listener) {
                     call_user_func($obj);
                 }

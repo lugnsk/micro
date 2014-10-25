@@ -26,9 +26,9 @@ class DetailViewWidget extends Widget
     /** @var Model $model Model for details */
     public $model = null;
     /** @var string $table Table for details */
-    public $table='';
+    public $table = '';
     /** @var string $condition Condition for generate with table */
-    public $condition='';
+    public $condition = '';
     /** @var array $keys Keys for render */
     public $keys = [];
     /** @var array $attributes attributes for dl */
@@ -53,7 +53,7 @@ class DetailViewWidget extends Widget
      * @param array $args arguments
      * @result void
      */
-    public function __construct($args=[])
+    public function __construct($args = [])
     {
         parent::__construct($args);
         $this->getConnect();
@@ -98,7 +98,7 @@ class DetailViewWidget extends Widget
         $fields = $this->conn->listFields($this->table);
 
         $fieldKeys = [];
-        foreach($fields AS $field) {
+        foreach ($fields AS $field) {
             $fieldKeys[] = $field['field'];
         }
 
@@ -118,17 +118,17 @@ class DetailViewWidget extends Widget
     public function run()
     {
         $result = Html::openTag('dl', $this->attributes);
-        foreach ($this->statement AS $key=>$value) {
+        foreach ($this->statement AS $key => $value) {
             if (in_array($key, $this->keys)) {
-                $result .= Html::openTag('dt',$this->attributesElement);
+                $result .= Html::openTag('dt', $this->attributesElement);
                 $result .= $this->getAttributeLabel($key);
                 $result .= Html::closeTag('dt');
-                $result .= Html::openTag('dd',$this->attributesValue);
+                $result .= Html::openTag('dd', $this->attributesValue);
                 $result .= $value;
                 $result .= Html::closeTag('dd');
             }
         }
-        echo $result , Html::closeTag('dl');
+        echo $result, Html::closeTag('dl');
     }
 
     /**

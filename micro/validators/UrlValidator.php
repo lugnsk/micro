@@ -33,7 +33,7 @@ class UrlValidator extends Validator
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
                 return false;
             }
-            if (filter_var($model->$element, FILTER_VALIDATE_URL) === FALSE) {
+            if (filter_var($model->$element, FILTER_VALIDATE_URL) === false) {
                 $this->errors[] = 'Parameter ' . $element . ' is not a valid URL address';
                 return false;
             }
@@ -50,7 +50,7 @@ class UrlValidator extends Validator
      */
     public function client($model)
     {
-        $js = 'if (/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.value'.
+        $js = 'if (/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.value' .
             ') != true) { e.preventDefault(); this.focus(); alert(\'Value is not a URL\'); }';
         return $js;
     }

@@ -76,7 +76,7 @@ class Request
 
             $gets = [];
             for ($i = 0; $i < $countUriBlocks; $i = $i + 2) {
-                if (!isset($uriBlocks[$i+1])) {
+                if (!isset($uriBlocks[$i + 1])) {
                     return;
                 }
                 $gets[$uriBlocks[$i]] = $uriBlocks[$i + 1];
@@ -107,7 +107,9 @@ class Request
             if (file_exists($path . $this->extensions . '/extensions/' . $block)) {
                 $this->extensions .= '/extensions/' . $block;
                 unset($uriBlocks[$i]);
-            } else break;
+            } else {
+                break;
+            }
         }
         $this->extensions = strtr($this->extensions, '/', '\\');
     }
@@ -132,7 +134,9 @@ class Request
             if (file_exists($path . $this->modules . '/modules/' . $block)) {
                 $this->modules .= '/modules/' . $block;
                 unset($uriBlocks[$i]);
-            } else break;
+            } else {
+                break;
+            }
         }
         $this->modules = strtr($this->modules, '/', '\\');
     }

@@ -36,7 +36,8 @@ class DbConnection
             if (!isset($config['options'])) {
                 $config['options'] = null;
             }
-            $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password'], $config['options']);
+            $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password'],
+                $config['options']);
         } catch (Exception $e) {
             die('Connect to DB failed: ' . $e->getMessage());
         }
@@ -61,7 +62,7 @@ class DbConnection
      * @param array $params params for query
      * @return \PDOStatement
      */
-    public function rawQuery($query='',$params=[])
+    public function rawQuery($query = '', $params = [])
     {
         $st = $this->conn->query($query);
         $st->execute($params);
@@ -149,7 +150,8 @@ class DbConnection
      */
     public function createTable($name, $elements = [], $params = '')
     {
-        return $this->conn->exec('CREATE TABLE IF NOT EXISTS ' . $name . ' (' . implode(',', $elements) . ') ' . $params . ';');
+        return $this->conn->exec('CREATE TABLE IF NOT EXISTS ' . $name . ' (' . implode(',',
+                $elements) . ') ' . $params . ';');
     }
 
     /**
@@ -218,9 +220,11 @@ class DbConnection
      */
     public function switchDatabase($dbName)
     {
-        if ($this->conn->exec('USE ' . $dbName . ';') != FALSE) {
+        if ($this->conn->exec('USE ' . $dbName . ';') != false) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -243,9 +247,10 @@ class DbConnection
      * @param array $line lines to added
      * @return bool
      */
-    public function insert($table, $line=[]) {
-        $fields      = implode(', ', array_keys($line));
-        $values = '"' . implode('", "', array_values($line)).'"';
+    public function insert($table, $line = [])
+    {
+        $fields = implode(', ', array_keys($line));
+        $values = '"' . implode('", "', array_values($line)) . '"';
 
         return $this->conn->query(
             'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
@@ -261,13 +266,13 @@ class DbConnection
      * @param string $conditions conditions for search
      * @return bool
      */
-    public function update($table, $elements=[], $conditions = '') {
+    public function update($table, $elements = [], $conditions = '')
+    {
         $valStr = [];
-        foreach (array_keys($elements) as $key)
-        {
+        foreach (array_keys($elements) as $key) {
             $valStr[] = '`' . $key . '`=:' . $key;
         }
-        if ( ! empty($conditions) ) {
+        if (!empty($conditions)) {
             $conditions = 'WHERE ' . $conditions;
         }
 
@@ -285,7 +290,8 @@ class DbConnection
      * @param array $ph params array
      * @return bool
      */
-    public function delete($table, $conditions, $ph=[]) {
+    public function delete($table, $conditions, $ph = [])
+    {
         return $this->conn->prepare(
             'DELETE FROM ' . $table . ' WHERE ' . $conditions
         )->execute($ph);
@@ -299,15 +305,15 @@ class DbConnection
      * @param array $params params array
      * @return bool
      */
-    public function exists($table, $params=[])
+    public function exists($table, $params = [])
     {
         $keys = [];
-        foreach ($params AS $key=>$val) {
-            $keys[] = '`'.$table.'`.`'.$key.'`="'.$val.'"';
+        foreach ($params AS $key => $val) {
+            $keys[] = '`' . $table . '`.`' . $key . '`="' . $val . '"';
         }
 
         $sth = $this->conn->query(
-            'SELECT * FROM '.$table.' WHERE '.implode(' AND ', $keys).' LIMIT 1;'
+            'SELECT * FROM ' . $table . ' WHERE ' . implode(' AND ', $keys) . ' LIMIT 1;'
         );
         $sth->execute();
 
@@ -321,9 +327,9 @@ class DbConnection
      * @param string $subQuery subject query
      * @return bool|integer
      */
-    public function count($subQuery='')
+    public function count($subQuery = '')
     {
-        $sth = $this->conn->query('SELECT COUNT(*) FROM ('.$subQuery.') AS m;');
+        $sth = $this->conn->query('SELECT COUNT(*) FROM (' . $subQuery . ') AS m;');
         if ($sth->execute()) {
             return $sth->fetchColumn();
         }

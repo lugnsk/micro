@@ -8,10 +8,10 @@ use \Micro\wrappers\Html;
 echo Html::heading(2, 'Регистрация');
 
 /** @var \Micro\web\Form $form */
-$form = $this->beginWidget('\Micro\widgets\FormWidget',[
-    'method'=>'post',
-    'action'=>'/register/post',
-    'client'=>$model->getClient(),
+$form = $this->beginWidget('\Micro\widgets\FormWidget', [
+    'method' => 'post',
+    'action' => '/register/post',
+    'client' => $model->getClient(),
 ]);
 
 echo $form->textFieldRow($model, 'email');

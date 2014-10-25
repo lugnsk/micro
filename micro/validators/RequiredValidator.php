@@ -52,6 +52,6 @@ class RequiredValidator extends Validator
      */
     public function client($model)
     {
-            return 'if (!this.value) { e.preventDefault(); this.focus(); alert(\'Required element!\'); }';
+        return 'if (!this.value) { e.preventDefault(); this.focus(); alert(\'Required element!\'); }';
     }
 }

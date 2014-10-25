@@ -21,7 +21,7 @@ class Language
 {
     /** @var array $language language array */
     private $language = [];
-    /** @var string $defaultLang default language  */
+    /** @var string $defaultLang default language */
     private $defaultLang = 'en';
 
 
@@ -29,7 +29,7 @@ class Language
      * Constructor language
      *
      * @access public
-     * @param string $viewNameFile  path to view
+     * @param string $viewNameFile path to view
      * @result void
      */
     public function __construct($viewNameFile)

@@ -41,7 +41,7 @@ class Router
      * @param string $method current Request method
      * @return string
      */
-    public function parse($uri, $method='GET')
+    public function parse($uri, $method = 'GET')
     {
         // default path
         if ($uri == '/' OR $uri == '') {
@@ -85,11 +85,17 @@ class Router
     private function validatedRule($uri, $pattern, $replacement)
     {
         $uriBlocks = explode('/', $uri);
-        if ($uriBlocks[0] == '') array_shift($uriBlocks);
+        if ($uriBlocks[0] == '') {
+            array_shift($uriBlocks);
+        }
         $patBlocks = explode('/', $pattern);
-        if ($patBlocks[0] == '') array_shift($patBlocks);
+        if ($patBlocks[0] == '') {
+            array_shift($patBlocks);
+        }
         $repBlocks = explode('/', $replacement);
-        if ($repBlocks[0] == '') array_shift($repBlocks);
+        if ($repBlocks[0] == '') {
+            array_shift($repBlocks);
+        }
 
         $attributes = [];
         $result = null;
@@ -131,12 +137,14 @@ class Router
 
                 if (preg_match('/' . substr($patBlocks[$i], $cut + 1, -1) . '/', $uriBlocks[$i])) {
                     $attr[substr($patBlocks[$i], 1, $cut - 1)] = $uriBlocks[$i];
-                } else return false;
+                } else {
+                    return false;
+                }
 
             } elseif ($uriBlocks[$i] != $patBlocks[$i]) {
                 return false;
             } else {
-                $attr[$uriBlocks[$i]]= $patBlocks[$i];
+                $attr[$uriBlocks[$i]] = $patBlocks[$i];
             }
         }
         return $attr;
@@ -155,12 +163,12 @@ class Router
         $result = null;
         foreach ($repBlocks AS $value) {
             if ($value{0} != '<') {
-                $result .= '/'.$value;
+                $result .= '/' . $value;
                 unset($attr[$value]);
             } else {
                 $element = substr($value, 1, -1);
                 if (isset($attr[$element])) {
-                    $result .= '/'.$attr[$element];
+                    $result .= '/' . $attr[$element];
                     unset($attr[$element]);
                 } else {
                     return false;

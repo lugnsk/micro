@@ -65,7 +65,7 @@ class Session
      */
     public function __get($name)
     {
-        return (isset($_SESSION[$name])) ? $_SESSION[$name] : NULL;
+        return (isset($_SESSION[$name])) ? $_SESSION[$name] : null;
     }
 
     /**

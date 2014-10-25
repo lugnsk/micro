@@ -29,7 +29,7 @@ class Form
     private function getField($model, $property)
     {
         $cl = get_class($model);
-        $smallName = substr($cl, strrpos($cl, '\\')+1);
+        $smallName = substr($cl, strrpos($cl, '\\') + 1);
         return [
             'id' => $smallName . '_' . $property,
             'name' => $smallName . '[' . $property . ']',
@@ -328,9 +328,9 @@ class Form
         $options['id'] = $element['id'];
 
         return Html::openTag('div', ['class' => 'row']) .
-            Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-            $this->numberField($model, $property, $options) .
-            Html::closeTag('div');
+        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $this->numberField($model, $property, $options) .
+        Html::closeTag('div');
     }
 
     /**
@@ -347,9 +347,9 @@ class Form
     {
         $element = $this->getField($model, $property);
         return Html::openTag('div', ['class' => 'row']) .
-            Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-            $this->passwordField($model, $property, $options) .
-            Html::closeTag('div');
+        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $this->passwordField($model, $property, $options) .
+        Html::closeTag('div');
     }
 
     /**

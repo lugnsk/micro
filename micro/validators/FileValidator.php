@@ -36,7 +36,7 @@ class FileValidator extends Validator
                 return false;
             }
             foreach ($files->files AS $fContext) {
-                if (isset($this->params['types']) AND (strpos($this->params['types'], $fContext['type'])===FALSE)) {
+                if (isset($this->params['types']) AND (strpos($this->params['types'], $fContext['type']) === false)) {
                     $this->errors[] = 'File ' . $fContext['name'] . ' not allowed type';
                     return false;
                 }

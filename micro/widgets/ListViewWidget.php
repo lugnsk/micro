@@ -23,11 +23,11 @@ use Micro\wrappers\Html;
 class ListViewWidget extends Widget
 {
     /** @var string $query query to database */
-    public $query=null;
+    public $query = null;
     /** @var \Micro\base\Controller $controller caller controller */
-    public $controller=null;
+    public $controller = null;
     /** @var string $view Name of view file */
-    public $view=null;
+    public $view = null;
     /** @var int $limit Limit current rows */
     public $limit = 10;
     /** @var int $page Current page on table */
@@ -44,7 +44,7 @@ class ListViewWidget extends Widget
     /** @var array $rows Rows table */
     protected $rows = [];
     /** @var string $pathView Generate path to view file */
-    protected $pathView='';
+    protected $pathView = '';
 
 
     /**
@@ -65,13 +65,13 @@ class ListViewWidget extends Widget
             $this->limit = 10;
         }
 
-        $cls = str_replace('\\','/', get_class($this->controller));
+        $cls = str_replace('\\', '/', get_class($this->controller));
         $this->pathView = str_replace('App', Micro::getInstance()->config['AppDir'], dirname($cls));
-        $this->pathView .= '/../views/'.strtolower(str_replace('Controller','',basename($cls)));
-        $this->pathView .= '/'.$this->view.'.php';
+        $this->pathView .= '/../views/' . strtolower(str_replace('Controller', '', basename($cls)));
+        $this->pathView .= '/' . $this->view . '.php';
 
         if (!file_exists($this->pathView)) {
-            throw new Exception('View path not valid: '.$this->pathView);
+            throw new Exception('View path not valid: ' . $this->pathView);
         }
 
         $this->rows = $this->query->run(\PDO::FETCH_ASSOC);
@@ -93,7 +93,7 @@ class ListViewWidget extends Widget
         $st = $i = $this->page * $this->limit;
 
         echo Html::openTag('ul', $this->attributes);
-        for ( ; $i < ($st + $this->limit); $i++) {
+        for (; $i < ($st + $this->limit); $i++) {
             if (isset($this->rows[$i])) {
                 echo Html::openTag('li', $this->attributesElement);
 

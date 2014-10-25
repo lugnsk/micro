@@ -1,6 +1,7 @@
 <?php /** MicroCommand */
 
 namespace Micro\base;
+
 /**
  * Command class file.
  *

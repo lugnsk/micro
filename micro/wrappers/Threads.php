@@ -14,7 +14,8 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-abstract class Threads {
+abstract class Threads
+{
     /** @var string $name */
     private $name;
     /** @var integer $pid */
@@ -24,17 +25,17 @@ abstract class Threads {
     /** @var integer $guid */
     private $guid;
     /** @var bool $isChild */
-    private $isChild=false;
+    private $isChild = false;
     /** @var array $internalIPCArray */
-    private $internalIPCArray=[];
+    private $internalIPCArray = [];
     /** @var integer $internalIPCKey */
     private $internalIPCKey;
     /** @var integer $internalSemaphoreKey */
     private $internalSemaphoreKey;
     /** @var bool $isIPC */
-    private $isIPC=false;
+    private $isIPC = false;
     /** @var bool $running */
-    private $running=false;
+    private $running = false;
     /** @var string $fileIPC1 */
     private $fileIPC1;
     /** @var string $fileIPC2 */
@@ -61,16 +62,20 @@ abstract class Threads {
         $this->guid = $guid;
         $this->puid = $puid;
 
-        if ($umask != -1) umask($umask);
+        if ($umask != -1) {
+            umask($umask);
+        }
 
         $this->isChild = false;
         $this->internalIPCArray = array();
 
-        if ($this->createIPCSegment() && $this->createIPCSemaphore())
+        if ($this->createIPCSegment() && $this->createIPCSemaphore()) {
             $this->isIPC = true;
-        else
+        } else {
             $this->isIPC = false;
+        }
     }
+
     /**
      * Is running thread
      *
@@ -81,6 +86,7 @@ abstract class Threads {
     {
         return (bool)$this->running;
     }
+
     /**
      * Set variable in shared memory
      *
@@ -94,6 +100,7 @@ abstract class Threads {
         $this->internalIPCArray[$name] = $value;
         $this->writeToIPCSegment();
     }
+
     /**
      * Get variable from shared memory
      *
@@ -106,6 +113,7 @@ abstract class Threads {
         $this->readFromIPCSegment();
         return $this->internalIPCArray[$name];
     }
+
     /**
      * Set alive
      *
@@ -116,6 +124,7 @@ abstract class Threads {
     {
         $this->setVariable('_pingTime', time());
     }
+
     /**
      * Get last alive
      *
@@ -125,11 +134,13 @@ abstract class Threads {
     public function getLastAlive()
     {
         $timestamp = intval($this->getVariable('_pingTime'));
-        if ($timestamp == 0)
+        if ($timestamp == 0) {
             return 0;
-        else
+        } else {
             return (time() - $timestamp);
+        }
     }
+
     /**
      * get thread name
      *
@@ -140,6 +151,7 @@ abstract class Threads {
     {
         return $this->name;
     }
+
     /**
      * Get thread process ID
      *
@@ -150,6 +162,7 @@ abstract class Threads {
     {
         return $this->pid;
     }
+
     /**
      * Register callback func into shared memory
      *
@@ -160,13 +173,15 @@ abstract class Threads {
      */
     public function register_callback_func($argList, $methodName)
     {
-        if (is_array($argList) && count ($argList) > 1) {
+        if (is_array($argList) && count($argList) > 1) {
             if ($argList[1] == -2) {
                 $this->internalIPCArray['_call_type'] = -2;
             } else {
                 $this->internalIPCArray['_call_type'] = -1;
             }
-        } else $this->internalIPCArray['_call_type'] = -1;
+        } else {
+            $this->internalIPCArray['_call_type'] = -1;
+        }
 
         $this->internalIPCArray['_call_method'] = $methodName;
         $this->internalIPCArray['_call_input'] = $argList;
@@ -178,7 +193,7 @@ abstract class Threads {
                 $this->sendSigUsr1();
                 break;
             }
-            case -2:{
+            case -2: {
                 shmop_write($this->internalSemaphoreKey, 1, 0);
 
                 $this->sendSigUsr1();
@@ -192,6 +207,7 @@ abstract class Threads {
             }
         }
     }
+
     /**
      * Set thread name
      *
@@ -203,6 +219,7 @@ abstract class Threads {
     {
         $this->name = $name;
     }
+
     /**
      * Start
      *
@@ -240,6 +257,7 @@ abstract class Threads {
             $this->pid = $pid;
         }
     }
+
     /**
      * Stop thread
      *
@@ -251,10 +269,10 @@ abstract class Threads {
         $success = false;
 
         if ($this->pid > 0) {
-            posix_kill ($this->pid, 9);
-            pcntl_waitpid ($this->pid, $temp = 0, WNOHANG);
+            posix_kill($this->pid, 9);
+            pcntl_waitpid($this->pid, $temp = 0, WNOHANG);
 
-            $success = pcntl_wifexited ($temp) ;
+            $success = pcntl_wifexited($temp);
 
             $this->cleanThreadContext();
         }
@@ -284,12 +302,13 @@ abstract class Threads {
         @shmop_close($this->internalIPCKey);
         @shmop_close($this->internalSemaphoreKey);
 
-        unlink ($this->fileIPC1);
-        unlink ($this->fileIPC2);
+        unlink($this->fileIPC1);
+        unlink($this->fileIPC2);
 
         $this->running = false;
         unset($this->pid);
     }
+
     /**
      * Signal handler
      *
@@ -332,10 +351,11 @@ abstract class Threads {
                 break;
             }
             default: {
-                // handle all other signals
+            // handle all other signals
             }
         }
     }
+
     /**
      * Send signal USR1
      *
@@ -348,6 +368,7 @@ abstract class Threads {
             posix_kill($this->pid, SIGUSR1);
         }
     }
+
     /**
      * Wait IPC semaphore
      *
@@ -359,12 +380,14 @@ abstract class Threads {
         while (true) {
             $ok = shmop_read($this->internalSemaphoreKey, 0, 1);
 
-            if ($ok == 0)
+            if ($ok == 0) {
                 break;
-            else
+            } else {
                 usleep(10);
+            }
         }
     }
+
     /**
      * Read from IPC segment
      *
@@ -384,6 +407,7 @@ abstract class Threads {
 
         $this->internalIPCArray = @unserialize($serialized_IPC_array);
     }
+
     /**
      * Write to IPC segment
      *
@@ -404,6 +428,7 @@ abstract class Threads {
             throw new Exception("Fatal exception writing SHM segment (shmop_write)" . strlen($serialized_IPC_array) . "-" . shmop_size($this->internalIPCKey));
         }
     }
+
     /**
      * Create IPC segment
      *
@@ -415,7 +440,7 @@ abstract class Threads {
     {
         $this->fileIPC1 = "/tmp/" . rand() . md5($this->getName()) . ".shm";
 
-        touch ($this->fileIPC1);
+        touch($this->fileIPC1);
 
         $shm_key = ftok($this->fileIPC1, 't');
         if ($shm_key == -1) {
@@ -428,6 +453,7 @@ abstract class Threads {
         }
         return true;
     }
+
     /**
      * Create IPC semaphore
      *
@@ -439,7 +465,7 @@ abstract class Threads {
     {
         $this->fileIPC2 = "/tmp/" . rand() . md5($this->getName()) . ".sem";
 
-        touch ($this->fileIPC2);
+        touch($this->fileIPC2);
 
         $sem_key = ftok($this->fileIPC2, 't');
         if ($sem_key == -1) {

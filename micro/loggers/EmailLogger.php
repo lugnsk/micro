@@ -36,13 +36,13 @@ class EmailLogger extends LogInterface
      * @param array $params configuration params
      * @result void
      */
-    public function __construct($params=[])
+    public function __construct($params = [])
     {
         parent::__construct($params);
 
         $this->from = isset($params['from']) ? $params['from'] : getenv("SERVER_ADMIN");
         $this->to = isset($params['to']) ? $params['to'] : $this->from;
-        $this->subject = isset($params['subject']) ? $params['subject'] : $_SERVER['SERVER_NAME'].' log message';
+        $this->subject = isset($params['subject']) ? $params['subject'] : $_SERVER['SERVER_NAME'] . ' log message';
     }
 
     /**
@@ -57,6 +57,6 @@ class EmailLogger extends LogInterface
     {
         $mail = new Mail($this->from);
         $mail->setType($this->type);
-        $mail->send($this->to, $this->subject, ucfirst($level).': '.$message );
+        $mail->send($this->to, $this->subject, ucfirst($level) . ': ' . $message);
     }
 }

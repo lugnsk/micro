@@ -32,14 +32,14 @@ class FileLogger extends LogInterface
      * @result void
      * @throws Exception
      */
-    public function __construct($params=[])
+    public function __construct($params = [])
     {
         parent::__construct($params);
 
         if (is_writeable($params['filename']) OR is_writeable(dirname($params['filename']))) {
             $this->connect = fopen($params['filename'], 'a+');
         } else {
-            throw new Exception('Directory or file "'.$params['filename'].'" is read-only');
+            throw new Exception('Directory or file "' . $params['filename'] . '" is read-only');
         }
     }
 
@@ -55,7 +55,7 @@ class FileLogger extends LogInterface
     public function sendMessage($level, $message)
     {
         if (is_resource($this->connect)) {
-            fwrite($this->connect, '['.date('H:i:s d.m.Y').'] '.ucfirst($level).": {$message}\n");
+            fwrite($this->connect, '[' . date('H:i:s d.m.Y') . '] ' . ucfirst($level) . ": {$message}\n");
         } else {
             throw new Exception('Error write log in file.');
         }

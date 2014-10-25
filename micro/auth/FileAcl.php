@@ -38,9 +38,9 @@ class FileAcl extends Acl
         parent::__construct($params);
 
         $roles = (isset($params['roles'])) ? $params['roles'] : [];
-        $this->roles = isset($roles['roles']) ? $roles['roles']: [];
-        $this->perms = isset($roles['perms']) ? $roles['perms']: [];
-        $this->rolePermsCompare = isset($roles['role_perms']) ? $roles['role_perms']: [];
+        $this->roles = isset($roles['roles']) ? $roles['roles'] : [];
+        $this->perms = isset($roles['perms']) ? $roles['perms'] : [];
+        $this->rolePermsCompare = isset($roles['role_perms']) ? $roles['role_perms'] : [];
     }
 
     /**
@@ -55,7 +55,7 @@ class FileAcl extends Acl
         $query = new Query;
         $query->select = '*';
         $query->table = 'acl_user';
-        $query->addWhere('`user`='.$userId);
+        $query->addWhere('`user`=' . $userId);
         $query->single = false;
         return $query->run();
     }
@@ -89,7 +89,7 @@ class FileAcl extends Acl
         }
 
         foreach ($assigned AS $assign) {
-            if ($assign['perm'] AND $assign['perm']==$permissionId) {
+            if ($assign['perm'] AND $assign['perm'] == $permissionId) {
                 return true;
             } elseif ($assign['role'] AND in_array($permissionId, $this->rolePerms($assign['role']))) {
                 return true;

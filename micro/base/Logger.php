@@ -38,9 +38,9 @@ class Logger
      * @param array $params configuration array
      * @result void
      */
-    public function __construct($params=[])
+    public function __construct($params = [])
     {
-        foreach ($params['loggers'] AS $name=>$log) {
+        foreach ($params['loggers'] AS $name => $log) {
             if (!array_key_exists('class', $log) OR !class_exists($log['class'])) {
                 continue;
             }

@@ -30,7 +30,7 @@ class GridViewWidget extends Widget
     /** @var array $paginationConfig parameters for PaginationWidget */
     public $paginationConfig = [];
     /** @var array $tableConfig table configuration */
-    public $tableConfig  = [];
+    public $tableConfig = [];
     /** @var array $attributes attributes for table */
     public $attributes = [];
     /** @var array $attributesCounter attributes for counter */
@@ -59,7 +59,7 @@ class GridViewWidget extends Widget
      * @param array $args arguments
      * @result void
      */
-    public function __construct($args=[])
+    public function __construct($args = [])
     {
         parent::__construct($args);
         $this->getConnect();
@@ -118,7 +118,7 @@ class GridViewWidget extends Widget
      */
     private function makeRows()
     {
-        if (($position = strpos($this->query, 'LIMIT')) !== FALSE) {
+        if (($position = strpos($this->query, 'LIMIT')) !== false) {
             $this->query = substr($this->query, 0, $position);
         }
 
@@ -129,7 +129,7 @@ class GridViewWidget extends Widget
         $this->keys = array_keys($st->fetch(\PDO::FETCH_ASSOC));
         $this->rowCount = $this->conn->count($this->query);
 
-        $st = $this->conn->rawQuery($this->query.' LIMIT '.($this->page*$this->limit).','.$this->limit);
+        $st = $this->conn->rawQuery($this->query . ' LIMIT ' . ($this->page * $this->limit) . ',' . $this->limit);
         $this->rows = $st->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -144,10 +144,10 @@ class GridViewWidget extends Widget
         if (!$this->tableConfig) {
             foreach ($this->keys AS $key) {
                 $this->tableConfig[$key] = [
-                    'header'=>$key,
-                    'filter'=>'<input type="text" name="'.$key.'" value="" />',
-                    'value'=>null,
-                    'class'=>null,
+                    'header' => $key,
+                    'filter' => '<input type="text" name="' . $key . '" value="" />',
+                    'value' => null,
+                    'class' => null,
                 ];
             }
         }
@@ -174,7 +174,7 @@ class GridViewWidget extends Widget
         echo $this->renderFilters();
         echo $this->renderRows();
         echo Html::closeTag('table');
-        echo $this->widget('Micro\widgets\PaginationWidget',$this->paginationConfig);
+        echo $this->widget('Micro\widgets\PaginationWidget', $this->paginationConfig);
     }
 
     /**
@@ -185,7 +185,7 @@ class GridViewWidget extends Widget
      */
     private function renderCounter()
     {
-        $result  = Html::openTag('div', $this->attributesCounter);
+        $result = Html::openTag('div', $this->attributesCounter);
         $result .= $this->textCounter . $this->rowCount;
         $result .= Html::closeTag('div');
         return $result;
@@ -207,7 +207,7 @@ class GridViewWidget extends Widget
                 $result .= Html::closeTag('th');
             }
         } else {
-            $result .= Html::openTag('td',['style'=>'text-align:center']) . $this->emptyText . Html::closeTag('td');
+            $result .= Html::openTag('td', ['style' => 'text-align:center']) . $this->emptyText . Html::closeTag('td');
         }
         $result .= Html::closeTag('tr');
         return $result;
@@ -224,7 +224,7 @@ class GridViewWidget extends Widget
         $result = null;
         if ($this->filters) {
             $result .= Html::openTag('tr');
-            foreach ($this->tableConfig AS $key=>$row) {
+            foreach ($this->tableConfig AS $key => $row) {
                 $result .= Html::openTag('td');
                 $result .= isset($row['filter']) ? $row['filter'] : null;
                 $result .= Html::closeTag('td');
@@ -245,16 +245,16 @@ class GridViewWidget extends Widget
         $result = null;
         foreach ($this->rows AS $elem) {
             $result .= Html::openTag('tr');
-            foreach ($this->tableConfig AS $key=>$row) {
+            foreach ($this->tableConfig AS $key => $row) {
                 $result .= Html::openTag('td');
                 if (isset($row['class']) AND is_subclass_of($row['class'], 'Micro\widgets\GridColumn')) {
                     $primaryKey = $elem[isset($row['key']) ? $row['key'] : 'id'];
                     $result .= new $row['class'](
-                        $row + [ 'str'=>isset($elem) ? $elem : null, 'pKey'=>$primaryKey ]
+                        $row + ['str' => isset($elem) ? $elem : null, 'pKey' => $primaryKey]
                     );
                 } elseif (isset($row['value'])) {
                     $data = $elem;
-                    $result .= eval('return '.$row['value'].';');
+                    $result .= eval('return ' . $row['value'] . ';');
                 } else {
                     $result .= isset($elem[$key]) ? $elem[$key] : null;
                 }

@@ -29,7 +29,8 @@ class RabbitMQ
      * @param array $params connect to broker
      * @result void
      */
-    public function __construct($params = []) {
+    public function __construct($params = [])
+    {
         $this->connect = new \AMQPConnection($params);
         $this->connect->connect();
 
@@ -42,7 +43,8 @@ class RabbitMQ
      * @access public
      * @return void
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->connect->disconnect();
     }
 
@@ -55,7 +57,8 @@ class RabbitMQ
      * @param string $chat name chatroom
      * @return void
      */
-    public function send($message, $route, $chat) {
+    public function send($message, $route, $chat)
+    {
         $exchange = new \AMQPExchange($this->channel);
         $exchange->setName($chat);
         $exchange->publish($message, $route);
@@ -70,7 +73,8 @@ class RabbitMQ
      * @param string $nameReader name queue
      * @return \AMQPEnvelope|bool
      */
-    public function read($chat, $route, $nameReader='random') {
+    public function read($chat, $route, $nameReader = 'random')
+    {
         $queue = new \AMQPQueue($this->channel);
         $queue->setName($nameReader);
         $queue->declare();
@@ -93,14 +97,15 @@ class RabbitMQ
      * @param string $nameReader name queue
      * @return array
      */
-    public function readAll($chat, $route, $nameReader) {
+    public function readAll($chat, $route, $nameReader)
+    {
         $queue = new \AMQPQueue($this->channel);
         $queue->setName($nameReader);
         $queue->declare();
         $queue->bind($chat, $route);
 
-        $result=[];
-        while($envelop = $queue->get()) {
+        $result = [];
+        while ($envelop = $queue->get()) {
             $queue->ack($envelop->getDeliveryTag());
             $result[] = $envelop;
         }

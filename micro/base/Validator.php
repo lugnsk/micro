@@ -27,18 +27,18 @@ class Validator
     public $params = [];
     /** @var array $validators supported validations */
     protected $validators = [
-        'required'  => 'RequiredValidator',
-        'captcha'   => 'CaptchaValidator',
-        'boolean'   => 'BooleanValidator',
-        'compare'   => 'CompareValidator',
-        'string'    => 'StringValidator',
-        'regexp'    => 'RegexpValidator',
-        'number'    => 'NumberValidator',
-        'unique'    => 'UniqueValidator',
-        'range'     => 'RangeValidator',
-        'email'     => 'EmailValidator',
-        'url'       => 'UrlValidator',
-        'file'      => 'FileValidator',
+        'required' => 'RequiredValidator',
+        'captcha' => 'CaptchaValidator',
+        'boolean' => 'BooleanValidator',
+        'compare' => 'CompareValidator',
+        'string' => 'StringValidator',
+        'regexp' => 'RegexpValidator',
+        'number' => 'NumberValidator',
+        'unique' => 'UniqueValidator',
+        'range' => 'RangeValidator',
+        'email' => 'EmailValidator',
+        'url' => 'UrlValidator',
+        'file' => 'FileValidator',
     ];
 
 
@@ -106,7 +106,7 @@ class Validator
                 }
                 return true;
             } else {
-                throw new Exception('Validator '.$name.' not defined.');
+                throw new Exception('Validator ' . $name . ' not defined.');
             }
         }
 
@@ -132,13 +132,14 @@ class Validator
      * @param \Micro\web\FormModel $model model
      * @return string
      */
-    public function clientValidate($model) {
-        $object = substr(get_class($model), strrpos(get_class($model), '\\')+1);
+    public function clientValidate($model)
+    {
+        $object = substr(get_class($model), strrpos(get_class($model), '\\') + 1);
 
         $result = null;
         foreach ($this->elements AS $element) {
             $id = $object . '_' . $element;
-            $result .= 'jQuery("#'.$id.'").bind("change blur submit", function(e){ '.$this->client($model).' });';
+            $result .= 'jQuery("#' . $id . '").bind("change blur submit", function(e){ ' . $this->client($model) . ' });';
         }
         return $result;
     }

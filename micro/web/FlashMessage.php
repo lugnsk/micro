@@ -41,7 +41,7 @@ class FlashMessage
      */
     public function __construct()
     {
-        if (Registry::get('session') != NULL) {
+        if (Registry::get('session') != null) {
             $this->session = Registry::get('session');
         } else {
             throw new Exception('Sessions not activated');
@@ -54,7 +54,8 @@ class FlashMessage
      * @access public
      * @return array
      */
-    public static function getTypeLabels() {
+    public static function getTypeLabels()
+    {
         return [
             self::TYPE_SUCCESS => 'success',
             self::TYPE_INFO => 'info',
@@ -70,7 +71,8 @@ class FlashMessage
      * @param int $type type id
      * @return mixed
      */
-    public static function getTypeLabel($type = self::TYPE_SUCCESS) {
+    public static function getTypeLabel($type = self::TYPE_SUCCESS)
+    {
         return self::getTypeLabels()[$type];
     }
 

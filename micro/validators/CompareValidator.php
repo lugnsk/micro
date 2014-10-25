@@ -26,7 +26,7 @@ class CompareValidator extends Validator
      * @param array $rule validation rule
      * @result void
      */
-    public function __construct($rule=[])
+    public function __construct($rule = [])
     {
         parent::__construct($rule);
 
@@ -79,7 +79,7 @@ class CompareValidator extends Validator
             $value = $model->$attribute;
         }
 
-        $js = 'if (this.value!="'.$value.'") { e.preventDefault(); this.focus(); alert(\'Value is not compatible\'); }';
+        $js = 'if (this.value!="' . $value . '") { e.preventDefault(); this.focus(); alert(\'Value is not compatible\'); }';
         return $js;
     }
 }

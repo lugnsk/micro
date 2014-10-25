@@ -9,7 +9,7 @@ class RegisterController extends Controller
 {
     public function actionIndex()
     {
-        echo $this->render('index', ['model'=>new User]);
+        echo $this->render('index', ['model' => new User]);
     }
 
     public function actionSuccess()

@@ -85,16 +85,16 @@ class PaginationWidget extends Widget
     {
         $items = [];
         if ($this->totalPages > 0) {
-            for ($i=0; ($i+1) <= $this->totalPages; $i++) {
+            for ($i = 0; ($i + 1) <= $this->totalPages; $i++) {
                 if ($i != $this->currentPage) {
                     $items[] = [
-                        'text'=>Html::href( $i+1, $this->url.$i, $this->attributesLink),
-                        'attr'=>$this->attributesElement
+                        'text' => Html::href($i + 1, $this->url . $i, $this->attributesLink),
+                        'attr' => $this->attributesElement
                     ];
                 } else {
                     $items[] = [
-                        'text'=>Html::href( $i+1, $this->url.$i, $this->attributesLink),
-                        'attr'=>$this->attributesElement + ['class'=>'active']
+                        'text' => Html::href($i + 1, $this->url . $i, $this->attributesLink),
+                        'attr' => $this->attributesElement + ['class' => 'active']
                     ];
                 }
             }

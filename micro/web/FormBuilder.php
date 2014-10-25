@@ -45,7 +45,12 @@ class FormBuilder
     {
         $this->config = $config;
         $this->model = $model;
-        $this->widget = new FormWidget(['action' => $action, 'method' => $method, 'type' => $type, 'client'=>$model->getClient()]);
+        $this->widget = new FormWidget([
+                'action' => $action,
+                'method' => $method,
+                'type' => $type,
+                'client' => $model->getClient()
+            ]);
     }
 
     /**
@@ -182,7 +187,8 @@ class FormBuilder
                     $subForm = new FormBuilder($value, (isset($value['model'])) ? $value['model'] : null);
                     echo $subForm;
                 } elseif ($this->model) {
-                    echo $this->form->$value['type']($this->model, $key, (isset($value['options'])) ? $value['options'] : []);
+                    echo $this->form->$value['type']($this->model, $key,
+                        (isset($value['options'])) ? $value['options'] : []);
                 } else {
                     echo Html::$value['type']($key, $value['value'], $value['options']);
                 }

@@ -175,7 +175,8 @@ class Html
     public static function script($text, $attributes = [])
     {
         $attributes['type'] = 'text/javascript';
-        return self::openTag('script', $attributes) . " /*<![CDATA[*/ " . $text . " /*]]>*/ " . self::closeTag('script');
+        return self::openTag('script',
+            $attributes) . " /*<![CDATA[*/ " . $text . " /*]]>*/ " . self::closeTag('script');
     }
 
     /**
@@ -225,7 +226,7 @@ class Html
      * @param array $attributes attributes tag
      * @return string
      */
-    public static function br($num=1, $attributes = [])
+    public static function br($num = 1, $attributes = [])
     {
         $str = '';
         for ($i = 0; $i < $num; $i++) {

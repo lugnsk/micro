@@ -62,7 +62,7 @@ class DbAcl extends Acl
      * @param string $permission checked permission
      * @return bool
      */
-    public function check($userId,$permission)
+    public function check($userId, $permission)
     {
         $query = new Query;
         $query->select = '*';
@@ -72,12 +72,12 @@ class DbAcl extends Acl
         $query->addJoin('`acl_role_perm` AS  `arp`', '`arp`.`role` =  `au`.`role`');
         $query->addJoin('`acl_perm` AS  `ap1`', '`ap1`.`id` =  `arp`.`perm`');
 
-        $query->addWhere('`au`.`user`='.$userId);
+        $query->addWhere('`au`.`user`=' . $userId);
         $query->addWhere('`ap`.`name`=:perm OR `ap1`.`name`=:perm');
 
         $query->limit = 1;
 
-        $query->params = [':perm'=>$permission];
+        $query->params = [':perm' => $permission];
         $query->single = true;
 
         return (bool)$query->run();
@@ -92,8 +92,8 @@ class DbAcl extends Acl
      */
     public function createRole($name)
     {
-        if (!$this->conn->exists('acl_role', ['name'=>$name])) {
-            $this->conn->insert('acl_role', ['name'=>$name]);
+        if (!$this->conn->exists('acl_role', ['name' => $name])) {
+            $this->conn->insert('acl_role', ['name' => $name]);
         }
     }
 
@@ -106,8 +106,8 @@ class DbAcl extends Acl
      */
     public function createPermission($name)
     {
-        if (!$this->conn->exists('acl_role', ['name'=>$name])) {
-            $this->conn->insert('acl_role', ['name'=>$name]);
+        if (!$this->conn->exists('acl_role', ['name' => $name])) {
+            $this->conn->insert('acl_role', ['name' => $name]);
         }
     }
 
@@ -120,7 +120,7 @@ class DbAcl extends Acl
      */
     public function deletePermission($name)
     {
-        $this->conn->delete('acl_perm',['name'=>$name]);
+        $this->conn->delete('acl_perm', ['name' => $name]);
     }
 
     /**
@@ -133,9 +133,9 @@ class DbAcl extends Acl
     public function deleteRole($name)
     {
         foreach ($this->rolePerms($name) AS $perm) {
-            $this->conn->delete('acl_role_perm', ['id'=>$perm['perm']]);
+            $this->conn->delete('acl_role_perm', ['id' => $perm['perm']]);
         }
-        $this->conn->delete('acl_role', ['name'=>$name]);
+        $this->conn->delete('acl_role', ['name' => $name]);
     }
 
     /**
@@ -150,7 +150,7 @@ class DbAcl extends Acl
         $query = new Query;
         $query->select = '*';
         $query->table = 'acl_role_perm';
-        $query->addWhere('role='.$role);
+        $query->addWhere('role=' . $role);
         $query->single = false;
         return $query->run();
     }
@@ -165,7 +165,7 @@ class DbAcl extends Acl
      */
     public function assignRolePermission($role, $permission)
     {
-        $this->conn->insert('acl_role_perm', ['role'=>$role,'perm'=>$permission]);
+        $this->conn->insert('acl_role_perm', ['role' => $role, 'perm' => $permission]);
     }
 
     /**
@@ -178,7 +178,7 @@ class DbAcl extends Acl
      */
     public function revokeRolePermission($role, $permission)
     {
-        $this->conn->delete('acl_role_perm', ['role'=>$role,'perm'=>$permission]);
+        $this->conn->delete('acl_role_perm', ['role' => $role, 'perm' => $permission]);
     }
 
     /**
@@ -190,12 +190,12 @@ class DbAcl extends Acl
      * @param boolean $asRole as role?
      * @return void
      */
-    public function grantPrivilege($userId, $privilege=null, $asRole=true)
+    public function grantPrivilege($userId, $privilege = null, $asRole = true)
     {
         if ($asRole) {
-            $this->conn->insert('acl_user', ['user'=>$userId, 'role'=>$privilege]);
+            $this->conn->insert('acl_user', ['user' => $userId, 'role' => $privilege]);
         } else {
-            $this->conn->insert('acl_user', ['user'=>$userId, 'perm'=>$privilege]);
+            $this->conn->insert('acl_user', ['user' => $userId, 'perm' => $privilege]);
         }
     }
 
@@ -207,12 +207,12 @@ class DbAcl extends Acl
      * @param integer $privilege privilege ID
      * @param bool $asRole as role?
      */
-    public function forbidPrivilege($userId, $privilege=null, $asRole=true)
+    public function forbidPrivilege($userId, $privilege = null, $asRole = true)
     {
         if ($asRole) {
-            $this->conn->delete('acl_user', '`user`="'.$userId.'" AND `role`="'.$privilege.'"');
+            $this->conn->delete('acl_user', '`user`="' . $userId . '" AND `role`="' . $privilege . '"');
         } else {
-            $this->conn->delete('acl_user', '`user`="'.$userId.'" AND `perm`="'.$privilege.'"');
+            $this->conn->delete('acl_user', '`user`="' . $userId . '" AND `perm`="' . $privilege . '"');
         }
     }
 }

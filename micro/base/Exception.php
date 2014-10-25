@@ -1,6 +1,7 @@
 <?php /** MicroException */
 
 namespace Micro\base;
+
 use Micro\Micro;
 
 /**
@@ -25,7 +26,7 @@ class Exception extends \Exception
     public function __toString()
     {
         if (defined('DEBUG_MICRO')) {
-            $_POST['errors'] = [ 'Error - '.$this->getMessage() ];
+            $_POST['errors'] = ['Error - ' . $this->getMessage()];
 
             $config = Micro::getInstance()->config;
 

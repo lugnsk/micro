@@ -84,7 +84,7 @@ abstract class Controller
 
                     }
                 }
-                throw new Exception('Method ' . $name . ' is not declared in '.get_class($this).'.');
+                throw new Exception('Method ' . $name . ' is not declared in ' . get_class($this) . '.');
             }
         }
 
@@ -138,7 +138,8 @@ abstract class Controller
      * @param string $data arguments array
      * @return string
      */
-    protected function renderRawData($data='') {
+    protected function renderRawData($data = '')
+    {
         $layoutPath = null;
         if (!$this->asWidget AND $this->layout) {
             $layoutPath = $this->getLayoutFile(
@@ -165,7 +166,7 @@ abstract class Controller
         $calledClass = get_called_class();
 
         // Calculate path to view
-        if ( substr($calledClass, 0, strpos($calledClass, '\\')) == 'App' ) {
+        if (substr($calledClass, 0, strpos($calledClass, '\\')) == 'App') {
             $path = Micro::getInstance()->config['AppDir'];
         } else {
             $path = Micro::getInstance()->config['MicroDir'];
@@ -177,7 +178,8 @@ abstract class Controller
         if ($this->asWidget) {
             $path .= $cl . '/views/' . $view . '.php';
         } else {
-            $className = str_replace('controller', '', strtolower(basename(str_replace('\\', '/', '/'.get_called_class()))));
+            $className = str_replace('controller', '',
+                strtolower(basename(str_replace('\\', '/', '/' . get_called_class()))));
             $path .= dirname($cl) . '/views/' . $className . '/' . $view . '.php';
         }
         return $path;
@@ -235,7 +237,7 @@ abstract class Controller
         $result .= $heads;
         $result .= substr($cache, $positionHead, $positionBody);
         $result .= $ends;
-        $result .= substr($cache, $positionHead+$positionBody);
+        $result .= substr($cache, $positionHead + $positionBody);
 
         return $result;
     }
@@ -258,7 +260,7 @@ abstract class Controller
             if (file_exists($baseDir . '/' . $afterPath)) {
                 return $baseDir . '/' . $afterPath;
             }
-            throw new Exception('Layout '.ucfirst($this->layout).' not found.');
+            throw new Exception('Layout ' . ucfirst($this->layout) . ' not found.');
         }
         return $layout . $afterPath;
     }
@@ -286,11 +288,11 @@ abstract class Controller
      * @param bool $isHead is head block
      * @return void
      */
-    public function registerScript($source, $isHead=true)
+    public function registerScript($source, $isHead = true)
     {
         $this->styleScripts[] = [
-            'isHead'=>$isHead,
-            'body'=>Html::script($source)
+            'isHead' => $isHead,
+            'body' => Html::script($source)
         ];
     }
 
@@ -302,11 +304,11 @@ abstract class Controller
      * @param bool $isHead is head block
      * @return void
      */
-    public function registerScriptFile($source, $isHead=true)
+    public function registerScriptFile($source, $isHead = true)
     {
         $this->styleScripts[] = [
-            'isHead'=>$isHead,
-            'body'=>Html::scriptFile($source)
+            'isHead' => $isHead,
+            'body' => Html::scriptFile($source)
         ];
     }
 
@@ -318,11 +320,11 @@ abstract class Controller
      * @param bool $isHead is head block
      * @return void
      */
-    public function registerCss($source, $isHead=true)
+    public function registerCss($source, $isHead = true)
     {
         $this->styleScripts[] = [
-            'isHead'=>$isHead,
-            'body'=>Html::css($source)
+            'isHead' => $isHead,
+            'body' => Html::css($source)
         ];
     }
 
@@ -334,11 +336,11 @@ abstract class Controller
      * @param bool $isHead is head block
      * @return void
      */
-    public function registerCssFile($source, $isHead=true)
+    public function registerCssFile($source, $isHead = true)
     {
         $this->styleScripts[] = [
-            'isHead'=>$isHead,
-            'body'=>Html::cssFile($source)
+            'isHead' => $isHead,
+            'body' => Html::cssFile($source)
         ];
     }
 
@@ -395,7 +397,7 @@ abstract class Controller
             throw new Exception('This widget (' . $name . ') already started!');
         }
 
-        /** @var \Micro\base\Widget $GLOBALS['widgetStack'][$name] widget */
+        /** @var \Micro\base\Widget $GLOBALS ['widgetStack'][$name] widget */
         $GLOBALS['widgetStack'][$name] = new $name($options);
         return $GLOBALS['widgetStack'][$name]->init();
     }
