@@ -3,8 +3,16 @@
 namespace Micro\caches;
 
 
+use Micro\base\Exception;
+
 class ApcCache implements Cache
 {
+    public function __construct()
+    {
+        if (!$this->check()) {
+            throw new Exception('APC cache not installed');
+        }
+    }
     public function check()
     {
         if(extension_loaded('apc') && ini_get('apc.enabled')) {
