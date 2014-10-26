@@ -58,7 +58,7 @@ class RedisCache implements Cache
         return ($this->driver->delete($name) !== 1) ? FALSE : TRUE;
     }
 
-    public function clean($name)
+    public function clean()
     {
         return $this->driver->flushDB();
     }

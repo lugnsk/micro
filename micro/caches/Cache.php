@@ -12,7 +12,7 @@ interface Cache
 
     public function delete($name);
 
-    public function clean($name);
+    public function clean();
 
     public function info();
 

@@ -90,7 +90,7 @@ class MemcachedCache implements Cache
         return $this->driver->delete($name);
     }
 
-    public function clean($name)
+    public function clean()
     {
         return $this->driver->flush();
     }

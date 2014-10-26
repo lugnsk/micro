@@ -155,6 +155,18 @@ class DbConnection
     }
 
     /**
+     * Clear all data from table
+     *
+     * @access public
+     * @param string $name table name
+     * @return int
+     */
+    public function clearTable($name)
+    {
+        return $this->conn->exec('TRUNCATE `' . $name . '`;');
+    }
+
+    /**
      * Get array fields into table
      *
      * @access public

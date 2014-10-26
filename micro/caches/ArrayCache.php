@@ -52,7 +52,7 @@ class ArrayCache implements Cache
         }
     }
 
-    public function clean($name)
+    public function clean()
     {
         $this->driver = [];
     }

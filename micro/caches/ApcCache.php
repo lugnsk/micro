@@ -7,12 +7,13 @@ use Micro\base\Exception;
 
 class ApcCache implements Cache
 {
-    public function __construct()
+    public function __construct($config = [])
     {
         if (!$this->check()) {
             throw new Exception('APC cache not installed');
         }
     }
+
     public function check()
     {
         if(extension_loaded('apc') && ini_get('apc.enabled')) {
@@ -42,7 +43,7 @@ class ApcCache implements Cache
         return apc_delete($name);
     }
 
-    public function clean($name)
+    public function clean()
     {
         if (extension_loaded('apcu')) {
             return apc_clear_cache();
