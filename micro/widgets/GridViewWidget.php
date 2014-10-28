@@ -35,6 +35,8 @@ class GridViewWidget extends Widget
     public $attributes = [];
     /** @var array $attributesCounter attributes for counter */
     public $attributesCounter = [];
+    /** @var array $attributesHeading attributes for heading */
+    public $attributesHeading = [];
     /** @var string $textCounter text for before counter */
     public $textCounter = 'Всего: ';
     /** @var bool $filters rendered filters */
@@ -45,6 +47,7 @@ class GridViewWidget extends Widget
     public $keys = [];
     /** @var string $emptyText text to render if rows not found */
     public $emptyText = 'Elements not found!';
+    public $template = '{counter}{data}{paginator}';
 
     /** @var int $rowCount summary lines */
     protected $rowCount = 0;
@@ -168,13 +171,21 @@ class GridViewWidget extends Widget
      */
     public function run()
     {
-        echo $this->renderCounter();
-        echo Html::openTag('table', $this->attributes);
-        echo $this->renderHeading();
-        echo $this->renderFilters();
-        echo $this->renderRows();
-        echo Html::closeTag('table');
-        echo $this->widget('Micro\widgets\PaginationWidget', $this->paginationConfig);
+        $result = $this->template;
+        $result = str_replace('{counter}', $this->renderCounter(), $result);
+        $result = str_replace(
+            '{paginator}',
+            $this->widget('Micro\widgets\PaginationWidget', $this->paginationConfig, true),
+            $result
+        );
+
+        $table = Html::openTag('table', $this->attributes);
+        $table .= $this->renderHeading();
+        $table .= $this->renderFilters();
+        $table .= $this->renderRows();
+        $table .= Html::closeTag('table');
+
+        echo str_replace('{data}', $table, $result);
     }
 
     /**
@@ -199,7 +210,7 @@ class GridViewWidget extends Widget
      */
     private function renderHeading()
     {
-        $result = Html::openTag('tr');
+        $result = Html::openTag('tr', $this->attributesHeading);
         if ($this->tableConfig) {
             foreach ($this->tableConfig AS $key => $row) {
                 $result .= Html::openTag('th');

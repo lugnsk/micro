@@ -150,7 +150,22 @@ class Request
      */
     private function prepareController(&$uriBlocks)
     {
-        $this->controller = ($str = array_shift($uriBlocks)) ? $str : 'default';
+        $path = Micro::getInstance()->config['AppDir'];
+
+        if ($this->extensions) {
+            $path .= $this->extensions;
+        }
+        if ($this->modules) {
+            $path .= $this->modules;
+        }
+
+        $str = array_shift($uriBlocks);
+        if (file_exists($path . '/controllers/' . ucfirst($str).'Controller.php' )) {
+            $this->controller = $str;
+        } else {
+            $this->controller = 'default';
+            array_unshift($uriBlocks, $str);
+        }
     }
 
     /**
