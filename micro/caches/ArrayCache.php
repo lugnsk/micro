@@ -1,11 +1,120 @@
-<?php
+<?php /** MicroArrayCache */
 
 namespace Micro\caches;
 
-
+/**
+ * Class ArrayCache
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage caches
+ * @version 1.0
+ * @since 1.0
+ */
 class ArrayCache implements Cache
 {
+    /** @var array $driver array as driver */
     protected $driver = [];
+
+    /**
+     * Check driver
+     *
+     * @access public
+     * @return mixed
+     */
+    public function check()
+    {
+        return TRUE;
+    }
+
+    /**
+     * Get value by name
+     *
+     * @access public
+     * @param string $name key name
+     * @return mixed
+     */
+    public function get($name)
+    {
+        return isset($this->driver[$name]) ? $this->driver[$name] : FALSE;
+    }
+
+    /**
+     * Set value of element
+     *
+     * @access public
+     * @param string $name key name
+     * @param mixed $value value
+     * @return mixed
+     */
+    public function set($name, $value)
+    {
+        $this->driver[$name] = $value;
+    }
+
+    /**
+     * Delete by key name
+     *
+     * @access public
+     * @param string $name key name
+     * @return mixed
+     */
+    public function delete($name)
+    {
+        if (isset($this->driver[$name])) {
+            unset($this->driver[$name]);
+        }
+    }
+
+    /**
+     * Clean all data from cache
+     *
+     * @access public
+     * @return mixed
+     */
+    public function clean()
+    {
+        $this->driver = [];
+    }
+
+    /**
+     * Summary info about cache
+     *
+     * @access public
+     * @return mixed
+     */
+    public function info()
+    {
+        return count($this->driver);
+    }
+
+    /**
+     * Get meta-data of key id
+     *
+     * @access public
+     * @param string $id key id
+     * @return mixed
+     */
+    public function getMeta($id)
+    {
+        if (isset($this->driver[$id])) {
+            return $this->get_type($this->driver[$id]);
+        }
+        return FALSE;
+    }
+
+    public function increment($name, $offset = 1)
+    {
+        $this->driver[$name] = $this->driver[$name] + $offset;
+    }
+
+    public function decrement($name, $offset = 1)
+    {
+        $this->driver[$name] = $this->driver[$name] - $offset;
+    }
 
     protected function get_type($var)
     {
@@ -29,54 +138,4 @@ class ArrayCache implements Cache
             return 'unknown';
         }
     }
-
-    public function check()
-    {
-        return $this->info() ? TRUE : FALSE;
-    }
-
-    public function get($name)
-    {
-        return isset($this->driver[$name]) ? $this->driver[$name] : FALSE;
-    }
-
-    public function set($name, $value)
-    {
-        $this->driver[$name] = $value;
-    }
-
-    public function delete($name)
-    {
-        if (isset($this->driver[$name])) {
-            unset($this->driver[$name]);
-        }
-    }
-
-    public function clean()
-    {
-        $this->driver = [];
-    }
-
-    public function info()
-    {
-        return count($this->driver);
-    }
-
-    public function getMeta($id)
-    {
-        if (isset($this->driver[$id])) {
-            return $this->get_type($this->driver[$id]);
-        }
-        return FALSE;
-    }
-
-    public function increment($name, $offset = 1)
-    {
-        $this->driver[$name] = $this->driver[$name] + $offset;
-    }
-
-    public function decrement($name, $offset = 1)
-    {
-        $this->driver[$name] = $this->driver[$name] - $offset;
-    }
-} 
+}

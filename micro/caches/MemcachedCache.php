@@ -1,10 +1,21 @@
-<?php
+<?php /** MicroMemcachedCache */
 
 namespace Micro\caches;
 
-
 use Micro\base\Exception;
 
+/**
+ * Class MemcachedCache
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage caches
+ * @version 1.0
+ * @since 1.0
+ */
 class MemcachedCache implements Cache
 {
     /** @var \Memcache|\Memcached $driver driver memcache(d) */
@@ -57,17 +68,39 @@ class MemcachedCache implements Cache
         }
     }
 
+    /**
+     * Check driver
+     *
+     * @access public
+     * @return mixed
+     */
     public function check()
     {
         return ( ! extension_loaded('memcached') && ! extension_loaded('memcache')) ? FALSE : TRUE;
     }
 
+    /**
+     * Get value by name
+     *
+     * @access public
+     * @param string $name key name
+     * @return mixed
+     */
     public function get($name)
     {
         $data = $this->driver->get($name);
         return is_array($data) ? $data[0] : $data;
     }
 
+    /**
+     * Set value of element
+     *
+     * @access public
+     * @param string $name key name
+     * @param mixed $value value
+     * @param integer $duration time duration
+     * @return mixed
+     */
     public function set($name, $value, $duration = 0)
     {
         switch (get_class($this->driver)) {
@@ -85,16 +118,35 @@ class MemcachedCache implements Cache
         }
     }
 
+    /**
+     * Delete by key name
+     *
+     * @access public
+     * @param string $name key name
+     * @return mixed
+     */
     public function delete($name)
     {
         return $this->driver->delete($name);
     }
 
+    /**
+     * Clean all data from cache
+     *
+     * @access public
+     * @return mixed
+     */
     public function clean()
     {
         return $this->driver->flush();
     }
 
+    /**
+     * Summary info about cache
+     *
+     * @access public
+     * @return mixed
+     */
     public function info()
     {
         return $this->driver->getStats();

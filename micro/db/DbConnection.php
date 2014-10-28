@@ -337,11 +337,18 @@ class DbConnection
      *
      * @access public
      * @param string $subQuery subject query
+     * @param string $table table name
      * @return bool|integer
      */
-    public function count($subQuery = '')
+    public function count($subQuery = '', $table='')
     {
-        $sth = $this->conn->query('SELECT COUNT(*) FROM (' . $subQuery . ') AS m;');
+        if ($subQuery) {
+            $sth = $this->conn->query('SELECT COUNT(*) FROM (' . $subQuery . ') AS m;');
+        } elseif ($table) {
+            $sth = $this->conn->query('SELECT COUNT(*) FROM `' . $table . '` AS m;');
+        } else {
+            return false;
+        }
         if ($sth->execute()) {
             return $sth->fetchColumn();
         }
