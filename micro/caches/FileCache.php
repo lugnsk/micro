@@ -16,8 +16,16 @@ namespace Micro\caches;
  */
 class FileCache implements Cache
 {
+    /** @var string $driver directory name */
     protected $driver;
 
+    /**
+     * Constructor
+     *
+     * @access pubic
+     * @param array $config config array
+     * @result void
+     */
     public function __construct($config = [])
     {
         $path = (isset($config['path'])) ? $config['path'] : sys_get_temp_dir() . '/cache';
@@ -109,16 +117,40 @@ class FileCache implements Cache
         return filesize($this->driver . '/' . $id);
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         $this->set($name, ((integer)$this->get($name) + $offset) );
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         $this->set($name, ((integer)$this->get($name) - $offset) );
     }
 
+    /**
+     * Clean directory
+     *
+     * @access protected
+     * @param string $dir directory to clean
+     * @param bool $deleteRootToo delete root dir?
+     * @return void
+     */
     protected function unlinkRecursive($dir, $deleteRootToo=false)
     {
         if(!$dh = @opendir($dir))

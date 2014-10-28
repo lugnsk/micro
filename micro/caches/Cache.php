@@ -77,7 +77,23 @@ interface Cache
      */
     public function getMeta($id);
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1);
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1);
 }

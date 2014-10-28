@@ -24,7 +24,14 @@ class DbCache implements Cache
     /** @var string $table table name */
     protected $table;
 
-    public function __construct($config)
+    /**
+     * Constructor
+     *
+     * @access public
+     * @param array $config config array
+     * @result void
+     */
+    public function __construct($config=[])
     {
         $this->table = 'cache';
         if (isset($config['table'])) {
@@ -125,16 +132,39 @@ class DbCache implements Cache
         return $this->getElement($id);
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         return $this->driver->update($this->table, ['value'=>'value+'.$offset], 'name="'.$name.'"');
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         return $this->driver->update($this->table, ['value'=>'value-'.$offset], 'name="'.$name.'"');
     }
 
+    /**
+     * Get element from DB
+     *
+     * @access protected
+     * @param string $name key name
+     * @return array|bool
+     */
     protected function getElement($name)
     {
         $query = new Query;

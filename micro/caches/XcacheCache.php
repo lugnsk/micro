@@ -2,6 +2,8 @@
 
 namespace Micro\caches;
 
+use Micro\base\Exception;
+
 /**
  * Class XcacheCache
  *
@@ -16,6 +18,21 @@ namespace Micro\caches;
  */
 class XcacheCache implements Cache
 {
+    /**
+     * Constructor
+     *
+     * @access public
+     * @param array $config config array
+     * @result void
+     * @throws Exception
+     */
+    public function __construct($config=[])
+    {
+        if (!$this->check()) {
+            throw new Exception('Extension XCache not installed');
+        }
+    }
+
     /**
      * Check driver
      *
@@ -92,17 +109,40 @@ class XcacheCache implements Cache
         return xcache_count(XC_TYPE_VAR);
     }
 
+    /**
+     * Get meta-data of key id
+     *
+     * @access public
+     * @param string $id key id
+     * @return mixed
+     */
     public function getMeta($id)
     {
         return FALSE;
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         $val = $this->get($name) + $offset;
         return $this->set($name, $val);
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         $val = $this->get($name) - $offset;
