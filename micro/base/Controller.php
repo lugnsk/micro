@@ -44,10 +44,13 @@ abstract class Controller
     public function __construct()
     {
         if ($module = Registry::get('request')->getModules()) {
-            $path = Micro::getInstance()->config['AppDir'] . $module . '/' . ucfirst(basename($module)) . 'Module.php';
+            $app = Micro::getInstance()->config['AppDir'];
+            $path = $app . str_replace('\\','/', $module) . '/' .
+                ucfirst(basename(str_replace('\\','/', $module))) . 'Module.php';
 
             if (file_exists($path)) {
-                $path = substr(basename($path), 0, -4);
+                $path = str_replace($app, 'App', $path);
+                $path = substr(str_replace('/', '\\', $path), 0, -4);
                 self::$module = new $path();
             }
         }

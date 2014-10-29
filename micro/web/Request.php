@@ -160,7 +160,7 @@ class Request
         }
 
         $str = array_shift($uriBlocks);
-        if (file_exists($path . '/controllers/' . ucfirst($str).'Controller.php' )) {
+        if (file_exists(str_replace('\\' , '/' , $path . '/controllers/' . ucfirst($str).'Controller.php' ))) {
             $this->controller = $str;
         } else {
             $this->controller = 'default';
