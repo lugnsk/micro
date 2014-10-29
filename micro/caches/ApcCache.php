@@ -18,6 +18,14 @@ use Micro\base\Exception;
  */
 class ApcCache implements Cache
 {
+    /**
+     * Constructor
+     *
+     * @access public
+     * @param array $config config array
+     * @result void
+     * @throws Exception
+     */
     public function __construct($config = [])
     {
         if (!$this->check()) {
@@ -131,11 +139,27 @@ class ApcCache implements Cache
         return [ 'expire' => $time + $ttl, 'mtime' => $time, 'data' => unserialize($data) ];
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         return apc_inc($name, $offset);
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         return apc_dec($name, $offset);

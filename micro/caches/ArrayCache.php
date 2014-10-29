@@ -2,6 +2,8 @@
 
 namespace Micro\caches;
 
+use Micro\base\Exception;
+
 /**
  * Class ArrayCache
  *
@@ -18,6 +20,15 @@ class ArrayCache implements Cache
 {
     /** @var array $driver array as driver */
     protected $driver = [];
+
+    /**
+     * @access public
+     * @param array $config array config
+     * @result void
+     */
+    public function __construct($config=[])
+    {
+    }
 
     /**
      * Check driver
@@ -106,16 +117,39 @@ class ArrayCache implements Cache
         return FALSE;
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         $this->driver[$name] = $this->driver[$name] + $offset;
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         $this->driver[$name] = $this->driver[$name] - $offset;
     }
 
+    /**
+     * Get type of var
+     *
+     * @access protected
+     * @param mixed $var any object
+     * @return string
+     */
     protected function get_type($var)
     {
         if (is_object($var)) {

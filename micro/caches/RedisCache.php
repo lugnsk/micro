@@ -21,6 +21,14 @@ class RedisCache implements Cache
     /** @var \Redis $driver driver redis */
     protected $driver;
 
+    /**
+     * Constructor
+     *
+     * @access public
+     * @param array $config config array
+     * @result void
+     * @throws Exception
+     */
     public function __construct($config = []) {
         if (!$this->check()) {
             throw new Exception('Redis not installed on system');
@@ -43,6 +51,12 @@ class RedisCache implements Cache
         }
     }
 
+    /**
+     * Destructor
+     *
+     * @access public
+     * @result void
+     */
     public function __destruct() {
         if ($this->driver) {
             $this->driver->close();
@@ -120,6 +134,13 @@ class RedisCache implements Cache
         return $this->driver->info();
     }
 
+    /**
+     * Get meta-data of key id
+     *
+     * @access public
+     * @param string $id key id
+     * @return mixed
+     */
     public function getMeta($id)
     {
         if ($value = $this->get($id)) {
@@ -128,11 +149,27 @@ class RedisCache implements Cache
         return FALSE;
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         return $this->driver->incrBy($name, $offset);
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         return $this->driver->decrBy($name, $offset);

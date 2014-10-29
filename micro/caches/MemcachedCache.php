@@ -21,6 +21,12 @@ class MemcachedCache implements Cache
     /** @var \Memcache|\Memcached $driver driver memcache(d) */
     protected $driver;
 
+    /**
+     * @access public
+     * @param array $config config array
+     * @result void
+     * @throws Exception
+     */
     public function __construct($config = [])
     {
         if (!$this->check() OR !isset($config['type'])) {
@@ -61,6 +67,12 @@ class MemcachedCache implements Cache
         }
     }
 
+    /**
+     * Destructor
+     *
+     * @access public
+     * @result void
+     */
     public function __destruct()
     {
         if ($this->driver) {
@@ -152,6 +164,13 @@ class MemcachedCache implements Cache
         return $this->driver->getStats();
     }
 
+    /**
+     * Get meta-data of key id
+     *
+     * @access public
+     * @param string $id key id
+     * @return mixed
+     */
     public function getMeta($id)
     {
         $stored = $this->driver->get($id);
@@ -163,13 +182,29 @@ class MemcachedCache implements Cache
         return ['expire' => $time + $ttl, 'mtime' => $time, 'data' => $data];
     }
 
+    /**
+     * Increment value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset increment value
+     * @return mixed
+     */
     public function increment($name, $offset = 1)
     {
         return $this->driver->increment($name, $offset);
     }
 
+    /**
+     * Decrement value
+     *
+     * @access public
+     * @param string $name key name
+     * @param int $offset decrement value
+     * @return mixed
+     */
     public function decrement($name, $offset = 1)
     {
         return $this->driver->decrement($name, $offset);
     }
-} 
+}
