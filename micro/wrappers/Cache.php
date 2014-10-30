@@ -1,6 +1,7 @@
 <?php /** MicroCacheWrapper */
 
 namespace Micro\wrappers;
+
 use Micro\base\Exception;
 
 /**
