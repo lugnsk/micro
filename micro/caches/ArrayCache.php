@@ -2,8 +2,6 @@
 
 namespace Micro\caches;
 
-use Micro\base\Exception;
-
 /**
  * Class ArrayCache
  *

@@ -2,8 +2,7 @@
 
 namespace Micro\web;
 
-use \Micro\base\Exception;
-use \Micro\base\Registry;
+use Micro\base\Exception;
 use Micro\Micro;
 
 /**

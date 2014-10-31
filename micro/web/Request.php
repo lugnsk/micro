@@ -116,6 +116,7 @@ class Request
             }
         }
         $this->extensions = strtr($this->extensions, '/', '\\');
+        return true;
     }
 
     /**
