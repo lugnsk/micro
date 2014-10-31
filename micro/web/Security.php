@@ -23,7 +23,6 @@ class Security {
      */
     public function __construct($config=[])
     {
-        die(var_dump('this'));
         $this->encodeInputVars();
     }
 
