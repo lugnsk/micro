@@ -36,6 +36,8 @@ abstract class Model extends FormModel
     protected $db = false;
     /** @var boolean $_isNewRecord is new record? */
     protected $_isNewRecord = false;
+    /** @var array $cacheRelations cached loads relations */
+    protected $cacheRelations = [];
 
 
     /**
@@ -89,6 +91,48 @@ abstract class Model extends FormModel
         $query->objectName = get_called_class();
         $query->single = $single;
         return $query->run();
+    }
+
+    /**
+     * Relations for model
+     *
+     * @access public
+     * @return Relations
+     * ]
+     */
+    public function relations()
+    {
+        $keys = new Relations;
+        // add any keys
+        return $keys;
+    }
+
+    /**
+     * Get relation data or magic properties
+     *
+     * @access public
+     * @param string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        if ($relation = $this->relations()->get($name)) {
+            if (!isset($this->cacheRelations[$name])) {
+                $sql = new Query;
+                $sql->addWhere('`m`.`' . $relation['On'][1] . '`="' . $this->{$relation['On'][0]} . '"');
+
+                if ($relation['Where']) {
+                    $sql->addWhere($relation['Where']);
+                }
+                if ($relation['Params']) {
+                    $sql->params = $relation['Params'];
+                }
+
+                $this->cacheRelations[$name] = $relation['Model']::finder($sql, $relation['IsMany']);
+            }
+            return $this->cacheRelations[$name];
+        }
+        return $this->$name;
     }
 
     /**
