@@ -58,6 +58,10 @@ class Request
     {
         $uri = (isset($_GET['r']) OR !empty($_GET['r'])) ? $_GET['r'] : '/';
 
+        if (substr($uri, -1) == '/') {
+            $uri = substr($uri, 0, -1);
+        }
+
         $trustUri = $this->router->parse($uri, $this->getMethod());
         $uriBlocks = explode('/', $trustUri);
 
