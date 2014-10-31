@@ -65,7 +65,7 @@ class Request
         $trustUri = $this->router->parse($uri, $this->getMethod());
         $uriBlocks = explode('/', $trustUri);
 
-        if ($uri{0} == '/') {
+        if (isset($uri{0}) AND $uri{0} == '/') {
             array_shift($uriBlocks);
         }
 
