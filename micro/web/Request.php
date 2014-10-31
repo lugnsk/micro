@@ -43,6 +43,12 @@ class Request
         $this->initialize();
     }
 
+    /**
+     * Get request method
+     *
+     * @access public
+     * @return string
+     */
     public function getMethod()
     {
         return $_SERVER['REQUEST_METHOD'];
@@ -91,6 +97,7 @@ class Request
 
     /**
      * Prepare extensions
+     *
      * @access private
      * @param array $uriBlocks uri blocks from URL
      * @return bool

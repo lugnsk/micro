@@ -47,6 +47,7 @@ class GridViewWidget extends Widget
     public $keys = [];
     /** @var string $emptyText text to render if rows not found */
     public $emptyText = 'Elements not found!';
+    /** @var string $template Template render */
     public $template = '{counter}{data}{paginator}';
 
     /** @var int $rowCount summary lines */

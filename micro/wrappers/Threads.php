@@ -16,29 +16,29 @@ namespace Micro\base;
  */
 abstract class Threads
 {
-    /** @var string $name */
+    /** @var string $name thread name */
     private $name;
-    /** @var integer $pid */
+    /** @var integer $pid process ID */
     private $pid;
-    /** @var integer $puid */
+    /** @var integer $puid process UID */
     private $puid;
-    /** @var integer $guid */
+    /** @var integer $guid process GUID */
     private $guid;
-    /** @var bool $isChild */
+    /** @var bool $isChild is child */
     private $isChild = false;
-    /** @var array $internalIPCArray */
+    /** @var array $internalIPCArray Internal IPC array */
     private $internalIPCArray = [];
-    /** @var integer $internalIPCKey */
+    /** @var integer $internalIPCKey Internal IPC key */
     private $internalIPCKey;
-    /** @var integer $internalSemaphoreKey */
+    /** @var integer $internalSemaphoreKey Internal semaphore key */
     private $internalSemaphoreKey;
-    /** @var bool $isIPC */
+    /** @var bool $isIPC is IPC */
     private $isIPC = false;
-    /** @var bool $running */
+    /** @var bool $running is running */
     private $running = false;
-    /** @var string $fileIPC1 */
+    /** @var string $fileIPC1 file IPC1 */
     private $fileIPC1;
-    /** @var string $fileIPC2 */
+    /** @var string $fileIPC2 file IPC2 */
     private $fileIPC2;
 
 

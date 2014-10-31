@@ -11,7 +11,7 @@ use Micro\base\Exception;
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package Micro
+ * @package micro
  * @subpackage caches
  * @version 1.0
  * @since 1.0
@@ -22,6 +22,8 @@ class MemcachedCache implements Cache
     protected $driver;
 
     /**
+     * Constructor
+     *
      * @access public
      * @param array $config config array
      * @result void

@@ -21,6 +21,8 @@ abstract class GridColumn
 
 
     /**
+     * Constructor
+     *
      * @access public
      * @param array $params grid column configuration
      * @result void
