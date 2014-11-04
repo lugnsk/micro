@@ -93,6 +93,20 @@ class GridViewWidget extends Widget
         }
 
         if ($this->rows) {
+            if (is_object($this->rows[0]) == true) {
+                foreach ( $this->rows AS $key=>$row) {
+                    $this->rows[$key] = (array)$row;
+                    foreach($this->rows[$key] AS $num=>$val) {
+                        if (is_array($this->rows[$key][$num]) OR is_object($this->rows[$key][$num])) {
+                            unset($this->rows[$key][$num]);
+                        }
+                        if (strpos($num, 'isNewRecord') !== FALSE) {
+                            unset($this->rows[$key][$num]);
+                        }
+                    }
+                }
+            }
+
             if ($this->query) {
                 $this->query = null;
             }
