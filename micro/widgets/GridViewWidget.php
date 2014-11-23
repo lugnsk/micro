@@ -249,6 +249,7 @@ class GridViewWidget extends Widget
     {
         $result = null;
         if ($this->filters) {
+            $result .= Html::beginForm(null, 'get');
             $result .= Html::openTag('tr');
             foreach ($this->tableConfig AS $key => $row) {
                 $result .= Html::openTag('td');
@@ -256,6 +257,7 @@ class GridViewWidget extends Widget
                 $result .= Html::closeTag('td');
             }
             $result .= Html::closeTag('tr');
+            $result .= Html::endForm();
         }
         return $result;
     }
