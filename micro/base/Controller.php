@@ -67,27 +67,23 @@ abstract class Controller
     public function action($name = 'index')
     {
         $config = Micro::getInstance()->config;
-        if (isset($config['errorController']) AND (get_class($this) == $config['errorController'])) {
-            if (isset($config['errorAction']) AND $config['errorAction']) {
-                $name = $config['errorAction'];
-            }
-        }
-
         $action = 'action' . ucfirst($name);
+
         if (!method_exists($this, $action)) {
-            $action = 'action' . ucfirst($this->defaultAction);
+            $_POST['errors'][] = 'Wrong path '.$_SERVER['REQUEST_URI'];
 
-            if (!method_exists($this, $action)) {
-                if (isset($config['errorController']) AND $config['errorController']) {
-                    if (isset($config['errorAction']) AND $config['errorAction']) {
-                        /** @var Controller $cls recreate controller */
-                        $cls = new $config['errorController'];
-                        $cls->action($config['errorAction']);
-                        return;
-
-                    }
+            $errorAction = isset($config['errorAction']) ? 'action' . ucfirst($config['errorAction']) : 'actionError';
+            if (method_exists($this, $errorAction)) {
+                $action = $errorAction;
+            } else {
+                if (isset($config['errorController']) AND class_exists($config['errorController'])) {
+                    /** @var Controller $cls recreate controller */
+                    $cls = new $config['errorController'];
+                    $cls->action($errorAction);
+                    return;
+                } else {
+                    throw new Exception('Method ' . $name . ' is not declared in ' . get_class($this) . '.');
                 }
-                throw new Exception('Method ' . $name . ' is not declared in ' . get_class($this) . '.');
             }
         }
 
