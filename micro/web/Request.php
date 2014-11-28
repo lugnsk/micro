@@ -62,10 +62,10 @@ class Request
      */
     private function initialize()
     {
-        $uri = (isset($_GET['r']) OR !empty($_GET['r'])) ? $_GET['r'] : '/';
+        $uri = (isset($_GET['r']) OR !empty($_GET['r'])) ? $_GET['r'] : '/default';
 
         if (substr($uri, -1) == '/') {
-            $uri = substr($uri, 0, -1);
+            $uri = '/default';
         }
 
         $trustUri = $this->router->parse($uri, $this->getMethod());

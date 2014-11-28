@@ -48,7 +48,8 @@ class Form
      */
     public function label($model, $property, $options = [])
     {
-        return Html::label($model->getLabel($property), get_class($model) . '_' . $property, $options);
+        $element = $this->getField($model, $property);
+        return Html::label($model->getLabel($property), $element['id'], $options);
     }
 
     /**
