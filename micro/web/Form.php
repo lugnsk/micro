@@ -314,7 +314,28 @@ class Form
     }
 
     /**
-     * Render text field row
+     * Render textArea field row
+     *
+     * @access public
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     * @param array $labelOptions attribute array for label
+     * @return string
+     */
+    public function textAreaFieldRow($model, $property, $options=[], $labelOptions=[])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', ['class'=>'row']) .
+        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $this->textArea($model, $property, $options).
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render number field row
      *
      * @access public
      * @param \Micro\web\FormModel $model model

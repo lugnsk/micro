@@ -118,7 +118,9 @@ class GridViewWidget extends Widget
                 $this->rows = array_slice($this->rows, ($this->page * $this->limit), $this->limit);
             }
         } else {
-            $this->makeRows();
+            if ($this->query) {
+                $this->makeRows();
+            }
         }
 
         $this->makeTableConfig();

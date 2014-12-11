@@ -28,6 +28,8 @@ class FormWidget extends Widget
     public $type = 'text/plain';
     /** @var string $client client js code */
     public $client = '';
+    /** @var array $attributes attributes for form element */
+    public $attributes=[];
 
     /**
      * Initialize widget
@@ -38,7 +40,8 @@ class FormWidget extends Widget
     public function init()
     {
         $this->action = ($this->action) ? $this->action : $_SERVER['REQUEST_URI'];
-        echo Html::beginForm($this->action, $this->method, ['type' => $this->type]);
+        $this->attributes['type'] = $this->type;
+        echo Html::beginForm($this->action, $this->method, $this->attributes);
         return new Form;
     }
 
