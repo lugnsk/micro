@@ -4,19 +4,31 @@ namespace App\controllers;
 
 use Micro\Micro;
 use Micro\base\Registry;
+use App\components\View;
 use Micro\web\FormBuilder;
 use App\models\LoginFormModel;
 use App\components\Controller;
 
 class DefaultController extends Controller
 {
+    public function filters() {
+        return [
+            'xss'=>[
+                'class'=>'\Micro\filters\XssFilter',
+                'actions'=>['index','login','logout'],
+                'clean'=>'*'
+            ]
+        ];
+    }
     public function actionIndex()
     {
         if (Registry::get('permission')->check(1, 'open_index')) { // hack
-            Registry::get('logger')->send('notice', 'Logined user open start page');
+            //Registry::get('logger')->send('notice', 'Logined user open start page');
         }
 
-        echo $this->render('index');
+        //echo $this->render('index');
+        $v = new View;
+        return $v;
     }
 
     public function actionLogin()

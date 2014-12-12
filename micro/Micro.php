@@ -67,9 +67,6 @@ final class Micro
      */
     private function __construct($config = [])
     {
-        // Register timer
-        $this->timer = microtime(1);
-
         // Register config
         $this->config = $config;
 
@@ -97,12 +94,16 @@ final class Micro
     public function run()
     {
         $path = $this->prepareController();
+        $action = Registry::get('request')->getAction();
+
         if (!class_exists($path)) {
             if (isset($this->config['errorController']) AND $this->config['errorController']) {
                 if (!Autoload::loader($this->config['errorController'])) {
                     throw new Exception('Error controller not valid');
                 }
+
                 $path = $this->config['errorController'];
+                $action = isset($config['errorAction']) ? $config['errorAction'] : 'error';
             } else {
                 throw new Exception('ErrorController not defined or empty');
             }
@@ -110,16 +111,7 @@ final class Micro
 
         /** @var \Micro\base\Controller $mvc ModelViewController */
         $mvc = new $path;
-        $mvc->action(Registry::get('request')->getAction());
-
-        // Render timer
-        if (isset($this->config['timer']) AND $this->config['timer'] == true) {
-            die(
-                Html::openTag('div', ['class' => 'Mruntime']) .
-                (microtime(1) - $this->timer) .
-                Html::closeTag('div')
-            );
-        }
+        $mvc->action($action);
     }
 
     /**

@@ -264,19 +264,6 @@ abstract class Controller
         return $layout . $afterPath;
     }
 
-    /**
-     * Redirect user to path
-     *
-     * @access public
-     * @param string $path path to redirect
-     * @return void
-     */
-    public function redirect($path)
-    {
-        header('Location: ' . $path);
-        exit();
-    }
-
     // Styles and Scripts
 
     /**
