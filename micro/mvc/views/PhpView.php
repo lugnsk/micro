@@ -36,6 +36,23 @@ class PhpView {
         }
         return $this->renderRawData($this->renderFile($this->getViewFile($this->view), $this->params));
     }
+
+    public function renderPartial($view)
+    {
+        $lay = $this->layout;
+        $wid = $this->asWidget;
+        $wi = $this->view;
+
+        $this->layout = null;
+        $this->asWidget = false;
+        $this->view = $view;
+        $output = $this->render();
+        $this->layout = $lay;
+        $this->asWidget = $wid;
+        $this->view = $wi;
+
+        return $output;
+    }
     /**
      * Get view file
      *

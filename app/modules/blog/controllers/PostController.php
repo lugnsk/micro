@@ -3,6 +3,7 @@
 namespace App\modules\blog\controllers;
 
 use App\components\Controller;
+use App\components\View;
 use Micro\db\Query;
 use App\modules\blog\models\Blog;
 
@@ -23,10 +24,10 @@ class PostController extends Controller
         $crt2->single = true;
         $num = $crt2->run();
 
-        echo $this->render('index', [
-            'blogs' => Blog::finder($crt),
-            'pages' => ceil($num[0] / 10),
-        ]);
+        $v = new View;
+        $v->addParameter('blogs', Blog::finder($crt));
+        $v->addParameter('pages', ceil($num[0]/10));
+        return $v;
     }
 
     public function actionView()
@@ -38,7 +39,9 @@ class PostController extends Controller
         ];
         $blog = Blog::finder($crt, true);
 
-        echo $this->render('view', ['model' => $blog]);
+        $v = new View;
+        $v->addParameter('model', $blog);
+        return $v;
     }
 
     public function actionCreate()
@@ -54,7 +57,9 @@ class PostController extends Controller
             }
         }
 
-        echo $this->render('create', ['model' => $blog]);
+        $v = new View;
+        $v->addParameter('model', $blog);
+        return $v;
     }
 
     public function actionUpdate()

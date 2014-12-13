@@ -20,7 +20,7 @@ if (!$blogs) {
 } else {
     ?>
     <?php foreach ($blogs AS $blog): ?>
-        <?= Html::heading(1, Html::link($blog->name, '/blog/post/' . $blog->id)) ?>
+        <?= Html::heading(1, Html::href($blog->name, '/blog/post/' . $blog->id)) ?>
         <p><?= $blog->content ?></p>
     <?php endforeach; ?>
     <p>

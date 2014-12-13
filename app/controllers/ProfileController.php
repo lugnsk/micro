@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\components\Controller;
+use App\components\View;
 use Micro\base\Registry;
 use App\models\User;
 use Micro\db\Query;
@@ -38,6 +39,8 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        echo $this->render('index', ['user' => $user]);
+        $v = new View;
+        $v->addParameter('user',$user);
+        return $v;
     }
 }

@@ -6,8 +6,8 @@ use Micro\Micro;
 use Micro\base\Registry;
 use App\components\View;
 use Micro\web\FormBuilder;
-use App\models\LoginFormModel;
 use App\components\Controller;
+use App\models\LoginFormModel;
 
 class DefaultController extends Controller
 {
@@ -26,9 +26,7 @@ class DefaultController extends Controller
             //Registry::get('logger')->send('notice', 'Logined user open start page');
         }
 
-        //echo $this->render('index');
-        $v = new View;
-        return $v;
+        return new View;
     }
 
     public function actionLogin()
@@ -49,7 +47,10 @@ class DefaultController extends Controller
                 $this->redirect('/profile');
             }
         }
-        echo $this->render('login', ['form' => $form]);
+
+        $v = new View;
+        $v->addParameter('form', $form);
+        return $v;
     }
 
     public function actionLogout()

@@ -3,23 +3,26 @@
 namespace App\controllers;
 
 use App\components\Controller;
+use App\components\View;
 use App\models\User;
 
 class RegisterController extends Controller
 {
     public function actionIndex()
     {
-        echo $this->render('index', ['model' => new User]);
+        $v = new View;
+        $v->addParameter('model', new User);
+        return $v;
     }
 
     public function actionSuccess()
     {
-        echo $this->render('success');
+        return new View;
     }
 
     public function actionError()
     {
-        echo $this->render('error');
+        return new View;
     }
 
     public function actionPost()
