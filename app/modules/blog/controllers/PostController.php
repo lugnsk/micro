@@ -2,11 +2,10 @@
 
 namespace App\modules\blog\controllers;
 
+use App\modules\blog\models\Blog;
 use App\components\Controller;
 use App\components\View;
 use Micro\db\Query;
-use App\modules\blog\models\Blog;
-
 
 class PostController extends Controller
 {

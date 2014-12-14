@@ -8,6 +8,7 @@ use Micro\base\Registry;
 
 abstract class Controller
 {
+    public $asWidget = false;
     public $module;
     public $layout;
 
@@ -55,6 +56,14 @@ abstract class Controller
         }
         echo $view;
     }
+
+    /**
+     * Get action class by name
+     *
+     * @access public
+     * @param string $name action name
+     * @return bool
+     */
     public function getActionClassByName($name) {
         if (method_exists($this, 'actions')) {
             $actions = $this->actions();

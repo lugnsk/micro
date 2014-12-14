@@ -1,9 +1,9 @@
 <?php
 
-use \Micro\wrappers\Html;
-
 /** @var \App\modules\blog\models\Blog $model */
 
-echo Html::href('назад', '/blog/post');
+use \Micro\wrappers\Html;
+
+echo Html::href('Назад', '/blog/post');
 echo Html::heading(1, $model->name);
 echo Html::openTag('p'), $model->content, Html::closeTag('p');

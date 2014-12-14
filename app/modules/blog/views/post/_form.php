@@ -1,4 +1,5 @@
 <?php
+
 use Micro\wrappers\Html;
 
 /** @var \App\modules\Blog\models\Blog $model */

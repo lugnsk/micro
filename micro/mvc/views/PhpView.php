@@ -8,18 +8,24 @@ use Micro\base\Registry;
 use Micro\wrappers\Html;
 use Micro\base\Exception;
 
-class PhpView {
-    public $asWidget = false;
-    public $widgetStack = [];
-    public $styleScripts = [];
-
+class PhpView implements View {
+    public $asWidget=false;
     public $layout;
     public $view;
     public $path;
 
+    public $styleScripts = [];
     public $params=[];
     public $data='';
 
+    /**
+     * Add parameter into view
+     *
+     * @access public
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function addParameter($name, $value) {
         $this->params[$name] = $value;
     }
@@ -40,19 +46,17 @@ class PhpView {
     public function renderPartial($view)
     {
         $lay = $this->layout;
-        $wid = $this->asWidget;
         $wi = $this->view;
 
         $this->layout = null;
-        $this->asWidget = false;
         $this->view = $view;
         $output = $this->render();
         $this->layout = $lay;
-        $this->asWidget = $wid;
         $this->view = $wi;
 
         return $output;
     }
+
     /**
      * Get view file
      *
@@ -72,8 +76,8 @@ class PhpView {
         }
 
         $cl = strtolower(dirname(strtr($calledClass, '\\', '/')));
-
         $cl = substr($cl, strpos($cl, '/'));
+
         if ($this->asWidget) {
             $path .= $cl . '/views/' . $view . '.php';
         } else {
@@ -95,7 +99,7 @@ class PhpView {
     protected function renderRawData($data = '')
     {
         $layoutPath = null;
-        if (!$this->asWidget AND $this->layout) {
+        if ($this->layout) {
             $layoutPath = $this->getLayoutFile(
                 Micro::getInstance()->config['AppDir'],
                 Registry::get('request')->getModules()
@@ -244,82 +248,6 @@ class PhpView {
             'isHead' => $isHead,
             'body' => Html::cssFile($source)
         ];
-    }
-
-    /**
-     * Render a widget
-     *
-     * @access public
-     * @param string $name widget name
-     * @param array $options widget options
-     * @param bool $capture capture output?
-     * @return mixed
-     * @throws Exception
-     */
-    public function widget($name, $options = [], $capture = false)
-    {
-        if (!class_exists($name)) {
-            throw new Exception('Widget ' . $name . ' not found.');
-        }
-
-        /** @var \Micro\base\Widget $widget widget */
-        $widget = new $name($options);
-        $widget->init();
-
-        if ($capture) {
-            ob_start();
-            $widget->run();
-            $result = ob_get_clean();
-        } else {
-            $widget->run();
-            $result = null;
-        }
-        unset($widget);
-        return $result;
-    }
-    /**
-     * Start render widget
-     *
-     * @access public
-     * @param string $name widget name
-     * @param array $options widget options
-     * @return mixed
-     * @throws Exception
-     */
-    public function beginWidget($name, $options = [])
-    {
-        if (!class_exists($name)) {
-            throw new Exception('Widget ' . $name . ' not found.');
-        }
-
-        if (isset($GLOBALS['widgetStack'][$name])) {
-            throw new Exception('This widget (' . $name . ') already started!');
-        }
-
-        /** @var \Micro\base\Widget $GLOBALS ['widgetStack'][$name] widget */
-        $GLOBALS['widgetStack'][$name] = new $name($options);
-        return $GLOBALS['widgetStack'][$name]->init();
-    }
-    /**
-     * End of widget
-     *
-     * @access public
-     * @param string $name widget name
-     * @return void
-     * @throws Exception
-     */
-    public function endWidget($name)
-    {
-        if (!class_exists($name) OR !isset($GLOBALS['widgetStack'][$name])) {
-            throw new Exception('Widget ' . $name . ' not started.');
-        }
-
-        /** @var \Micro\base\Widget $widget widget */
-        $widget = $GLOBALS['widgetStack'][$name];
-        unset($GLOBALS['widgetStack'][$name]);
-
-        $widget->run();
-        unset($widget);
     }
 
     public function __toString() {

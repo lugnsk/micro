@@ -4,5 +4,4 @@
 
 echo \Micro\wrappers\Html::heading(1, 'Создание статьи');
 
-//$this->addParameter('model', $model);
 echo $this->renderPartial('_form');

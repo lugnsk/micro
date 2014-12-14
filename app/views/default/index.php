@@ -1,7 +1,7 @@
 <?php
 use \Micro\wrappers\Html;
 
-/** @var \App\controllers\DefaultController $this */
+/** @var \App\components\View $this */
 $this->title .= ' - Главная';
 ?>
 <?= Html::heading(1, 'Simple app') ?>

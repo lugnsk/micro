@@ -2,7 +2,7 @@
 
 use \Micro\wrappers\Html;
 
-/** @var App\controllers\RegisterController $this */
+/** @var App\components\View $this */
 /** @var App\models\User $model */
 
 echo Html::heading(2, 'Регистрация');

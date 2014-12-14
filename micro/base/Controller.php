@@ -90,6 +90,8 @@ abstract class Controller
         $this->$action();
     }
 
+    // Renders
+
     /**
      * Render partial a view
      *
@@ -111,7 +113,6 @@ abstract class Controller
 
         return $output;
     }
-
     /**
      * Render insert data into view
      *
@@ -127,7 +128,6 @@ abstract class Controller
         }
         return $this->renderRawData($this->renderFile($this->getViewFile($view), $data));
     }
-
     /**
      * Render raw data in layout
      *
@@ -152,6 +152,8 @@ abstract class Controller
         }
         return $data;
     }
+
+    // Private elements
 
     /**
      * Get view file
@@ -183,7 +185,6 @@ abstract class Controller
         }
         return $path;
     }
-
     /**
      * Render file by path
      *
@@ -207,7 +208,6 @@ abstract class Controller
 
         return ob_get_clean();
     }
-
     /**
      * Insert styles and scripts into cache
      *
@@ -240,7 +240,6 @@ abstract class Controller
 
         return $result;
     }
-
     /**
      * Get layout path
      *
@@ -281,7 +280,6 @@ abstract class Controller
             'body' => Html::script($source)
         ];
     }
-
     /**
      * Register JS file
      *
@@ -297,7 +295,6 @@ abstract class Controller
             'body' => Html::scriptFile($source)
         ];
     }
-
     /**
      * Register CSS code
      *
@@ -313,7 +310,6 @@ abstract class Controller
             'body' => Html::css($source)
         ];
     }
-
     /**
      * Register CSS file
      *
@@ -363,7 +359,6 @@ abstract class Controller
         unset($widget);
         return $result;
     }
-
     /**
      * Start render widget
      *
@@ -387,7 +382,6 @@ abstract class Controller
         $GLOBALS['widgetStack'][$name] = new $name($options);
         return $GLOBALS['widgetStack'][$name]->init();
     }
-
     /**
      * End of widget
      *

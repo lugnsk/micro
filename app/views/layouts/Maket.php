@@ -1,9 +1,10 @@
 <?php
+
 use \Micro\wrappers\Html;
 use \Micro\Micro;
 
 /** @var string $content */
-/** @var \App\components\Controller $this */
+/** @var \App\components\View $this */
 
 $this->registerScriptFile('/css/jquery.js');
 $this->registerCssFile('/css/main.css');
@@ -23,7 +24,7 @@ $this->registerCssFile('/css/main.css');
         <span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
     </div>
     <div id="content">
-        <?php $this->widget('App\widgets\MenubarWidget', ['links' => $this->menu]); ?>
+        <?php (new \App\widgets\MenubarWidget(['links' => $this->menu])); ?>
         <?= $content ?>
     </div>
     <div id="footer">

@@ -13,7 +13,7 @@ if (isset($_GET['page'])) {
 }
 
 $this->widget('App\modules\blog\widgets\TopblogsWidget');
-echo Html::href('создать', '/blog/post/create');
+echo Html::href('Создать', '/blog/post/create');
 
 if (!$blogs) {
     ?><p>Ничего не найдено</p><?php

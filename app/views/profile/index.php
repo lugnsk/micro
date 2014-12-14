@@ -1,9 +1,8 @@
-<?php
-/** @var \App\models\User $user */
-?>
-    <h1>Личный кабинет (<?= $user->login; ?>)
-        <small><?= $user->fio; ?></small>
-    </h1>
+<?php /** @var \App\models\User $user */ ?>
+
+<h1>Личный кабинет (<?= $user->login; ?>)
+    <small><?= $user->fio; ?></small>
+</h1>
 
 <?= \Micro\wrappers\Html::beginForm('', 'post', ['name' => 'Setup_form']) ?>
     <p><label for="Setup_fio">ФИО</label><input id="Setup_fio" type="text" name="Setup[fio]"/></p>
