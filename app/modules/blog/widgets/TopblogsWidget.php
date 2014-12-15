@@ -3,7 +3,7 @@
 namespace App\modules\blog\widgets;
 
 use App\components\View;
-use Micro\base\Widget;
+use Micro\mvc\Widget;
 
 class TopblogsWidget extends Widget
 {

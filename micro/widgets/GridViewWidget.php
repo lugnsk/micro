@@ -3,7 +3,7 @@
 namespace Micro\widgets;
 
 use Micro\base\Registry;
-use Micro\base\Widget;
+use Micro\mvc\Widget;
 use Micro\db\DbConnection;
 use Micro\wrappers\Html;
 
@@ -188,13 +188,20 @@ class GridViewWidget extends Widget
      */
     public function run()
     {
+        ob_start();
+        $pager = new PaginationWidget($this->paginationConfig);
+        $pager->init();
+        $pager->run();
+        $pager = ob_get_clean();
+
         $result = $this->template;
         $result = str_replace('{counter}', $this->renderCounter(), $result);
         $result = str_replace(
             '{paginator}',
-            $this->widget('Micro\widgets\PaginationWidget', $this->paginationConfig, true),
+            $pager,
             $result
         );
+
 
         $table = Html::openTag('table', $this->attributes);
         $table .= $this->renderHeading();

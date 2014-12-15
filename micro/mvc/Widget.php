@@ -1,62 +1,44 @@
-<?php
+<?php /** MicroWidget */
 
 namespace Micro\mvc;
 
-use Micro\base\Exception;
-
-class Widget {
-    public function widget($name, $options = [], $capture = false)
+/**
+ * Class Controller
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage mvc
+ * @version 1.0
+ * @since 1.0
+ */
+abstract class Widget
+{
+    /**
+     * Constructor for widgets
+     *
+     * @access public
+     * @param array $args arguments array
+     * @result void
+     */
+    public function __construct($args = [])
     {
-        if (!class_exists($name)) {
-            throw new Exception('Widget ' . $name . ' not found.');
+        foreach ($args AS $name => $value) {
+            $this->$name = $value;
         }
-
-        /** @var \Micro\base\Widget $widget widget */
-        $widget = new $name($options);
-        $widget->init();
-
-        if ($capture) {
-            ob_start();
-            $widget->run();
-            $result = ob_get_clean();
-        } else {
-            $result = $widget->run();
-        }
-
-        $result->asWidget = true;
-
-        unset($widget);
-        echo $result;
     }
-    public function beginWidget($name, $options=[])
-    {
-        if (!class_exists($name)) {
-            throw new Exception('Widget ' . $name . ' not found.');
-        }
 
-        if (isset($GLOBALS['widgetStack'][$name])) {
-            throw new Exception('This widget (' . $name . ') already started!');
-        }
+    /**
+     * Initialize widget
+     * @abstract
+     */
+    abstract public function init();
 
-        /** @var \Micro\base\Widget $GLOBALS ['widgetStack'][$name] widget */
-        $GLOBALS['widgetStack'][$name] = new $name($options);
-        return $GLOBALS['widgetStack'][$name]->init();
-    }
-    public function endWidget($name)
-    {
-        if (!class_exists($name) OR !isset($GLOBALS['widgetStack'][$name])) {
-            throw new Exception('Widget ' . $name . ' not started.');
-        }
-
-        /** @var \Micro\base\Widget $widget widget */
-        $widget = $GLOBALS['widgetStack'][$name];
-        unset($GLOBALS['widgetStack'][$name]);
-
-        $v = $widget->run();
-        unset($widget);
-
-        $v->asWidget = true;
-
-        echo $v;
-    }
+    /**
+     * Run widget
+     * @abstract
+     */
+    abstract public function run();
 }

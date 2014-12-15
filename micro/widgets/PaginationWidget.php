@@ -2,7 +2,7 @@
 
 namespace Micro\widgets;
 
-use Micro\base\Widget;
+use Micro\mvc\Widget;
 use Micro\wrappers\Html;
 
 /**

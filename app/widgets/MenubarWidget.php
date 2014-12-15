@@ -3,7 +3,7 @@
 namespace App\widgets;
 
 use App\components\View;
-use Micro\base\Widget;
+use Micro\mvc\Widget;
 
 class MenubarWidget extends Widget
 {
@@ -13,10 +13,11 @@ class MenubarWidget extends Widget
 
     public function run()
     {
-        //echo $this->render('menubar');
         $v = new View;
+        $v->path = get_class($this);
         $v->view = 'menubar';
-        $v->asWidget = true; //die(var_dump($v));
+        $v->asWidget = true;
+
         return $v;
     }
 }

@@ -1,17 +1,38 @@
-<?php
+<?php /** MicroController */
 
 namespace Micro\mvc;
 
-use Micro\base\Exception;
 use Micro\Micro;
 use Micro\base\Registry;
+use Micro\base\Exception;
 
+/**
+ * Class Controller
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/antivir88/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage mvc
+ * @version 1.0
+ * @since 1.0
+ */
 abstract class Controller
 {
+    /** @var bool $asWidget */
     public $asWidget = false;
+    /** @var string $module */
     public $module;
+    /** @var string $layout */
     public $layout;
 
+    /**
+     * Constructor controller
+     *
+     * @access public
+     * @result void
+     */
     public function __construct()
     {
         // if module defined
@@ -28,6 +49,15 @@ abstract class Controller
             }
         }
     }
+
+    /**
+     * Run action
+     *
+     * @access public
+     * @param string $name action name
+     * @return void
+     * @throws Exception
+     */
     public function action($name = 'index')
     {
         $view = null;
@@ -86,5 +116,4 @@ abstract class Controller
         header('Location: ' . $path);
         exit();
     }
-
 }

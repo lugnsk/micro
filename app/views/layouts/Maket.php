@@ -24,7 +24,7 @@ $this->registerCssFile('/css/main.css');
         <span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
     </div>
     <div id="content">
-        <?php (new \App\widgets\MenubarWidget(['links' => $this->menu])); ?>
+        <?= $this->widget('\App\widgets\MenubarWidget', ['links' => $this->menu]); ?>
         <?= $content ?>
     </div>
     <div id="footer">

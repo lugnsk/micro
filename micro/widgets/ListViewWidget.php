@@ -3,7 +3,7 @@
 namespace Micro\widgets;
 
 use Micro\base\Exception;
-use Micro\base\Widget;
+use Micro\mvc\Widget;
 use Micro\db\Query;
 use Micro\Micro;
 use Micro\wrappers\Html;
@@ -24,7 +24,7 @@ class ListViewWidget extends Widget
 {
     /** @var string $query query to database */
     public $query = null;
-    /** @var \Micro\base\Controller $controller caller controller */
+    /** @var \Micro\mvc\Controller $controller caller controller */
     public $controller = null;
     /** @var string $view Name of view file */
     public $view = null;
@@ -104,6 +104,11 @@ class ListViewWidget extends Widget
             }
         }
         echo Html::closeTag('ul');
-        echo $this->widget('Micro\widgets\PaginationWidget', $this->paginationConfig);
+
+        ob_start();
+        $pager = new PaginationWidget($this->paginationConfig);
+        $pager->init();
+        $pager->run();
+        echo ob_get_clean();
     }
 }

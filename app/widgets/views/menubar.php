@@ -1,3 +1,3 @@
 <?= \Micro\wrappers\Html::openTag('div', ['class' => 'menu']) ?>
-<?= implode(' ', $this->links) ?>
+<?= implode(' ', $this->menu) ?>
 <?= \Micro\wrappers\Html::closeTag('div') ?>

@@ -4,7 +4,7 @@ namespace Micro\widgets;
 
 use Micro\base\Exception;
 use Micro\base\Registry;
-use Micro\base\Widget;
+use Micro\mvc\Widget;
 use Micro\db\Model;
 use Micro\db\Query;
 use Micro\wrappers\Html;
