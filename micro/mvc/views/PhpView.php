@@ -84,13 +84,13 @@ class PhpView extends View {
     /**
      * Render raw data in layout
      *
-     * @access protected
+     * @access public
      * @global Micro
      * @global Registry
      * @param string $data arguments array
      * @return string
      */
-    protected function renderRawData($data = '')
+    public function renderRawData($data = '')
     {
         $layoutPath = null;
         if ($this->layout) {
