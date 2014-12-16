@@ -80,8 +80,8 @@ abstract class Controller
         // @TODO: post filters
 
         if (is_object($view)) {
-            $view->layout = $this->layout;
-            $view->view = $name;
+            $view->layout = (!$view->layout) ? $this->layout : $view->layout;
+            $view->view = (!$view->view) ? $name : $view->name;
             $view->path = get_called_class();
         }
         echo $view;

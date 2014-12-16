@@ -35,7 +35,9 @@ class PhpView extends View {
         if (empty($this->view)) {
             return false;
         }
-        return $this->renderRawData($this->renderFile($this->getViewFile($this->view), $this->params));
+        return $this->renderRawData(
+            ($this->data) ? $this->data : $this->renderFile($this->getViewFile($this->view), $this->params)
+        );
     }
     /**
      * Render partial
