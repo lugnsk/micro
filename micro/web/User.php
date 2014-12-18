@@ -30,6 +30,18 @@ class User
     }
 
     /**
+     * Set User ID
+     *
+     * @access public
+     * @param mixed $id user id
+     * @return void
+     */
+    public function setID($id)
+    {
+        Registry::get('session')->UserID = $id;
+    }
+
+    /**
      * Get user ID
      *
      * @access public

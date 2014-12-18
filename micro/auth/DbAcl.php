@@ -60,9 +60,10 @@ class DbAcl extends Acl
      * @access public
      * @param integer $userId user id
      * @param string $permission checked permission
+     * @param array $data for compatible, not used!
      * @return bool
      */
-    public function check($userId, $permission)
+    public function check($userId, $permission, $data=[])
     {
         $query = new Query;
         $query->select = '*';
