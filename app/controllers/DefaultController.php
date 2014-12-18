@@ -11,7 +11,8 @@ use App\models\LoginFormModel;
 
 class DefaultController extends Controller
 {
-    public function filters() {
+    public function filters()
+    {
         return [
             'xss'=>[
                 'class'=>'\Micro\filters\XssFilter',
@@ -20,6 +21,7 @@ class DefaultController extends Controller
             ]
         ];
     }
+
     public function actionIndex()
     {
         if (Registry::get('permission')->check(1, 'open_index')) { // hack
@@ -50,6 +52,19 @@ class DefaultController extends Controller
 
         $v = new View;
         $v->addParameter('form', $form);
+        return $v;
+    }
+
+    public function actionError()
+    {
+        $result = null;
+        if (isset($_POST['errors'])) {
+            foreach ($_POST['errors'] AS $err) {
+                $result .= '<h3 class="text-danger bg-danger">'.$err.'</h3>';
+            }
+        }
+        $v = new View;
+        $v->data = $result ? $result : 'undefined error';
         return $v;
     }
 
