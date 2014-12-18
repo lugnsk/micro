@@ -1,5 +1,8 @@
 <?php
 
+// Activate error page
+//define('DEBUG_MICRO', true);
+
 // Configs
 $config = require '../app/config.php';
 
