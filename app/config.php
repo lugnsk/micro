@@ -41,6 +41,10 @@ return [
         'files' => [
             'class' => '\Micro\web\Uploader'
         ],
+        // Cookie's
+        'cookie' => [
+            'class' => '\Micro\web\Cookie'
+        ],
         // Default session
         'session' => [
             'class' => '\Micro\web\Session',

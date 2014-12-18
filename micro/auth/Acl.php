@@ -76,7 +76,8 @@ abstract class Acl
      * @access public
      * @param integer $userId user id
      * @param string $permission checked permission
+     * @param array $data for compatible, not used!
      * @return bool
      */
-    abstract public function check($userId, $permission);
+    abstract public function check($userId, $permission, $data=[]);
 }
