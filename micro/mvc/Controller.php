@@ -70,7 +70,6 @@ abstract class Controller
         }
         $filters = method_exists($this, 'filters') ? $this->filters() : null;
 
-        // @TODO: pre filters
         $this->applyFilters($name, true, $filters, null);
 
         if ($actionClass) {
@@ -86,7 +85,6 @@ abstract class Controller
             $view->path = get_called_class();
         }
 
-        // @TODO: post filters
         echo $this->applyFilters($name, false, $filters, $view);
     }
 
