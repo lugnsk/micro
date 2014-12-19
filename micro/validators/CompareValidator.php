@@ -53,10 +53,10 @@ class CompareValidator extends Validator
                 return false;
             }
             $elementValue = $model->$element;
-            if ($this->params['value'] AND ($this->params['value'] != $elementValue)) {
+            if (isset($this->params['value']) AND ($this->params['value'] != $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $this->params['value'];
                 return false;
-            } elseif ($this->params['attribute'] AND ($model->{$this->params['attribute']} != $elementValue)) {
+            } elseif (isset($this->params['attribute']) AND ($model->{$this->params['attribute']} != $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $model->{$this->params['attribute']};
                 return false;
             }

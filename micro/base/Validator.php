@@ -89,7 +89,7 @@ class Validator
      */
     public function run($model, $client = false)
     {
-        $elements = explode(',', strtr(array_shift($this->rule), ' ', ''));
+        $elements = explode(',', str_replace(' ', '', array_shift($this->rule)));
         $name = array_shift($this->rule);
         $className = null;
 
