@@ -14,6 +14,10 @@ class DefaultController extends Controller
     public function filters()
     {
         return [
+            'csrf'=>[
+                'class'=>'\Micro\filters\CsrfFilter',
+                'actions'=>['login']
+            ],
             'xss'=>[
                 'class'=>'\Micro\filters\XssFilter',
                 'actions'=>['index','login','logout'],

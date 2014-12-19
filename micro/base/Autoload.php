@@ -68,8 +68,8 @@ class Autoload
         if (!file_exists($path)) {
             return false;
         }
-        require $path;
 
+        require_once $path;
         return true;
     }
 }

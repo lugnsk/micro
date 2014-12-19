@@ -85,7 +85,7 @@ abstract class Controller
             $view->path = get_called_class();
         }
 
-        echo $this->applyFilters($name, false, $filters, $view);
+        echo $this->applyFilters($name, false, $filters, $view->__toString());
     }
 
     /**
@@ -107,16 +107,14 @@ abstract class Controller
             if (!isset($filter['class']) OR !class_exists($filter['class'])) {
                 continue;
             }
-            if (!isset($filter['action']) OR !in_array($action, $filter['action'])) {
+            if (!isset($filter['actions']) OR !in_array($action, $filter['actions'])) {
                 continue;
             }
 
             /** @var \Micro\filters\Filter $_filter */
             $_filter = new $filter['class'];
-            unset($filter['class']);
 
             $res = $isPre ? $_filter->pre( $filter ) : $_filter->post( $filter + ['data'=>$data] );
-
             if (!$res) {
                 throw new Exception( $_filter->result );
             }
