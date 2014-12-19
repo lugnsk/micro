@@ -71,20 +71,60 @@ abstract class Controller
         $filters = method_exists($this, 'filters') ? $this->filters() : null;
 
         // @TODO: pre filters
+        $this->applyFilters($name, true, $filters, null);
+
         if ($actionClass) {
             $cl = new $actionClass;
             $view = $cl->run();
         } else {
             $view = $this->{'action' . ucfirst($name)}();
         }
-        // @TODO: post filters
 
         if (is_object($view)) {
             $view->layout = (!$view->layout) ? $this->layout : $view->layout;
             $view->view = (!$view->view) ? $name : $view->name;
             $view->path = get_called_class();
         }
-        echo $view;
+
+        // @TODO: post filters
+        echo $this->applyFilters($name, false, $filters, $view);
+    }
+
+    /**
+     * Apply filters
+     *
+     * @access public
+     * @param string $action current action name
+     * @param bool $isPre is pre or post
+     * @param array $filters defined filters
+     * @param string $data data to parse
+     * @return null|string
+     * @throws Exception error on filter
+     */
+    public function applyFilters($action, $isPre=true, $filters=[], $data=null) {
+        if (!$filters) {
+            return $data;
+        }
+        foreach ($filters AS $filter) {
+            if (!isset($filter['class']) OR !class_exists($filter['class'])) {
+                continue;
+            }
+            if (!isset($filter['action']) OR !in_array($action, $filter['action'])) {
+                continue;
+            }
+
+            /** @var \Micro\filters\Filter $_filter */
+            $_filter = new $filter['class'];
+            unset($filter['class']);
+
+            $res = $isPre ? $_filter->pre( $filter ) : $_filter->post( $filter + ['data'=>$data] );
+
+            if (!$res) {
+                throw new Exception( $_filter->result );
+            }
+            $data = $res;
+        }
+        return $data;
     }
 
     /**

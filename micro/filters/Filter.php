@@ -3,7 +3,7 @@
 namespace Micro\filters;
 
 /**
- * Filter interface file.
+ * Filter class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -14,8 +14,10 @@ namespace Micro\filters;
  * @version 1.0
  * @since 1.0
  */
-interface Filter
+abstract class Filter
 {
+    public $result;
+
     /**
      * PreFilter
      *
@@ -23,7 +25,7 @@ interface Filter
      * @param array $params checked items and other params
      * @return boolean
      */
-    public function pre(array $params);
+    abstract public function pre(array $params);
 
     /**
      * PostFilter
@@ -32,5 +34,5 @@ interface Filter
      * @param array $params checked items and other params
      * @return mixed
      */
-    public function post(array $params);
+    abstract public function post(array $params);
 }

@@ -14,7 +14,7 @@ namespace Micro\filters;
  * @version 1.0
  * @since 1.0
  */
-class AccessFilter implements Filter
+class AccessFilter extends Filter
 {
     /**
      * PreFilter
@@ -25,7 +25,7 @@ class AccessFilter implements Filter
      */
     public function pre(array $params)
     {
-        // TODO: Implement pre() method.
+        return true;
     }
 
     /**
@@ -37,6 +37,6 @@ class AccessFilter implements Filter
      */
     public function post(array $params)
     {
-        // TODO: Implement post() method.
+        return $params['data'];
     }
 }

@@ -10,7 +10,7 @@ namespace Micro\filters;
  * @subpackage filters
  * @version 0.0.1
  */
-class XssFilter implements Filter
+class XssFilter extends Filter
 {
     /**
      * PreFilter
@@ -48,17 +48,17 @@ class XssFilter implements Filter
      *
      * @access public
      * @param array $params checked items and other params
-     * @return void
+     * @return string
      */
     public function post(array $params) {
-        // not
+        return $params['data'];
     }
 
     /**
      * Do XSS Clean
      *
      * @access private
-     * @param $data data for check
+     * @param array $data data for check
      * @return mixed
      */
     private function doXssClean(&$data) {
