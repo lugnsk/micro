@@ -103,15 +103,15 @@ class AccessFilter extends Filter
      */
     protected function matchRole($rule) {
         if (isset($rule['roles']) AND $rule['roles']) {
-            if (is_array($rule['role'])) {
-                foreach ($rule['role'] AS $role) {
+            if (is_array($rule['roles'])) {
+                foreach ($rule['roles'] AS $role) {
                     if (!Registry::get('user')->check($role)) {
                         return false;
                     }
                 }
                 return true;
             } else {
-                return Registry::get('user')->check($rule['role']);
+                return Registry::get('user')->check($rule['roles']);
             }
         }
         return true;
