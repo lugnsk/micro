@@ -63,7 +63,7 @@ class User
     public function check($permission, $data = [])
     {
         if (!$this->isGuest()) {
-            return Registry::get('permissions')->check($this->getID(), $permission, $data);
+            return Registry::get('permission')->check($this->getID(), $permission, $data);
         } else {
             return false;
         }

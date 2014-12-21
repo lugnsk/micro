@@ -20,6 +20,17 @@ use Micro\base\Registry;
 class AccessFilter extends Filter
 {
     /**
+     * PostFilter
+     *
+     * @access public
+     * @param array $params checked items and other params
+     * @return mixed
+     */
+    public function post(array $params)
+    {
+        return $params['data'];
+    }
+    /**
      * PreFilter
      *
      * @access public
@@ -44,18 +55,6 @@ class AccessFilter extends Filter
     }
 
     /**
-     * PostFilter
-     *
-     * @access public
-     * @param array $params checked items and other params
-     * @return mixed
-     */
-    public function post(array $params)
-    {
-        return $params['data'];
-    }
-
-    /**
      * Check one rule
      *
      * @access protected
@@ -64,18 +63,18 @@ class AccessFilter extends Filter
      */
     protected function checkRule(array $rule)
     {
-        if ($this->matchAction($rule)
-            && $this->matchRole($rule)
-            && $this->matchUser($rule)
-            && $this->matchIP($rule)
-            && $this->matchVerb($rule)
+        if (
+               $this->matchAction($rule)
+            AND $this->matchUser($rule)
+            AND $this->matchRole($rule)
+            AND $this->matchIP($rule)
+            AND $this->matchVerb($rule)
         ) {
-            return (array_shift($rule)==='allow') ? true : false;
+            return $rule['allow'];
         } else {
             return NULL;
         }
     }
-
     /**
      * Match action
      *
@@ -84,39 +83,15 @@ class AccessFilter extends Filter
      * @return bool
      */
     protected function matchAction($rule) {
-        if (isset($rule['actions']) and $rule['actions']) {
-            if (is_array($rule['actions'])) {
-                return in_array($this->action, $rule['actions']);
-            } else {
-                return $rule['actions']==$this->action;
-            }
+        if (!isset($rule['actions']) OR !$rule['actions']) {
+            return true;
         }
-        return true;
-    }
-
-    /**
-     * Match role
-     *
-     * @access protected
-     * @param array $rule rule definition
-     * @return bool
-     */
-    protected function matchRole($rule) {
-        if (isset($rule['roles']) AND $rule['roles']) {
-            if (is_array($rule['roles'])) {
-                foreach ($rule['roles'] AS $role) {
-                    if (!Registry::get('user')->check($role)) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return Registry::get('user')->check($rule['roles']);
-            }
+        if (is_array($rule['actions'])) {
+            return in_array($this->action, $rule['actions']);
+        } else {
+            return $this->action==$rule['actions'];
         }
-        return true;
     }
-
     /**
      * Match user
      *
@@ -125,30 +100,52 @@ class AccessFilter extends Filter
      * @return bool
      */
     protected function matchUser($rule) {
-        $user = Registry::get('user');
-
-        if (isset($rule['users']) AND $rule['users']) {
-            if (is_array($rule['users'])) {
-                foreach ($rule['users'] AS $u) {
-                    switch ($u) {
-                        case '*': { return true;                           }
-                        case '?': { return $user->isGuest();               }
-                        case '@': { return !$user->isGuest();              }
-                        default:  { return $user->getID()==$rule['users']; }
-                    }
-                }
-            } else {
-                switch ($rule['users']) {
-                    case '*': { return true;                           }
-                    case '?': { return $user->isGuest();               }
-                    case '@': { return !$user->isGuest();              }
-                    default:  { return $user->getID()==$rule['users']; }
+        if (!isset($rule['users']) OR !$rule['users']) {
+            return true;
+        }
+        if (is_array($rule['users'])) {
+            foreach ($rule['users'] AS $u) {
+                switch ($u) {
+                    case '*': { return true; }
+                    case '?': { if (Registry::get('user')->isGuest()) return true; break; }
+                    case '@': { if (!Registry::get('user')->isGuest()) return true; break; }
+                    default:  { if (Registry::get('user')->getID()==$rule['users']) return true; }
                 }
             }
+        } else {
+            switch ($rule['users']) {
+                case '*': { return true; }
+                case '?': { if (Registry::get('user')->isGuest()) return true; break; }
+                case '@': { if (!Registry::get('user')->isGuest()) return true; break; }
+                default:  { if (Registry::get('user')->getID()==$rule['users']) return true; }
+            }
         }
-        return true;
+        return false;
     }
-
+    /**
+     * Match role
+     *
+     * @access protected
+     * @param array $rule rule definition
+     * @return bool
+     */
+    protected function matchRole($rule) {
+        if (!isset($rule['roles']) OR !$rule['roles']) {
+            return true;
+        }
+        if (is_array($rule['roles'])) {
+            foreach ($rule['roles'] AS $role) {
+                if (Registry::get('user')->check($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if (Registry::get('user')->check($rule['roles'])) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Match IP
      *
@@ -157,23 +154,25 @@ class AccessFilter extends Filter
      * @return bool
      */
     protected function matchIP($rule) {
+        if (!isset($rule['ips']) OR !$rule['ips']) {
+            return true;
+        }
         $ip = Registry::get('request')->getUserIP();
 
-        if (isset($rule['ips']) AND $rule['ips']) {
-            if (is_array($rule['ips'])) {
-                foreach ($rule['ips'] AS $r) {
-                    if (!($r==='*' || $r===$ip || (($pos=strpos($r, '*'))!==false && !strncmp($ip,$r,$pos)))) {
-                        return false;
-                    }
+        if (is_array($rule['ips'])) {
+            foreach ($rule['ips'] AS $r) {
+                if ($r==='*' || $r===$ip || (($pos=strpos($r, '*'))!==false && !strncmp($ip,$r,$pos))) {
+                    return true;
                 }
-            } else {
-                $r = $rule['ips'];
-                return $r==='*' || $r===$ip || (($pos=strpos($r, '*'))!==false && !strncmp($ip,$r,$pos));
+            }
+        } else {
+            $r = $rule['ips'];
+            if ($r==='*' || $r===$ip || (($pos=strpos($r, '*'))!==false && !strncmp($ip,$r,$pos))) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
-
     /**
      * Match verbose
      *
@@ -182,18 +181,19 @@ class AccessFilter extends Filter
      * @return bool
      */
     protected function matchVerb($rule){
-        $verb = Registry::get('request')->getMethod();
-        if (isset($rule['verb']) AND $rule['verb']) {
-            if (is_array($rule['verb'])) {
-                foreach ($rule['verb'] AS $v) {
-                    if (!($v==$verb)) {
-                        return false;
-                    }
-                }
-            } else {
-                return $rule['verb']==$verb;
-            }
+        if (!isset($rule['verb']) OR !$rule['verb']) {
+            return true;
         }
-        return true;
+        if (is_array($rule['verb'])) {
+            $verb = Registry::get('request')->getMethod();
+            foreach ($rule['verb'] AS $v) {
+                if ($v==$verb) {
+                    return true;
+                }
+            }
+        } else {
+            return $rule['verb']==Registry::get('request')->getMethod();
+        }
+        return false;
     }
 }

@@ -11,6 +11,7 @@ return [
     'timer' => true,
     // Language
     'lang' => 'en',
+    // Errors
     'errorController' => '\App\controllers\DefaultController',
     'errorAction' => 'error',
     // Setup components
