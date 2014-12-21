@@ -112,7 +112,7 @@ abstract class Controller
             }
 
             /** @var \Micro\filters\Filter $_filter */
-            $_filter = new $filter['class'];
+            $_filter = new $filter['class']($action);
 
             $res = $isPre ? $_filter->pre( $filter ) : $_filter->post( $filter + ['data'=>$data] );
             if (!$res) {

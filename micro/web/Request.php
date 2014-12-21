@@ -54,6 +54,11 @@ class Request
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    public function getUserIP()
+    {
+        return isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:'127.0.0.1';
+    }
+
     /**
      * Initialize request object
      *

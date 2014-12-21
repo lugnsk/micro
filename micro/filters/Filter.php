@@ -16,7 +16,15 @@ namespace Micro\filters;
  */
 abstract class Filter
 {
+    protected $action;
     public $result;
+
+    /**
+     * @param string $action current action
+     */
+    public function __construct($action) {
+        $this->action = $action;
+    }
 
     /**
      * PreFilter

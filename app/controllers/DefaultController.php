@@ -14,6 +14,31 @@ class DefaultController extends Controller
     public function filters()
     {
         return [
+            'access'=>[
+                'class'=>'\Micro\filters\AccessFilter',
+                'actions'=>['login','logout','index','error'],
+                'rules'=>[
+                    [
+                        'allow',
+                        'actions'   =>['index','error'],
+                        'users'     =>['*'],
+                        'ips'       =>['127.0.0.1','192.168.1.24'],
+                        'verb'      =>'GET',
+                        'roles'     =>['guest','user','administrator'],
+                        'message'   =>'Full pack rule defined!'
+                    ],
+                    [ 'deny',
+                        'actions'=>['login'],
+                        'users'=>['@'],
+                        'message'=>'Not authorized only'
+                    ],
+                    [ 'deny',
+                        'actions'=>['logout'],
+                        'users'=>['?'],
+                        'message'=>'Authorized only'
+                    ]
+                ]
+            ],
             'csrf'=>[
                 'class'=>'\Micro\filters\CsrfFilter',
                 'actions'=>['login']

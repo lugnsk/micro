@@ -80,18 +80,18 @@ abstract class Rbac
      *
      * @access public
      * @param integer $userId user id
-     * @param string $action acton name
+     * @param string $permission permission name
      * @param array $data action params
      * @return boolean
      */
-    public function check($userId, $action, $data = [])
+    public function check($userId, $permission, $data = [])
     {
         $tree = $this->tree($this->rawRoles());
 
         foreach ($this->assigned($userId) AS $role) {
             if ($actionRole = $this->searchRoleRecursive($tree, $role['name'])) {
-                if ($trustRole = $this->searchRoleRecursive($actionRole, $action)) {
-                    return $this->execute($trustRole[$action], $data);
+                if ($trustRole = $this->searchRoleRecursive($actionRole, $permission)) {
+                    return $this->execute($trustRole[$permission], $data);
                 }
             }
         }

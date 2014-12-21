@@ -56,14 +56,14 @@ class User
      * Check access by current user
      *
      * @access public
-     * @param string $action action to check
+     * @param string $permission permission to check
      * @param array $data arguments
      * @return bool
      */
-    public function check($action, $data = [])
+    public function check($permission, $data = [])
     {
         if (!$this->isGuest()) {
-            return Registry::get('permissions')->check($this->getID(), $action, $data);
+            return Registry::get('permissions')->check($this->getID(), $permission, $data);
         } else {
             return false;
         }
