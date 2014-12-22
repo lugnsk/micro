@@ -15,10 +15,9 @@ use Micro\base\Registry;
  * @subpackage web
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class Identity {
-    /** @var mixed $id unique id */
-    protected $id;
     /** @var string $username user name */
     public $username;
     /** @var string $password user password */
@@ -32,11 +31,9 @@ abstract class Identity {
      * @access public
      * @global Registry
      * @return bool
+     * @abstract
      */
-    public function authenticate()
-    {
-        Registry::get('user')->setID($this->getId());
-    }
+    abstract public function authenticate();
 
     /**
      * Initialize identity element
@@ -50,31 +47,37 @@ abstract class Identity {
     {
         $this->username = $username;
         $this->password = $password;
-        $this->id       = null;
         $this->error    = null;
     }
 
     /**
-     * Get user ID
+     * Add data into session
      *
      * @access public
-     * @return integer|null
-     * @final
+     * @global Registry
+     * @param string $name session parameter name
+     * @param mixed $value session parameter value
+     * @return mixed
      */
-    final public function getId() {
-        return $this->id;
+    public function addSession($name, $value) {
+        return Registry::get('session')->$name = $value;
     }
 
     /**
-     * Set Name state for a given value
+     * Add data into cookie
      *
      * @access public
      * @global Registry
      * @param string $name cookie name
-     * @param mixed $value cookie value
+     * @param mixed $value data value
+     * @param int $expire life time
+     * @param string $path path access cookie
+     * @param string $domain domain access cookie
+     * @param bool $secure use SSL?
+     * @param bool $httpOnly disable on JS?
      * @return mixed
      */
-    public function setState($name, $value) {
-        return Registry::get('cookie')->set($name, $value);
+    public function addCookie($name, $value, $expire=0, $path='/', $domain='', $secure=false, $httpOnly=true) {
+        return Registry::get('cookie')->set($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 }
