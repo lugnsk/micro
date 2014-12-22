@@ -58,6 +58,7 @@ class DbLogger extends LogInterface
      * Get connect to database
      *
      * @access public
+     * @global Registry
      * @return void
      */
     public function getConnect()

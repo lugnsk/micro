@@ -11,6 +11,8 @@ namespace Micro\wrappers;
  * @package micro
  * @subpackage wrappers
  * @version 1.0
+ * @since 1.0
+ * @final
  */
 final class Ftp
 {

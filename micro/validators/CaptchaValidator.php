@@ -28,6 +28,7 @@ class CaptchaValidator extends Validator
      * Constructor validator
      *
      * @access public
+     * @global Registry
      * @param array $rule validation rule
      * @result void
      */
@@ -42,6 +43,7 @@ class CaptchaValidator extends Validator
      * Validate on server, make rule
      *
      * @access public
+     * @global Registry
      * @param Model $model checked model
      * @return bool
      */

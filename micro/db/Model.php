@@ -83,6 +83,7 @@ abstract class Model extends FormModel
      * @param Query $query query to search
      * @param boolean $single is single
      * @return mixed One or more data
+     * @static
      */
     public static function finder($query = null, $single = false)
     {

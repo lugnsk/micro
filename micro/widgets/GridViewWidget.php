@@ -73,6 +73,7 @@ class GridViewWidget extends Widget
      * Get connect to DB
      *
      * @access public
+     * @global Registry
      * @return void
      */
     public function getConnect()

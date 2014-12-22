@@ -96,6 +96,7 @@ class AccessFilter extends Filter
      * Match user
      *
      * @access protected
+     * @global Registry
      * @param array $rule rule definition
      * @return bool
      */
@@ -126,6 +127,7 @@ class AccessFilter extends Filter
      * Match role
      *
      * @access protected
+     * @global Registry
      * @param array $rule rule definition
      * @return bool
      */
@@ -150,6 +152,7 @@ class AccessFilter extends Filter
      * Match IP
      *
      * @access protected
+     * @global Registry
      * @param array $rule rule definition
      * @return bool
      */
@@ -177,6 +180,7 @@ class AccessFilter extends Filter
      * Match verbose
      *
      * @access protected
+     * @global Registry
      * @param array $rule rule definition
      * @return bool
      */

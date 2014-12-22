@@ -19,13 +19,13 @@ use Micro\base\Exception;
  */
 class FlashMessage
 {
-    /** @property integer $TYPE_SUCCESS success */
+    /** @var integer $TYPE_SUCCESS success */
     const TYPE_SUCCESS = 1;
-    /** @property integer $TYPE_NOTICE notice */
+    /** @var integer $TYPE_NOTICE notice */
     const TYPE_INFO = 2;
-    /** @property integer $TYPE_WARNING warning */
+    /** @var integer $TYPE_WARNING warning */
     const TYPE_WARNING = 3;
-    /** @property integer TYPE_DANGER danger */
+    /** @var integer TYPE_DANGER danger */
     const TYPE_DANGER = 4;
 
     /** @var \Micro\web\Session $session current session */
@@ -53,6 +53,7 @@ class FlashMessage
      *
      * @access public
      * @return array
+     * @static
      */
     public static function getTypeLabels()
     {
@@ -70,6 +71,7 @@ class FlashMessage
      * @access public
      * @param int $type type id
      * @return mixed
+     * @static
      */
     public static function getTypeLabel($type = self::TYPE_SUCCESS)
     {

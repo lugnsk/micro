@@ -19,13 +19,10 @@ class DefaultController extends Controller
                 'actions'=>['login','logout','index','error'],
                 'rules'=>[
                     [
-                        'allow'     =>true,
-                        'actions'   =>['index','error'],
-                        'users'     =>['*'],
-                        'ips'       =>['127.0.0.1','192.168.1.24'],
-                        'verb'      =>'GET',
-                        'roles'     =>['guest','user','administrator'],
-                        'message'   =>'Full pack rule defined!'
+                        'allow'     =>false,
+                        'actions'   =>['index'],
+                        'users'     =>['@'],
+                        'message'   =>'Only for not authorized!'
                     ],
                     [
                         'allow'     =>false,
@@ -55,19 +52,11 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        if (Registry::get('permission')->check(1, 'open_index')) { // hack
-            //Registry::get('logger')->send('notice', 'Logined user open start page');
-        }
-
         return new View;
     }
 
     public function actionLogin()
     {
-        if (!Registry::get('user')->isGuest()) {
-            $this->redirect('/');
-        }
-
         $form = new FormBuilder(
             include Micro::getInstance()->config['AppDir'] . '/views/default/loginform.php',
             new LoginFormModel(),

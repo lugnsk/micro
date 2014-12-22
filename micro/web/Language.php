@@ -15,6 +15,7 @@ use Micro\Micro;
  * @package micro
  * @version 1.0
  * @since 1.0
+ * @property-read
  */
 class Language
 {

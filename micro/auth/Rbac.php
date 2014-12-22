@@ -50,6 +50,7 @@ abstract class Rbac
      * Get current connection from registry
      *
      * @access public
+     * @global Registry
      * @result void
      */
     public function getConnect()
@@ -84,7 +85,7 @@ abstract class Rbac
      * @param array $data action params
      * @return boolean
      */
-    public function check($userId, $permission, $data = [])
+    public function check($userId, $permission, array $data = [])
     {
         $tree = $this->tree($this->rawRoles());
 
@@ -130,7 +131,7 @@ abstract class Rbac
      * @param array $data action params
      * @return bool
      */
-    public function execute($role, $data)
+    public function execute(array $role, array $data)
     {
         if (!$role['data']) {
             return true;

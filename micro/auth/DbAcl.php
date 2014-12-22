@@ -7,6 +7,8 @@ use Micro\db\Query;
 /**
  * Database ACL class file.
  *
+ * ACL security logic with DB
+ *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
@@ -25,7 +27,7 @@ class DbAcl extends Acl
      * @param array $params config array
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         parent::__construct($params);
 
@@ -63,7 +65,7 @@ class DbAcl extends Acl
      * @param array $data for compatible, not used!
      * @return bool
      */
-    public function check($userId, $permission, $data=[])
+    public function check($userId, $permission, array $data=[])
     {
         $query = new Query;
         $query->select = '*';

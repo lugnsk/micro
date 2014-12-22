@@ -7,6 +7,8 @@ use Micro\db\Query;
 /**
  * Database RBAC class file.
  *
+ * RBAC security logic with DB
+ *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
@@ -80,7 +82,7 @@ class DbRbac extends Rbac
      * @param array $data action params
      * @return boolean
      */
-    public function check($userId, $action, $data = [])
+    public function check($userId, $action, array $data = [])
     {
         if (!$this->conn->exists('rbac_role', ['name' => $action])) {
             return false;

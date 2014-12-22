@@ -13,6 +13,7 @@ namespace Micro\wrappers;
  * @subpackage wrappers
  * @version 1.0
  * @since 1.0
+ * @final
  */
 final class Mail
 {

@@ -31,6 +31,7 @@ abstract class Controller
      * Constructor controller
      *
      * @access public
+     * @global Registry
      * @result void
      */
     public function __construct()

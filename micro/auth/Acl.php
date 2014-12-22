@@ -8,6 +8,8 @@ use \Micro\db\DbConnection;
 /**
  * Abstract ACL class file.
  *
+ * Base logic for a ACL security
+ *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
@@ -16,6 +18,7 @@ use \Micro\db\DbConnection;
  * @subpackage auth
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class Acl
 {
@@ -26,13 +29,13 @@ abstract class Acl
 
 
     /**
-     * Base constructor for ACL
+     * Base constructor for ACL, make acl_user table if exists
      *
      * @access public
      * @param array $params config array
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         $this->getConnect();
 
@@ -54,6 +57,7 @@ abstract class Acl
      * Get current connection from registry
      *
      * @access public
+     * @global Registry
      * @return void
      */
     public function getConnect()
@@ -67,6 +71,7 @@ abstract class Acl
      * @access protected
      * @param string $role role name
      * @return array
+     * @abstract
      */
     abstract protected function rolePerms($role);
 
@@ -78,6 +83,7 @@ abstract class Acl
      * @param string $permission checked permission
      * @param array $data for compatible, not used!
      * @return bool
+     * @abstract
      */
-    abstract public function check($userId, $permission, $data=[]);
+    abstract public function check($userId, $permission, array $data=[]);
 }

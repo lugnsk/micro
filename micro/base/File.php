@@ -21,6 +21,7 @@ class File
      * @access public
      * @param string $dirName directory name
      * @return integer
+     * @static
      */
     public static function dirSize($dirName)
     {
@@ -47,6 +48,7 @@ class File
      * @access public
      * @param string $path path to remove
      * @return void
+     * @static
      */
     public static function removeDir($path)
     {
@@ -70,6 +72,7 @@ class File
      * @param string $src source path
      * @param string $dst destination path
      * @return void
+     * @static
      */
     public static function recurseCopy($src, $dst)
     {
@@ -97,6 +100,7 @@ class File
      * @param string $dst destination path
      * @param string $exc exception name
      * @return void
+     * @static
      */
     public static function recurseCopyIfEdited($src = '', $dst = '', $exc = '.php')
     {

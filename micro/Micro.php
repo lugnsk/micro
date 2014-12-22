@@ -5,12 +5,11 @@ namespace Micro;
 use Micro\base\Exception;
 use Micro\base\Autoload;
 use Micro\base\Registry;
-use Micro\wrappers\Html;
 
 /**
  * Micro class file.
  *
- * Base class for initialize framework
+ * Base class for initialize MicroPHP, used as bootstrap framework.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
@@ -19,21 +18,22 @@ use Micro\wrappers\Html;
  * @package micro
  * @version 1.0
  * @since 1.0
+ * @final
  */
 final class Micro
 {
-    /** @var string $version of Micro */
+    /** @var string $version Version of MicroPHP */
     public static $version = '1.0';
     /** @var Micro $_app Application singleton */
     protected static $_app;
     /** @var array $config Configuration array */
     public $config;
-    /** @var integer $timer Timer of generate page */
-    private $timer;
 
 
     /**
      * Method CLONE is not allowed for application
+     *
+     * Clone disabled on MicroPHP base class
      *
      * @access private
      * @return void
@@ -45,21 +45,27 @@ final class Micro
     /**
      * Get application singleton instance
      *
+     * Getting instance of MicroPHP class
+     *
      * @access public
      * @param  array $config configuration array
      * @return Micro this
+     * @static
      */
     public static function getInstance($config = [])
     {
         if (self::$_app == null) {
             self::$_app = new Micro($config);
         }
-
         return self::$_app;
     }
 
     /**
      * Constructor application
+     *
+     * Private constructor a MicroPHP application.
+     * If isset config, application get parameters for initialization
+     * and setup components.
      *
      * @access private
      * @param array $config configuration array
@@ -67,24 +73,21 @@ final class Micro
      */
     private function __construct($config = [])
     {
-        // Register config
         $this->config = $config;
 
-        // Register aliases
         Autoload::setAlias('Micro', $config['MicroDir']);
         Autoload::setAlias('App', $config['AppDir']);
-
-        // Patch for composer
         if (isset($config['VendorDir'])) {
             Autoload::setAlias('Vendor', $config['VendorDir']);
         }
 
-        // Register loader
         spl_autoload_register(['\Micro\base\Autoload', 'loader']);
     }
 
     /**
      * Running application
+     *
+     * Launch application with defined configs and run node of MVC
      *
      * @access public
      * @global Registry
@@ -116,6 +119,8 @@ final class Micro
 
     /**
      * Prepare controller to use
+     *
+     * Convert request into path to node MVC
      *
      * @access private
      * @global Registry

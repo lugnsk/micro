@@ -25,6 +25,7 @@ class Autoload
      * @param string $alias name for new alias
      * @param string $realPath path of alias
      * @return void
+     * @static
      */
     public static function setAlias($alias, $realPath)
     {
@@ -37,6 +38,7 @@ class Autoload
      * @access public
      * @param string $className search class name
      * @return bool
+     * @static
      */
     public static function loader($className)
     {

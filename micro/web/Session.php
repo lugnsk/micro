@@ -12,6 +12,7 @@ namespace Micro\web;
  * @package micro
  * @version 1.0
  * @since 1.0
+ * @property
  */
 class Session
 {

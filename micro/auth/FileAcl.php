@@ -7,6 +7,8 @@ use Micro\db\Query;
 /**
  * File ACL class file.
  *
+ * ACL security with files.
+ *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
@@ -33,7 +35,7 @@ class FileAcl extends Acl
      * @param array $params configuration array
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         parent::__construct($params);
 
@@ -78,9 +80,10 @@ class FileAcl extends Acl
      * @access public
      * @param integer $userId user id
      * @param string $permission checked permission
+     * @param array $data not used, added for compatible!
      * @return bool
      */
-    public function check($userId, $permission)
+    public function check($userId, $permission, array $data=[])
     {
         $permissionId = array_search($permission, $this->perms);
         $assigned = $this->assigned($userId);

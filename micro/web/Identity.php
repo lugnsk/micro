@@ -17,11 +17,11 @@ use Micro\base\Registry;
  * @since 1.0
  */
 abstract class Identity {
-    /** @property mixed $id unique id */
+    /** @var mixed $id unique id */
     protected $id;
-    /** @property string $username user name */
+    /** @var string $username user name */
     public $username;
-    /** @property string $password user password */
+    /** @var string $password user password */
     public $password;
     /** @var string $error error string */
     public $error;
@@ -30,6 +30,7 @@ abstract class Identity {
      * Authenticate
      *
      * @access public
+     * @global Registry
      * @return bool
      */
     public function authenticate()
@@ -58,6 +59,7 @@ abstract class Identity {
      *
      * @access public
      * @return integer|null
+     * @final
      */
     final public function getId() {
         return $this->id;
@@ -67,6 +69,7 @@ abstract class Identity {
      * Set Name state for a given value
      *
      * @access public
+     * @global Registry
      * @param string $name cookie name
      * @param mixed $value cookie value
      * @return mixed

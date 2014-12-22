@@ -9,6 +9,38 @@ use Micro\db\Query;
 
 class PostController extends Controller
 {
+    public function filters()
+    {
+        return [
+            [
+                'class'=>'\Micro\filters\AccessFilter',
+                'actions'=>['index','view','create','update','delete'],
+                'rules'=>[
+                    [
+                        'allow'     =>false,
+                        'actions'   =>['create','update','delete'],
+                        'users'     =>['?'],
+                        'message'   =>'Only for authorized!'
+                    ],
+                    [
+                        'allow'     =>true,
+                        'actions'   =>['index','view'],
+                        'users'     =>['*'],
+                        'message'   =>'View for all'
+                    ],
+                ]
+            ],
+            [
+                'class'=>'\Micro\filters\CsrfFilter',
+                'actions'=>['login']
+            ],
+            [
+                'class'=>'\Micro\filters\XssFilter',
+                'actions'=>['index','login','logout'],
+                'clean'=>'*'
+            ]
+        ];
+    }
     public function actionIndex()
     {
         $crt = new Query;

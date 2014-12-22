@@ -22,6 +22,7 @@ class CsrfFilter extends Filter
      * PreFilter
      *
      * @access public
+     * @global Registry
      * @param array $params checked items and other params
      * @return boolean
      */
@@ -50,6 +51,7 @@ class CsrfFilter extends Filter
      * PostFilter
      *
      * @access public
+     * @global Registry
      * @param array $params checked items and other params
      * @return mixed
      */

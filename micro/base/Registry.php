@@ -14,6 +14,7 @@ use \Micro\Micro;
  * @package micro
  * @version 1.0
  * @since 1.0
+ * @final
  */
 final class Registry
 {
@@ -43,6 +44,7 @@ final class Registry
      * @access public
      * @param string $name element name
      * @return mixed
+     * @static
      */
     public static function get($name = '')
     {
@@ -57,6 +59,7 @@ final class Registry
      * @param string $name element name
      * @param mixed $value element value
      * @return void
+     * @static
      */
     public static function set($name, $value)
     {
@@ -69,6 +72,7 @@ final class Registry
      *
      * @access public
      * @return array
+     * @static
      */
     public static function getAll()
     {
@@ -82,6 +86,7 @@ final class Registry
      * @access public
      * @param null $name name element to initialize
      * @throws \Micro\base\Exception
+     * @static
      */
     public static function configure($name = null)
     {
@@ -119,6 +124,7 @@ final class Registry
      * @param string $name component name
      * @param array $options component configs
      * @return bool
+     * @static
      */
     public static function loadComponent($name, $options)
     {

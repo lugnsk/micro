@@ -5,6 +5,8 @@ namespace Micro\auth;
 /**
  * File RBAC class file.
  *
+ * RBAC security with files.
+ *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/antivir88/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov

@@ -22,6 +22,7 @@ class User
      * Get state user
      *
      * @access public
+     * @global Registry
      * @return bool
      */
     public function isGuest()
@@ -33,6 +34,7 @@ class User
      * Set User ID
      *
      * @access public
+     * @global Registry
      * @param mixed $id user id
      * @return void
      */
@@ -45,6 +47,7 @@ class User
      * Get user ID
      *
      * @access public
+     * @global Registry
      * @return bool|integer
      */
     public function getID()
@@ -56,6 +59,7 @@ class User
      * Check access by current user
      *
      * @access public
+     * @global Registry
      * @param string $permission permission to check
      * @param array $data arguments
      * @return bool
@@ -73,6 +77,7 @@ class User
      * Get captcha code
      *
      * @access public
+     * @global Registry
      * @return string
      */
     public function getCaptcha()
