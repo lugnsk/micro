@@ -69,7 +69,7 @@ abstract class Controller
                 throw new Exception('Action "'.$name.'" not found into '.get_class($this));
             }
         }
-        $filters = method_exists($this, 'filters') ? $this->filters() : null;
+        $filters = method_exists($this, 'filters') ? $this->filters() : [];
 
         $this->applyFilters($name, true, $filters, null);
 

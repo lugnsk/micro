@@ -283,7 +283,7 @@ class Html
     }
 
     /**
-     * Render link
+     * Render anchor
      *
      * @access public
      * @param string $name name to link

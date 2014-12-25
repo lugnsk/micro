@@ -127,11 +127,12 @@ class Form
      * @param array $options attributes array
      * @return string
      */
-    public function imageField($model, $property, $imageSource, array $options = [])
+    public function imageField($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
-        return Html::imageField($element['name'], $element['value'], $imageSource, $options);
+        $image = isset($options['image']) ? $options['image'] : [];
+        return Html::imageField($element['name'], $element['value'], $image, $options);
     }
 
     /**
@@ -416,15 +417,15 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $elements elements array
      * @param array $options attrubtes array
      * @return string
      */
-    public function listBoxField($model, $property, array $elements = [], array $options = [])
+    public function listBoxField($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
         $options['selected'] = $element['value'];
+        $elements = isset($options['elements']) ? $options['elements'] : [];
         return Html::listBox($element['name'], $elements, $options);
     }
 
@@ -434,15 +435,15 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $elements elements array
      * @param array $options attribute array
      * @return string
      */
-    public function dropDownListField($model, $property, array $elements = [], array $options = [])
+    public function dropDownListField($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
         $options['selected'] = $element['value'];
+        $elements = isset($options['elements']) ? $options['elements'] : [];
         return Html::dropDownList($element['name'], $elements, $options);
     }
 
@@ -452,13 +453,14 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property property model
-     * @param array $checkboxes checkBoxes array
-     * @param string $format format for render
+     * @param array $options options array
      * @return string
      */
-    public function checkBoxListField($model, $property, array $checkboxes = [], $format = '<p>%check% %text%</p>')
+    public function checkBoxListField($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
+        $checkboxes = isset($options['checkboxes']) ? $options['checkboxes'] : [];
+        $format = isset($options['format']) ? $options['format'] : '<p>%check% %text%</p>';
         return Html::checkBoxList($element['name'], $checkboxes, $format, $element['value']);
     }
 
@@ -468,13 +470,14 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $radios radios array
-     * @param string $format format for render
+     * @param array $options options array
      * @return string
      */
-    public function radioButtonListField($model, $property, array $radios = [], $format = '<p>%radio% %text%</p>')
+    public function radioButtonListField($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
+        $radios = isset($options['radios']) ? $options['radios'] : [];
+        $format = isset($options['format']) ? $options['format'] : '<p>%radio% %text%</p>';
         return Html::radioButtonList($element['name'], $radios, $format, $element['value']);
     }
 
@@ -507,19 +510,18 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param string $imageSource path to image
      * @param array $options attribute array
      * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function imageFieldRow($model, $property, $imageSource, array $options = [], array $labelOptions = [])
+    public function imageFieldRow($model, $property, array $options = [], array $labelOptions = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
         return Html::openTag('div', ['class' => 'row']) .
         Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-        $this->imageField($model, $property, $imageSource, $options) .
+        $this->imageField($model, $property, $options) .
         Html::closeTag('div');
     }
 
@@ -867,15 +869,15 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $elements elements for listBox
      * @param array $options attribute array
      * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function listBoxFieldRow($model, $property, array $elements=[], array $options=[], array $labelOptions=[])
+    public function listBoxFieldRow($model, $property, array $options=[], array $labelOptions=[])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+        $elements = isset($options['elements']) ? $options['elements'] : [];
 
         return Html::openTag('div', ['class' => 'row']) .
         Html::label($model->getLabel($property), $element['id'], $labelOptions) .
@@ -889,15 +891,15 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $elements elements for listBox
      * @param array $options attribute array
      * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function dropDownListFieldRow($model, $property, array $elements=[], array $options=[], array $labelOptions=[])
+    public function dropDownListFieldRow($model, $property, array $options=[], array $labelOptions=[])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+        $elements = isset($options['elements']) ? $options['elements'] : [];
 
         return Html::openTag('div', ['class' => 'row']) .
         Html::label($model->getLabel($property), $element['id'], $labelOptions) .
@@ -911,19 +913,18 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $checkboxes checkboxes for list
-     * @param string $format template for render
+     * @param array $options options array
      * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function checkBoxListFieldRow($model, $property, array $checkboxes=[], $format = '<p>%check% %text%</p>', array $labelOptions = [])
+    public function checkBoxListFieldRow($model, $property, array $options=[], array $labelOptions = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
         return Html::openTag('div', ['class' => 'row']) .
         Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-        $this->checkBoxListField($model, $property, $checkboxes, $format, $options) .
+        $this->checkBoxListField($model, $property, $options) .
         Html::closeTag('div');
     }
 
@@ -933,19 +934,18 @@ class Form
      * @access public
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
-     * @param array $radios radios for list
-     * @param string $format template for render
+     * @param array $options options array
      * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function radioButtonListFieldRow($model, $property, array $radios = [], $format = '<p>%radio% %text%</p>', array $labelOptions = [])
+    public function radioButtonListFieldRow($model, $property, array $options = [], array $labelOptions = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
         return Html::openTag('div', ['class' => 'row']) .
         Html::label($model->getLabel($property), $element['id'], $labelOptions) .
-        $this->radioButtonListField($model, $property, $radios, $format) .
+        $this->radioButtonListField($model, $property, $options) .
         Html::closeTag('div');
     }
 }
