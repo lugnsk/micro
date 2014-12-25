@@ -742,10 +742,10 @@ class Html
     {
         $rads = '';
         foreach ($radios AS $radio) {
-            if ($radio['value'] == $selected) {
+            if ($radio['value'] === $selected) {
                 $radio['attributes']['selected'] = 'selected';
             }
-            $rad = self::radioField($name, $radio['value'], $radio['attributes']);
+            $rad = self::radioField($name, $radio['value'], isset($radio['attributes'])?$radio['attributes']:[]);
             $rads .= strtr(strtr($format, '%radio%', $rad), '%text%', $radio['text']);
         }
         return $rads;

@@ -478,6 +478,7 @@ class Form
         $element = $this->getField($model, $property);
         $radios = isset($options['radios']) ? $options['radios'] : [];
         $format = isset($options['format']) ? $options['format'] : '<p>%radio% %text%</p>';
+
         return Html::radioButtonList($element['name'], $radios, $format, $element['value']);
     }
 
