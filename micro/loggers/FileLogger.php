@@ -32,7 +32,7 @@ class FileLogger extends LogInterface
      * @result void
      * @throws Exception
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         parent::__construct($params);
 

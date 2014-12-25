@@ -83,7 +83,7 @@ abstract class FormModel
      * @param array $data array to change
      * @return void
      */
-    public function setModelData($data = [])
+    public function setModelData(array $data = [])
     {
         foreach ($data AS $key => $value) {
             $this->$key = $value;

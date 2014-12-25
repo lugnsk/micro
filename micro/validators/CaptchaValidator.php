@@ -32,7 +32,7 @@ class CaptchaValidator extends Validator
      * @param array $rule validation rule
      * @result void
      */
-    public function __construct($rule = [])
+    public function __construct(array $rule = [])
     {
         parent::__construct($rule);
 

@@ -26,7 +26,7 @@ class WincacheCache implements Cache
      * @result void
      * @throws Exception
      */
-    public function __construct($config=[])
+    public function __construct(array $config=[])
     {
         if (!$this->check()) {
             throw new Exception('Extension WinCache not installed');

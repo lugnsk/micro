@@ -36,7 +36,7 @@ class EmailLogger extends LogInterface
      * @param array $params configuration params
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         parent::__construct($params);
 

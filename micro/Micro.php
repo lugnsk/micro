@@ -52,7 +52,7 @@ final class Micro
      * @return Micro this
      * @static
      */
-    public static function getInstance($config = [])
+    public static function getInstance(array $config = [])
     {
         if (self::$_app == null) {
             self::$_app = new Micro($config);
@@ -71,7 +71,7 @@ final class Micro
      * @param array $config configuration array
      * @result void
      */
-    private function __construct($config = [])
+    private function __construct(array $config = [])
     {
         $this->config = $config;
 

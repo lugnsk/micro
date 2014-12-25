@@ -31,7 +31,7 @@ class DbCache implements Cache
      * @param array $config config array
      * @result void
      */
-    public function __construct($config=[])
+    public function __construct(array $config=[])
     {
         $this->table = 'cache';
         if (isset($config['table'])) {

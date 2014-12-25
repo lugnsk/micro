@@ -49,7 +49,7 @@ class Validator
      * @param array $rule configuration array
      * @result void
      */
-    public function __construct($rule = [])
+    public function __construct(array $rule = [])
     {
         $this->rule = $rule;
     }

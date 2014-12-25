@@ -41,7 +41,7 @@ class FormBuilder
      * @param string $action path URL action
      * @result void
      */
-    public function __construct($config = [], $model = null, $method = 'GET', $type = 'text/plain', $action = '')
+    public function __construct(array $config = [], $model = null, $method = 'GET', $type = 'text/plain', $action = '')
     {
         $this->config = $config;
         $this->model = $model;
@@ -62,7 +62,7 @@ class FormBuilder
      * @param array $data array to change
      * @return void
      */
-    public function setModelData($data = [])
+    public function setModelData(array $data = [])
     {
         $this->model->setModelData($data);
     }

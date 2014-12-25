@@ -29,7 +29,7 @@ class RabbitMQ
      * @param array $params connect to broker
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         $this->connect = new \AMQPConnection($params);
         $this->connect->connect();

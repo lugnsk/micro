@@ -63,7 +63,7 @@ class GridViewWidget extends Widget
      * @param array $args arguments
      * @result void
      */
-    public function __construct($args = [])
+    public function __construct(array $args = [])
     {
         parent::__construct($args);
         $this->getConnect();

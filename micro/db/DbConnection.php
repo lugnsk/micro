@@ -30,7 +30,7 @@ class DbConnection
      * @result void
      * @throw Exception
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
         try {
             if (!isset($config['options'])) {
@@ -62,7 +62,7 @@ class DbConnection
      * @param array $params params for query
      * @return \PDOStatement
      */
-    public function rawQuery($query = '', $params = [])
+    public function rawQuery($query = '', array $params = [])
     {
         $st = $this->conn->query($query);
         $st->execute($params);
@@ -148,7 +148,7 @@ class DbConnection
      * @param string $params table params
      * @return int
      */
-    public function createTable($name, $elements = [], $params = '')
+    public function createTable($name, array $elements = [], $params = '')
     {
         return $this->conn->exec('CREATE TABLE IF NOT EXISTS ' . $name . ' (' . implode(',',
                 $elements) . ') ' . $params . ';');
@@ -259,7 +259,7 @@ class DbConnection
      * @param array $line lines to added
      * @return bool
      */
-    public function insert($table, $line = [])
+    public function insert($table, array $line = [])
     {
         $fields = implode(', ', array_keys($line));
         $values = '"' . implode('", "', array_values($line)) . '"';
@@ -278,7 +278,7 @@ class DbConnection
      * @param string $conditions conditions for search
      * @return bool
      */
-    public function update($table, $elements = [], $conditions = '')
+    public function update($table, array $elements = [], $conditions = '')
     {
         $valStr = [];
         foreach (array_keys($elements) as $key) {
@@ -302,7 +302,7 @@ class DbConnection
      * @param array $ph params array
      * @return bool
      */
-    public function delete($table, $conditions, $ph = [])
+    public function delete($table, $conditions, array $ph = [])
     {
         return $this->conn->prepare(
             'DELETE FROM ' . $table . ' WHERE ' . $conditions
@@ -317,7 +317,7 @@ class DbConnection
      * @param array $params params array
      * @return bool
      */
-    public function exists($table, $params = [])
+    public function exists($table, array $params = [])
     {
         $keys = [];
         foreach ($params AS $key => $val) {

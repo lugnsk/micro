@@ -27,7 +27,7 @@ class Dispatcher
      * @param int|null $prior priority
      * @return void
      */
-    public function addListener($listener, $event = [], $prior = null)
+    public function addListener($listener, array $event = [], $prior = null)
     {
         if (!$prior) {
             $this->listeners[$listener][] = $event;

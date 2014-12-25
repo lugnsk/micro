@@ -30,7 +30,7 @@ class Relations {
      * @param array $params
      * @return void
      */
-    public function add($name, $model, $isMany=false, $on=[], $where='', $params=[])
+    public function add($name, $model, $isMany=false, array $on=[], $where='', array $params=[])
     {
         $this->data[$name] = [
             'IsMany'=>$isMany,

@@ -28,7 +28,7 @@ class FileRbac extends Rbac
      * @param array $params configuration array
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         parent::__construct();
 

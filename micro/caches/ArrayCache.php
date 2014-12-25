@@ -26,7 +26,7 @@ class ArrayCache implements Cache
      * @param array $config array config
      * @result void
      */
-    public function __construct($config=[])
+    public function __construct(array $config=[])
     {
     }
 

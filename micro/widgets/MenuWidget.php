@@ -32,7 +32,7 @@ class MenuWidget extends Widget
      * @param array $attributes menu attributes
      * @result void
      */
-    public function __construct($items = [], $attributes = [])
+    public function __construct(array $items = [], array $attributes = [])
     {
         parent::__construct();
 

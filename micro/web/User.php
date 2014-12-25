@@ -64,7 +64,7 @@ class User
      * @param array $data arguments
      * @return bool
      */
-    public function check($permission, $data = [])
+    public function check($permission, array $data = [])
     {
         if (!$this->isGuest()) {
             return Registry::get('permission')->check($this->getID(), $permission, $data);

@@ -32,7 +32,7 @@ abstract class LogInterface
      * @throws Exception
      * @result void
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         $levels = explode(',', strtr(strtolower($params['levels']), ' ', ''));
         foreach ($levels AS $level) {

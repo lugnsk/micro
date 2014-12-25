@@ -28,7 +28,7 @@ class Router
      * @access public
      * @param array $routes
      */
-    public function __construct($routes = [])
+    public function __construct(array $routes = [])
     {
         $this->routes = array_merge($this->routes, $routes);
     }
@@ -126,7 +126,7 @@ class Router
      * @param array $patBlocks pattern blocks from valid URL
      * @return array|bool
      */
-    private function parseUri($uriBlocks = [], $patBlocks = [])
+    private function parseUri(array $uriBlocks = [], array $patBlocks = [])
     {
         $attr = [];
 

@@ -26,7 +26,7 @@ class FileCache implements Cache
      * @param array $config config array
      * @result void
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
         $path = (isset($config['path'])) ? $config['path'] : sys_get_temp_dir() . '/cache';
         if (!is_dir($path)) {

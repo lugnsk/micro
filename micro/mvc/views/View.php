@@ -67,7 +67,7 @@ abstract class View
      * @return string
      * @throws Exception
      */
-    public function widget($name, $options=[], $capture=false)
+    public function widget($name, array $options=[], $capture=false)
     {
         if (!class_exists($name)) {
             throw new Exception('Widget ' . $name . ' not found.');
@@ -96,7 +96,7 @@ abstract class View
      * @return mixed
      * @throws Exception
      */
-    public function beginWidget($name, $options=[])
+    public function beginWidget($name, array $options=[])
     {
         if (!class_exists($name)) {
             throw new Exception('Widget ' . $name . ' not found.');

@@ -37,7 +37,7 @@ class Request
      * @param array $routes routes array
      * @result void
      */
-    public function __construct($routes = [])
+    public function __construct(array $routes = [])
     {
         $this->router = new Router(isset($routes['routes']) ? $routes['routes'] : []);
         $this->initialize();

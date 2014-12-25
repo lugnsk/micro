@@ -40,7 +40,7 @@ class Cache
      * @result void
      * @throws Exception
      */
-    function __construct($config=[])
+    function __construct(array $config=[])
     {
         if (isset($config['servers'])) {
             foreach ($config['servers'] AS $key=>$server) {

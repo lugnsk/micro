@@ -23,7 +23,7 @@ class Session
      * @param array $config configuration array
      * @result void
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
         if (isset($config['autoStart']) AND ($config['autoStart'] == true)) {
             $this->create();

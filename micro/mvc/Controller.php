@@ -100,7 +100,7 @@ abstract class Controller
      * @return null|string
      * @throws Exception error on filter
      */
-    public function applyFilters($action, $isPre=true, $filters=[], $data=null) {
+    public function applyFilters($action, $isPre=true, array $filters=[], $data=null) {
         if (!$filters) {
             return $data;
         }

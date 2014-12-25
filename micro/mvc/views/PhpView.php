@@ -69,7 +69,7 @@ class PhpView extends View {
      * @return string
      * @throws Exception widget not declared
      */
-    protected function renderFile($fileName, $data = [])
+    protected function renderFile($fileName, array $data = [])
     {
         $lang = new Language($fileName);
 

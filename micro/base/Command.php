@@ -31,7 +31,7 @@ abstract class Command
      * @param array $args configuration array
      * @result void
      */
-    public function __construct($args = [])
+    public function __construct(array $args = [])
     {
         $this->args = $args;
     }

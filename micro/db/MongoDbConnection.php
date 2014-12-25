@@ -52,7 +52,7 @@ class MongoDbConnection
      * @result void
      * @throws Exception
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
         if (isset($config['dbname'])) {
             $this->dbName = $config['dbname'];
@@ -140,7 +140,7 @@ class MongoDbConnection
      * @param array $keys indexes
      * @return array
      */
-    public function removeIndexes($collectionName, $keys = [])
+    public function removeIndexes($collectionName, array $keys = [])
     {
         if ($keys) {
             return $this->getCollection($collectionName)->deleteIndex($keys);
@@ -184,7 +184,7 @@ class MongoDbConnection
      * @param bool $single return single document?
      * @return array|\MongoCursor|null
      */
-    public function rawQuery($collectionName, $params = [], $fields = [], $single = false)
+    public function rawQuery($collectionName, array $params = [], array $fields = [], $single = false)
     {
         $collect = $this->getCollection($collectionName);
         return $single ? $collect->findOne($params, $fields) : $collect->find($params, $fields);
@@ -237,7 +237,7 @@ class MongoDbConnection
      * @param array $document
      * @return array|bool
      */
-    public function insert($collectionName, $document = [])
+    public function insert($collectionName, array $document = [])
     {
         return $this->getCollection($collectionName)->insert($document);
     }
@@ -252,7 +252,7 @@ class MongoDbConnection
      * @param array $options
      * @return bool
      */
-    public function update($collectionName, $conditions = [], $newDocument = [], $options = [])
+    public function update($collectionName, array $conditions = [], array $newDocument = [], array $options = [])
     {
         return $this->getCollection($collectionName)->update($conditions, $newDocument, $options);
     }
