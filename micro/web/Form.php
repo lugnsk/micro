@@ -491,16 +491,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function fileFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function fileFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->fileField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -512,16 +523,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function imageFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function imageFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->imageField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -533,14 +555,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function passwordFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function passwordFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $options['id'] = $element['id'];
+
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->passwordField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -552,16 +587,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function textFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function textFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->textField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -575,16 +621,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function colorFieldRow($model, $property, array $options=[], array $labelOptions = [])
+    public function colorFieldRow($model, $property, array $options=[])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class'=>'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->colorField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -596,16 +653,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function dateFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function dateFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->dateField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -617,16 +685,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function dateTimeFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function dateTimeFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->dateTimeField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -646,8 +725,20 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->dateTimeLocalField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -659,16 +750,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function emailFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function emailFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->emailField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -680,16 +782,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function numberFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function numberFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->numberField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -701,16 +814,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function rangeFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function rangeFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->rangeField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -722,16 +846,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function searchFieldRow($model, $property, array $options=[], array $labelOptions = [])
+    public function searchFieldRow($model, $property, array $options=[])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class'=>'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->searchField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -743,16 +878,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function telFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function telFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->telField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -764,16 +910,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function timeFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function timeFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->timeField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -785,16 +942,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function urlFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function urlFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->urlField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -806,16 +974,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function monthFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function monthFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->monthField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -827,16 +1006,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function weekFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function weekFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->weekField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -848,16 +1038,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function textAreaFieldRow($model, $property, array $options=[], array $labelOptions=[])
+    public function textAreaFieldRow($model, $property, array $options=[])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class'=>'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->textAreaField($model, $property, $options).
         Html::closeTag('div');
     }
@@ -871,17 +1072,28 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function listBoxFieldRow($model, $property, array $options=[], array $labelOptions=[])
+    public function listBoxFieldRow($model, $property, array $options=[])
     {
+        $elements = isset($options['elements']) ? $options['elements'] : [];
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
-        $elements = isset($options['elements']) ? $options['elements'] : [];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->listBoxField($model, $property, $elements, $options) .
         Html::closeTag('div');
     }
@@ -893,17 +1105,28 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function dropDownListFieldRow($model, $property, array $options=[], array $labelOptions=[])
+    public function dropDownListFieldRow($model, $property, array $options=[])
     {
+        $elements = isset($options['elements']) ? $options['elements'] : [];
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
-        $elements = isset($options['elements']) ? $options['elements'] : [];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->dropDownListField($model, $property, $elements, $options) .
         Html::closeTag('div');
     }
@@ -915,16 +1138,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options options array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function checkBoxListFieldRow($model, $property, array $options=[], array $labelOptions = [])
+    public function checkBoxListFieldRow($model, $property, array $options=[])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->checkBoxListField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -936,16 +1170,27 @@ class Form
      * @param \Micro\web\FormModel $model model
      * @param string $property model property
      * @param array $options options array
-     * @param array $labelOptions attribute array for label
      * @return string
      */
-    public function radioButtonListFieldRow($model, $property, array $options = [], array $labelOptions = [])
+    public function radioButtonListFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        return Html::openTag('div', ['class' => 'row']) .
-        Html::label($model->getLabel($property), $element['id'], $labelOptions) .
+        $block = [];
+        if (isset($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (isset($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
         $this->radioButtonListField($model, $property, $options) .
         Html::closeTag('div');
     }

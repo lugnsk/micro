@@ -746,7 +746,7 @@ class Html
                 $radio['attributes']['selected'] = 'selected';
             }
             $rad = self::radioField($name, $radio['value'], isset($radio['attributes'])?$radio['attributes']:[]);
-            $rads .= strtr(strtr($format, '%radio%', $rad), '%text%', $radio['text']);
+            $rads .= str_replace(['%radio%','%text%'],[$rad,$radio['text']],$format);
         }
         return $rads;
     }
