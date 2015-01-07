@@ -24,6 +24,8 @@ final class Registry
      * @access protected
      * @result void
      */
+	 	// Основные переменные и объекты классов
+    static protected $data = array();
     protected function __construct()
     {
     }
@@ -49,7 +51,7 @@ final class Registry
     public static function get($name = '')
     {
         self::configure($name);
-        return (isset($GLOBALS[$name])) ? $GLOBALS[$name] : null;
+        return (isset(self::data[$name])) ? self::data[$name] : null;
     }
 
     /**
@@ -61,10 +63,11 @@ final class Registry
      * @return void
      * @static
      */
-    public static function set($name, $value)
-    {
-        self::configure($name);
-        $GLOBALS[$name] = $value;
+  // Добавление данных
+    static public function set($name, $value) {
+		self::configure();
+        self::$data[$name] = $value;
+       
     }
 
     /**
@@ -77,7 +80,7 @@ final class Registry
     public static function getAll()
     {
         self::configure();
-        return $GLOBALS;
+        return self::data;
     }
 
     /**
@@ -90,7 +93,7 @@ final class Registry
      */
     public static function configure($name = null)
     {
-        if ($name AND isset($GLOBALS[$name])) {
+        if ($name AND isset(self::data[$name])) {
             return;
         }
 
@@ -149,7 +152,7 @@ final class Registry
         $className = $options['class'];
         unset($options['class']);
 
-        $GLOBALS[$name] = new $className($options);
+        self::data[$name] = new $className($options);
         return true;
     }
 }
