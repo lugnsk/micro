@@ -20,6 +20,8 @@ final class Registry
 {
     /** @var array $data TUT VSE KLASSY i DRUGIE DANNYE */
     static protected $data = [];
+    
+    
     /**
      * Disable construct
      *
