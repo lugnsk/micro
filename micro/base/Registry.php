@@ -18,14 +18,15 @@ use \Micro\Micro;
  */
 final class Registry
 {
+    /** @var array $data TUT VSE KLASSY i DRUGIE DANNYE */
+    static protected $data = array();
     /**
      * Disable construct
      *
      * @access protected
      * @result void
      */
-	 	// Основные переменные и объекты классов
-    static protected $data = array();
+
     protected function __construct()
     {
     }
@@ -51,7 +52,7 @@ final class Registry
     public static function get($name = '')
     {
         self::configure($name);
-        return (isset(self::data[$name])) ? self::data[$name] : null;
+        return (isset(self::$data[$name])) ? self::$data[$name] : null;
     }
 
     /**
@@ -64,8 +65,9 @@ final class Registry
      * @static
      */
   // Добавление данных
-    static public function set($name, $value) {
-		self::configure();
+    static public function set($name, $value) 
+    {
+	self::configure();
         self::$data[$name] = $value;
        
     }
@@ -80,7 +82,7 @@ final class Registry
     public static function getAll()
     {
         self::configure();
-        return self::data;
+        return self::$data;
     }
 
     /**
@@ -93,7 +95,7 @@ final class Registry
      */
     public static function configure($name = null)
     {
-        if ($name AND isset(self::data[$name])) {
+        if ($name AND isset(self::$data[$name])) {
             return;
         }
 
@@ -152,7 +154,7 @@ final class Registry
         $className = $options['class'];
         unset($options['class']);
 
-        self::data[$name] = new $className($options);
+        self::$data[$name] = new $className($options);
         return true;
     }
 }
