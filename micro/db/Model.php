@@ -154,6 +154,9 @@ abstract class Model extends FormModel
                 if ($relation['Params']) {
                     $sql->params = $relation['Params'];
                 }
+                if ($relation['Limit'] > 0) {
+                    $sql->limit = $relation['Limit'];
+                }
 
                 $sql->params[ $relation['On'][0] ] = $this->{$relation['On'][0]};
 

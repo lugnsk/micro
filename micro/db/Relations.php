@@ -30,17 +30,19 @@ class Relations
      * @param array $on relation types
      * @param string $where options
      * @param array $params arguments
+     * @param integer $limit limit rows
      *
      * @return void
      */
-    public function add($name, $model, $isMany = false, array $on = [], $where = '', array $params = [])
+    public function add( $name, $model, $isMany = false, array $on = [], $where = '', array $params = [], $limit = 0 )
     {
         $this->data[$name] = [
             'IsMany' => $isMany,
             'Model' => $model,
             'On' => $on,
             'Where' => $where,
-            'Params' => $params
+            'Params' => $params,
+            'Limit' => $limit
         ];
     }
 
