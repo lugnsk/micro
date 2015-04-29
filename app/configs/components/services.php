@@ -1,5 +1,7 @@
 <?php
 return [
+    'class' => '\Micro\base\Services',
+
     'servers' => [
         'server1'=>[
             'class' => '\Micro\queues\RawQueue',
@@ -28,7 +30,13 @@ return [
     ],
     'routes' => [
         'pipeline.service' => 'server1',
-        'master.*' => ['server2','server3'],
-        'broadcast.*'=> ['server4']
+        'master.*' => [
+            'async'=>['server2'],
+            'server3'
+        ],
+        'broadcast.*'=> [
+            'stream'=>['server4', 'server1'],
+            'sync'=>'server2'
+        ]
     ]
 ];

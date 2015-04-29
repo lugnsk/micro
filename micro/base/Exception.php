@@ -27,28 +27,39 @@ class Exception extends \Exception
     public function __toString()
     {
         if (!defined('DEBUG_MICRO') || DEBUG_MICRO === false) {
-            $errors = !empty($_POST['errors']) ? $_POST['errors'] : [];
-            $errors += ['Error - ' . $this->getMessage()];
-
-            unset($_GET, $_POST);
-            $_POST['errors'] = $errors;
-
-            $config = Micro::getInstance()->config;
-
-            if (empty($config['errorController'])) {
-                return 'Option `errorController` not configured';
+            if (ob_get_level()) {
+                ob_end_clean();
             }
-            if (empty($config['errorAction'])) {
-                return 'Option `errorAction` not configured';
-            }
+        }
+        $this->makeErrors();
 
-            /** @var \Micro\mvc\controllers\Controller $mvc controller */
-            $mvc = new $config['errorController'];
-            echo $mvc->action($config['errorAction']);
 
-            error_reporting(0);
-        } else {
+        if (php_sapi_name() === 'cli') {
             return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';
         }
+
+        $config = Micro::getInstance()->config;
+
+        if (empty($config['errorController'])) {
+            return 'Option `errorController` not configured';
+        }
+        if (empty($config['errorAction'])) {
+            return 'Option `errorAction` not configured';
+        }
+
+        /** @var \Micro\mvc\controllers\Controller $mvc controller */
+        $mvc = new $config['errorController'];
+        echo $mvc->action($config['errorAction']);
+
+        error_reporting(0);
+    }
+
+    protected function makeErrors()
+    {
+        $errors = !empty($_POST['errors']) ? $_POST['errors'] : [];
+        $errors += ['Error - ' . $this->getMessage()];
+
+        unset($_GET, $_POST);
+        $_POST['errors'] = $errors;
     }
 }
