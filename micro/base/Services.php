@@ -1,7 +1,18 @@
-<?php
+<?php /** MicroServices */
 
 namespace Micro\base;
 
+/**
+ * Services class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @version 1.0
+ * @since 1.0
+ */
 class Services
 {
     /** @var array $servers Configuration servers */
