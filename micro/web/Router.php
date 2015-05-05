@@ -91,20 +91,9 @@ class Router
      */
     private function validatedRule($uri, $pattern, $replacement)
     {
-        $uriBlocks = explode('/', $uri);
-        if ($uriBlocks[0] === '') {
-            array_shift($uriBlocks);
-        }
-
-        $patBlocks = explode('/', $pattern);
-        if ($patBlocks[0] === '') {
-            array_shift($patBlocks);
-        }
-
-        $repBlocks = explode('/', $replacement);
-        if ($repBlocks[0] === '') {
-            array_shift($repBlocks);
-        }
+        $uriBlocks = explode('/', trim($uri, '/'));
+        $patBlocks = explode('/', trim($pattern, '/'));
+        $repBlocks = explode('/', trim($replacement, '/'));
 
         if (count($uriBlocks) !== count($patBlocks)) {
             return false;
