@@ -1,13 +1,12 @@
 Micro - PHP Framework
 =====
 
-[![Join the chat at https://gitter.im/lugnsk/micro](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lugnsk/micro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Micro - молодой H-MVC фреймворк со свободным исходным кодом, написанный на языке программирования PHP,
 для разработки полноценных веб-сервисов и приложений.
 Micro реализует паттерн "иерархический модель-представление-контроллер" (HMVC).
 Текущая стабильная версия отсутствует, распостраняется по свободной лицензией MIT.
 
+[![Join the chat at https://gitter.im/lugnsk/micro](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lugnsk/micro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Code Climate](https://codeclimate.com/github/lugnsk/micro/badges/gpa.svg)](https://codeclimate.com/github/lugnsk/micro)
 [![Build Status](https://secure.travis-ci.org/lugnsk/micro.png)](http://travis-ci.org/lugnsk/micro)
 [![HHVM Status](http://hhvm.h4cc.de/badge/lugnsk/microphp.svg)](http://hhvm.h4cc.de/package/lugnsk/microphp)
