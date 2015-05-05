@@ -1,6 +1,8 @@
 Micro - PHP Framework
 =====
 
+[![Join the chat at https://gitter.im/lugnsk/micro](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lugnsk/micro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Micro - молодой H-MVC фреймворк со свободным исходным кодом, написанный на языке программирования PHP,
 для разработки полноценных веб-сервисов и приложений.
 Micro реализует паттерн "иерархический модель-представление-контроллер" (HMVC).
