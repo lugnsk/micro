@@ -41,7 +41,7 @@ abstract class Rbac
             $this->conn->createTable('`rbac_user`', [
                 '`role` varchar(127) NOT NULL',
                 '`user` int(10) unsigned NOT NULL',
-                'KEY `name` (`name`,`user`)'
+                'UNIQUE KEY `name` (`name`,`user`)'
             ], 'ENGINE=MyISAM DEFAULT CHARSET=utf8');
         }
     }
@@ -118,15 +118,15 @@ abstract class Rbac
      * @access public
      *
      * @param array $elements elements array
-     * @param int $parentId parent ID
+     * @param string $parentId parent ID
      *
      * @return array
      */
-    public function tree(&$elements, $parentId = 0)
+    public function tree(&$elements, $parentId = '0')
     {
         $branch = [];
         foreach ($elements AS $key => $element) {
-            if ($element['based'] === $parentId) {
+            if ($element['based'] === (string)$parentId) {
                 $children = $this->tree($elements, $element['name']);
                 if ($children) {
                     $element['childs'] = $children;

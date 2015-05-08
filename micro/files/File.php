@@ -18,6 +18,8 @@ abstract class File
 {
     protected $stream;
 
+
+    // Заголовки для работы с потоком
     /**
      * Create connect to driver FileSystem
      *
@@ -40,7 +42,15 @@ abstract class File
      * @abstract
      */
     abstract public function __destruct();
+    //* createStream
+    //* readStream
+    //* writeStream
+    //* updateStream
+    //* putStream
 
+
+
+    // заголовки для работы с файлами
     /**
      * Copy file from $sourcePath to $destinationPath
      *
@@ -100,7 +110,26 @@ abstract class File
      * @abstract
      */
     abstract public function file_put_contents($filePath, $data);
+    //* exists
+    //* has
+    //* rename
+    //* get
+    //* put
+    //* write
+    //* update
+    //* copy
+    //* read
+    //* delete
+    //* getSize
+    //* size
+    //* readAndDelete
+    //* listcontents
+    //* touch
+    //* createFile
 
+
+
+    // заголовки для работы с метой
     /**
      * Get free space on dir or filesystem
      *
@@ -122,33 +151,6 @@ abstract class File
      * @return float
      */
     abstract public function disk_total_space($directory);
-
-/*
-    // Заголовки для работы с потоком
-    //* createStream
-    //* readStream
-    //* writeStream
-    //* updateStream
-    //* putStream
-
-    // заголовки для работы с файлами
-    //* has
-    //* rename
-    //* get
-    //* put
-    //* write
-    //* update
-    //* copy
-    //* read
-    //* delete
-    //* getSize
-    //* size
-    //* readAndDelete
-    //* listcontents
-    //* touch
-    //* createFile
-
-    // заголовки для работы с метой
     //* mtime
     //* getMimeType
     //* getMetaData
@@ -162,10 +164,10 @@ abstract class File
     //* mimeType
     //* checksum
 
+
+
+
     // заголовки для работы с директориями
     //* createDir
     //* deleteDir
-*/
-
-
 }
