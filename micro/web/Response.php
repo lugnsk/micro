@@ -23,7 +23,7 @@ class Response
     /** @var string $statusMessage Message for status of operation */
     protected $statusMessage = 'OK';
     /** @var string $contentType Content type of result */
-    protected $contentType = 'Content-Type: text/html';
+    protected $contentType = 'text/html';
     /** @var array $headers Headers of response */
     protected $headers = [];
     /** @var mixed $body Body of response */
@@ -167,6 +167,18 @@ class Response
     }
 
     /**
+     * Get HTTP Content Type
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
      * Set content type of HTTP body
      *
      * @access public
@@ -177,7 +189,7 @@ class Response
      */
     public function setContentType( $newType = '' )
     {
-        $this->contentType = $newType ?: 'Content-Type: text/html';
+        $this->contentType = $newType ?: 'text/html';
     }
 
     /**
@@ -205,6 +217,8 @@ class Response
     {
         $message = $this->statusMessage ?: $this->getStatusMessageFromCode($this->statusCode);
         header($this->httpVersion . ' ' . $this->statusCode . ' ' . $message);
+
+        header('Content-Type: ' . $this->contentType);
 
         foreach ($this->headers AS $key => $val) {
             header($key . ': ' . $val);

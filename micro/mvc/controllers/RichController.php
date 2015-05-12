@@ -91,12 +91,19 @@ abstract class RichController extends Controller
             $view = $this->{'action' . ucfirst($name)}();
         }
 
-        // new logic - check headers
-        $this->response->setContentType($this->format);
+        // if not define specify content type
+        if (!$this->response->getContentType()) {
+            $this->response->setContentType($this->format);
+        }
 
 
         // post - operations
-        $this->response->setBody($this->applyFilters($name, false, $filters, $view));
+        $this->response->setBody(
+            $this->switchContentType(
+                $this->applyFilters($name, false, $filters, $view)
+            )
+        );
+
         return $this->response;
     }
 
@@ -117,6 +124,9 @@ abstract class RichController extends Controller
             }
             case 'application/xml': {
                 return is_object($data) ? $data->__toString() : $data;
+            }
+            default: {
+                return $data;
             }
         }
     }
