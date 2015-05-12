@@ -306,7 +306,7 @@ class DbConnection
         $fields = implode(', ', array_keys($line));
         $values = '"' . implode('", "', array_values($line)) . '"';
 
-        $dbh = $this->conn->query(
+        $dbh = $this->conn->prepare(
             'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
         )->execute($line);
 
@@ -377,7 +377,7 @@ class DbConnection
             $keys[] = '`' . $table . '`.`' . $key . '`="' . $val . '"';
         }
 
-        $sth = $this->conn->query(
+        $sth = $this->conn->prepare(
             'SELECT * FROM ' . $table . ' WHERE ' . implode(' AND ', $keys) . ' LIMIT 1;'
         );
         $sth->execute();
@@ -398,9 +398,9 @@ class DbConnection
     public function count($subQuery = '', $table = '')
     {
         if ($subQuery) {
-            $sth = $this->conn->query('SELECT COUNT(*) FROM (' . $subQuery . ') AS m;');
+            $sth = $this->conn->prepare('SELECT COUNT(*) FROM (' . $subQuery . ') AS m;');
         } elseif ($table) {
-            $sth = $this->conn->query('SELECT COUNT(*) FROM `' . $table . '` AS m;');
+            $sth = $this->conn->prepare('SELECT COUNT(*) FROM `' . $table . '` AS m;');
         } else {
             return false;
         }
