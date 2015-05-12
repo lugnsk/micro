@@ -331,14 +331,14 @@ class DbConnection
     {
         $valStr = [];
         foreach (array_keys($elements) as $key) {
-            $valStr[] = '`' . $key . '`=:' . $key;
+            $valStr[] = '`' . $key . '` = :' . $key;
         }
         if ($conditions) {
             $conditions = 'WHERE ' . $conditions;
         }
 
-        return $this->conn->query(
-            'UPDATE ' . $table . ' SET ' . implode(', ', $valStr) . ' ' . $conditions
+        return $this->conn->prepare(
+            'UPDATE `' . $table . '` SET ' . implode(', ', $valStr) . ' ' . $conditions
         )->execute($elements);
     }
 

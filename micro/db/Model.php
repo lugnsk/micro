@@ -293,7 +293,7 @@ abstract class Model extends FormModel
         if ($this->beforeUpdate()) {
             if (!$where) {
                 if ($this->primaryKey) {
-                    $where .= $this->primaryKey . '=:' . $this->primaryKey;
+                    $where .= '`' . $this->primaryKey . '` = :' . $this->primaryKey;
                 } else {
                     throw new Exception ('In table ' . static::tableName() . ' option `id` not defined/not use.');
                 }
