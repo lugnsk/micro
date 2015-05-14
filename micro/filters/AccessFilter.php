@@ -51,7 +51,11 @@ class AccessFilter extends Filter
             if ($res === true) {
                 return true;
             } elseif ($res === false) {
-                throw new Exception(!empty($rule['message']) ? $rule['message'] : 'Access denied!');
+                $this->result = [
+                    'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
+                    'message'  => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
+                ];
+                return false;
             } elseif ($res === null) {
                 continue;
             }

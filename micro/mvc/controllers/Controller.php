@@ -85,7 +85,11 @@ abstract class Controller
 
             $res = $isPre ? $_filter->pre($filter) : $_filter->post($filter + ['data' => $data]);
             if (!$res) {
-                throw new Exception($_filter->result);
+                if (!empty($_filter->result['redirect'])) {
+                    header('Location: ' . $_filter->result['redirect']);
+                    die();
+                }
+                throw new Exception($_filter->result['message']);
             }
             $data = $res;
         }

@@ -34,7 +34,10 @@ class CsrfFilter extends Filter
             return true;
         }
         if (empty($_POST['csrf'])) {
-            $this->result = 'Not allowed';
+            $this->result = [
+                'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
+                'message'  => !empty($rule['message']) ? $rule['message'] : 'Not allowed!'
+            ];
             return false;
         }
 
@@ -45,7 +48,10 @@ class CsrfFilter extends Filter
             Registry::get('session')->csrf = $csrf;
             return true;
         }
-        $this->result = 'Bad request';
+        $this->result = [
+            'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
+            'message'  => !empty($rule['message']) ? $rule['message'] : 'Bad request!'
+        ];
         return false;
     }
 
