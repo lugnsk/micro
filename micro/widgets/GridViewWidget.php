@@ -30,6 +30,7 @@ class GridViewWidget extends Widget
     public $filters = true;
     /** @var string $template Template render */
     public $template = '{counter}{table}{pager}';
+    /** @var string $templateTable Template table render */
     public $templateTable = '{headers}{filters}{rows}';
     /** @var string $textCounter text for before counter */
     public $counterText = 'Sum: ';

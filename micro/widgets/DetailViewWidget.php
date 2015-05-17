@@ -93,36 +93,35 @@ class DetailViewWidget extends Widget
      * @access public
      *
      * @return void
+     * @throws Exception
      */
     public function init()
     {
+        $result = [];
+
+        // обходим заданные параметры
         foreach ($this->columns AS $key=>$val) {
-            $arg = is_int($key) ? $val : $key;
+            $column = '';
+            $data = [];
 
-            if ( !in_array($arg, $this->keys, true) ) {
-                unset($this->columns[$key]);
-                continue;
-            }
-
-            if ( !is_array( $val ) ) {
-                $label = ucfirst( method_exists( $this->data, 'getLabel' ) ? $this->data->getLabel( $arg ) : $arg );
-
-                $buffer = array(
-                    'label' => $label,
-                    'type'  => 'text',
-                    'value' => $val
-                );
-                $this->columns[$key] = $buffer;
+            // если параметр число и вал строка - это ключ
+            if (is_int($key) && is_string($val)) {
+                $column = $val;
+            // если параметр строка и вал массив - is good
+            } elseif (is_string($key) && is_array($val)) {
+                $column = $key;
             } else {
-                $buffer = array(
-                    'label' => $val['label'] ?: ucfirst($arg),
-                    'type'  => $val['type']  ?: 'text',
-                    'value' => $val['value'] ?: $arg
-                );
-
-                $this->columns[$key] = $buffer;
+                throw new Exception('Unknown `data` format into DetailViewWidget');
             }
+
+            $result[] = [
+                'title' => !empty($data['title']) ? $data['title'] : ucfirst( method_exists( $this->data, 'getLabel' ) ? $this->data->getLabel( $column ) : $column ),
+                'type'  => !empty($data['type']) ? $data['type'] : 'text',
+                'value' => !empty($data['value']) ? $data['value'] : $this->data->{$column}
+            ];
         }
+
+        $this->columns = $result;
     }
 
     /**
@@ -138,7 +137,7 @@ class DetailViewWidget extends Widget
 
         foreach ($this->columns AS $key=>$val) {
             $result .= Html::openTag('dt', $this->attributesElement);
-            $result .= $val['label'];
+            $result .= $val['title'];
             $result .= Html::closeTag('dt');
             $result .= Html::openTag('dd', $this->attributesValue);
 
