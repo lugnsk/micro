@@ -109,7 +109,7 @@ class Curl
      *
      * @return bool
      */
-    public function setOpt($option, $value)
+    public function setopt($option, $value)
     {
         return curl_setopt($this->curl, $option, $value);
     }
@@ -271,7 +271,7 @@ class Curl
      */
     protected function setHttpAuth($httpauth)
     {
-        $this->setOpt(CURLOPT_HTTPAUTH, $httpauth);
+        $this->setopt(CURLOPT_HTTPAUTH, $httpauth);
     }
 
     /**
