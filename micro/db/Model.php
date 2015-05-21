@@ -101,12 +101,36 @@ abstract class Model extends FormModel
         return $query->run();
     }
 
+    /**
+     * Finder by primary key
+     *
+     * @access public
+     * @param int|string $value unique value
+     * @return mixed
+     * @static
+     */
     public static function findByPk($value)
     {
+        return self::findByAttributes( [ self::$primaryKey => $value ], true );
+    }
+
+    /**
+     * Find models by attributes
+     *
+     * @access public
+     * @param array $attributes attributes and data for search
+     * @param bool $single single or more
+     * @return mixed
+     */
+    public static function findByAttributes( array $attributes = [] , $single = false )
+    {
         $query = new Query;
-        $query->addWhere( self::$primaryKey . ' = :val' );
-        $query->params['val'] = $value;
-        return self::finder($query, true);
+        foreach ($attributes AS $key=>$val) {
+            $query->addWhere( $key . ' = :' . $key );
+        }
+        $query->params = $attributes;
+
+        return self::finder($query, $single);
     }
 
     /**
