@@ -26,7 +26,7 @@ abstract class Model extends FormModel
     /** @var boolean $_isNewRecord is new record? */
     protected $_isNewRecord = false;
     /** @var string $primaryKey Primary key on table */
-    protected $primaryKey = 'id';
+    public static $primaryKey = 'id';
     /** @var array $cacheRelations cached loads relations */
     protected $cacheRelations = [];
 
@@ -99,6 +99,14 @@ abstract class Model extends FormModel
         $query->objectName = get_called_class();
         $query->single = $single;
         return $query->run();
+    }
+
+    public static function findByPk($value)
+    {
+        $query = new Query;
+        $query->addWhere( self::$primaryKey . ' = :val' );
+        $query->params['val'] = $value;
+        return self::finder($query, true);
     }
 
     /**
