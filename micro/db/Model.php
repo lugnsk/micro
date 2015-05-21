@@ -206,7 +206,7 @@ abstract class Model extends FormModel
                 return false;
             }
 
-            $pKey = $this->primaryKey?:'id';
+            $pKey = self::$primaryKey?:'id';
             if ($this->checkAttributeExists( $pKey )) {
                 $this->$pKey = $id;
             }
@@ -252,11 +252,9 @@ abstract class Model extends FormModel
         if ($this->isNewRecord()) {
             return $this->create();
         } else {
-            if ($this->beforeSave()) {
-                if ($this->update()) {
-                    $this->afterSave();
-                    return true;
-                }
+            if ($this->beforeSave() && $this->update()) {
+                $this->afterSave();
+                return true;
             }
         }
         return false;
@@ -300,8 +298,8 @@ abstract class Model extends FormModel
         }
         if ($this->beforeUpdate()) {
             if (!$where) {
-                if ($this->primaryKey) {
-                    $where .= '`' . $this->primaryKey . '` = :' . $this->primaryKey;
+                if (self::$primaryKey) {
+                    $where .= '`' . self::$primaryKey . '` = :' . self::$primaryKey;
                 } else {
                     throw new Exception ('In table ' . static::tableName() . ' option `id` not defined/not use.');
                 }
@@ -349,14 +347,14 @@ abstract class Model extends FormModel
             return false;
         }
         if ($this->beforeDelete()) {
-            if (!$this->primaryKey) {
+            if (!self::$primaryKey) {
                 throw new Exception('In table ' . static::tableName() . ' option `id` not defined/not use.');
             }
 
             if (
             $this->db->delete(
                 static::tableName(),
-                $this->primaryKey . '=:' . $this->primaryKey, [$this->primaryKey => $this->{$this->primaryKey}]
+                self::$primaryKey . '=:' . self::$primaryKey, [self::$primaryKey => $this->{self::$primaryKey}]
             )
             ) {
                 $this->afterDelete();
@@ -421,7 +419,7 @@ abstract class Model extends FormModel
         }
 
         foreach ($arr AS $key=>$val) {
-            if (!in_array($key, $buffer)) {
+            if (!in_array($key, $buffer, true)) {
                 unset($arr[$key]);
             }
         }
