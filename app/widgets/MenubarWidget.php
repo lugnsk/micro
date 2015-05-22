@@ -13,11 +13,11 @@ class MenubarWidget extends Widget
 
     public function run()
     {
-        $v = new View;
-        $v->path = get_class($this);
-        $v->view = 'menubar';
-        $v->asWidget = true;
+        $view = new View;
+        $view->path = get_class($this);
+        $view->view = 'menubar';
+        $view->asWidget = true;
 
-        echo $v;
+        echo $view;
     }
 }
