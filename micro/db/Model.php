@@ -269,10 +269,15 @@ abstract class Model extends FormModel
      * Save changes
      *
      * @access public
+     * @param bool $validate Validated data?
      * @return boolean
      */
-    final public function save()
+    final public function save( $validate = false )
     {
+        if ($validate && !$this->validate()) {
+            return false;
+        }
+
         if ($this->isNewRecord()) {
             return $this->create();
         } else {
