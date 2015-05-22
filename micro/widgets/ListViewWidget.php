@@ -84,6 +84,13 @@ class ListViewWidget extends Widget
         }
 
         if ($args['data'] instanceof Query) {
+            if (strlen($args['data']->objectName)) {
+                $cls = $args['data']->objectName;
+                $args['data']->table = $cls::tableName();
+            } elseif (!$args['data']->table) {
+                throw new Exception('Data query not set table or objectName');
+            }
+
             $select               = $args['data']->select;
 
             $args['data']->select = 'COUNT(id)';
