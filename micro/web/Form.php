@@ -1187,7 +1187,10 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
-        $options['selected'] = $element['value'];
+
+        if (!empty($element['value'])) {
+            $options['selected'] = $element['value'];
+        }
 
         $elements = [];
         if (!empty($options['elements'])) {
