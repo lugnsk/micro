@@ -742,7 +742,7 @@ class Html
             if (!empty($option['label'])) {
                 $opts .= self::optGroup($option['label'], $option['options'], $option['attributes']);
             } else {
-                if ($option['value'] === $selected) {
+                if (!empty($option['value']) && $option['value'] === $selected) {
                     $option['selected'] = 'selected';
                 }
 
@@ -758,7 +758,7 @@ class Html
                     unset($option['text']);
                 }
 
-                $opts .= self::option($option['value'], $text, $attr);
+                $opts .= self::option( !empty($option['value']) ? $option['value'] : '' , $text, $attr);
             }
         }
 

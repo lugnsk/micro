@@ -1201,6 +1201,29 @@ class Form
         return Html::dropDownList($element['name'], $elements, $options);
     }
 
+    public function checkboxFieldRow($model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        $block = [];
+        if (!empty($options['block'])) {
+            $block = $options['block'];
+            unset($options['block']);
+        }
+
+        $label = [];
+        if (!empty($options['label'])) {
+            $label = $options['label'];
+            unset($options['label']);
+        }
+
+        return Html::openTag('div', $block) .
+        Html::label($model->getLabel($property), $element['id'], $label) .
+        $this->checkBoxField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
     // LIST Rows
 
     /**
