@@ -914,8 +914,8 @@ class Html
     {
         $rads = '';
         foreach ($radios AS $radio) {
-            if ($radio['value'] === $selected) {
-                $radio['attributes']['selected'] = 'selected';
+            if (strcmp($radio['value'], $selected) === 0) {
+                $radio['attributes']['checked'] = 'checked';
             }
             $rad = self::radioField($name, $radio['value'],
                 !empty($radio['attributes']) ? $radio['attributes'] : []);
