@@ -227,7 +227,7 @@ class GridViewWidget extends Widget
         $result = Html::openTag('tr', $this->attributesHeading);
         foreach ($this->tableConfig AS $key=>$row) {
             $result .= Html::openTag('th', (!empty($row['attributesHeader']) ? $row['attributesHeader'] : []) );
-            $result .= !is_array($row) ? ucfirst($row) : (!empty($row['header']) ? $row['header'] : '');
+            $result .= !is_array($row) ? ucfirst($row) : (!empty($row['header']) ? $row['header'] : ucfirst($key));
             $result .= Html::closeTag('th');
         }
         $result .= Html::closeTag('tr');
