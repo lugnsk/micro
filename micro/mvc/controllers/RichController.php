@@ -92,7 +92,7 @@ abstract class RichController extends Controller
         }
 
         // if not define specify content type
-        if (!$this->response->getContentType()) {
+        if ($this->response->getContentType() !== $this->format) {
             $this->response->setContentType($this->format);
         }
 
