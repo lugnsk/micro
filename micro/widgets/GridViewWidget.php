@@ -83,14 +83,14 @@ class GridViewWidget extends Widget
         $this->page  = ($this->page < 0)   ? 0  : $this->page;
 
         if ($args['data'] instanceof Query) {
-            if ($args['data']->objectName) { // table name
+            if ($args['data']->objectName) {
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
                 throw new Exception('Data query not set table or objectName');
             }
 
-            if ($args['data']->having || $args['data']->group) { // cut having | group for count(*)
+            if ($args['data']->having || $args['data']->group) {
                 $res = new Query;
                 $res->select = 'COUNT(*)';
                 $res->table = '(' . $args['data']->getQuery() . ') micro_count';
@@ -113,7 +113,7 @@ class GridViewWidget extends Widget
             $args['data'] = array_slice($args['data'], $this->page * $this->limit, $this->limit);
         }
 
-        foreach ($args['data'] AS $model) { // convert to arrays to stdObject
+        foreach ($args['data'] AS $model) {
             $this->rows[] = is_subclass_of($model, 'Micro\db\Model') ? $model : (object)$model;
         }
     }
@@ -286,7 +286,7 @@ class GridViewWidget extends Widget
 
         if (0 === count($this->rows)) {
             return Html::openTag('tr') .
-                Html::openTag('td', ['cols'=>count($this->keys)]) . $this->emptyText . Html::closeTag('td') .
+                Html::openTag('td', ['cols'=>count($this->fields)]) . $this->emptyText . Html::closeTag('td') .
             Html::closeTag('tr');
         }
 
