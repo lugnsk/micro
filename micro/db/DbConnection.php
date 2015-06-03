@@ -305,19 +305,21 @@ class DbConnection
     public function insert($table, array $line = [], $multi = false)
     {
         $fields = implode(', ', array_keys( $multi?$line[0]:$line ));
-        $values = ':' . implode(', :', array_keys( $multi?$line[0]:$line )) . '';
+        $values = ':' . implode(', :', array_keys( $multi?$line[0]:$line ));
 
+        $dbh = null;
         $this->conn->beginTransaction();
-
-        $dbh = $this->conn->prepare( 'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');' );
         if ($multi) {
             foreach ($line AS $l) {
-                $dbh->execute($l);
+                $dbh = $this->conn->prepare(
+                    'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
+                )->execute($l);
             }
         } else {
-            $dbh->execute($line);
+            $dbh = $this->conn->prepare(
+                'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
+            )->execute($line);
         }
-
         $this->conn->commit();
 
         if ($dbh) {
