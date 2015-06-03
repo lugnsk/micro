@@ -298,6 +298,7 @@ class DbConnection
      *
      * @param string $table table name
      * @param array $line lines to added
+     * @param bool $multi is multi rows
      *
      * @return bool
      */
