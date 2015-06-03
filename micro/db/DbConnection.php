@@ -307,9 +307,16 @@ class DbConnection
         $values = ':' . implode(', :', array_keys( $multi?$line[0]:$line )) . '';
 
         $this->conn->beginTransaction();
-        $dbh = $this->conn->prepare(
-            'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
-        )->execute($line);
+
+        $dbh = $this->conn->prepare( 'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');' );
+        if ($multi) {
+            foreach ($line AS $l) {
+                $dbh->execute($l);
+            }
+        } else {
+            $dbh->execute($line);
+        }
+
         $this->conn->commit();
 
         if ($dbh) {
