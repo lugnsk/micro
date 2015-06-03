@@ -301,14 +301,16 @@ class DbConnection
      *
      * @return bool
      */
-    public function insert($table, array $line = [])
+    public function insert($table, array $line = [], $multi = false)
     {
-        $fields = implode(', ', array_keys($line));
-        $values = '"' . implode('", "', array_values($line)) . '"';
+        $fields = implode(', ', array_keys( $multi?$line[0]:$line ));
+        $values = ':' . implode(', :', array_keys( $multi?$line[0]:$line )) . '';
 
+        $this->conn->beginTransaction();
         $dbh = $this->conn->prepare(
             'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
         )->execute($line);
+        $this->conn->commit();
 
         if ($dbh) {
             return $this->conn->lastInsertId();
