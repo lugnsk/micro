@@ -224,7 +224,7 @@ abstract class Model extends FormModel
         if (!$this->isNewRecord()) {
             return false;
         }
-        if ($this->beforeCreate()) {
+        if ($this->beforeCreate() && $this->beforeSave()) {
             $id = $this->db->insert(static::tableName(), $this->mergeAttributesDb());
             if (!$id) {
                 return false;
@@ -236,7 +236,9 @@ abstract class Model extends FormModel
             }
 
             $this->_isNewRecord = false;
+
             $this->afterCreate();
+            $this->afterSave();
 
             return true;
         }
