@@ -70,6 +70,8 @@ abstract class Model extends FormModel
     }
 
     /**
+     * Get name of table
+     *
      * @access public
      *
      * @return string
@@ -79,6 +81,20 @@ abstract class Model extends FormModel
     public static function tableName()
     {
         throw new Exception('Function `tableName` not defined into ' . get_called_class());
+    }
+
+    /**
+     * Find by model attribute values
+     *
+     * @access public
+     *
+     * @param bool $single Is a single?
+     *
+     * @return mixed
+     */
+    public function find( $single = false )
+    {
+        return self::findByAttributes(Type::getVars($this), $single);
     }
 
     /**
