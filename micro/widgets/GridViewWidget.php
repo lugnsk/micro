@@ -44,6 +44,10 @@ class GridViewWidget extends Widget
     public $attributesCounter = [];
     /** @var array $attributesHeading attributes for heading */
     public $attributesHeading = [];
+    /** @var array $attributesFilter attributes for filter row */
+    public $attributesFilter = [];
+    /** @var array $attributesFilterForm attributes for filter form */
+    public $attributesFilterForm = [];
     /** @var array $tableConfig table configuration */
     public $tableConfig = [];
     /** @var array $paginationConfig parameters for PaginationWidget */
@@ -252,7 +256,8 @@ class GridViewWidget extends Widget
         if (!$this->filters) {
             return null;
         }
-        $result  = Html::beginForm(null, 'get') . Html::openTag('tr');
+        $result  = Html::beginForm(null, 'get', $this->attributesFilterForm);
+        $result .= Html::openTag('tr', $this->attributesFilter);
 
         foreach ($this->tableConfig AS $key=>$row) {
             $result .= Html::openTag('td', $row['attributesFilter'] );
