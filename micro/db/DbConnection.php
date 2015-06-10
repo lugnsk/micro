@@ -304,7 +304,7 @@ class DbConnection
      */
     public function insert($table, array $line = [], $multi = false)
     {
-        $fields = implode(', ', array_keys( $multi?$line[0]:$line ));
+        $fields = '`' . implode('`, `', array_keys( $multi?$line[0]:$line )) . '`';
         $values = ':' . implode(', :', array_keys( $multi?$line[0]:$line ));
 
         $id = null;
