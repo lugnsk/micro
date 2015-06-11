@@ -748,7 +748,7 @@ class Html
                     unset($option['attributes']);
                 }
 
-                if (!empty($option['value']) && $option['value'] === $selected) {
+                if (!empty($option['value']) && (string)$option['value'] === (string)$selected) {
                     $attr['selected'] = 'selected';
                 }
 
