@@ -25,28 +25,47 @@ class Uploader
      * Constructor uploads
      *
      * @access public
+     *
+     * @param array $rawData Raw data for setup
+     *
      * @result void
      */
-    public function __construct()
+    public function __construct( array $rawData = null )
     {
-        if (null !== $_FILES) {
-            if (!empty($_FILES['name'])) {
-                $sumFiles = count($_FILES['name']);
-                for ($i = 0; $i < $sumFiles; $i++) {
-                    if (empty($_FILES['name'][$i])) {
-                        break;
-                    }
-                    $this->files[] = [
-                        'name'     => $_FILES['name'][$i],
-                        'type'     => $_FILES['type'][$i],
-                        'error'    => $_FILES['error'][$i],
-                        'tmp_name' => $_FILES['tmp_name'][$i],
-                        'size'     => $_FILES['size'][$i]
-                    ];
+        $this->setup( $rawData );
+    }
+
+    /**
+     * Setup uploader from config array
+     *
+     * @access public
+     *
+     * @param array $rawData Raw data
+     *
+     * @return void
+     */
+    public function setup( array $rawData = [] )
+    {
+        if ( 0 === count( $rawData ) ) {
+            return;
+        }
+
+        if ( !empty( $rawData['name'] ) ) {
+            $sumFiles = count( $rawData['name'] );
+            for ($i = 0; $i < $sumFiles; $i++) {
+                if ( empty( $rawData['name'][$i] ) ) {
+                    continue;
                 }
-            } else {
-                $this->files[] = $_FILES;
+                $this->files[] = [
+                    'name'     => $rawData['name'][$i],
+                    'type'     => $rawData['type'][$i],
+                    'error'    => $rawData['error'][$i],
+                    'tmp_name' => $rawData['tmp_name'][$i],
+                    'size'     => $rawData['size'][$i]
+                ];
             }
+        } else {
+            $this->files[] = $rawData;
         }
     }
 }

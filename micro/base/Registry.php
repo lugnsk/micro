@@ -32,13 +32,18 @@ final class Registry
      * @return mixed
      * @static
      */
-    public static function get($name = '')
+    public static function __get($name = '')
     {
         if (empty(self::$data[$name])) {
             self::configure($name);
         }
 
         return self::$data[$name];
+    }
+
+    public function load( $filename )
+    {
+        self::$data = array_merge(self::$data, require $filename);
     }
 
     /**
@@ -142,26 +147,5 @@ final class Registry
     {
         self::configure();
         return self::$data;
-    }
-
-
-    /**
-     * Disable construct
-     *
-     * @access protected
-     * @result void
-     */
-    protected function __construct()
-    {
-    }
-
-    /**
-     * Disable clone
-     *
-     * @access protected
-     * @return void
-     */
-    protected function __clone()
-    {
     }
 }

@@ -45,14 +45,14 @@ class Dispatcher
      *
      * @param string $listener listener name
      *
-     * @return void
+     * @return mixed
      */
-    public function signal($listener)
+    public function signal($listener, array $params = [] )
     {
         if ($this->listeners) {
             foreach ($this->listeners AS $key => $obj) {
                 if ($key === $listener) {
-                    call_user_func($obj);
+                    return call_user_func($obj, $params);
                 }
             }
         }

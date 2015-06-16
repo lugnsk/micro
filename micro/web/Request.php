@@ -18,18 +18,10 @@ use Micro\Micro;
  */
 class Request
 {
-    /** @var Router $router router for request */
-    private $router;
-    /** @var string $extensions extensions in request */
-    private $extensions;
-    /** @var string $modules modules in request */
-    private $modules;
-    /** @var string $controller controller to run */
-    private $controller;
-    /** @var string $action action to run */
-    private $action;
-    /** @var string $uri current uri */
-    private $uri;
+    /** @var bool $cli Is running as CLI */
+    protected $cli;
+    /** @var array $data Data from request */
+    protected $data;
 
 
     /**
@@ -37,188 +29,34 @@ class Request
      *
      * @access public
      *
-     * @param array $routes routes array
-     *
      * @result void
      */
-    public function __construct(array $routes = [])
+    public function __construct()
     {
-        $this->router = new Router( !empty($routes['routes']) ? $routes['routes'] : [] );
+        $this->cli = php_sapi_name() === 'cli';
 
-        $this->uri = !empty($_GET['r']) ? $_GET['r']: '/default';
-        $this->uri = (substr($this->uri, -1) === '/') ? '/default': $this->uri;
-        $this->uri = $this->router->parse($this->uri, $this->getMethod());
+        $this->data = [
+            'query'   => isset($_GET) ? $_GET : FALSE,
+            'post'    => isset($_POST) ? $_POST : FALSE,
+            'files'   => isset($_FILES) ? $_FILES : FALSE,
+            'cookie'  => isset($_COOKIE) ? $_COOKIE : FALSE,
+            'server'  => isset($_SERVER) ? $_SERVER : FALSE,
+            'session' => isset($_SESSION) ? $_SESSION : FALSE
+        ];
 
-        $this->initialize();
+        unset($_GET, $_POST, $_FILES, $_COOKIE, $_SERVER, $_SESSION, $_REQUEST, $GLOBALS);
     }
+
     /**
-     * Initialize request object
+     * Get flag of running as CLI
      *
      * @access public
      *
-     * @return void
+     * @return bool
      */
-    private function initialize()
+    public function isCli()
     {
-        $key = strpos($this->uri, '?');
-        $params = $key ? substr($this->uri, $key+2) : null;
-        $uriBlocks = explode('/', substr($this->uri, 0, $key?:strlen($this->uri)));
-
-        if (substr($this->uri, 0, 1) === '/') {
-            array_shift($uriBlocks);
-        }
-
-        $this->prepareExtensions($uriBlocks);
-        $this->prepareModules($uriBlocks);
-        $this->prepareController($uriBlocks);
-        $this->prepareAction($uriBlocks);
-
-        if ($params) {
-            $paramBlocks = explode('&', $params);
-
-            foreach ($paramBlocks AS $param) {
-                $val = explode('=', $param);
-                $_GET[$val[0]] = $val[1];
-            }
-        }
-    }
-
-    /**
-     * Prepare extensions
-     *
-     * @access private
-     *
-     * @param array $uriBlocks uri blocks from URL
-     *
-     * @return void
-     */
-    private function prepareExtensions(&$uriBlocks)
-    {
-        foreach ($uriBlocks AS $i => $block) {
-            if (file_exists(Micro::getInstance()->config['AppDir'] . $this->extensions . '/extensions/' . $block)) {
-                $this->extensions .= '/extensions/' . $block;
-                unset($uriBlocks[$i]);
-            } else {
-                break;
-            }
-        }
-        $this->extensions = strtr($this->extensions, '/', '\\');
-    }
-    /**
-     * Prepare modules
-     *
-     * @access private
-     *
-     * @global      Micro
-     *
-     * @param array $uriBlocks uri blocks from URL
-     *
-     * @return void
-     */
-    private function prepareModules(&$uriBlocks)
-    {
-        $path = Micro::getInstance()->config['AppDir'] . ($this->extensions ?: '');
-
-        foreach ($uriBlocks AS $i => $block) {
-            if (file_exists($path . $this->modules . '/modules/' . $block)) {
-                $this->modules .= '/modules/' . $block;
-                unset($uriBlocks[$i]);
-            } else {
-                break;
-            }
-        }
-
-        $this->modules = strtr($this->modules, '/', '\\');
-    }
-    /**
-     * Prepare controller
-     *
-     * @access private
-     *
-     * @param array $uriBlocks uri blocks from URL
-     *
-     * @return void
-     */
-    private function prepareController(&$uriBlocks)
-    {
-        $path = Micro::getInstance()->config['AppDir'] . ($this->extensions?:'') . ($this->modules?:'');
-        $str  = array_shift($uriBlocks);
-
-        if (file_exists(str_replace('\\', '/', $path . '/controllers/' . ucfirst($str) . 'Controller.php'))) {
-            $this->controller = $str;
-        } else {
-            $this->controller = 'default';
-            array_unshift($uriBlocks, $str);
-        }
-    }
-    /**
-     * Prepare action
-     *
-     * @access private
-     *
-     * @param array $uriBlocks uri blocks from URL
-     *
-     * @return void
-     */
-    private function prepareAction(&$uriBlocks)
-    {
-        $this->action = array_shift($uriBlocks) ?: 'index';
-    }
-
-    /**
-     * Get extensions from request
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getExtensions()
-    {
-        return $this->extensions;
-    }
-    /**
-     * Get modules from request
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getModules()
-    {
-        return $this->modules;
-    }
-    /**
-     * Get controller from request
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getController()
-    {
-        return ucfirst($this->controller) . 'Controller';
-    }
-    /**
-     * Get calculate path to controller
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getCalculatePath()
-    {
-        return 'App' . $this->getExtensions() . $this->getModules() . '\\controllers\\' . $this->getController();
-    }
-    /**
-     * Get action from request
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
+        return $this->cli;
     }
 
     /**
@@ -230,8 +68,9 @@ class Request
      */
     public function getMethod()
     {
-        return $_SERVER['REQUEST_METHOD'];
+        return $this->data['server']['REQUEST_METHOD'];
     }
+
     /**
      * Check request is AJAX ?
      *
@@ -241,8 +80,10 @@ class Request
      */
     public function isAjax()
     {
-        return !empty($_SERVER['HTTP_X_REQUEST_WITH']) && $_SERVER['HTTP_X_REQUEST_WITH'] === 'XMLHttpRequest';
+        return !empty($this->data['server']['HTTP_X_REQUEST_WITH']) &&
+        $this->data['server']['HTTP_X_REQUEST_WITH'] === 'XMLHttpRequest';
     }
+
     /**
      * Get user IP-address
      *
@@ -252,8 +93,9 @@ class Request
      */
     public function getUserIP()
     {
-        return !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
+        return !empty($this->data['server']['REMOTE_ADDR']) ? $this->data['server']['REMOTE_ADDR'] : '127.0.0.1';
     }
+
     /**
      * Get browser data from user user agent string
      *
@@ -265,6 +107,124 @@ class Request
      */
     public function getBrowser( $agent = null )
     {
-        return get_browser( $agent ?: $_SERVER['HTTP_USER_AGENT'], true);
+        return get_browser( $agent ?: $this->data['server']['HTTP_USER_AGENT'], true);
+    }
+
+    /**
+     * Get any var from Request storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $storage Storage name
+     *
+     * @return bool
+     */
+    public function getVar($name, $storage)
+    {
+        return array_key_exists($name, $this->data[$storage]) ? $this->data[$storage][$name] : FALSE;
+    }
+
+    /**
+     * Get value by key from server storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getServerVar( $name )
+    {
+        return $this->getVar($name, 'server');
+    }
+
+    /**
+     * Get value by key from query storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getQueryVar( $name )
+    {
+        return $this->getVar($name,'query');
+    }
+
+    /**
+     * Get value by key from post storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getPostVar( $name )
+    {
+        return $this->getVar($name, 'post');
+    }
+
+    /**
+     * Get value by key from cookie storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getCookieVar( $name )
+    {
+        return $this->getVar($name, 'cookie');
+    }
+
+    /**
+     * Get value by key from session storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getSessionVar( $name )
+    {
+        return $this->getVar($name, 'session');
+    }
+
+    /**
+     * Get arguments from command line
+     *
+     * @access public
+     *
+     * @return array
+     */
+    public function getArguments()
+    {
+        global $argv;
+        return $argv;
+    }
+
+    /**
+     * Get files mapper
+     *
+     * @access public
+     *
+     * @param string $className Class name of mapper
+     *
+     * @return mixed
+     */
+    public function getFiles( $className = '\Micro\web\Uploader' )
+    {
+        if ( !is_array($this->data['files']) ) {
+            return false;
+        }
+
+        /** @var \Micro\web\Uploader $files */
+        $files = new $className( $this->data['files'] );
+        return $files;
     }
 }

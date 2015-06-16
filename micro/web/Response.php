@@ -207,6 +207,19 @@ class Response
     }
 
     /**
+     * Public convert response to string (for send to client) and send headers
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function send()
+    {
+        $this->sendHeaders();
+        echo $this->sendBody();
+    }
+
+    /**
      * Send headers into browser
      *
      * @access public
@@ -236,18 +249,5 @@ class Response
     public function sendBody()
     {
         return $this->body;
-    }
-
-    /**
-     * Public convert response to string (for send to client) and send headers
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $this->sendHeaders();
-        return $this->sendBody();
     }
 }

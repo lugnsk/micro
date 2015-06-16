@@ -4,8 +4,12 @@ namespace Micro;
 
 use Micro\base\Autoload;
 use Micro\base\Console;
+use Micro\base\Dispatcher;
 use Micro\base\Exception;
 use Micro\base\Registry;
+use Micro\web\Request;
+use Micro\web\Resolver;
+use Micro\web\Response;
 
 /**
  * Micro class file.
@@ -19,145 +23,275 @@ use Micro\base\Registry;
  * @package micro
  * @version 1.0
  * @since 1.0
- * @final
  */
-final class Micro
+class Micro
 {
-    /** @var string $version Version of MicroPHP */
-    public static $version = '1.0';
-    /** @var Micro $_app Application singleton */
-    protected static $_app;
-    /** @var array $config Configuration array */
-    public $config;
+    /** @const string VERSION Version framework */
+    const VERSION = '1.1';
+
+    /** @var string $environment Application environment */
+    protected $environment = 'devel';
+    /** @var string $appDir Application directory */
+    protected $appDir;
+    /** @var string $microDir Micro directory */
+    protected $microDir;
+    /** @var bool $debug Debug-mode flag */
+    protected $debug = true;
+    /** @var float $startTime Time of start framework */
+    protected $startTime;
+    /** @var bool $loaded Micro loaded flag */
+    protected $loaded;
+    /** @var Registry $container Registry is a container for components and options */
+    protected $container;
+    /** @var Dispatcher $dispatcher Event dispatcher */
+    protected $dispatcher;
 
 
     /**
-     * Method CLONE is not allowed for application
-     *
-     * Clone disabled on MicroPHP base class
-     *
-     * @access private
-     *
-     * @return void
-     */
-    protected function __clone()
-    {
-    }
-
-    /**
-     * Get application singleton instance
-     *
-     * Getting instance of MicroPHP class
+     * Clone application
      *
      * @access public
      *
-     * @param  array $config configuration array
-     *
-     * @return Micro this
-     * @static
+     * @return void
      */
-    public static function getInstance(array $config = [])
+    public function __clone()
     {
-        if (self::$_app === null) {
-            self::$_app = new Micro($config);
+        if ($this->debug){
+            $this->startTime = microtime(true);
         }
 
-        return self::$_app;
+        $this->loaded = false;
+        $this->container = null;
     }
 
     /**
-     * Constructor application
+     * Initialize framework
      *
-     * Private constructor a MicroPHP application.
-     * If isset config, application get parameters for initialization
-     * and setup components.
+     * @access public
      *
-     * @access protected
-     *
-     * @param array $config configuration array
+     * @param string $appDir         Application directory
+     * @param string $microDir       Micro directory
+     * @param string $environment    Application environment: devel , prod , test
+     * @param bool   $debug          Debug-mode flag
+     * @param bool   $registerLoader Register default autoloader
      *
      * @result void
      */
-    protected function __construct(array $config = [])
+    public function __construct( $appDir, $microDir, $environment = 'devel', $debug = true, $registerLoader = true )
     {
-        $this->config = $config;
+        $this->appDir      = $appDir;
+        $this->microDir    = $microDir;
+        $this->environment = $environment;
+        $this->debug       = (bool)$debug;
+        $this->loaded      = false;
 
-        Autoload::setAlias('Micro', $config['MicroDir']);
-        Autoload::setAlias('App', $config['AppDir']);
+        if ($this->debug) {
+            $this->startTime = microtime(true);
+        }
 
-        spl_autoload_register(['\Micro\base\Autoload', 'loader']);
+        if (!$registerLoader) {
+            return;
+        }
+
+        $this->registerAutoload([
+            'filename' => $this->getMicroDir() . '/base/Autoload',
+            'callable' => ['\Micro\base\Autoload', 'loader']
+        ]);
+
+        Autoload::setAlias('Micro', $microDir);
+        Autoload::setAlias('App', $appDir);
+    }
+
+    /**
+     * Register autoload from config array
+     *
+     * Config format ['filename'=>'' , 'callable'=>'' , 'throw'=>'' , 'prepend'=>''];
+     *
+     * @access public
+     *
+     * @param array $config Config array
+     *
+     * @return bool
+     */
+    public function registerAutoload( array $config )
+    {
+        if (empty($config['filename']) || !file_exists($config['filename'])) {
+            return false;
+        }
+
+        $config = array_merge([
+            'filename' => '/autoload.php',
+            'callable' => '',
+            'throw'    => true,
+            'prepend'  => false
+        ], $config);
+
+        if (!file_exists($config['filename'])) {
+            return false;
+        }
+
+        if (empty($config['callable'])) {
+            return false;
+        }
+
+        require $config['filename'];
+        spl_autoload_register($config['callable'], (bool)$config['throw'], (bool)$config['prepend']);
+
+        return true;
+    }
+
+    /**
+     * Boot Loader
+     *
+     * @access public
+     *
+     * @param string $configPath Path to configure Registry
+     *
+     * @return void
+     */
+    public function loader( $configPath )
+    {
+        if (true === $this->loaded) {
+            return;
+        }
+
+        $this->initContainer($configPath);
+        $this->getDispatcher();
+
+        $this->loaded = true;
+    }
+
+    /**
+     * Unloader subsystem
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function unloader()
+    {
+        if (false === $this->loaded) {
+            return;
+        }
+
+        $this->container = null;
+        $this->loaded = false;
+    }
+
+    /**
+     * Initialize container
+     *
+     * @access public
+     *
+     * @param string $configPath Path to configure Registry
+     *
+     * @return void
+     */
+    public function initContainer( $configPath )
+    {
+        $this->container = new Registry;
+        $this->container->load( $configPath );
+    }
+
+    /**
+     * Get event dispatcher
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function getDispatcher()
+    {
+        $this->dispatcher = $this->container->dispatcher ?: new Dispatcher;
     }
 
     /**
      * Running application
      *
-     * Launch application as CLI or MVC mode
-     *
      * @access public
      *
-     * @global Registry
+     * @param Request $request Request object
+     * @param string $configPath Path to config file
      *
-     * @return void
-     * @throws Exception controller not set
+     * @return Response
      */
-    public function run()
+    public function run( Request $request, $configPath = '/configs/index.php' )
     {
-        if (php_sapi_name() !== 'cli') {
-            $this->runMvc();
+        if (!$this->loaded) {
+            $this->loader($configPath);
+        }
+
+        $resolver = new Resolver( $request, $this->container );
+        $this->dispatcher->signal('micro.router', []);
+
+        $app = $resolver->getApplication();
+        $this->dispatcher->signal('micro.controller', []);
+
+        $result = null;
+        $response = new Response;
+
+        if ($request->isCli()) {
+            $app->execute();
+            $result = $app->message;
         } else {
-            $this->runCli();
+            $result = $app->action($resolver->getAction());
         }
+        $this->dispatcher->signal('micro.response', []);
+
+        if ($result instanceof Response) {
+            $response = $result;
+        } else {
+            $response->setBody($result);
+        }
+
+        $this->unloader();
+        return $response;
     }
 
-    /**
-     * Running command line interface
-     *
-     * @access protected
-     *
-     * @global Registry
-     *
-     * @return void
-     * @throws Exception command not set
-     */
-    protected function runCli()
+    public function terminate( Request $request, Response $response )
     {
-        global $argv;
+        $this->dispatcher->signal('micro.exit', [
+            'request'=>$request,
+            'response'=>$response
+        ]);
 
-        $cli     = new Console($argv);
-        $cls     = $cli->getCommand();
-
-        /** @var \Micro\base\Command $command */
-        $command = new $cls($cli->getParams());
-
-        $command->execute();
-
-        if (!$command->result) {
-            throw new Exception($command->message);
-        }
-        echo $command->message , "\n";
+        unset($request, $response);
     }
 
-    /**
-     * Running MVC interface
-     *
-     * @access protected
-     *
-     * @global Registry
-     *
-     * @return void
-     * @throws Exception
-     */
-    protected function runMvc()
+    public function getEnvironment()
     {
-        $path   = Registry::get('request')->getCalculatePath();
-        $action = Registry::get('request')->getAction();
-
-        if (!class_exists($path)) {
-            throw new Exception('Controller not found into path `' . $path . '`.');
-        }
-
-        /** @var \Micro\mvc\controllers\Controller $mvc ModelViewController */
-        $mvc = new $path;
-        echo $mvc->action($action);
+        return $this->environment;
+    }
+    public function getAppDir()
+    {
+        return $this->appDir;
+    }
+    public function getMicroDir()
+    {
+        return $this->microDir;
+    }
+    public function getCharset()
+    {
+        return 'UTF-8';
+    }
+    public function getStartTime()
+    {
+        return $this->debug ? $this->startTime : null;
+    }
+    public function isDebug()
+    {
+        return $this->debug;
+    }
+    public function getContainer()
+    {
+        return $this->container;
+    }
+    public function getCacheDir()
+    {
+        return $this->appDir.'/cache/'.$this->environment;
+    }
+    public function getLogDir()
+    {
+        return $this->appDir.'/logs';
     }
 }
