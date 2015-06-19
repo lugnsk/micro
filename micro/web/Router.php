@@ -33,7 +33,7 @@ class Router
      */
     public function __construct(array $routes = [])
     {
-        $this->routes = $routes;
+        $this->routes = $routes['routes'];
     }
 
     /**

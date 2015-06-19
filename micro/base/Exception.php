@@ -2,8 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\Micro;
-
 /**
  * Exception specific exception
  *
@@ -17,6 +15,15 @@ use Micro\Micro;
  */
 class Exception extends \Exception
 {
+    protected $container;
+
+    public function __construct($container, $message = "", $code = 0, \Exception $previous = null)
+    {
+        $this->container = $container;
+
+        parent::__construct($message, $code, $previous);
+    }
+
     /**
      * Magic convert object to string
      *
@@ -38,18 +45,19 @@ class Exception extends \Exception
             return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';
         }
 
-        $config = Micro::getInstance()->config;
-
-        if (empty($config['errorController'])) {
+        if (empty($this->container->__get('errorController'))) {
             return 'Option `errorController` not configured';
         }
-        if (empty($config['errorAction'])) {
+        if (empty($this->container->__get('errorAction'))) {
             return 'Option `errorAction` not configured';
         }
 
+        $controller = $this->container->__get('errorController');
+        $action = $this->container->__get('errorAction');
+
         /** @var \Micro\mvc\controllers\Controller $mvc controller */
-        $mvc = new $config['errorController'];
-        echo $mvc->action($config['errorAction']);
+        $mvc = new $controller;
+        echo $mvc->action($action);
 
         error_reporting(0);
     }

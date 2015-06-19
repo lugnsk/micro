@@ -79,8 +79,8 @@ class Micro
      */
     public function __construct( $appDir, $microDir, $environment = 'devel', $debug = true, $registerLoader = true )
     {
-        $this->appDir      = $appDir;
-        $this->microDir    = $microDir;
+        $this->appDir      = realpath($appDir);
+        $this->microDir    = realpath($microDir);
         $this->environment = $environment;
         $this->debug       = (bool)$debug;
         $this->loaded      = false;
@@ -94,7 +94,7 @@ class Micro
         }
 
         $this->registerAutoload([
-            'filename' => $this->getMicroDir() . '/base/Autoload',
+            'filename' => $this->getMicroDir() . '/base/Autoload.php',
             'callable' => ['\Micro\base\Autoload', 'loader']
         ]);
 
@@ -189,7 +189,7 @@ class Micro
      */
     public function initContainer( $configPath )
     {
-        $this->container = new Registry;
+        $this->container = new Registry($this->appDir);
         $this->container->load( $configPath );
     }
 
