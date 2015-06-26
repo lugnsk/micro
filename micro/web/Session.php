@@ -2,6 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\Registry;
+
 /**
  * Session is a Session manager
  *
@@ -16,6 +18,8 @@ namespace Micro\web;
  */
 class Session
 {
+    protected $container;
+
     /**
      * Construct for this class
      *
@@ -25,8 +29,10 @@ class Session
      *
      * @result void
      */
-    public function __construct(array $config = [])
+    public function __construct(Registry $registry, array $config = [])
     {
+        $this->container = $registry;
+
         if (!empty($config['autoStart']) AND ($config['autoStart'] === true)) {
             $this->create();
         }
@@ -70,7 +76,7 @@ class Session
      */
     public function __get($name)
     {
-        return !empty($_SESSION[$name]) ? $_SESSION[$name] : null;
+        return $this->container->request->getSessionVar($name);
     }
 
     /**
@@ -85,7 +91,7 @@ class Session
      */
     public function __set($name, $value)
     {
-        $_SESSION[$name] = $value;
+        $this->container->request->setSessionVar($name, $value);
     }
 
     /**
@@ -99,7 +105,7 @@ class Session
      */
     public function __isset($name)
     {
-        return !empty($_SESSION[$name]);
+        return (bool) $this->container->request->getSessionVar($name);
     }
 
     /**
@@ -113,6 +119,6 @@ class Session
      */
     public function __unset($name)
     {
-        unset($_SESSION[$name]);
+        $this->container->request->setSessionVar($name, NULL);
     }
 }

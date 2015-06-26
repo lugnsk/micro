@@ -33,7 +33,7 @@ class FileValidator extends Validator
     {
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
-                $files = new Uploader;
+                $files = $this->container->request->getFiles();
                 if ( ! empty( $this->params['maxFiles'] ) AND ( count( $files->files ) > $this->params['maxFiles'] )) {
                     $this->errors[] = 'Too many files in parameter ' . $element;
                     return false;

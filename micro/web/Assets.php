@@ -3,7 +3,7 @@
 namespace Micro\web;
 
 use Micro\base\File as MFile;
-use Micro\Micro;
+use Micro\base\Registry;
 
 /**
  * Assets class file.
@@ -19,6 +19,8 @@ use Micro\Micro;
  */
 class Assets
 {
+    protected $container;
+
     /** @var string $assetDir directory for assets */
     private $assetDir = 'assets';
     /** @var string $hash hash for asset path */
@@ -36,18 +38,20 @@ class Assets
      *
      * @access public
      *
+     * @param Registry $registry
      * @param string $directory directory of assets
      *
      * @result void
      */
-    public function __construct($directory = '')
+    public function __construct(Registry $registry, $directory = '')
     {
+        $this->container = $registry;
         $this->directory = rtrim($directory, '/') . '/assets';
         $this->hash = md5($this->directory);
 
         $tmp = '/' . $this->assetDir . '/' . $this->hash;
-        $this->publishDir = Micro::getInstance()->config['HtmlDir'] . $tmp;
-        $this->sourceDir = Micro::getInstance()->config['WebDir'] . $tmp;
+        $this->publishDir = $this->container->HtmlDir . $tmp;
+        $this->sourceDir  = $this->container->WebDir . $tmp;
     }
 
     /**

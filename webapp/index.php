@@ -14,4 +14,4 @@ $response = $app->run($request);
 $response->send();
 
 // Kill application
-$app->terminate($request, $response);
+$app->terminate();

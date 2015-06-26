@@ -3,12 +3,10 @@
 namespace Micro;
 
 use Micro\base\Autoload;
-use Micro\base\Console;
 use Micro\base\Dispatcher;
-use Micro\base\Exception;
 use Micro\base\Registry;
+use Micro\base\Resolver;
 use Micro\web\Request;
-use Micro\web\Resolver;
 use Micro\web\Response;
 
 /**
@@ -156,7 +154,6 @@ class Micro
         }
 
         $this->initContainer($configPath);
-        $this->getDispatcher();
 
         $this->loaded = true;
     }
@@ -191,18 +188,8 @@ class Micro
     {
         $this->container = new Registry($this->appDir);
         $this->container->load( $configPath );
-    }
 
-    /**
-     * Get event dispatcher
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function getDispatcher()
-    {
-        $this->dispatcher = $this->container->dispatcher ?: new Dispatcher;
+        $this->container->dispatcher = $this->container->dispatcher ?: new Dispatcher($this->container);
     }
 
     /**
@@ -220,23 +207,24 @@ class Micro
         if (!$this->loaded) {
             $this->loader($configPath);
         }
+        $this->container->request = $request;
 
-        $resolver = new Resolver( $request, $this->container );
-        $this->dispatcher->signal('micro.router', []);
+        $resolver = new Resolver( $this->container );
+        $this->container->dispatcher->signal('micro.router', []);
 
         $app = $resolver->getApplication();
-        $this->dispatcher->signal('micro.controller', []);
+        $this->container->dispatcher->signal('micro.controller', []);
 
         $result = null;
-        $response = new Response;
 
+        $response = $this->container->response ?: new Response;
         if ($request->isCli()) {
             $app->execute();
             $result = $app->message;
         } else {
             $result = $app->action($resolver->getAction());
         }
-        $this->dispatcher->signal('micro.response', []);
+        $this->container->dispatcher->signal('micro.response', []);
 
         if ($result instanceof Response) {
             $response = $result;
@@ -248,14 +236,9 @@ class Micro
         return $response;
     }
 
-    public function terminate( Request $request, Response $response )
+    public function terminate()
     {
-        $this->dispatcher->signal('micro.exit', [
-            'request'=>$request,
-            'response'=>$response
-        ]);
-
-        unset($request, $response);
+        $this->container->dispatcher->signal('micro.exit', []);
     }
 
     public function getEnvironment()

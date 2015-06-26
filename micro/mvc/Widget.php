@@ -2,6 +2,9 @@
 
 namespace Micro\mvc;
 
+use Micro\base\Registry;
+use Micro\web\Request;
+
 /**
  * Class Controller
  *
@@ -16,6 +19,9 @@ namespace Micro\mvc;
  */
 abstract class Widget
 {
+    protected $container;
+
+
     /**
      * Constructor for widgets
      *
@@ -25,8 +31,11 @@ abstract class Widget
      *
      * @result void
      */
-    public function __construct(array $args = [])
+    public function __construct(array $args = [], Registry $container=null )
     {
+        $this->request = $request;
+        $this->container = $container;
+
         foreach ($args AS $name => $value) {
             $this->$name = $value;
         }

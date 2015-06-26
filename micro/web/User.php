@@ -18,6 +18,13 @@ use Micro\base\Registry;
  */
 class User
 {
+    protected $container;
+
+    public function __construct(Registry $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Set User ID
      *
@@ -30,7 +37,7 @@ class User
      */
     public function setID($id)
     {
-        Registry::get('session')->UserID = $id;
+        $this->container->session->UserID = $id;
     }
 
     /**
@@ -47,7 +54,7 @@ class User
     public function check($permission, array $data = [])
     {
         if (!$this->isGuest()) {
-            return Registry::get('permission')->check($this->getID(), $permission, $data);
+            return $this->container->permission->check($this->getID(), $permission, $data);
         } else {
             return false;
         }
@@ -78,7 +85,7 @@ class User
     {
         if (!$this->isGuest()) {
             $this->setID(null);
-            Registry::get('session')->destroy();
+            $this->container->session->destroy();
         }
     }
 
@@ -91,7 +98,7 @@ class User
      */
     public function isGuest()
     {
-        return !Registry::get('session') || !Registry::get('session')->UserID;
+        return !$this->container->session || !$this->container->session->UserID;
     }
 
     /**
@@ -103,7 +110,7 @@ class User
      */
     public function getID()
     {
-        return (!$this->isGuest()) ? Registry::get('session')->UserID : false;
+        return (!$this->isGuest()) ? $this->container->session->UserID : false;
     }
 
     /**
@@ -115,7 +122,7 @@ class User
      */
     public function getCaptcha()
     {
-        return Registry::get('session')->captchaCode;
+        return $this->container->session->captchaCode;
     }
 
     /**
@@ -125,10 +132,10 @@ class User
      *
      * @param string $code source captcha
      *
-     * @return string
+     * @return void
      */
-    public function makeCaptcha($code)
+    public function setCaptcha($code)
     {
-        return md5($code);
+        $this->container->session->captchaCode = md5($code);
     }
 }

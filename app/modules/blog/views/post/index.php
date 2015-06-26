@@ -2,8 +2,9 @@
 use Micro\web\Language;
 use Micro\wrappers\Html;
 
+/** @var App\components\View $this */
 /** @var array $blogs */
-/** @var integer $pages */
+/** @var integer $page */
 /** @var Language $lang */
 
 $this->widget('App\modules\blog\widgets\TopblogsWidget');
@@ -13,7 +14,7 @@ echo Html::href('Создать', '/blog/post/create');
 <?php
     echo $this->widget('\Micro\widgets\ListViewWidget', [
         'data'=>$blogs,
-        'page'=> !empty($_GET['page']) ? $_GET['page'] : 0,
+        'page'=> $page,
         'pathView'=>__DIR__ . '/_view.php',
         'paginationConfig' => [
             'url'=>'/blog/post/index/'

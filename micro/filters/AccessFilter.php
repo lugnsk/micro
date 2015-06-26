@@ -130,19 +130,19 @@ class AccessFilter extends Filter
                         return true;
                     }
                     case '?': {
-                        if (Registry::get('user')->isGuest()) {
+                        if ($this->container->user->isGuest()) {
                             return true;
                         }
                         break;
                     }
                     case '@': {
-                        if (!Registry::get('user')->isGuest()) {
+                        if (!$this->container->user->isGuest()) {
                             return true;
                         }
                         break;
                     }
                     default: {
-                        if (Registry::get('user')->getID() === $u) {
+                        if ($this->container->user->getID() === $u) {
                             return true;
                         }
                     }
@@ -154,19 +154,19 @@ class AccessFilter extends Filter
                     return true;
                 }
                 case '?': {
-                    if (Registry::get('user')->isGuest()) {
+                    if ($this->container->user->isGuest()) {
                         return true;
                     }
                     break;
                 }
                 case '@': {
-                    if (!Registry::get('user')->isGuest()) {
+                    if (!$this->container->user->isGuest()) {
                         return true;
                     }
                     break;
                 }
                 default: {
-                    if (Registry::get('user')->getID() === $rule['users']) {
+                    if ($this->container->user->getID() === $rule['users']) {
                         return true;
                     }
                 }
@@ -192,12 +192,12 @@ class AccessFilter extends Filter
         }
         if (is_array($rule['roles'])) {
             foreach ($rule['roles'] AS $role) {
-                if (Registry::get('user')->check($role)) {
+                if ($this->container->user->check($role)) {
                     return true;
                 }
             }
         } else {
-            if (Registry::get('user')->check($rule['roles'])) {
+            if ($this->container->user->check($rule['roles'])) {
                 return true;
             }
         }
@@ -219,7 +219,7 @@ class AccessFilter extends Filter
         if (empty($rule['ips'])) {
             return true;
         }
-        $ip = Registry::get('request')->getUserIP();
+        $ip = $this->container->request->getUserIP();
 
         if (is_array($rule['ips'])) {
             foreach ($rule['ips'] AS $r) {
@@ -254,14 +254,14 @@ class AccessFilter extends Filter
             return true;
         }
         if (is_array($rule['verb'])) {
-            $verb = Registry::get('request')->getMethod();
+            $verb = $this->container->request->getMethod();
             foreach ($rule['verb'] AS $v) {
                 if ($v === $verb) {
                     return true;
                 }
             }
         } else {
-            return $rule['verb'] === Registry::get('request')->getMethod();
+            return $rule['verb'] === $this->container->request->getMethod();
         }
         return false;
     }

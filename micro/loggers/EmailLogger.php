@@ -2,6 +2,7 @@
 
 namespace Micro\loggers;
 
+use Micro\base\Registry;
 use Micro\wrappers\Mail;
 
 /**
@@ -34,17 +35,19 @@ class EmailLogger extends LogInterface
      *
      * @access public
      *
+     * @param Registry $container
      * @param array $params configuration params
      *
      * @result void
+     * @throws \Micro\base\Exception
      */
-    public function __construct(array $params = [])
+    public function __construct(Registry $container, array $params = [])
     {
-        parent::__construct($params);
+        parent::__construct($container, $params);
 
         $this->from = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
         $this->to = !empty($params['to']) ? $params['to'] : $this->from;
-        $this->subject = !empty($params['subject']) ? $params['subject'] : $_SERVER['SERVER_NAME'] . ' log message';
+        $this->subject = !empty($params['subject']) ? $params['subject'] : $this->container->getServerVar('SERVER_NAME') . ' log message';
     }
 
     /**

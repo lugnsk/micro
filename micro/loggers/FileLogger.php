@@ -3,6 +3,7 @@
 namespace Micro\loggers;
 
 use Micro\base\Exception;
+use Micro\base\Registry;
 
 /**
  * File logger class file.
@@ -29,19 +30,20 @@ class FileLogger extends LogInterface
      *
      * @access public
      *
+     * @param Registry $container
      * @param array $params configuration params
      *
      * @result void
      * @throws Exception
      */
-    public function __construct(array $params = [])
+    public function __construct(Registry $container, array $params = [])
     {
-        parent::__construct($params);
+        parent::__construct($container, $params);
 
-        if (is_writeable($params['filename']) OR is_writeable(dirname($params['filename']))) {
+        if (is_writable($params['filename']) OR is_writable(dirname($params['filename']))) {
             $this->connect = fopen($params['filename'], 'a+');
         } else {
-            throw new Exception('Directory or file "' . $params['filename'] . '" is read-only');
+            throw new Exception($this->container, 'Directory or file "' . $params['filename'] . '" is read-only');
         }
     }
 
@@ -61,7 +63,7 @@ class FileLogger extends LogInterface
         if (is_resource($this->connect)) {
             fwrite($this->connect, '[' . date('H:i:s d.m.Y') . '] ' . ucfirst($level) . ": {$message}\n");
         } else {
-            throw new Exception('Error write log in file.');
+            throw new Exception($this->container, 'Error write log in file.');
         }
     }
 

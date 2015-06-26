@@ -15,8 +15,19 @@ namespace Micro\base;
  */
 class Exception extends \Exception
 {
+    /** @var Registry $container Container config */
     protected $container;
 
+    /**
+     * @access public
+     *
+     * @param Registry $container
+     * @param string $message
+     * @param int $code
+     * @param \Exception $previous
+     *
+     * @result void
+     */
     public function __construct($container, $message = "", $code = 0, \Exception $previous = null)
     {
         $this->container = $container;
@@ -45,10 +56,10 @@ class Exception extends \Exception
             return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';
         }
 
-        if (empty($this->container->__get('errorController'))) {
+        if (!$this->container->__get('errorController')) {
             return 'Option `errorController` not configured';
         }
-        if (empty($this->container->__get('errorAction'))) {
+        if (!$this->container->__get('errorAction')) {
             return 'Option `errorAction` not configured';
         }
 
@@ -56,7 +67,7 @@ class Exception extends \Exception
         $action = $this->container->__get('errorAction');
 
         /** @var \Micro\mvc\controllers\Controller $mvc controller */
-        $mvc = new $controller;
+        $mvc = new $controller( $this->container );
         echo $mvc->action($action);
 
         error_reporting(0);
@@ -64,10 +75,10 @@ class Exception extends \Exception
 
     protected function makeErrors()
     {
-        $errors = !empty($_POST['errors']) ? $_POST['errors'] : [];
+        $errors = $this->container->request->getPostVar('errors') ?: [];
+
         $errors += ['Error - ' . $this->getMessage()];
 
-        unset($_GET, $_POST);
-        $_POST['errors'] = $errors;
+        $this->container->request->setPostVar('errors', $errors);
     }
 }

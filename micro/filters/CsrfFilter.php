@@ -2,8 +2,6 @@
 
 namespace Micro\filters;
 
-use Micro\base\Registry;
-
 /**
  * Class CrsfFilter
  *
@@ -30,10 +28,11 @@ class CsrfFilter extends Filter
      */
     public function pre(array $params)
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if ($this->container->request->getServerVar('REQUEST_METHOD') !== 'POST') {
             return true;
         }
-        if (empty($_POST['csrf'])) {
+
+        if (!$this->container->request->getPostVar('csrf')) {
             $this->result = [
                 'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
                 'message'  => !empty($rule['message']) ? $rule['message'] : 'Not allowed!'
@@ -41,13 +40,17 @@ class CsrfFilter extends Filter
             return false;
         }
 
-        $csrf = Registry::get('session')->csrf;
-        if (($key = in_array($_POST['csrf'], $csrf, true)) !== null) {
+        $csrf = $this->container->session->csrf;
+        if (($key = in_array($this->container->request->getPostVar('csrf'), $csrf, true)) !== null) {
 
-            unset($csrf[$key], $_POST['csrf']);
-            Registry::get('session')->csrf = $csrf;
+            unset( $csrf[$key] );
+
+            $this->container->request->setPostVar('csrf', null);
+            $this->container->session->csrf = $csrf;
+
             return true;
         }
+
         $this->result = [
             'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
             'message'  => !empty($rule['message']) ? $rule['message'] : 'Bad request!'
@@ -67,12 +70,29 @@ class CsrfFilter extends Filter
      */
     public function post(array $params)
     {
-        return preg_replace_callback('/(<form[^>]*>)(.*?)(<\/form>)/m',
-            create_function('$matches', '$gen = md5(rand()); $s = Micro\base\Registry::get("session"); ' .
-                '$arr = $s->csrf; $arr[] = md5($gen); $s->csrf = $arr; return $matches[1]."<input type=\"hidden\"' .
-                ' name=\"csrf\" value=\"".$gen."\" />".$matches[2].$matches[3];'
-            ),
+        return preg_replace_callback(
+            '/(<form[^>]*>)(.*?)(<\/form>)/m',
+            array($this, 'insertProtect'),
             $params['data']
         );
+    }
+
+    /**
+     * Insert CSRF protect into forms
+     *
+     * @access public
+     *
+     * @param array $matches Form
+     *
+     * @return string
+     */
+    public function insertProtect( array $matches = [] )
+    {
+        $gen = md5(mt_rand());
+        $s = $this->container->session;
+        $arr = $s->csrf;
+        $arr[] = md5($gen);
+        $s->csrf = $arr;
+        return $matches[1]."<input type=\"hidden\" name=\"csrf\" value=\"".$gen."\" />".$matches[2].$matches[3];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\Registry;
+
 /**
  * Cookie class file.
  *
@@ -16,6 +18,13 @@ namespace Micro\web;
  */
 class Cookie
 {
+    protected $container;
+
+    public function __construct(Registry $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Get cookie
      *
@@ -27,7 +36,7 @@ class Cookie
      */
     public function get($name)
     {
-        return !empty($_COOKIE[$name]) ? $_COOKIE[$name] : false;
+        return $this->container->request->getCookieVar($name);
     }
 
     /**
@@ -38,7 +47,7 @@ class Cookie
      */
     public function getAll()
     {
-        return $_COOKIE;
+        return $this->container->request->getStorage('cookie');
     }
 
     /**
@@ -69,7 +78,7 @@ class Cookie
      */
     public function exists($name)
     {
-        return !empty($_COOKIE[$name]);
+        return (bool)$this->container->request->getCookieVar($name);
     }
 
     /**

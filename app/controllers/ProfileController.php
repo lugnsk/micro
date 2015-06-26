@@ -39,9 +39,10 @@ class ProfileController extends Controller
 
     public function actionIndex()
     {
-        $query = new Query;
+        $query = new Query($this->container);
+
         $query->addWhere('id = :id');
-        $query->params = ['id' => Registry::get('session')->UserID];
+        $query->params = ['id' => $this->container->user->getID()];
 
         $user = User::finder($query, true);
         if (!$user) {
@@ -61,7 +62,7 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        $v = new View;
+        $v = new View($this->container);
         $v->addParameter('user', $user);
         return $v;
     }

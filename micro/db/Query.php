@@ -18,8 +18,8 @@ use Micro\base\Registry;
  */
 class Query
 {
-    /** @var DbConnection $conn Current connect to DB */
-    public $conn;
+    /** @var Registry $container Container config */
+    public $container;
 
     /** @var string $select selectable columns */
     public $select = '*';
@@ -52,23 +52,14 @@ class Query
      * Construct class
      *
      * @access public
+     *
+     * @param Registry $container
+     *
      * @result void
      */
-    public function __construct()
+    public function __construct( Registry $container )
     {
-        $this->getDbConnection();
-    }
-
-    /**
-     * Get connection to db
-     *
-     * @access public
-     * @global Registry
-     * @return void
-     */
-    public function getDbConnection()
-    {
-        $this->conn = Registry::get('db');
+        $this->container = $container;
     }
 
     /**
@@ -223,7 +214,7 @@ class Query
      */
     public function run($as = \PDO::FETCH_CLASS)
     {
-        $res = $this->conn->rawQuery($this->getQuery(), $this->params, $as, $this->objectName);
+        $res = $this->container->db->rawQuery($this->getQuery(), $this->params, $as, $this->objectName);
         if ($this->single) {
             return !empty($res[0]) ? $res[0] : false;
         } else {

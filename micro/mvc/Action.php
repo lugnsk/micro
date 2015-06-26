@@ -2,6 +2,9 @@
 
 namespace Micro\mvc;
 
+use Micro\base\Registry;
+use Micro\web\Request;
+
 /**
  * Class Action
  *
@@ -16,6 +19,13 @@ namespace Micro\mvc;
  */
 abstract class Action
 {
+    protected $container;
+
+    public function __construct( Registry $container )
+    {
+        $this->container = $container;
+    }
+
     /**
      * Running action
      *

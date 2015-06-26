@@ -49,7 +49,7 @@ abstract class ViewController extends Controller
         if (!method_exists($this, 'action' . ucfirst($name))) {
             $actionClass = $this->getActionClassByName($name);
             if (!$actionClass) {
-                throw new Exception('Action "' . $name . '" not found into ' . get_class($this));
+                throw new Exception( $this->container, 'Action "' . $name . '" not found into ' . get_class($this));
             }
         }
 
@@ -57,13 +57,14 @@ abstract class ViewController extends Controller
 
         if ($actionClass) {
             /** @var \Micro\mvc\Action $cl */
-            $cl = new $actionClass;
+            $cl = new $actionClass( $this->container );
             $view = $cl->run();
         } else {
             $view = $this->{'action' . ucfirst($name)}();
         }
 
         if (is_object($view)) {
+            $view->module = get_class($this->module);
             $view->layout = (!$view->layout) ? $this->layout : $view->layout;
             $view->view = (!$view->view) ? $name : $view->name;
             $view->path = get_called_class();

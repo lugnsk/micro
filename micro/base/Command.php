@@ -22,6 +22,8 @@ abstract class Command
     public $result = false;
     /** @var string $message status message of execute command */
     public $message = '';
+    /** @var Registry $container Container config */
+    protected $container;
 
 
     /**
@@ -29,12 +31,14 @@ abstract class Command
      *
      * @access public
      *
+     * @param Registry $container Container config
      * @param array $args configuration array
      *
      * @result void
      */
-    public function __construct(array $args = [])
+    public function __construct( Registry $container, array $args = [] )
     {
+        $this->container = $container;
         $this->args = $args;
     }
 

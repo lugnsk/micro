@@ -30,6 +30,7 @@ class FlashMessage
 
     /** @var \Micro\web\Session $session current session */
     protected $session;
+    protected $container;
 
     /**
      * Constructor messenger
@@ -39,12 +40,12 @@ class FlashMessage
      * @result void
      * @throws Exception
      */
-    public function __construct()
+    public function __construct( Registry $container )
     {
-        if (Registry::get('session') !== null) {
-            $this->session = Registry::get('session');
-        } else {
-            throw new Exception('Sessions not activated');
+        $this->container = $container;
+
+        if ($this->container->session === null) {
+            throw new Exception($this->container, 'Sessions not activated');
         }
     }
 
@@ -94,13 +95,13 @@ class FlashMessage
      */
     public function push($type = FlashMessage::TYPE_SUCCESS, $title = '', $description = '')
     {
-        $flashes = $this->session->flash;
+        $flashes = $this->container->session->flash;
         $flashes[] = [
             'type' => $type,
             'title' => $title,
             'description' => $description
         ];
-        $this->session->flash = $flashes;
+        $this->container->session->flash = $flashes;
     }
 
     /**
@@ -115,7 +116,7 @@ class FlashMessage
      */
     public function has($type = FlashMessage::TYPE_SUCCESS)
     {
-        foreach ($this->session->flash AS $element) {
+        foreach ($this->container->session->flash AS $element) {
             if (!empty($element['type']) && $element['type'] === $type) {
                 return true;
             }
@@ -135,10 +136,10 @@ class FlashMessage
      */
     public function get($type = FlashMessage::TYPE_SUCCESS)
     {
-        foreach ($this->session->flash AS $key => $element) {
+        foreach ($this->container->session->flash AS $key => $element) {
             if (!empty($element['type']) && $element['type'] === $type) {
                 $result = $element;
-                unset(Registry::get('session')->flash[$key]);
+                unset($this->container->session->flash[$key]);
                 return $result;
             }
         }
@@ -154,8 +155,8 @@ class FlashMessage
      */
     public function getAll()
     {
-        $result = $this->session->flash;
-        $this->session->flash = [];
+        $result = $this->container->session->flash;
+        $this->container->session->flash = [];
         return $result;
     }
 }

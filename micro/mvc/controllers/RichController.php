@@ -3,6 +3,7 @@
 namespace Micro\mvc\controllers;
 
 use Micro\base\Registry;
+use Micro\web\Request;
 
 abstract class RichController extends Controller
 {
@@ -37,13 +38,17 @@ abstract class RichController extends Controller
      *
      * @access public
      *
+     * @param Request $request
+     * @param Registry $registry
+     * @param string $modules
+     *
      * @result void
      */
-    public function __construct()
+    public function __construct( Registry $registry, $modules='' )
     {
-        parent::__construct();
+        parent::__construct( $registry, $modules );
 
-        $this->methodType = Registry::get('request')->getMethod() ?: 'GET';
+        $this->methodType = $this->container->request->getMethod() ?: 'GET';
     }
 
     /**
@@ -54,6 +59,7 @@ abstract class RichController extends Controller
      * @param string $name Called action name
      *
      * @return string
+     * @throws \Micro\base\Exception
      */
     public function action($name = 'index')
     {
@@ -85,7 +91,7 @@ abstract class RichController extends Controller
         // running
         if ($actionClass) {
             /** @var \Micro\mvc\Action $cl */
-            $cl = new $actionClass;
+            $cl = new $actionClass ( $this->container );
             $view = $cl->run();
         } else {
             $view = $this->{'action' . ucfirst($name)}();

@@ -2,6 +2,7 @@
 
 namespace Micro\web;
 
+use Micro\base\Registry;
 use Micro\base\Validator;
 
 /**
@@ -18,6 +19,12 @@ use Micro\base\Validator;
  */
 abstract class FormModel
 {
+    protected $container;
+    public function __construct(Registry $container)
+    {
+        $this->container = $container;
+    }
+
     /** @var array $errors validation errors */
     protected $errors = [];
 
@@ -30,7 +37,7 @@ abstract class FormModel
     public function validate()
     {
         foreach ($this->rules() AS $rule) {
-            $validator = new Validator($rule);
+            $validator = new Validator($this->container, $rule);
 
             if (!$validator->run($this) AND $validator->errors) {
                 $this->errors[] = $validator->errors;
@@ -57,14 +64,16 @@ abstract class FormModel
      * Get client code for validation
      *
      * @access public
+     *
      * @return string
+     * @throws \Micro\base\Exception
      */
     public function getClient()
     {
         $result = 'jQuery(document).ready(function(){';
 
         foreach ($this->rules() AS $rule) {
-            $validator = new Validator($rule);
+            $validator = new Validator($this->container, $rule);
             if (is_string($js = $validator->run($this, true))) {
                 $result .= ' ' . $js;
             }

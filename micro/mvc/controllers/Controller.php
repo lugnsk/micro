@@ -2,7 +2,6 @@
 
 namespace Micro\mvc\controllers;
 
-use Micro\Micro;
 use Micro\base\Registry;
 use Micro\base\Exception;
 use Micro\web\Response;
@@ -10,10 +9,12 @@ use Micro\web\Response;
 
 abstract class Controller
 {
-    /** @var string $module */
+    /** @var \Object $module */
     public $module;
     /** @var \Micro\web\Response $response Response HTTP data */
     public $response;
+    /** @var Registry $container */
+    protected $container;
 
 
     /**
@@ -32,26 +33,31 @@ abstract class Controller
      * Constructor controller
      *
      * @access public
-     * @global Registry
+     *
+     * @param Registry $registry
+     * @param string $modules
+     *
      * @result void
      */
-    public function __construct()
+    public function __construct( Registry $registry, $modules='' )
     {
-        // if module defined
-        if ($module = Registry::get('request')->getModules()) {
-            $app = Micro::getInstance()->config['AppDir'];
+        $this->container = $registry;
 
-            $path = $app . str_replace('\\', '/', $module) . '/' .
-                    ucfirst(basename(str_replace('\\', '/', $module))) . 'Module.php';
+        // if module defined
+        if ($modules) {
+            $app = $this->container->AppDir;
+
+            $path = $app . str_replace('\\', '/', $modules) . '/' .
+                    ucfirst(basename(str_replace('\\', '/', $modules))) . 'Module.php';
 
             // search module class
             if (file_exists($path)) {
                 $path = substr(str_replace('/', '\\', str_replace($app, 'App', $path)), 0, -4);
-                $this->module = new $path();
+                $this->module = new $path( $this->container );
             }
         }
 
-        $this->response = new Response;
+        $this->response = $this->container->response ?: new Response;
     }
 
     /**
@@ -81,7 +87,7 @@ abstract class Controller
             }
 
             /** @var \Micro\filters\Filter $_filter */
-            $_filter = new $filter['class']($action);
+            $_filter = new $filter['class']($action, $this->container);
 
             $res = $isPre ? $_filter->pre($filter) : $_filter->post($filter + ['data' => $data]);
             if (!$res) {
@@ -89,7 +95,7 @@ abstract class Controller
                     header('Location: ' . $_filter->result['redirect']);
                     die();
                 }
-                throw new Exception($_filter->result['message']);
+                throw new Exception($this->container, $_filter->result['message']);
             }
             $data = $res;
         }

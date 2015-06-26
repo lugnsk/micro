@@ -32,6 +32,11 @@ class Registry
         $this->config = require $this->appDir . $filename;
     }
 
+    public function __set($name, $component)
+    {
+        $this->data[$name] = $component;
+    }
+
     /**
      * Get registry value
      *

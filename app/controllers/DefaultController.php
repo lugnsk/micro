@@ -53,7 +53,7 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        return new View;
+        return new View($this->container);
     }
 
     public function actionLogin()

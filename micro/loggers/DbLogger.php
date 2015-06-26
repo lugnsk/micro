@@ -34,15 +34,14 @@ class DbLogger extends LogInterface
      *
      * @result void
      */
-    public function __construct(array $params = [])
+    public function __construct(Registry $container, array $params = [])
     {
-        parent::__construct($params);
-        $this->getConnect();
+        parent::__construct($container, $params);
 
         $this->tableName = !empty($params['table']) ? $params['table'] : 'logs';
 
-        if (!$this->conn->tableExists($this->tableName)) {
-            $this->conn->createTable(
+        if (!$this->container->db->tableExists($this->tableName)) {
+            $this->container->db->createTable(
                 $this->tableName,
                 array(
                     '`id` INT AUTO_INCREMENT',
@@ -57,18 +56,6 @@ class DbLogger extends LogInterface
     }
 
     /**
-     * Get connect to database
-     *
-     * @access public
-     * @global Registry
-     * @return void
-     */
-    public function getConnect()
-    {
-        $this->conn = Registry::get('db');
-    }
-
-    /**
      * Send log message into DB
      *
      * @access public
@@ -80,7 +67,7 @@ class DbLogger extends LogInterface
      */
     public function sendMessage($level, $message)
     {
-        $this->conn->insert($this->tableName, [
+        $this->container->db->insert($this->tableName, [
             'level' => $level,
             'message' => $message,
             'date_create' => $_SERVER['REQUEST_TIME']

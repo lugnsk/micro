@@ -44,25 +44,26 @@ class PostController extends Controller
 
     public function actionIndex()
     {
-        $crt = new Query;
+        $crt = new Query($this->container);
         $crt->table = Blog::tableName();
         $crt->order = 'id DESC';
 
-        $v = new View;
+        $v = new View ($this->request, $this->container) ;
         $v->addParameter('blogs', $crt);
+        $v->addParameter('page', $this->request->getQueryVar('page') ?: 0 );
         return $v;
     }
 
     public function actionView()
     {
-        $crt = new Query;
+        $crt = new Query($this->container);
         $crt->addWhere('id = :id');
         $crt->params = [
-            ':id' => $_GET['id']
+            ':id' => $this->request->getQueryVar('id')
         ];
         $blog = Blog::finder($crt, true);
 
-        $v = new View;
+        $v = new View($this->request, $this->container);
         $v->addParameter('model', $blog);
         return $v;
     }

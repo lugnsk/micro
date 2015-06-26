@@ -28,17 +28,17 @@ class CaptchaValidator extends Validator
      * Constructor validator
      *
      * @access public
-     * @global      Registry
      *
+     * @param Registry $registry
      * @param array $rule validation rule
      *
      * @result void
      */
-    public function __construct(array $rule = [])
+    public function __construct(Registry $registry, array $rule = [])
     {
-        parent::__construct($rule);
+        parent::__construct($registry, $rule);
 
-        $this->captcha = Registry::get('user')->getCaptcha();
+        $this->captcha = $this->container->user->getCaptcha();
     }
 
     /**
@@ -59,7 +59,7 @@ class CaptchaValidator extends Validator
                 return false;
             }
 
-            $convert = Registry::get('user')->makeCaptcha($model->$element);
+            $convert = $this->container->user->makeCaptcha($model->$element);
             if ($convert !== $this->captcha) {
                 return false;
             }

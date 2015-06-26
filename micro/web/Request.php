@@ -2,8 +2,6 @@
 
 namespace Micro\web;
 
-use Micro\Micro;
-
 /**
  * Request class file.
  *
@@ -45,6 +43,31 @@ class Request
         ];
 
         unset($_GET, $_POST, $_FILES, $_COOKIE, $_SERVER, $_SESSION, $_REQUEST, $GLOBALS);
+    }
+
+    /**
+     * Destructor Request
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        if ($this->isCli()) {
+            return;
+        }
+
+        foreach ($this->data AS $key=>$val) {
+            switch ($key) {
+                case 'query':   $_GET     = $val; break;
+                case 'post':    $_POST    = $val; break;
+                case 'files':   $_FILES   = $val; break;
+                case 'cookie':  $_COOKIE  = $val; break;
+                case 'server':  $_SERVER  = $val; break;
+                case 'session': $_SESSION = $val; break;
+            }
+        }
     }
 
     /**
@@ -108,6 +131,82 @@ class Request
     public function getBrowser( $agent = null )
     {
         return get_browser( $agent ?: $this->data['server']['HTTP_USER_AGENT'], true);
+    }
+
+    /**
+     * Set value into storage
+     *
+     * @access public
+     *
+     * @param string $name    Key name
+     * @param string $value   Key value
+     * @param string $storage Storage name
+     *
+     * @return void
+     */
+    public function setVar($name, $value, $storage)
+    {
+        $this->data[$storage][$name] = $value;
+    }
+
+    /**
+     * Set value into query storage
+     *
+     * @access public
+     *
+     * @param string $name    Key name
+     * @param string $value   Key value
+     *
+     * @return void
+     */
+    public function setQueryVar($name, $value)
+    {
+        $this->setVar($name, $value, 'query');
+    }
+
+    /**
+     * Set value into post storage
+     *
+     * @access public
+     *
+     * @param string $name    Key name
+     * @param string $value   Key value
+     *
+     * @return void
+     */
+    public function setPostVar($name, $value)
+    {
+        $this->setVar($name, $value, 'post');
+    }
+
+    /**
+     * Set value into cookie storage
+     *
+     * @access public
+     *
+     * @param string $name    Key name
+     * @param string $value   Key value
+     *
+     * @return void
+     */
+    public function setCookieVar($name, $value)
+    {
+        $this->setVar($name, $value, 'cookie');
+    }
+
+    /**
+     * Set value into session storage
+     *
+     * @access public
+     *
+     * @param string $name    Key name
+     * @param string $value   Key value
+     *
+     * @return void
+     */
+    public function setSessionVar($name, $value)
+    {
+        $this->setVar($name, $value, 'session');
     }
 
     /**
@@ -226,5 +325,34 @@ class Request
         /** @var \Micro\web\Uploader $files */
         $files = new $className( $this->data['files'] );
         return $files;
+    }
+
+    /**
+     * Get all data from storage
+     *
+     * @access public
+     *
+     * @param string $name Storage name
+     *
+     * @return mixed
+     */
+    public function getStorage( $name )
+    {
+        return $this->data[$name];
+    }
+
+    /**
+     * Set all data into storage
+     *
+     * @access public
+     *
+     * @param string $name Storage name
+     * @param array $data Any data
+     *
+     * @return void
+     */
+    public function setStorage( $name, array $data = [] )
+    {
+        $this->data[$name] = $data;
     }
 }

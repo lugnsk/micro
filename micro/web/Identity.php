@@ -19,6 +19,8 @@ use Micro\base\Registry;
  */
 abstract class Identity
 {
+    protected $container;
+
     /** @var string $username user name */
     public $username;
     /** @var string $password user password */
@@ -31,13 +33,15 @@ abstract class Identity
      *
      * @access public
      *
+     * @param Registry $container
      * @param string $username
      * @param string $password
      *
      * @result void
      */
-    public function __construct($username, $password)
+    public function __construct(Registry $container, $username, $password)
     {
+        $this->container = $container;
         $this->username = $username;
         $this->password = $password;
         $this->error = null;
@@ -66,7 +70,7 @@ abstract class Identity
      */
     public function addSession($name, $value)
     {
-        return Registry::get('session')->$name = $value;
+        return $this->container->session->$name = $value;
     }
 
     /**
@@ -94,6 +98,6 @@ abstract class Identity
         $secure = false,
         $httpOnly = true
     ) {
-        return Registry::get('cookie')->set($name, $value, $expire, $path, $domain, $secure, $httpOnly);
+        return $this->container->cookie->set($name, $value, $expire, $path, $domain, $secure, $httpOnly);
     }
 }

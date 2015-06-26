@@ -35,7 +35,9 @@ class PhpView extends View
      * Render insert data into view
      *
      * @access protected
+     *
      * @return string
+     * @throws \Micro\base\Exception
      */
     public function render()
     {
@@ -55,6 +57,7 @@ class PhpView extends View
      * @param string $view view name
      *
      * @return string
+     * @throws \Micro\base\Exception
      */
     public function renderPartial($view)
     {
@@ -90,7 +93,7 @@ class PhpView extends View
         include str_replace('\\', '/', $fileName);
 
         if ($GLOBALS['widgetStack']) {
-            throw new Exception(count($GLOBALS['widgetStack']) . ' widgets not endings.');
+            throw new Exception($this->request, $this->container, count($GLOBALS['widgetStack']) . ' widgets not endings.');
         }
 
         return ob_get_clean();
@@ -106,15 +109,13 @@ class PhpView extends View
      * @param string $data arguments array
      *
      * @return string
+     * @throws \Micro\base\Exception
      */
     public function renderRawData($data = '')
     {
         $layoutPath = null;
         if ($this->layout) {
-            $layoutPath = $this->getLayoutFile(
-                Micro::getInstance()->config['AppDir'],
-                Registry::get('request')->getModules()
-            );
+            $layoutPath = $this->getLayoutFile( $this->container->AppDir, $this->module );
         }
 
         if ($layoutPath) {
@@ -139,9 +140,9 @@ class PhpView extends View
 
         // Calculate path to view
         if (substr($calledClass, 0, strpos($calledClass, '\\')) === 'App') {
-            $path = Micro::getInstance()->config['AppDir'];
+            $path = $this->container->AppDir;
         } else {
-            $path = Micro::getInstance()->config['MicroDir'];
+            $path = $this->container->MicroDir;
         }
 
         $cl = strtolower(dirname(strtr($calledClass, '\\', '/')));
@@ -158,7 +159,7 @@ class PhpView extends View
         $path = str_replace('//','/', $path);
 
         if (!file_exists($path)) {
-            throw new Exception('View path `' . $path . '` not exists.');
+            throw new Exception($this->request, $this->container, 'View path `' . $path . '` not exists.');
         }
         return $path;
     }
@@ -183,7 +184,7 @@ class PhpView extends View
             if (file_exists($baseDir . '/' . $afterPath)) {
                 return $baseDir . '/' . $afterPath;
             }
-            throw new Exception('Layout ' . ucfirst($this->layout) . ' not found.');
+            throw new Exception($this->request, $this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
         }
         return $layout . $afterPath;
     }

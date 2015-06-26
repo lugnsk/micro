@@ -38,7 +38,7 @@ class UniqueValidator extends Validator
             }
             $elementValue = $model->$element;
 
-            $query = new Query;
+            $query = new Query($this->container);
             $query->select = $this->params['attribute'];
             $query->table = $this->params['table'];
             $query->addWhere($this->params['attribute'] . '="' . $elementValue . '"');

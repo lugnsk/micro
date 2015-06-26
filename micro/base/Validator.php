@@ -2,8 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\Micro;
-
 /**
  * Validator is a runner validation process
  *
@@ -41,17 +39,22 @@ class Validator
     /** @var array $rule current rule */
     private $rule = [];
 
+    protected $container;
+
+
     /**
      * Constructor validator object
      *
      * @access public
      *
+     * @param Registry $registry
      * @param array $rule configuration array
      *
      * @result void
      */
-    public function __construct(array $rule = [])
+    public function __construct(Registry $registry, array $rule = [])
     {
+        $this->container = $registry;
         $this->rule = $rule;
     }
 
@@ -85,7 +88,7 @@ class Validator
 
         if (!empty($this->validators[$name])) {
             $className = '\\Micro\\validators\\' . $this->validators[$name];
-        } elseif (file_exists(Micro::getInstance()->config['AppDir'] . '/validators/' . $name . '.php')) {
+        } elseif (file_exists($this->container->AppDir . '/validators/' . $name . '.php')) {
             $className = '\\App\\validators\\' . $name . '.php';
         } else {
             if (function_exists($name)) {
@@ -96,7 +99,7 @@ class Validator
                 }
                 return true;
             } else {
-                throw new Exception('Validator ' . $name . ' not defined.');
+                throw new Exception($this->container, 'Validator ' . $name . ' not defined.');
             }
         }
 

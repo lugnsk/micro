@@ -26,6 +26,7 @@ class Logger
         'info',
         'debug'
     );
+
     /** @var array $loggers defined loggers */
     protected $loggers = array();
 
@@ -34,11 +35,12 @@ class Logger
      *
      * @access public
      *
+     * @param Registry $container
      * @param array $params configuration array
      *
      * @result void
      */
-    public function __construct(array $params = [])
+    public function __construct(Registry $container, array $params = [])
     {
         foreach ($params['loggers'] AS $name => $log) {
             if (empty($log['class']) OR !class_exists($log['class'])) {
@@ -49,7 +51,7 @@ class Logger
                 continue;
             }
 
-            $this->loggers[$name] = new $log['class']($log);
+            $this->loggers[$name] = new $log['class']($container, $log);
         }
     }
 

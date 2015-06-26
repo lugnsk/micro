@@ -4,6 +4,7 @@ namespace Micro\loggers;
 
 use Micro\base\Exception;
 use Micro\base\Logger;
+use Micro\base\Registry;
 
 /**
  * Base logger class file.
@@ -23,6 +24,7 @@ abstract class LogInterface
 {
     /** @var array $supportedLevels supported log levels */
     protected $supportedLevels = array();
+    protected $container;
 
     /**
      * Constructor is a initialize loggers
@@ -34,8 +36,10 @@ abstract class LogInterface
      * @throws Exception
      * @result void
      */
-    public function __construct(array $params = [])
+    public function __construct( Registry $container, array $params = [] )
     {
+        $this->container = $container;
+
         $levels = explode(',', strtr(strtolower($params['levels']), ' ', ''));
         foreach ($levels AS $level) {
             if (in_array($level, Logger::$supportedLevels, true)) {
@@ -43,7 +47,7 @@ abstract class LogInterface
             }
         }
         if (!$levels) {
-            throw new Exception('Logger ' . get_class($this) . ' empty levels.');
+            throw new Exception($this->container, 'Logger ' . get_class($this) . ' empty levels.');
         }
     }
 

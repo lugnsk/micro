@@ -40,22 +40,10 @@ abstract class Model extends FormModel
      *
      * @result void
      */
-    public function __construct($new = true)
+    public function __construct($new = true, $container)
     {
         $this->_isNewRecord = $new;
-        $this->getDbConnection();
-    }
-
-    /**
-     * Get connection to db
-     *
-     * @access public
-     * @global Registry
-     * @return void
-     */
-    public function getDbConnection()
-    {
-        $this->db = Registry::get('db');
+        $this->container = $container;
     }
 
     /**
@@ -108,9 +96,9 @@ abstract class Model extends FormModel
      * @return mixed One or more data
      * @static
      */
-    public static function finder($query = null, $single = false)
+    public static function finder($query = null, $single = false, $container=null)
     {
-        $query = ($query instanceof Query) ? $query : new Query;
+        $query = ($query instanceof Query) ? $query : new Query($container);
         $query->table = static::tableName() . ' `m`';
         $query->objectName = get_called_class();
         $query->single = $single;

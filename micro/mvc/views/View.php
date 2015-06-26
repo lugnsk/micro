@@ -3,8 +3,9 @@
 namespace Micro\mvc\views;
 
 use Micro\base\Exception;
-use Micro\Micro;
 use Micro\wrappers\Html;
+use Micro\web\Request;
+use Micro\base\Registry;
 
 /**
  * Class View
@@ -29,6 +30,14 @@ abstract class View
     /** @var array $stack */
     public $stack = [];
 
+    protected $container;
+    public $module;
+
+
+    public function __construct( Registry $container )
+    {
+        $this->container = $container;
+    }
 
     /**
      * Render
@@ -81,11 +90,11 @@ abstract class View
     public function widget($name, array $options = [], $capture = false)
     {
         if (!class_exists($name)) {
-            throw new Exception('Widget ' . $name . ' not found.');
+            throw new Exception($this->container, 'Widget ' . $name . ' not found.');
         }
 
         /** @var \Micro\mvc\Widget $widget widget */
-        $widget = new $name($options);
+        $widget = new $name($options, $this->container);
         $widget->init();
 
         if ($capture) {
@@ -127,15 +136,15 @@ abstract class View
     public function beginWidget($name, array $options = [])
     {
         if (!class_exists($name)) {
-            throw new Exception('Widget ' . $name . ' not found.');
+            throw new Exception($this->container, 'Widget ' . $name . ' not found.');
         }
 
         if (!empty($GLOBALS['widgetStack'][$name])) {
-            throw new Exception('This widget (' . $name . ') already started!');
+            throw new Exception($this->container, 'This widget (' . $name . ') already started!');
         }
 
         /** @var \Micro\mvc\Widget $GLOBALS ['widgetStack'][$name] widget */
-        $GLOBALS['widgetStack'][$name] = new $name($options);
+        $GLOBALS['widgetStack'][$name] = new $name($options, $this->container);
         return $GLOBALS['widgetStack'][$name]->init();
     }
 
@@ -160,7 +169,7 @@ abstract class View
         }
 
         if (!class_exists($name) OR empty($GLOBALS['widgetStack'][$name])) {
-            throw new Exception('Widget ' . $name . ' not started.');
+            throw new Exception($this->container, 'Widget ' . $name . ' not started.');
         }
 
         /** @var \Micro\mvc\Widget $widget widget */

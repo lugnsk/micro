@@ -3,6 +3,7 @@
 namespace Micro\validators;
 
 use Micro\base\Validator;
+use Micro\base\Registry;
 use Micro\db\Model;
 
 /**
@@ -24,16 +25,17 @@ class BooleanValidator extends Validator
      *
      * @access public
      *
+     * @param Registry $registry
      * @param array $rule validation rule
      *
      * @result void
      */
-    public function __construct(array $rule = [])
+    public function __construct(Registry $registry, array $rule = [])
     {
+        parent::__construct($registry, $rule);
+
         $this->params['true'] = true;
         $this->params['false'] = false;
-
-        parent::__construct($rule);
     }
 
     /**

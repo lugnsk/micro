@@ -1,10 +1,21 @@
-<?php
+<?php /** MicroResolver */
 
-namespace Micro\web;
+namespace Micro\base;
 
-use Micro\base\Console;
-use Micro\base\Registry;
+use Micro\web\Request;
 
+/**
+ * Resolver class file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage web
+ * @version 1.0
+ * @since 1.0
+ */
 class Resolver
 {
     /** @var string $extensions Extensions in request */
@@ -17,8 +28,6 @@ class Resolver
     private $action;
     /** @var string $uri converted URL */
     protected $uri;
-    /** @var Request $request Current request */
-    protected $request;
     /** @var Registry $container Container config */
     protected $container;
 
@@ -33,42 +42,19 @@ class Resolver
      *
      * @result void
      */
-    public function __construct( Request $request, Registry $registry )
+    public function __construct( Registry $registry )
     {
-        $this->request = $request;
         $this->container = $registry;
 
-        if ($this->request->isCli()) {
+        if ($this->container->request->isCli()) {
             return;
         }
 
-        $query = $this->request->getQueryVar('r') OR '/default';
+        $query = $this->container->request->getQueryVar('r') ?: '/default';
         $query = (substr($query, -1) === '/') ? '/default': $query;
-        $this->uri = $this->container->router->parse( $query, $this->request->getMethod() );
+        $this->uri = $this->container->router->parse( $query, $this->container->request->getMethod() );
 
         $this->initialize();
-    }
-
-    /**
-     * Get application instance
-     *
-     * @access public
-     *
-     * @return \Micro\base\Command|\Micro\mvc\controllers\Controller
-     */
-    public function getApplication()
-    {
-        if ($this->request->isCli()) {
-            $console = new Console($this->request->getArguments());
-            $command = $console->getCommand();
-
-            /** @var \Micro\base\Command $command */
-            return new $command( $this->container, $console->getParams() );
-        }
-
-        /** @var \Micro\mvc\controllers\Controller $cls Controller */
-        $cls = $this->getCalculatePath();
-        return new $cls ( $this->request, $this->container );
     }
 
     /**
@@ -98,7 +84,7 @@ class Resolver
 
             foreach ($paramBlocks AS $param) {
                 $val = explode('=', $param);
-                $_GET[$val[0]] = $val[1];
+                $this->container->request->setQueryVar($val[0], $val[1]);
             }
         }
     }
@@ -115,7 +101,7 @@ class Resolver
     private function prepareExtensions(&$uriBlocks)
     {
         foreach ($uriBlocks AS $i => $block) {
-            if (file_exists($this->container->config['AppDir'] . $this->extensions . '/extensions/' . $block)) {
+            if (file_exists($this->container->AppDir . $this->extensions . '/extensions/' . $block)) {
                 $this->extensions .= '/extensions/' . $block;
                 unset($uriBlocks[$i]);
             } else {
@@ -124,6 +110,7 @@ class Resolver
         }
         $this->extensions = strtr($this->extensions, '/', '\\');
     }
+
     /**
      * Prepare modules
      *
@@ -137,10 +124,10 @@ class Resolver
      */
     private function prepareModules(&$uriBlocks)
     {
-        $path = $this->container->config['AppDir'] . ($this->extensions ?: '');
+        $path = $this->container->AppDir . ($this->extensions ?: '');
 
         foreach ($uriBlocks AS $i => $block) {
-            if (file_exists($path . $this->modules . '/modules/' . $block)) {
+            if (!empty($block) && file_exists($path . $this->modules . '/modules/' . $block)) {
                 $this->modules .= '/modules/' . $block;
                 unset($uriBlocks[$i]);
             } else {
@@ -150,6 +137,7 @@ class Resolver
 
         $this->modules = strtr($this->modules, '/', '\\');
     }
+
     /**
      * Prepare controller
      *
@@ -161,7 +149,7 @@ class Resolver
      */
     private function prepareController(&$uriBlocks)
     {
-        $path = $this->container->config['AppDir'] . ($this->extensions?:'') . ($this->modules?:'');
+        $path = $this->container->AppDir . ($this->extensions?:'') . ($this->modules?:'');
         $str  = array_shift($uriBlocks);
 
         if (file_exists(str_replace('\\', '/', $path . '/controllers/' . ucfirst($str) . 'Controller.php'))) {
@@ -171,6 +159,7 @@ class Resolver
             array_unshift($uriBlocks, $str);
         }
     }
+
     /**
      * Prepare action
      *
@@ -196,6 +185,7 @@ class Resolver
     {
         return $this->extensions;
     }
+
     /**
      * Get modules from request
      *
@@ -207,6 +197,7 @@ class Resolver
     {
         return $this->modules;
     }
+
     /**
      * Get controller from request
      *
@@ -218,6 +209,19 @@ class Resolver
     {
         return ucfirst($this->controller) . 'Controller';
     }
+
+    /**
+     * Get action from request
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
     /**
      * Get calculate path to controller
      *
@@ -229,15 +233,26 @@ class Resolver
     {
         return 'App' . $this->getExtensions() . $this->getModules() . '\\controllers\\' . $this->getController();
     }
+
     /**
-     * Get action from request
+     * Get application instance
      *
      * @access public
      *
-     * @return string
+     * @return \Micro\base\Command|\Micro\mvc\controllers\Controller
      */
-    public function getAction()
+    public function getApplication()
     {
-        return $this->action;
+        if ($this->container->request->isCli()) {
+            $console = new Console( $this->container->request->getArguments() );
+            $command = $console->getCommand();
+
+            /** @var \Micro\base\Command $command */
+            return new $command( $this->container, $console->getParams() );
+        }
+
+        /** @var \Micro\mvc\controllers\Controller $cls Controller */
+        $cls = $this->getCalculatePath();
+        return new $cls ( $this->container, $this->getModules() );
     }
 }
