@@ -2,6 +2,5 @@
 
 // Flash messages
 return [
-    'class' => '\Micro\web\FlashMessage',
-    'depends' => 'session'
+    'class' => '\Micro\web\FlashMessage'
 ];

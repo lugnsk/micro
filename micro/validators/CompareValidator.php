@@ -25,17 +25,16 @@ class CompareValidator extends Validator
      *
      * @access public
      *
-     * @param Registry $registry
-     * @param array $rule validation rule
+     * @param array $params Configuration array
      *
      * @result void
      */
-    public function __construct(Registry $registry, array $rule = [])
+    public function __construct( array $params )
     {
-        parent::__construct($registry, $rule);
-
         $this->params['attribute'] = null;
         $this->params['value'] = null;
+
+        parent::__construct($params);
     }
 
     /**

@@ -32,7 +32,9 @@ abstract class FormModel
      * Run validation
      *
      * @access public
+     *
      * @return bool
+     * @throws \Micro\base\Exception
      */
     public function validate()
     {

@@ -3,5 +3,7 @@
 // Default session
 return [
     'class' => '\Micro\web\Session',
-    'autoStart' => true
+    'arguments' => [
+        'autoStart' => true
+    ]
 ];

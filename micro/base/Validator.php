@@ -22,7 +22,7 @@ class Validator
     /** @var array $params validation parameters */
     public $params = [];
     /** @var array $validators supported validations */
-    protected $validators = [
+    protected static $validators = [
         'required' => 'RequiredValidator',
         'captcha' => 'CaptchaValidator',
         'boolean' => 'BooleanValidator',
@@ -47,15 +47,14 @@ class Validator
      *
      * @access public
      *
-     * @param Registry $registry
-     * @param array $rule configuration array
+     * @param array $params configuration array
      *
      * @result void
      */
-    public function __construct(Registry $registry, array $rule = [])
+    public function __construct( array $params )
     {
-        $this->container = $registry;
-        $this->rule = $rule;
+        $this->container = $params['registry'];
+        $this->rule = $params['rule'];
     }
 
     /**
@@ -86,9 +85,9 @@ class Validator
         $name = array_shift($this->rule);
         $className = null;
 
-        if (!empty($this->validators[$name])) {
-            $className = '\\Micro\\validators\\' . $this->validators[$name];
-        } elseif (file_exists($this->container->AppDir . '/validators/' . $name . '.php')) {
+        if (!empty(self::$validators[$name])) {
+            $className = '\\Micro\\validators\\' . self::$validators[$name];
+        } elseif (file_exists($this->container->kernel->getAppDir() . '/validators/' . $name . '.php')) {
             $className = '\\App\\validators\\' . $name . '.php';
         } else {
             if (function_exists($name)) {

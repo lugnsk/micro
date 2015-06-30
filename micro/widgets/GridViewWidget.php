@@ -80,7 +80,7 @@ class GridViewWidget extends Widget
         parent::__construct( $args );
 
         if (empty($args['data'])) {
-            throw new Exception('Argument "data" not initialized into GridViewWidget');
+            throw new Exception($this->container, 'Argument "data" not initialized into GridViewWidget');
         }
 
         $this->limit = ($this->limit < 10) ? 10 : $this->limit;
@@ -95,7 +95,7 @@ class GridViewWidget extends Widget
             }
 
             if ($args['data']->having || $args['data']->group) {
-                $res = new Query;
+                $res = new Query( $this->container );
                 $res->select = 'COUNT(*)';
                 $res->table = '(' . $args['data']->getQuery() . ') micro_count';
                 $res->single = true;
@@ -256,6 +256,8 @@ class GridViewWidget extends Widget
         if (!$this->filters) {
             return null;
         }
+        $filtersData = $this->container->request->getQueryVar($this->filterPrefix);
+
         $result  = Html::beginForm(null, 'get', $this->attributesFilterForm);
         $result .= Html::openTag('tr', $this->attributesFilter);
 
@@ -270,7 +272,7 @@ class GridViewWidget extends Widget
                 $buffer    = is_array($row) ? $key : $row;
                 $fieldName = $this->filterPrefix . '[' . $buffer . ']';
                 $fieldId   = $this->filterPrefix . '_' . $buffer;
-                $val       = !empty($_GET[ $this->filterPrefix ][$buffer]) ? $_GET[ $this->filterPrefix ][$buffer] : '';
+                $val = !empty($filtersData[$buffer]) ? $filtersData[$buffer] : '';
                 $result   .= Html::textField($fieldName, $val, [ 'id' => $fieldId ]);
             }
             $result .= Html::closeTag('td');

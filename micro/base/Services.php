@@ -21,6 +21,7 @@ class Services
     protected $routes = [];
     /** @var array $brokers Started servers */
     protected $brokers = [];
+    protected $container;
 
 
     /**
@@ -34,6 +35,7 @@ class Services
      */
     public function __construct( array $params = [] )
     {
+        $this->container = $params['container'];
         $this->servers = !empty($params['servers']) ? $params['servers'] : [];
         $this->routes  = !empty($params['routes'])  ? $params['routes']  : [];
     }
@@ -61,7 +63,7 @@ class Services
             }
         }
         if (!$server) {
-            throw new Exception('Message not send, random servers is down into `' . $uri . '`');
+            throw new Exception($this->container, 'Message not send, random servers is down into `' . $uri . '`');
         }
 
         return $this->brokers[$server];
@@ -90,7 +92,7 @@ class Services
                 return $this->routes[ $keys[$a] ]; // роут найден
             }
         }
-        throw new Exception('Route `' . $uri . '` not found');
+        throw new Exception($this->container, 'Route `' . $uri . '` not found');
     }
 
     /**
@@ -121,7 +123,7 @@ class Services
             $servers += $route['*'];
         }
         if (!$servers) {
-            throw new Exception( 'Type `' . $type . '` not found into route' );
+            throw new Exception( $this->container, 'Type `' . $type . '` not found into route' );
         }
 
         return $servers;
@@ -156,7 +158,7 @@ class Services
                 break;
             }
             default: {
-                throw new Exception('Service type `' . $type . '` wrong name.');
+                throw new Exception($this->container, 'Service type `' . $type . '` wrong name.');
             }
         }
     }

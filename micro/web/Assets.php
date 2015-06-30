@@ -50,8 +50,8 @@ class Assets
         $this->hash = md5($this->directory);
 
         $tmp = '/' . $this->assetDir . '/' . $this->hash;
-        $this->publishDir = $this->container->HtmlDir . $tmp;
-        $this->sourceDir  = $this->container->WebDir . $tmp;
+        $this->publishDir = $this->container->kernel->HtmlDir . $tmp;
+        $this->sourceDir  = $this->container->kernel->WebDir . $tmp;
     }
 
     /**

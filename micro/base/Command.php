@@ -31,15 +31,14 @@ abstract class Command
      *
      * @access public
      *
-     * @param Registry $container Container config
-     * @param array $args configuration array
+     * @param array $params configuration array
      *
      * @result void
      */
-    public function __construct( Registry $container, array $args = [] )
+    public function __construct( array $params )
     {
-        $this->container = $container;
-        $this->args = $args;
+        $this->container = $params['container'];
+        $this->args = $params['args'];
     }
 
     /**

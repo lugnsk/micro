@@ -29,16 +29,15 @@ class CaptchaValidator extends Validator
      *
      * @access public
      *
-     * @param Registry $registry
-     * @param array $rule validation rule
+     * @param array $params Configuration array
      *
      * @result void
      */
-    public function __construct(Registry $registry, array $rule = [])
+    public function __construct( array $params )
     {
-        parent::__construct($registry, $rule);
-
         $this->captcha = $this->container->user->getCaptcha();
+
+        parent::__construct($params);
     }
 
     /**

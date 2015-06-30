@@ -71,7 +71,7 @@ class ActionsGridColumn extends GridColumn
      *
      * @access public
      *
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {

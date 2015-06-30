@@ -43,6 +43,7 @@ class FormBuilder
      * @param array $attr attributes for form
      *
      * @result void
+     * @throws \Micro\base\Exception
      */
     public function __construct(
         array $config = [],

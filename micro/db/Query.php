@@ -37,7 +37,7 @@ class Query
     public $having = '';
     /** @var integer $limit count result rows */
     public $limit = -1;
-    /** @var integer $offset offset on strart result rows */
+    /** @var integer $offset offset on start result rows */
     public $ofset = -1;
     /** @var array $params masks for where */
     public $params = [];

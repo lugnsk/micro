@@ -16,6 +16,8 @@ use Micro\wrappers\Html;
  * @subpackage widgets
  * @version 1.0
  * @since 1.0
+ *
+ * @deprecated
  */
 class MenuWidget extends Widget
 {

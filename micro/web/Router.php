@@ -27,13 +27,13 @@ class Router
      *
      * @access public
      *
-     * @param array $routes
+     * @param array $config
      *
      * @result void
      */
-    public function __construct(array $routes = [])
+    public function __construct(array $config = [])
     {
-        $this->routes = $routes['routes'];
+        $this->routes = $config['routes'];
     }
 
     /**

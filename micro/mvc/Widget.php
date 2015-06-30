@@ -31,10 +31,9 @@ abstract class Widget
      *
      * @result void
      */
-    public function __construct(array $args = [], Registry $container=null )
+    public function __construct( array $args = [] )
     {
-        $this->request = $request;
-        $this->container = $container;
+        $this->container = $args['container'];
 
         foreach ($args AS $name => $value) {
             $this->$name = $value;

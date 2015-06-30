@@ -20,9 +20,9 @@ class User
 {
     protected $container;
 
-    public function __construct(Registry $container)
+    public function __construct( array $config )
     {
-        $this->container = $container;
+        $this->container = $config['container'];
     }
 
     /**

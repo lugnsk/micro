@@ -45,7 +45,7 @@ abstract class Controller
 
         // if module defined
         if ($modules) {
-            $app = $this->container->AppDir;
+            $app = $this->container->kernel->getAppDir();
 
             $path = $app . str_replace('\\', '/', $modules) . '/' .
                     ucfirst(basename(str_replace('\\', '/', $modules))) . 'Module.php';

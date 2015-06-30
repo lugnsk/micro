@@ -115,7 +115,7 @@ class PhpView extends View
     {
         $layoutPath = null;
         if ($this->layout) {
-            $layoutPath = $this->getLayoutFile( $this->container->AppDir, $this->module );
+            $layoutPath = $this->getLayoutFile( $this->container->kernel->getAppDir(), $this->module );
         }
 
         if ($layoutPath) {
@@ -140,9 +140,9 @@ class PhpView extends View
 
         // Calculate path to view
         if (substr($calledClass, 0, strpos($calledClass, '\\')) === 'App') {
-            $path = $this->container->AppDir;
+            $path = $this->container->kernel->getAppDir();
         } else {
-            $path = $this->container->MicroDir;
+            $path = $this->container->kernel->getMicroDir();
         }
 
         $cl = strtolower(dirname(strtr($calledClass, '\\', '/')));
@@ -159,7 +159,7 @@ class PhpView extends View
         $path = str_replace('//','/', $path);
 
         if (!file_exists($path)) {
-            throw new Exception($this->request, $this->container, 'View path `' . $path . '` not exists.');
+            throw new Exception($this->container, 'View path `' . $path . '` not exists.');
         }
         return $path;
     }

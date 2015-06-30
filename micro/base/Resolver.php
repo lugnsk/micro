@@ -101,7 +101,7 @@ class Resolver
     private function prepareExtensions(&$uriBlocks)
     {
         foreach ($uriBlocks AS $i => $block) {
-            if (file_exists($this->container->AppDir . $this->extensions . '/extensions/' . $block)) {
+            if (file_exists($this->container->kernel->getAppDir() . $this->extensions . '/extensions/' . $block)) {
                 $this->extensions .= '/extensions/' . $block;
                 unset($uriBlocks[$i]);
             } else {
@@ -124,7 +124,7 @@ class Resolver
      */
     private function prepareModules(&$uriBlocks)
     {
-        $path = $this->container->AppDir . ($this->extensions ?: '');
+        $path = $this->container->kernel->getAppDir() . ($this->extensions ?: '');
 
         foreach ($uriBlocks AS $i => $block) {
             if (!empty($block) && file_exists($path . $this->modules . '/modules/' . $block)) {
@@ -149,7 +149,7 @@ class Resolver
      */
     private function prepareController(&$uriBlocks)
     {
-        $path = $this->container->AppDir . ($this->extensions?:'') . ($this->modules?:'');
+        $path = $this->container->kernel->getAppDir() . ($this->extensions?:'') . ($this->modules?:'');
         $str  = array_shift($uriBlocks);
 
         if (file_exists(str_replace('\\', '/', $path . '/controllers/' . ucfirst($str) . 'Controller.php'))) {
@@ -231,7 +231,7 @@ class Resolver
      */
     public function getCalculatePath()
     {
-        return 'App' . $this->getExtensions() . $this->getModules() . '\\controllers\\' . $this->getController();
+        return '\App' . $this->getExtensions() . $this->getModules() . '\\controllers\\' . $this->getController();
     }
 
     /**

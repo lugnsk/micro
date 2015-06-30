@@ -15,54 +15,52 @@ namespace Micro\base;
  */
 class Registry
 {
-    protected $appDir;
-
     /** @var array $data registry data */
     protected $data = [];
+    /** @var array $config Config array */
     protected $config = [];
 
 
-    public function __construct( $path )
-    {
-        $this->appDir = $path;
-    }
-
+    /**
+     * Load more configs from file
+     *
+     * @access public
+     *
+     * @param string $filename
+     *
+     * @return void
+     */
     public function load( $filename )
     {
-        $this->config = require $this->appDir . $filename;
+        if ( file_exists($this->kernel->getAppDir() . $filename) ) {
+            $this->config = array_merge_recursive($this->config, require $this->kernel->getAppDir() . $filename);
+        }
     }
 
+    /**
+     * Set attribute
+     *
+     * @access public
+     *
+     * @param string $name Name attribute
+     * @param mixed  $component Component or option
+     *
+     * @return void
+     */
     public function __set($name, $component)
     {
         $this->data[$name] = $component;
     }
 
     /**
-     * Get registry value
+     * Is set component or option name into registry
      *
      * @access public
      *
-     * @param string $name element name
+     * @param string $name Name attribute
      *
-     * @return mixed
-     * @static
+     * @return bool
      */
-    public function __get($name = '')
-    {
-        if (!$this->__isset($name)) {
-            return false;
-        }
-
-        if (!empty($this->config[$name])) {
-            return $this->config[$name];
-        }
-
-        if (empty($this->data[$name])) {
-            $this->configure($name);
-        }
-
-        return $this->data[$name];
-    }
     public function __isset($name)
     {
         if (array_key_exists($name, $this->config)) {
@@ -79,14 +77,37 @@ class Registry
     }
 
     /**
+     * Get registry value
+     *
+     * @access public
+     *
+     * @param string $name element name
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function __get($name = '')
+    {
+        if (!empty($this->config[$name])) {
+            return $this->config[$name];
+        }
+
+        if (empty($this->data[$name])) {
+            $this->configure($name);
+        }
+
+        return $this->data[$name];
+    }
+
+    /**
      * Get component's
      *
      * @access public
      *
      * @param string|null $name name element to initialize
      *
+     * @return void
      * @throws \Micro\base\Exception
-     * @static
      */
     public function configure($name = null)
     {
@@ -122,28 +143,36 @@ class Registry
      * @param array $options component configs
      *
      * @return bool
-     * @static
+     * @throws Exception
      */
     public function loadComponent($name, $options)
     {
         if (empty($options['class']) OR !class_exists($options['class'])) {
             return false;
         }
+        $className = $options['class'];
 
-        if (!empty($options['depends'])) {
-            if (is_array($options['depends'])) {
-                foreach ($options['depends'] AS $depend) {
-                    $this->configure($depend);
-                }
-            } else {
-                $this->configure($options['depends']);
-            }
+        if (empty($options['arguments'])) {
+            $this->data[$name] = new $className;
+            return true;
         }
 
-        $className = $options['class'];
-        unset($options['class']);
+        foreach ($options['arguments'] AS $key => $val) {
+            if ($val{0} === '@') {
+                if ($val === '@this') {
+                    $val = $this;
+                } else {
+                    $option = substr($val, 1);
+                    if (!array_key_exists($option, $this->__get($option))){
+                        throw new Exception($this, 'Argument `' . $option . '` not found into container');
+                    }
 
-        $this->data[$name] = new $className($options);
+                    $val = $this->__get( $option );
+                }
+            }
+        }
+        $this->data[$name] = new $className( $options['arguments'] );
+
         return true;
     }
 }

@@ -59,8 +59,8 @@ class Language
      *
      * @param string $name element name
      *
-     * @throws Exception
      * @return mixed
+     * @throws Exception
      */
     public function __get($name)
     {

@@ -28,9 +28,10 @@ class FlashMessage
     /** @var integer TYPE_DANGER danger */
     const TYPE_DANGER = 4;
 
-    /** @var \Micro\web\Session $session current session */
-    protected $session;
+
+    /** @var \Micro\base\Registry $container Container config */
     protected $container;
+
 
     /**
      * Constructor messenger

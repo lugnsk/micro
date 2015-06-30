@@ -67,19 +67,19 @@ class DetailViewWidget extends Widget
                         $cls = $args['data']->objectName;
                         $args['data']->table = $cls::tableName();
                     } elseif (!$args['data']->table) {
-                        throw new Exception('Data query not set table or objectName');
+                        throw new Exception($this->container, 'Data query not set table or objectName');
                     }
                     $this->data = $args['data']->run();
                 } elseif (is_subclass_of($args['data'], 'Micro\db\Model')) {
                     $this->data = $args['data'];
                 } else {
-                    throw new Exception('Argument "model" not supported type into DetailViewWidget');
+                    throw new Exception($this->container, 'Argument "model" not supported type into DetailViewWidget');
                 }
                 $this->keys = $this->data->getAttributes();
                 break;
             }
             default: {
-                throw new Exception('Argument "model" not supported type into DetailViewWidget');
+                throw new Exception($this->container, 'Argument "model" not supported type into DetailViewWidget');
             }
         }
         if (empty($args['columns'])) {
@@ -111,7 +111,7 @@ class DetailViewWidget extends Widget
             } elseif (is_string($key) && is_array($val)) {
                 $column = $key;
             } else {
-                throw new Exception('Unknown `data` format into DetailViewWidget');
+                throw new Exception($this->container, 'Unknown `data` format into DetailViewWidget');
             }
 
             $result[] = [

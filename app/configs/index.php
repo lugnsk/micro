@@ -9,14 +9,9 @@ foreach (scandir(__DIR__ . '/components') AS $fileName) {
 }
 
 return [
-    // Directories
-    'MicroDir' => __DIR__ . '/../../micro',
-    'AppDir' => __DIR__ . '/..',
     // Sitename
     'company' => 'Micro',
     'slogan' => 'simply hmvc php framework',
-    // Print run time
-    'timer' => true,
     // Language
     'lang' => 'en',
     // Errors

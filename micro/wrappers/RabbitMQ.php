@@ -16,9 +16,9 @@ namespace Micro\wrappers;
  */
 class RabbitMQ
 {
-    /** @var \AMQPConnection $connect connect to broker */
+    /** @var \AMQPConnection $connect Connect to broker */
     protected $connect;
-    /** @var \AMQPChannel $channel channel of connection */
+    /** @var \AMQPChannel $channel Channel of connection */
     protected $channel;
 
 

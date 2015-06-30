@@ -1,8 +1,6 @@
-<?php /** MicroCacheWrapper */
+<?php /** MicroCache */
 
-namespace Micro\wrappers;
-
-use Micro\base\Exception;
+namespace Micro\base;
 
 /**
  * Cache class file.
@@ -19,7 +17,7 @@ use Micro\base\Exception;
 class Cache
 {
     /** @var array $drivers Supported drivers */
-    protected $drivers = [
+    protected static $drivers = [
         'array' => '\\Micro\\caches\\ArrayCache',
         'apc' => '\\Micro\\caches\\ApcCache',
         'file' => '\\Micro\\caches\\FileCache',
@@ -31,6 +29,8 @@ class Cache
     ];
     /** @var array $servers Activated servers */
     protected $servers = [];
+    protected $container;
+
 
     /**
      * Constructor is a initialize Caches
@@ -44,16 +44,18 @@ class Cache
      */
     public function __construct(array $config = [])
     {
+        $this->container = $config['container'];
+
         if (!empty($config['servers'])) {
             foreach ($config['servers'] AS $key => $server) {
-                if (in_array($server['driver'], array_keys($this->drivers), true)) {
-                    $this->servers[$key] = new $this->drivers[$server['driver']] ($server);
+                if (in_array($server['driver'], array_keys(self::$drivers), true)) {
+                    $this->servers[$key] = new self::$drivers[$server['driver']] ($server);
                 } else {
-                    throw new Exception('Cache driver ' . $server['driver'] . ' not found');
+                    throw new Exception($this->container, 'Cache driver `' . $server['driver'] . '` not found');
                 }
             }
         } else {
-            throw new Exception('Caching not configured');
+            throw new Exception($this->container, 'Caching not configured');
         }
     }
 
@@ -76,7 +78,7 @@ class Cache
         if (in_array($driver, $this->servers, true)) {
             return $this->servers[$driver];
         } else {
-            throw new Exception('Cache ' . $driver . ' not found.');
+            throw new Exception($this->container, 'Cache `' . $driver . '` not found.');
         }
     }
 }

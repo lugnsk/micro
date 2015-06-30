@@ -4,6 +4,7 @@ namespace Micro;
 
 use Micro\base\Autoload;
 use Micro\base\Dispatcher;
+use Micro\base\Exception;
 use Micro\base\Registry;
 use Micro\base\Resolver;
 use Micro\web\Request;
@@ -41,8 +42,6 @@ class Micro
     protected $loaded;
     /** @var Registry $container Registry is a container for components and options */
     protected $container;
-    /** @var Dispatcher $dispatcher Event dispatcher */
-    protected $dispatcher;
 
 
     /**
@@ -186,10 +185,15 @@ class Micro
      */
     public function initContainer( $configPath )
     {
-        $this->container = new Registry($this->appDir);
-        $this->container->load( $configPath );
+        $this->container = new Registry;
+        $this->container->kernel = $this;
 
-        $this->container->dispatcher = $this->container->dispatcher ?: new Dispatcher($this->container);
+        $this->container->load( $configPath );
+        try {
+            $this->container->dispatcher = $this->container->dispatcher;
+        } catch (Exception $e) {
+            $this->container->dispatcher =  new Dispatcher($this->container);
+        }
     }
 
     /**
@@ -210,10 +214,10 @@ class Micro
         $this->container->request = $request;
 
         $resolver = new Resolver( $this->container );
-        $this->container->dispatcher->signal('micro.router', []);
+        $this->container->dispatcher->signal('kernel.router', []);
 
         $app = $resolver->getApplication();
-        $this->container->dispatcher->signal('micro.controller', []);
+        $this->container->dispatcher->signal('kernel.controller', []);
 
         $result = null;
 
@@ -224,7 +228,7 @@ class Micro
         } else {
             $result = $app->action($resolver->getAction());
         }
-        $this->container->dispatcher->signal('micro.response', []);
+        $this->container->dispatcher->signal('kernel.response', []);
 
         if ($result instanceof Response) {
             $response = $result;
@@ -238,36 +242,38 @@ class Micro
 
     public function terminate()
     {
-        $this->container->dispatcher->signal('micro.exit', []);
+        $this->container->dispatcher->signal('kernel.terminate', []);
     }
 
-    public function getEnvironment()
-    {
-        return $this->environment;
-    }
-    public function getAppDir()
-    {
-        return $this->appDir;
-    }
-    public function getMicroDir()
-    {
-        return $this->microDir;
-    }
+    // Methods for components
+
     public function getCharset()
     {
         return 'UTF-8';
-    }
-    public function getStartTime()
-    {
-        return $this->debug ? $this->startTime : null;
     }
     public function isDebug()
     {
         return $this->debug;
     }
+    public function getStartTime()
+    {
+        return $this->debug ? $this->startTime : null;
+    }
+    public function getEnvironment()
+    {
+        return $this->environment;
+    }
     public function getContainer()
     {
         return $this->container;
+    }
+    public function getMicroDir()
+    {
+        return $this->microDir;
+    }
+    public function getAppDir()
+    {
+        return $this->appDir;
     }
     public function getCacheDir()
     {
