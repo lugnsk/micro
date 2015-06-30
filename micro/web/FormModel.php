@@ -75,7 +75,7 @@ abstract class FormModel
         $result = 'jQuery(document).ready(function(){';
 
         foreach ($this->rules() AS $rule) {
-            $validator = new Validator($this->container, $rule);
+            $validator = new Validator( [ 'container'=>$this->container, 'rule'=>$rule ] );
             if (is_string($js = $validator->run($this, true))) {
                 $result .= ' ' . $js;
             }

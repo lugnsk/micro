@@ -84,7 +84,9 @@ class FormBuilder
      * Validation model
      *
      * @access public
+     *
      * @return bool
+     * @throws \Micro\base\Exception
      */
     public function validateModel()
     {

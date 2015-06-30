@@ -249,6 +249,9 @@ class Micro
     {
         $this->container->dispatcher->signal('kernel.terminate', []);
         $this->unloader();
+        if ($this->debug) {
+            echo '<div class=timer>' . ( microtime(true) - $this->getStartTime() ) . '</div>';
+        }
     }
 
     // Methods for components

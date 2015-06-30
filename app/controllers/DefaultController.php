@@ -59,8 +59,8 @@ class DefaultController extends Controller
     public function actionLogin()
     {
         $form = new FormBuilder(
-            include Micro::getInstance()->config['AppDir'] . '/views/default/loginform.php',
-            new LoginFormModel(),
+            include $this->container->kernel->getAppDir() . '/views/default/loginform.php',
+            new LoginFormModel($this->container),
             'POST'
         );
 
@@ -71,7 +71,7 @@ class DefaultController extends Controller
             }
         }
 
-        $v = new View;
+        $v = new View($this->container);
         $v->addParameter('form', $form);
         return $v;
     }

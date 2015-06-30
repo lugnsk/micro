@@ -53,7 +53,7 @@ class Validator
      */
     public function __construct( array $params )
     {
-        $this->container = $params['registry'];
+        $this->container = $params['container'];
         $this->rule = $params['rule'];
     }
 
@@ -102,7 +102,7 @@ class Validator
             }
         }
 
-        $valid = new $className;
+        $valid = new $className( [ 'container'=>$this->container, 'rule'=>$this->rule] );
         $valid->elements = $elements;
         $valid->params = $this->rule;
         if ($client AND method_exists($valid, 'client')) {

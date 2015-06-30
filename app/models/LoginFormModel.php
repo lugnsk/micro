@@ -34,7 +34,7 @@ class LoginFormModel extends FormModel
 
     public function logined()
     {
-        $query = new Query;
+        $query = new Query($this->container);
         $query->addWhere('login = :login');
         $query->addWhere('pass = :pass');
 
@@ -44,7 +44,7 @@ class LoginFormModel extends FormModel
         ];
 
         if ($user = User::finder($query, true)) {
-            Registry::get('session')->UserID = $user->id;
+            $this->container->session->UserID = $user->id;
             return true;
         } else {
             $this->addError('Логин или пароль не верны.');
