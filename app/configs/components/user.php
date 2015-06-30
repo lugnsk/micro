@@ -2,5 +2,8 @@
 
 // User
 return [
-    'class' => '\Micro\web\User'
+    'class' => '\Micro\web\User',
+    'arguments' => [
+        'container'=>'@this'
+    ]
 ];

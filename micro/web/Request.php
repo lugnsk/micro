@@ -34,12 +34,12 @@ class Request
         $this->cli = php_sapi_name() === 'cli';
 
         $this->data = [
-            'query'   => isset($_GET) ? $_GET : FALSE,
-            'post'    => isset($_POST) ? $_POST : FALSE,
-            'files'   => isset($_FILES) ? $_FILES : FALSE,
-            'cookie'  => isset($_COOKIE) ? $_COOKIE : FALSE,
-            'server'  => isset($_SERVER) ? $_SERVER : FALSE,
-            'session' => isset($_SESSION) ? $_SESSION : FALSE
+            'query'   => isset($_GET) ? $_GET : [],
+            'post'    => isset($_POST) ? $_POST : [],
+            'files'   => isset($_FILES) ? $_FILES : [],
+            'cookie'  => isset($_COOKIE) ? $_COOKIE : [],
+            'server'  => isset($_SERVER) ? $_SERVER : [],
+            'session' => isset($_SESSION) ? $_SESSION : []
         ];
 
         unset($_GET, $_POST, $_FILES, $_COOKIE, $_SERVER, $_SESSION, $_REQUEST, $GLOBALS);

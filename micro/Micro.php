@@ -219,9 +219,9 @@ class Micro
         $app = $resolver->getApplication();
         $this->container->dispatcher->signal('kernel.controller', []);
 
+        $response = null;
         $result = null;
 
-        $response = $this->container->response ?: new Response;
         if ($request->isCli()) {
             $app->execute();
             $result = $app->message;
@@ -233,16 +233,22 @@ class Micro
         if ($result instanceof Response) {
             $response = $result;
         } else {
+            try {
+                $response = $this->container->response;
+            } catch (Exception $e) {
+                $response = new Response;
+            }
+
             $response->setBody($result);
         }
 
-        $this->unloader();
         return $response;
     }
 
     public function terminate()
     {
         $this->container->dispatcher->signal('kernel.terminate', []);
+        $this->unloader();
     }
 
     // Methods for components

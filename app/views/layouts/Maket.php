@@ -21,14 +21,14 @@ $this->registerCssFile('/css/main.css');
 <body>
 <div id="container">
     <div id="top">
-        <span><?= Micro::getInstance()->config['company'] ?></span> <?= Micro::getInstance()->config['slogan'] ?>
+        <span><?= $this->container->company ?></span> <?= $this->container->slogan ?>
     </div>
     <div id="content">
         <?= $this->widget('\App\widgets\MenubarWidget', ['links' => $this->menu]); ?>
         <?= $content ?>
     </div>
     <div id="footer">
-        &copy; <?= Micro::getInstance()->config['company'] ?> <?= date('Y') ?>
+        &copy; <?= $this->container->company ?> <?= date('Y') ?>
     </div>
 </div>
 </body>

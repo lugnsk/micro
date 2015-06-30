@@ -27,6 +27,7 @@ abstract class Filter
 
     /**
      * @param string $action current action
+     * @param Registry $registry
      */
     public function __construct($action, Registry $registry )
     {

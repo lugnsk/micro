@@ -157,8 +157,8 @@ class Registry
             return true;
         }
 
-        foreach ($options['arguments'] AS $key => $val) {
-            if ($val{0} === '@') {
+        foreach ($options['arguments'] AS $key => &$val) {
+            if (is_string($val) && $val{0} === '@') {
                 if ($val === '@this') {
                     $val = $this;
                 } else {

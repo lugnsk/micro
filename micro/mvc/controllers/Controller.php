@@ -57,7 +57,11 @@ abstract class Controller
             }
         }
 
-        $this->response = $this->container->response ?: new Response;
+        try {
+            $this->response = $this->container->response;
+        } catch (Exception $e) {
+            $this->response = new Response;
+        }
     }
 
     /**

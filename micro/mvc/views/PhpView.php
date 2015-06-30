@@ -86,14 +86,14 @@ class PhpView extends View
      */
     protected function renderFile($fileName, array $data = [])
     {
-        $lang = new Language($fileName);
+        $lang = new Language($this->container, $fileName);
         extract($data, EXTR_PREFIX_SAME || EXTR_REFS, 'data');
         ob_start();
 
         include str_replace('\\', '/', $fileName);
 
         if ($GLOBALS['widgetStack']) {
-            throw new Exception($this->request, $this->container, count($GLOBALS['widgetStack']) . ' widgets not endings.');
+            throw new Exception($this->container, count($GLOBALS['widgetStack']) . ' widgets not endings.');
         }
 
         return ob_get_clean();

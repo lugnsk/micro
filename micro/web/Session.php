@@ -31,7 +31,7 @@ class Session
      */
     public function __construct( array $config = [] )
     {
-        $this->container = $config['registry'];
+        $this->container = $config['container'];
 
         if (!empty($config['autoStart']) AND ($config['autoStart'] === true)) {
             $this->create();

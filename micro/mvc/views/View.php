@@ -93,6 +93,8 @@ abstract class View
             throw new Exception($this->container, 'Widget ' . $name . ' not found.');
         }
 
+        $options = array_merge($options, ['container'=>$this->container]);
+
         /** @var \Micro\mvc\Widget $widget widget */
         $widget = new $name($options, $this->container);
         $widget->init();
