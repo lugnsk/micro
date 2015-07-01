@@ -64,9 +64,9 @@ class DefaultController extends Controller
             'POST'
         );
 
-        if (!empty($_POST['LoginFormModel'])) {
-            $form->setModelData($_POST['LoginFormModel']);
-            if ($form->validateModel() AND $form->getModel()->logined()) {
+        if ($post = $this->container->request->getPostVar('LoginFormModel')) {
+            $form->setModelData($post);
+            if ($form->validateModel() && $form->getModel()->logined()) {
                 $this->redirect('/profile');
             }
         }
@@ -79,19 +79,19 @@ class DefaultController extends Controller
     public function actionError()
     {
         $result = null;
-        if (!empty($_POST['errors'])) {
-            foreach ($_POST['errors'] AS $err) {
+        if ($errors = $this->container->request->getPostVar('errors')) {
+            foreach ($errors AS $err) {
                 $result .= Html::heading(3, $err, ['class' => 'text-danger bg-danger']);
             }
         }
-        $v = new View;
+        $v = new View( $this->container );
         $v->data = $result ?: 'undefined error';
         return $v;
     }
 
     public function actionLogout()
     {
-        Registry::get('session')->destroy();
+        $this->container->session->destroy();
         $this->redirect('/');
     }
 }

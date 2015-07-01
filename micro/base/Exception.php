@@ -2,6 +2,8 @@
 
 namespace Micro\base;
 
+use Micro\web\Response;
+
 /**
  * Exception specific exception
  *
@@ -68,8 +70,17 @@ class Exception extends \Exception
 
         /** @var \Micro\mvc\controllers\Controller $mvc controller */
         $mvc = new $controller( $this->container );
-        echo $mvc->action($action);
 
+        $response = null;
+        $result = $mvc->action($action);
+        if ($result instanceof Response) {
+            $response = $result;
+        } else {
+            $response = new Response;
+            $response->setBody($result);
+        }
+
+        $response->send();
         error_reporting(0);
     }
 

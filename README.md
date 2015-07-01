@@ -6,6 +6,7 @@ Micro - молодой H-MVC фреймворк со свободным исхо
 Micro реализует паттерн "иерархический модель-представление-контроллер" (HMVC).
 Текущая стабильная версия отсутствует, распостраняется по свободной лицензией MIT.
 
+[![Author](http://img.shields.io/badge/author-@microcmf-blue.svg?style=flat-square)](https://twitter.com/microcmf)
 [![Join the chat at https://gitter.im/lugnsk/micro](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lugnsk/micro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Code Climate](https://codeclimate.com/github/lugnsk/micro/badges/gpa.svg)](https://codeclimate.com/github/lugnsk/micro)
 [![Build Status](https://secure.travis-ci.org/lugnsk/micro.png)](http://travis-ci.org/lugnsk/micro)
