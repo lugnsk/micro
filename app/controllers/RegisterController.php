@@ -37,25 +37,25 @@ class RegisterController extends Controller
 
     public function actionIndex()
     {
-        $v = new View;
-        $v->addParameter('model', new User);
+        $v = new View($this->container);
+        $v->addParameter('model', new User($this->container));
         return $v;
     }
 
     public function actionSuccess()
     {
-        return new View;
+        return new View($this->container);
     }
 
     public function actionError()
     {
-        return new View;
+        return new View($this->container);
     }
 
     public function actionPost()
     {
         if (!empty($_POST['User'])) {
-            $user = new User;
+            $user = new User($this->container);
             $user->setModelData($_POST['User']);
             $user->pass = md5($_POST['User']['pass']);
 
