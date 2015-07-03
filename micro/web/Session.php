@@ -46,7 +46,7 @@ class Session
      */
     public function create()
     {
-        if (!session_id()) {
+        if (PHP_SESSION_ACTIVE !== session_status()) {
             session_start();
         }
     }
@@ -59,7 +59,7 @@ class Session
      */
     public function destroy()
     {
-        if (session_id()) {
+        if (PHP_SESSION_ACTIVE === session_status()) {
             session_unset();
             session_destroy();
         }

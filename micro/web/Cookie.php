@@ -47,7 +47,7 @@ class Cookie
      */
     public function getAll()
     {
-        return $this->container->request->getStorage('cookie');
+        return $this->container->request->getStorage('_COOKIE');
     }
 
     /**

@@ -32,42 +32,6 @@ class Request
     public function __construct()
     {
         $this->cli = php_sapi_name() === 'cli';
-
-        $this->data = [
-            'query'   => isset($_GET) ? $_GET : [],
-            'post'    => isset($_POST) ? $_POST : [],
-            'files'   => isset($_FILES) ? $_FILES : [],
-            'cookie'  => isset($_COOKIE) ? $_COOKIE : [],
-            'server'  => isset($_SERVER) ? $_SERVER : [],
-            'session' => isset($_SESSION) ? $_SESSION : []
-        ];
-
-        unset($_GET, $_POST, $_FILES, $_COOKIE, $_SERVER, $_SESSION, $_REQUEST, $GLOBALS);
-    }
-
-    /**
-     * Destructor Request
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        if ($this->isCli()) {
-            return;
-        }
-
-        foreach ($this->data AS $key=>$val) {
-            switch ($key) {
-                case 'query':   $_GET     = $val; break;
-                case 'post':    $_POST    = $val; break;
-                case 'files':   $_FILES   = $val; break;
-                case 'cookie':  $_COOKIE  = $val; break;
-                case 'server':  $_SERVER  = $val; break;
-                case 'session': $_SESSION = $val; break;
-            }
-        }
     }
 
     /**
@@ -91,7 +55,7 @@ class Request
      */
     public function getMethod()
     {
-        return $this->data['server']['REQUEST_METHOD'];
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     /**
@@ -103,8 +67,7 @@ class Request
      */
     public function isAjax()
     {
-        return !empty($this->data['server']['HTTP_X_REQUEST_WITH']) &&
-        $this->data['server']['HTTP_X_REQUEST_WITH'] === 'XMLHttpRequest';
+        return !empty($_SERVER['HTTP_X_REQUEST_WITH']) && $_SERVER['HTTP_X_REQUEST_WITH'] === 'XMLHttpRequest';
     }
 
     /**
@@ -116,7 +79,7 @@ class Request
      */
     public function getUserIP()
     {
-        return !empty($this->data['server']['REMOTE_ADDR']) ? $this->data['server']['REMOTE_ADDR'] : '127.0.0.1';
+        return !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
     }
 
     /**
@@ -130,7 +93,7 @@ class Request
      */
     public function getBrowser( $agent = null )
     {
-        return get_browser( $agent ?: $this->data['server']['HTTP_USER_AGENT'], true);
+        return get_browser( $agent ?: $_SERVER['HTTP_USER_AGENT'], true);
     }
 
     /**
@@ -146,7 +109,7 @@ class Request
      */
     public function setVar($name, $value, $storage)
     {
-        $this->data[$storage][$name] = $value;
+        $GLOBALS[$storage][$name] = $value;
     }
 
     /**
@@ -161,7 +124,7 @@ class Request
      */
     public function setQueryVar($name, $value)
     {
-        $this->setVar($name, $value, 'query');
+        $this->setVar($name, $value, '_GET');
     }
 
     /**
@@ -176,7 +139,7 @@ class Request
      */
     public function setPostVar($name, $value)
     {
-        $this->setVar($name, $value, 'post');
+        $this->setVar($name, $value, '_POST');
     }
 
     /**
@@ -191,7 +154,7 @@ class Request
      */
     public function setCookieVar($name, $value)
     {
-        $this->setVar($name, $value, 'cookie');
+        $this->setVar($name, $value, '_COOKIE');
     }
 
     /**
@@ -206,7 +169,7 @@ class Request
      */
     public function setSessionVar($name, $value)
     {
-        $this->setVar($name, $value, 'session');
+        $this->setVar($name, $value, '_SESSION');
     }
 
     /**
@@ -221,7 +184,7 @@ class Request
      */
     public function getVar($name, $storage)
     {
-        return array_key_exists($name, $this->data[$storage]) ? $this->data[$storage][$name] : FALSE;
+        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : FALSE;
     }
 
     /**
@@ -235,7 +198,7 @@ class Request
      */
     public function getServerVar( $name )
     {
-        return $this->getVar($name, 'server');
+        return $this->getVar($name, '_SERVER');
     }
 
     /**
@@ -249,7 +212,7 @@ class Request
      */
     public function getQueryVar( $name )
     {
-        return $this->getVar($name,'query');
+        return $this->getVar($name,'_GET');
     }
 
     /**
@@ -263,7 +226,7 @@ class Request
      */
     public function getPostVar( $name )
     {
-        return $this->getVar($name, 'post');
+        return $this->getVar($name, '_POST');
     }
 
     /**
@@ -277,7 +240,7 @@ class Request
      */
     public function getCookieVar( $name )
     {
-        return $this->getVar($name, 'cookie');
+        return $this->getVar($name, '_COOKIE');
     }
 
     /**
@@ -291,7 +254,7 @@ class Request
      */
     public function getSessionVar( $name )
     {
-        return $this->getVar($name, 'session');
+        return $this->getVar($name, '_SESSION');
     }
 
     /**
@@ -318,12 +281,12 @@ class Request
      */
     public function getFiles( $className = '\Micro\web\Uploader' )
     {
-        if ( !is_array($this->data['files']) ) {
+        if ( !is_array($_FILES) ) {
             return false;
         }
 
         /** @var \Micro\web\Uploader $files */
-        $files = new $className( $this->data['files'] );
+        $files = new $className( $_FILES );
         return $files;
     }
 
@@ -338,7 +301,7 @@ class Request
      */
     public function getStorage( $name )
     {
-        return $this->data[$name];
+        return $GLOBALS[$name];
     }
 
     /**
@@ -353,6 +316,6 @@ class Request
      */
     public function setStorage( $name, array $data = [] )
     {
-        $this->data[$name] = $data;
+        $GLOBALS[$name] = $data;
     }
 }

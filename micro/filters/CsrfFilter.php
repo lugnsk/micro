@@ -32,7 +32,8 @@ class CsrfFilter extends Filter
             return true;
         }
 
-        if (!$this->container->request->getPostVar('csrf')) {
+        $postCSRF = $this->container->request->getPostVar('csrf');
+        if (!$postCSRF) {
             $this->result = [
                 'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
                 'message'  => !empty($rule['message']) ? $rule['message'] : 'Not allowed!'
@@ -41,11 +42,9 @@ class CsrfFilter extends Filter
         }
 
         $csrf = $this->container->session->csrf;
-        if (($key = in_array($this->container->request->getPostVar('csrf'), $csrf, true)) !== null) {
-
+        if (($key = in_array(md5($postCSRF), $csrf, true)) !== null) {
             unset( $csrf[$key] );
 
-            $this->container->request->setPostVar('csrf', null);
             $this->container->session->csrf = $csrf;
 
             return true;
@@ -90,9 +89,9 @@ class CsrfFilter extends Filter
     {
         $gen = md5(mt_rand());
         $s = $this->container->session;
-        $arr = $s->csrf;
-        $arr[] = md5($gen);
-        $s->csrf = $arr;
+
+        $s->csrf = array_merge( is_array($s->csrf) ? $s->csrf : [], [ md5($gen) ] );
+
         return $matches[1]."<input type=\"hidden\" name=\"csrf\" value=\"".$gen."\" />".$matches[2].$matches[3];
     }
 }

@@ -24,12 +24,7 @@ class XssFilter extends Filter
     {
         $clean = trim(strtoupper( !empty($params['clean']) ? $params['clean'] : '*' ));
 
-        $get = $this->container->request->getStorage('query');
-        $post = $this->container->request->getStorage('post');
-        $cookie = $this->container->request->getStorage('cookie');
-        $files = $this->container->request->getStorage('files');
-
-        $data = [ 'GET' => &$get, 'POST' => &$post, 'COOKIE' => &$cookie, 'FILES' => &$files ];
+        $data = [ 'GET' => &$_GET, 'POST' => &$_POST, 'COOKIE' => &$_COOKIE, 'FILES' => &$_FILES ];
         if ($clean === '*') {
             $clean = 'GET,POST,COOKIE,FILES';
         }
@@ -42,11 +37,6 @@ class XssFilter extends Filter
                 }
             }
         }
-
-        $this->container->request->setStorage('query', $get);
-        $this->container->request->setStorage('post', $post);
-        $this->container->request->setStorage('cookie', $cookie);
-        $this->container->request->setStorage('files', $files);
 
         return true;
     }

@@ -2,6 +2,7 @@
 
 namespace Micro\db;
 
+use Micro\base\Exception;
 use Micro\base\Registry;
 
 /**

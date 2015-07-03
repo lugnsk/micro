@@ -36,14 +36,16 @@ abstract class Model extends FormModel
      *
      * @access public
      *
+     * @param Registry $container
      * @param boolean $new is new model?
      *
      * @result void
      */
-    public function __construct($new = true, $container)
+    public function __construct( Registry $container, $new = true )
     {
+        parent::__construct($container);
+
         $this->_isNewRecord = $new;
-        $this->container = $container;
     }
 
     /**

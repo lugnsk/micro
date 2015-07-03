@@ -48,9 +48,9 @@ class PostController extends Controller
         $crt->table = Blog::tableName();
         $crt->order = 'id DESC';
 
-        $v = new View ($this->request, $this->container) ;
+        $v = new View( $this->container );
         $v->addParameter('blogs', $crt);
-        $v->addParameter('page', $this->request->getQueryVar('page') ?: 0 );
+        $v->addParameter('page', $this->container->request->getQueryVar('page') ?: 0 );
         return $v;
     }
 
@@ -59,36 +59,36 @@ class PostController extends Controller
         $crt = new Query($this->container);
         $crt->addWhere('id = :id');
         $crt->params = [
-            ':id' => $this->request->getQueryVar('id')
+            ':id' => $this->container->request->getQueryVar('id')
         ];
         $blog = Blog::finder($crt, true);
 
-        $v = new View($this->request, $this->container);
+        $v = new View($this->container);
         $v->addParameter('model', $blog);
         return $v;
     }
 
     public function actionCreate()
     {
-        $blog = new Blog;
+        $blog = new Blog($this->container);
 
-        if (!empty($_POST['Blog'])) {
-            $blog->name = $_POST['Blog']['name'];
-            $blog->content = $_POST['Blog']['content'];
+        if ($blogData = $this->container->request->getPostVar('Blog')) {
+            $blog->name = $blogData['name'];
+            $blog->content = $blogData['content'];
 
             if ($blog->save()) {
                 $this->redirect('/blog/post/' . $blog->id);
             }
         }
 
-        $v = new View;
+        $v = new View($this->container);
         $v->addParameter('model', $blog);
         return $v;
     }
 
     public function actionUpdate()
     {
-        $crt = new Query;
+        $crt = new Query($this->container);
         $crt->addWhere('id = :id');
         $crt->params = [':id' => $_GET['id']];
         $blog = Blog::finder($crt, true);
@@ -99,7 +99,7 @@ class PostController extends Controller
 
     public function actionDelete()
     {
-        $crt = new Query;
+        $crt = new Query($this->container);
         $crt->addWhere('id = :id');
         $crt->params = [':id' => $_GET['id']];
         $blog = Blog::finder($crt, true);

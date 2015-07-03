@@ -39,7 +39,7 @@ abstract class FormModel
     public function validate()
     {
         foreach ($this->rules() AS $rule) {
-            $validator = new Validator($this->container, $rule);
+            $validator = new Validator(['container'=>$this->container, 'rule'=>$rule]);
 
             if (!$validator->run($this) AND $validator->errors) {
                 $this->errors[] = $validator->errors;

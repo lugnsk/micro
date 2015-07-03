@@ -20,6 +20,7 @@ class DbConnection
 {
     /** @var \PDO|null $conn Connection to DB */
     protected $conn;
+    protected $container;
 
 
     /**
@@ -46,6 +47,8 @@ class DbConnection
                throw new Exception('Connect to DB failed: ' . $e->getMessage());
             }
         }
+
+        $this->container = $config['container'];
     }
 
     /**
@@ -77,7 +80,7 @@ class DbConnection
         $sth = $this->conn->prepare($query);
 
         if ($fetchType === \PDO::FETCH_CLASS) {
-            $sth->setFetchMode($fetchType, ucfirst($fetchClass), ['new' => false]);
+            $sth->setFetchMode($fetchType, ucfirst($fetchClass), ['container'=>$this->container,'new' => false]);
         } else {
             $sth->setFetchMode($fetchType);
         }
@@ -85,10 +88,11 @@ class DbConnection
         foreach ($params AS $name => $value) {
             $sth->bindValue($name, $value);
         }
+
         if ($sth->execute()) {
             return $sth->fetchAll();
         } else {
-            throw new Exception($sth->errorCode() . ': ' . print_r($sth->errorInfo()));
+            throw new Exception($this->container, $sth->errorCode() . ': ' . print_r($sth->errorInfo()));
         }
     }
 
