@@ -65,12 +65,11 @@ abstract class Model extends FormModel
      * @access public
      *
      * @return string
-     * @throws Exception
      * @static
      */
     public static function tableName()
     {
-        throw new Exception('Function `tableName` not defined into ' . get_called_class());
+        return NULL;
     }
 
     /**
@@ -94,6 +93,7 @@ abstract class Model extends FormModel
      *
      * @param Query $query query to search
      * @param boolean $single is single
+     * @param Registry $container
      *
      * @return mixed One or more data
      * @static
@@ -112,12 +112,13 @@ abstract class Model extends FormModel
      *
      * @access public
      * @param int|string $value unique value
+     * @param Registry $container
      * @return mixed
      * @static
      */
-    public static function findByPk($value)
+    public static function findByPk($value, Registry $container)
     {
-        return self::findByAttributes( [ self::$primaryKey => $value ], true );
+        return self::findByAttributes( [ self::$primaryKey => $value ], true, $container );
     }
 
     /**
@@ -126,11 +127,12 @@ abstract class Model extends FormModel
      * @access public
      * @param array $attributes attributes and data for search
      * @param bool $single single or more
+     * @param Registry $container
      * @return mixed
      */
-    public static function findByAttributes( array $attributes = [] , $single = false )
+    public static function findByAttributes( array $attributes = [] , $single = false, Registry $container )
     {
-        $query = new Query;
+        $query = new Query( $container );
         foreach ($attributes AS $key=>$val) {
             $query->addWhere( $key . ' = :' . $key );
         }
@@ -149,7 +151,7 @@ abstract class Model extends FormModel
     public function getAttributes()
     {
         $fields = [];
-        foreach (Registry::get('db')->listFields(static::tableName()) AS $field) {
+        foreach ($this->container->db->listFields(static::tableName()) AS $field) {
             $fields[] = $field['field'];
         }
         return $fields;
@@ -182,7 +184,7 @@ abstract class Model extends FormModel
     {
         if ($relation = $this->relations()->get($name)) {
             if (empty($this->cacheRelations[$name])) {
-                $sql = new Query;
+                $sql = new Query( $this->container );
 
                 $sql->addWhere('`m`.`' . $relation['On'][1] . '`=:' . $relation['On'][0]);
 
@@ -199,7 +201,7 @@ abstract class Model extends FormModel
                 $sql->params[ $relation['On'][0] ] = $this->{$relation['On'][0]};
 
                 /** @var Model $relation['Model'] */
-                $this->cacheRelations[$name] = $relation['Model']::finder($sql, !$relation['IsMany']);
+                $this->cacheRelations[$name] = $relation['Model']::finder($sql, !$relation['IsMany'], $this->container);
             }
             return $this->cacheRelations[$name];
         } elseif (isset($this->$name)) {
@@ -224,6 +226,7 @@ abstract class Model extends FormModel
      *
      * @access public
      * @return boolean
+     * @throws Exception
      */
     final public function create()
     {
@@ -277,8 +280,11 @@ abstract class Model extends FormModel
      * Save changes
      *
      * @access public
+     *
      * @param bool $validate Validated data?
+     *
      * @return boolean
+     * @throws Exception
      */
     final public function save( $validate = false )
     {
@@ -338,7 +344,9 @@ abstract class Model extends FormModel
                 if (self::$primaryKey) {
                     $where .= '`' . self::$primaryKey . '` = :' . self::$primaryKey;
                 } else {
-                    throw new Exception ('In table ' . static::tableName() . ' option `id` not defined/not use.');
+                    throw new Exception ($this->container,
+                        'In table ' . static::tableName() . ' option `id` not defined/not use.'
+                    );
                 }
             }
 
@@ -385,7 +393,9 @@ abstract class Model extends FormModel
         }
         if ($this->beforeDelete()) {
             if (!self::$primaryKey) {
-                throw new Exception('In table ' . static::tableName() . ' option `id` not defined/not use.');
+                throw new Exception($this->container,
+                    'In table ' . static::tableName() . ' option `id` not defined/not use.'
+                );
             }
 
             if (

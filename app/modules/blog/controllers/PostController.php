@@ -56,13 +56,7 @@ class PostController extends Controller
 
     public function actionView()
     {
-        $crt = new Query($this->container);
-        $crt->addWhere('id = :id');
-        $crt->params = [
-            ':id' => $this->container->request->getQueryVar('id')
-        ];
-        $blog = Blog::finder($crt, true);
-
+        $blog = Blog::findByPk($this->container->request->getQueryVar('id'), $this->container);
         $v = new View($this->container);
         $v->addParameter('model', $blog);
         return $v;
@@ -88,21 +82,20 @@ class PostController extends Controller
 
     public function actionUpdate()
     {
-        $crt = new Query($this->container);
-        $crt->addWhere('id = :id');
-        $crt->params = [':id' => $_GET['id']];
-        $blog = Blog::finder($crt, true);
+        $blog = Blog::findByPk($this->container->request->getQueryVar('id'), $this->container);
 
         $blog->name = 'setupher';
+
         return $blog->save();
     }
 
     public function actionDelete()
     {
-        $crt = new Query($this->container);
-        $crt->addWhere('id = :id');
-        $crt->params = [':id' => $_GET['id']];
-        $blog = Blog::finder($crt, true);
+        $blog = Blog::findByPk(
+            $this->container->request->getQueryVar('id'),
+            $this->container
+        );
+
         return $blog->delete();
     }
 }

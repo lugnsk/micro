@@ -39,24 +39,18 @@ class ProfileController extends Controller
 
     public function actionIndex()
     {
-        $query = new Query($this->container);
-
-        $query->addWhere('id = :id');
-        $query->params = ['id' => $this->container->user->getID()];
-
-        $user = User::finder($query, true);
+        $user = User::findByPk($this->container->user->getID(), $this->container);
         if (!$user) {
             $this->redirect('/logout');
         }
 
-        if (!empty($_POST['Setup'])) {
-            $form = $_POST['Setup'];
-            if (!empty($form['pass'])) {
-                $user->pass = md5($form['pass']);
+        if ($setup = $this->container->request->getPostVar('Setup')) {
+            if (!empty($setup['pass'])) {
+                $user->pass = md5($setup['pass']);
             }
 
-            if (!empty($form['fio'])) {
-                $user->fio = $form['fio'];
+            if (!empty($setup['fio'])) {
+                $user->fio = $setup['fio'];
             }
 
             $user->save();
