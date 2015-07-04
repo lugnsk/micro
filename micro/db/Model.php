@@ -21,8 +21,6 @@ use Micro\web\FormModel;
  */
 abstract class Model extends FormModel
 {
-    /** @var DbConnection $db pdo connection */
-    protected $db = false;
     /** @var boolean $_isNewRecord is new record? */
     protected $_isNewRecord = false;
     /** @var string $primaryKey Primary key on table */
@@ -234,7 +232,7 @@ abstract class Model extends FormModel
             return false;
         }
         if ($this->beforeCreate() && $this->beforeSave()) {
-            $id = $this->db->insert(static::tableName(), $this->mergeAttributesDb());
+            $id = $this->container->db->insert(static::tableName(), $this->mergeAttributesDb());
             if (!$id) {
                 return false;
             }
@@ -350,7 +348,7 @@ abstract class Model extends FormModel
                 }
             }
 
-            if ($this->db->update(static::tableName(), $this->mergeAttributesDb(), $where)) {
+            if ($this->container->db->update(static::tableName(), $this->mergeAttributesDb(), $where)) {
                 $this->afterUpdate();
                 return true;
             }
@@ -399,7 +397,7 @@ abstract class Model extends FormModel
             }
 
             if (
-            $this->db->delete(
+            $this->container->db->delete(
                 static::tableName(),
                 self::$primaryKey . '=:' . self::$primaryKey, [self::$primaryKey => $this->{self::$primaryKey}]
             )
@@ -438,7 +436,7 @@ abstract class Model extends FormModel
         }
 
         $res = false;
-        foreach ($this->db->listFields(static::tableName()) AS $row) {
+        foreach ($this->container->db->listFields(static::tableName()) AS $row) {
             if ($row['field'] === $name) {
                 $res = true;
                 break;
@@ -461,7 +459,7 @@ abstract class Model extends FormModel
         $arr = Type::getVars($this);
 
         $buffer = [];
-        foreach ($this->db->listFields(static::tableName()) AS $row) {
+        foreach ($this->container->db->listFields(static::tableName()) AS $row) {
             $buffer[] = $row['field'];
         }
 
