@@ -2,6 +2,8 @@
 
 namespace App\modules\blog;
 
-class BlogModule
+use Micro\mvc\Module;
+
+class BlogModule extends Module
 {
 }

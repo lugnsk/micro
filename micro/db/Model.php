@@ -81,7 +81,7 @@ abstract class Model extends FormModel
      */
     public function find( $single = false )
     {
-        return self::findByAttributes(Type::getVars($this), $single);
+        return self::findByAttributes(Type::getVars($this), $single, $this->container);
     }
 
     /**
