@@ -5,6 +5,7 @@ namespace Micro;
 use Micro\base\Autoload;
 use Micro\base\Dispatcher;
 use Micro\base\Exception;
+use Micro\base\OutputInterface;
 use Micro\base\Registry;
 use Micro\base\Resolver;
 use Micro\web\Request;
@@ -123,11 +124,7 @@ class Micro
             'prepend'  => false
         ], $config);
 
-        if (!file_exists($config['filename'])) {
-            return false;
-        }
-
-        if (empty($config['callable'])) {
+        if (!file_exists($config['filename']) || empty($config['callable'])) {
             return false;
         }
 
@@ -189,10 +186,9 @@ class Micro
         $this->container->kernel = $this;
 
         $this->container->load( $configPath );
-        try {
-            $this->container->dispatcher = $this->container->dispatcher;
-        } catch (Exception $e) {
-            $this->container->dispatcher =  new Dispatcher($this->container);
+
+        if (!isset($this->container->dispatcher)) {
+            $this->container->dispatcher = new Dispatcher( $this->container );
         }
     }
 
@@ -214,33 +210,25 @@ class Micro
         $this->container->request = $request;
 
         $resolver = new Resolver( $this->container );
-        $this->container->dispatcher->signal('kernel.router', []);
+        $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
 
         $app = $resolver->getApplication();
-        $this->container->dispatcher->signal('kernel.controller', []);
+        $this->container->dispatcher->signal('kernel.controller', ['application' => $app]);
 
         $response = null;
-        $result = null;
-
         if ($request->isCli()) {
             $app->execute();
-            $result = $app->message;
+            $response = $app;
         } else {
-            $result = $app->action($resolver->getAction());
-        }
-        $this->container->dispatcher->signal('kernel.response', []);
-
-        if ($result instanceof Response) {
-            $response = $result;
-        } else {
-            try {
-                $response = $this->container->response;
-            } catch (Exception $e) {
-                $response = new Response;
+            $output = $app->action($resolver->getAction());
+            if (! $output instanceof OutputInterface) {
+                $response = $this->container->response ?: new Response;
+                $response->setBody($output);
+            } else {
+                $response = $output;
             }
-
-            $response->setBody($result);
         }
+        $this->container->dispatcher->signal('kernel.response', ['output' => $response]);
 
         return $response;
     }
@@ -249,11 +237,11 @@ class Micro
     {
         $this->container->dispatcher->signal('kernel.terminate', []);
 
-        $this->unloader();
-
-        if ($this->debug) {
-            echo '<div class=timer>' . ( microtime(true) - $this->getStartTime() ) . '</div>';
+        if ($this->debug && !$this->container->request->isCli()) {
+            echo '<div class=timer>' , ( microtime(true) - $this->getStartTime() ) , '</div>';
         }
+
+        $this->unloader();
     }
 
     // Methods for components

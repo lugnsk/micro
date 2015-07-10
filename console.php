@@ -1,14 +1,10 @@
 <?php
 
-// Activate error page
-define('DEBUG_MICRO', true);
+require __DIR__ . '/micro/Micro.php';
 
-// Configs
-$config = require __DIR__ . '/app/configs/index.php';
+$app = new \Micro\Micro(__DIR__.'/app', __DIR__.'/micro');
 
-// Get micro
-require $config['MicroDir'] . '/base/Autoload.php';
-require $config['MicroDir'] . '/Micro.php';
+$response = $app->run( new \Micro\web\Request );
+$response->send();
 
-// Run application
-\Micro\Micro::getInstance($config)->run();
+$app->terminate();

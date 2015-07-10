@@ -20,6 +20,7 @@ class DbConnection
 {
     /** @var \PDO|null $conn Connection to DB */
     protected $conn;
+    /** @var \Micro\base\Registry $container Registry container */
     protected $container;
 
 
@@ -44,7 +45,7 @@ class DbConnection
                 $config['options']);
         } catch (Exception $e) {
             if (!$ignoreFail) {
-               throw new Exception('Connect to DB failed: ' . $e->getMessage());
+               throw new Exception($config['container'], 'Connect to DB failed: ' . $e->getMessage());
             }
         }
 
@@ -151,7 +152,7 @@ class DbConnection
      */
     public function tableExists($table)
     {
-        return (bool)in_array($table, $this->listTables(), true);
+        return in_array($table, $this->listTables(), true);
     }
 
     /**
@@ -162,13 +163,7 @@ class DbConnection
      */
     public function listTables()
     {
-        $sth = $this->conn->query('SHOW TABLES;');
-
-        $result = [];
-        foreach ($sth->fetchAll() AS $row) {
-            $result[] = $row[0];
-        }
-        return $result;
+        return $this->conn->query('SHOW TABLES;')->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\OutputInterface;
+
 /**
  * Response class file.
  *
@@ -14,7 +16,7 @@ namespace Micro\web;
  * @version 1.0
  * @since 1.0
  */
-class Response
+class Response implements OutputInterface
 {
     /** @var string $httpVersion Protocol version */
     protected $httpVersion = 'HTTP/1.1';

@@ -248,7 +248,7 @@ class Resolver
             $command = $console->getCommand();
 
             /** @var \Micro\base\Command $command */
-            return new $command( $this->container, $console->getParams() );
+            return new $command( ['container'=>$this->container, 'args'=>$console->getParams()] );
         }
 
         /** @var \Micro\mvc\controllers\Controller $cls Controller */

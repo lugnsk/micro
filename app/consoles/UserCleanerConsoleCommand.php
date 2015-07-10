@@ -2,14 +2,13 @@
 
 namespace App\consoles;
 
-use Micro\base\Command;
+use Micro\base\ConsoleCommand;
 
-class UserCleanerConsoleCommand extends Command
+class UserCleanerConsoleCommand extends ConsoleCommand
 {
     public function execute()
     {
-        echo 'Hello, world!', "\n";
-
+        $this->message = 'Hello, world!' . "\n";
         $this->result = true;
     }
 }
