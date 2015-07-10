@@ -143,7 +143,7 @@ class Micro
      *
      * @return void
      */
-    public function loader( $configPath )
+    public function loader( $configPath = '/configs/index.php' )
     {
         if (true === $this->loaded) {
             return;
