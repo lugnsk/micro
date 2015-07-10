@@ -1,10 +1,10 @@
 <?php
 
 // Get micro
-require $_SERVER['DOCUMENT_ROOT'] . '/../micro/Micro.php';
+require __DIR__ . '/../micro/Micro.php';
 
 // Get kernel
-$app = new \Micro\Micro( $_SERVER['DOCUMENT_ROOT']. '/../app', $_SERVER['DOCUMENT_ROOT']. '/../micro' );
+$app = new \Micro\Micro( __DIR__ . '/../app', __DIR__ . '/../micro' );
 
 // Get request
 $request = new \Micro\web\Request;
