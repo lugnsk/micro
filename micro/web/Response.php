@@ -37,14 +37,14 @@ class Response implements OutputInterface
      *
      * @access public
      *
-     * @param string  $body response body
-     * @param int    $status HTTP status code, default 200
+     * @param string $body response body
+     * @param int $status HTTP status code, default 200
      * @param string $message HTTP status message, default OK
-     * @param array  $headers HTTP headers
+     * @param array $headers HTTP headers
      *
      * @result void
      */
-    public function __construct( $body = '', $status = 200, $message = null, array $headers = [] )
+    public function __construct($body = '', $status = 200, $message = null, array $headers = [])
     {
         $this->setStatus($status, $message);
         $this->setHeaders($headers);
@@ -58,11 +58,11 @@ class Response implements OutputInterface
      *
      * @param string $name Name of header
      * @param string $value Value header
-     * @param bool   $replace Replaced if exists?
+     * @param bool $replace Replaced if exists?
      *
      * @return void
      */
-    public function addHeader( $name, $value, $replace = true )
+    public function addHeader($name, $value, $replace = true)
     {
         $header = empty($this->headers[$name]) ? $value : $this->headers[$name];
         $this->headers[$name] = $replace ? $value : $header;
@@ -77,9 +77,9 @@ class Response implements OutputInterface
      *
      * @return string|null
      */
-    public function getHeader( $name )
+    public function getHeader($name)
     {
-        return $this->headers ? $this->headers[$name] : NULL;
+        return $this->headers ? $this->headers[$name] : null;
     }
 
     /**
@@ -91,7 +91,7 @@ class Response implements OutputInterface
      *
      * @return void
      */
-    public function setHttpVersion( $version = 'HTTP/1.1' )
+    public function setHttpVersion($version = 'HTTP/1.1')
     {
         $this->httpVersion = $version;
     }
@@ -105,7 +105,7 @@ class Response implements OutputInterface
      *
      * @return void
      */
-    public function setHeaders( array $headers = [] )
+    public function setHeaders(array $headers = [])
     {
         $this->headers = $headers;
     }
@@ -115,12 +115,12 @@ class Response implements OutputInterface
      *
      * @access public
      *
-     * @param int         $status Code for a new status
+     * @param int $status Code for a new status
      * @param string|null $message Message for a new status
      *
      * @return void
      */
-    public function setStatus( $status = 200, $message = null )
+    public function setStatus($status = 200, $message = null)
     {
         $this->statusCode = $status;
         $this->setStatusMessage($message);
@@ -135,7 +135,7 @@ class Response implements OutputInterface
      *
      * @return void
      */
-    public function setStatusMessage( $message = '' )
+    public function setStatusMessage($message = '')
     {
         $this->statusMessage = $message ?: $this->getStatusMessageFromCode($this->statusCode);
     }
@@ -149,7 +149,7 @@ class Response implements OutputInterface
      *
      * @return string
      */
-    public function getStatusMessageFromCode( $code = 200 )
+    public function getStatusMessageFromCode($code = 200)
     {
         $codes = [
             200 => 'OK',
@@ -165,6 +165,7 @@ class Response implements OutputInterface
             503 => 'Service Unavailable',
             // @TODO: add other elements
         ];
+
         return !empty($codes[$code]) ? $codes[$code] : '';
     }
 
@@ -189,7 +190,7 @@ class Response implements OutputInterface
      *
      * @return void
      */
-    public function setContentType( $newType = '' )
+    public function setContentType($newType = '')
     {
         $this->contentType = $newType ?: 'text/html';
     }

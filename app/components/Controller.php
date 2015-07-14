@@ -22,7 +22,7 @@ class Controller extends BaseController
      *
      * @result void
      */
-    public function __construct( Registry $registry, $modules='' )
+    public function __construct(Registry $registry, $modules = '')
     {
         $this->layout = 'maket';
 

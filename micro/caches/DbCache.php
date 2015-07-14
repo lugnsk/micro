@@ -94,6 +94,7 @@ class DbCache implements Cache
         $query->params = ['name' => $name];
         $query->limit = 1;
         $query->single = true;
+
         return $query->run(\PDO::FETCH_ASSOC);
     }
 

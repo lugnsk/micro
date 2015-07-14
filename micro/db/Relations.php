@@ -34,7 +34,7 @@ class Relations
      *
      * @return void
      */
-    public function add( $name, $model, $isMany = false, array $on = [], $where = '', array $params = [], $limit = 0 )
+    public function add($name, $model, $isMany = false, array $on = [], $where = '', array $params = [], $limit = 0)
     {
         $this->data[$name] = [
             'IsMany' => $isMany,

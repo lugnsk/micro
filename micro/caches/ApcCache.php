@@ -62,6 +62,7 @@ class ApcCache implements Cache
     public function get($name)
     {
         $values = apc_fetch($name);
+
         return is_array($values) ? $values : [];
     }
 
@@ -148,6 +149,7 @@ class ApcCache implements Cache
         }
 
         list($data, $time, $ttl) = $stored;
+
         return ['expire' => $time + $ttl, 'mtime' => $time, 'data' => unserialize($data)];
     }
 

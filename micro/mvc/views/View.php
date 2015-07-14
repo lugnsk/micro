@@ -4,7 +4,6 @@ namespace Micro\mvc\views;
 
 use Micro\base\Exception;
 use Micro\wrappers\Html;
-use Micro\web\Request;
 use Micro\base\Registry;
 
 /**
@@ -34,7 +33,7 @@ abstract class View
     public $module;
 
 
-    public function __construct( Registry $container )
+    public function __construct(Registry $container)
     {
         $this->container = $container;
     }
@@ -93,7 +92,7 @@ abstract class View
             throw new Exception($this->container, 'Widget ' . $name . ' not found.');
         }
 
-        $options = array_merge($options, ['container'=>$this->container]);
+        $options = array_merge($options, ['container' => $this->container]);
 
         /** @var \Micro\mvc\Widget $widget widget */
         $widget = new $name($options, $this->container);
@@ -121,6 +120,7 @@ abstract class View
         }
 
         echo $result;
+
         return '';
     }
 
@@ -147,6 +147,7 @@ abstract class View
 
         /** @var \Micro\mvc\Widget $GLOBALS ['widgetStack'][$name] widget */
         $GLOBALS['widgetStack'][$name] = new $name($options, $this->container);
+
         return $GLOBALS['widgetStack'][$name]->init();
     }
 
@@ -167,6 +168,7 @@ abstract class View
             unset($widget);
 
             echo $v;
+
             return;
         }
 

@@ -73,6 +73,7 @@ class DefaultController extends Controller
 
         $v = new View($this->container);
         $v->addParameter('form', $form);
+
         return $v;
     }
 
@@ -84,8 +85,9 @@ class DefaultController extends Controller
                 $result .= Html::heading(3, $err, ['class' => 'text-danger bg-danger']);
             }
         }
-        $v = new View( $this->container );
+        $v = new View($this->container);
         $v->data = $result ?: 'undefined error';
+
         return $v;
     }
 

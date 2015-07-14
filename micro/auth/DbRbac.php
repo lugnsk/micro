@@ -58,6 +58,7 @@ class DbRbac extends Rbac
         ) {
             return $this->conn->insert('rbac_user', ['role' => $name, 'user' => $userId]);
         }
+
         return false;
     }
 
@@ -149,6 +150,7 @@ class DbRbac extends Rbac
         $query->table = 'rbac_role';
         $query->order = '`type` ASC';
         $query->single = false;
+
         return $query->run($pdo);
     }
 

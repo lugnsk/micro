@@ -29,7 +29,7 @@ class CompareValidator extends Validator
      *
      * @result void
      */
-    public function __construct( array $params )
+    public function __construct(array $params)
     {
         $this->params['attribute'] = null;
         $this->params['value'] = null;
@@ -55,17 +55,21 @@ class CompareValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             $elementValue = $model->$element;
             if (!empty($this->params['value']) AND ($this->params['value'] !== $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $this->params['value'];
+
                 return false;
             } elseif (!empty($this->params['attribute']) AND ($model->{$this->params['attribute']} !== $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $model->{$this->params['attribute']};
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -87,6 +91,7 @@ class CompareValidator extends Validator
         }
 
         $js = 'if (this.value!="' . $value . '") { e.preventDefault(); this.focus(); alert(\'Value is not compatible\'); }';
+
         return $js;
     }
 }

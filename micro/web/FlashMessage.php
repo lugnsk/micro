@@ -41,7 +41,7 @@ class FlashMessage
      * @result void
      * @throws Exception
      */
-    public function __construct( Registry $container )
+    public function __construct(Registry $container)
     {
         $this->container = $container;
 
@@ -122,6 +122,7 @@ class FlashMessage
                 return true;
             }
         }
+
         return false;
     }
 
@@ -141,9 +142,11 @@ class FlashMessage
             if (!empty($element['type']) && $element['type'] === $type) {
                 $result = $element;
                 unset($this->container->session->flash[$key]);
+
                 return $result;
             }
         }
+
         return false;
     }
 
@@ -158,6 +161,7 @@ class FlashMessage
     {
         $result = $this->container->session->flash;
         $this->container->session->flash = [];
+
         return $result;
     }
 }

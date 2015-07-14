@@ -32,6 +32,7 @@ class Html
     public static function link($name, $url, array $attributes = [])
     {
         $attributes['href'] = $url;
+
         return self::openTag('link', $attributes) . $name . self::closeTag('link');
     }
 
@@ -52,6 +53,7 @@ class Html
         foreach ($attributes AS $key => $value) {
             $result .= ' ' . $key . '="' . $value . '"';
         }
+
         return '<' . $name . $result . '>';
     }
 
@@ -86,6 +88,7 @@ class Html
     {
         $attributes['name'] = $name;
         $attributes['content'] = $content;
+
         return self::tag('meta', $attributes);
     }
 
@@ -108,6 +111,7 @@ class Html
         foreach ($attributes AS $elem => $value) {
             $result .= ' ' . $elem . '="' . $value . '" ';
         }
+
         return '<' . $name . $result . '/>';
     }
 
@@ -170,6 +174,7 @@ class Html
     public static function css($text, array $attributes = [])
     {
         $attributes['type'] = 'text/css';
+
         return self::openTag('style', $attributes) . $text . self::closeTag('style');
     }
 
@@ -187,6 +192,7 @@ class Html
     public static function script($text, array $attributes = [])
     {
         $attributes['type'] = 'text/javascript';
+
         return self::openTag('script',
             $attributes) . ' /*<![CDATA[*/ ' . $text . ' /*]]>*/ ' . self::closeTag('script');
     }
@@ -217,6 +223,7 @@ class Html
         if (empty($docTypes[$name])) {
             return false;
         }
+
         return $docTypes[$name];
     }
 
@@ -252,6 +259,7 @@ class Html
         for ($i = 0; $i < $num; $i++) {
             $str .= self::tag('br', $attributes);
         }
+
         return $str;
     }
 
@@ -272,6 +280,7 @@ class Html
     public static function mailto($name, $email, array $attributes = [])
     {
         $attributes['href'] = 'mailto:' . $email;
+
         return self::openTag('a', $attributes) . $name . self::closeTag('a');
     }
 
@@ -290,6 +299,7 @@ class Html
     public static function href($name, $url, array $attributes = [])
     {
         $attributes['href'] = $url;
+
         return self::openTag('a', $attributes) . $name . self::closeTag('a');
     }
 
@@ -332,6 +342,7 @@ class Html
         }
 
         $attributeImg['usemap'] = $name;
+
         return self::image($alt, $source, $attributeImg) .
         self::openTag('map', ['name' => $name, 'id' => $name]) .
         $areas . self::closeTag('map');
@@ -353,6 +364,7 @@ class Html
     {
         $attributes['src'] = $file;
         $attributes['alt'] = $name;
+
         return self::tag('img', $attributes);
     }
 
@@ -393,6 +405,7 @@ class Html
     public static function embed($source, array $attributes = [])
     {
         $attributes['source'] = $source;
+
         return self::openTag('embed', $attributes) . self::closeTag('embed');
     }
 
@@ -414,7 +427,7 @@ class Html
 
         $result = null;
         foreach ($items AS $item) {
-            $result .= Html::openTag('li', !empty($item['attr']) ? $item['attr'] : [] );
+            $result .= Html::openTag('li', !empty($item['attr']) ? $item['attr'] : []);
             if (!empty($item['parents'])) {
                 $result .= !empty($item['text']) ? $item['text'] : null;
                 $result .= self::lists(
@@ -427,6 +440,7 @@ class Html
             }
             $result .= Html::closeTag('li');
         }
+
         return self::openTag($parentTag, $attributes) . $result . self::closeTag($parentTag);
     }
 
@@ -464,6 +478,7 @@ class Html
                 !empty($value['attributes']) ? $value['attributes'] : []
             );
         }
+
         return self::beginTable($attributes) . $output . self::endTable();
     }
 
@@ -497,6 +512,7 @@ class Html
                 );
             }
         }
+
         return self::openTag('tr', $attributes) . $output . self::closeTag('tr');
     }
 
@@ -591,6 +607,7 @@ class Html
     {
         $attributes['action'] = $action;
         $attributes['method'] = $method;
+
         return self::openTag('form', $attributes);
     }
 
@@ -658,6 +675,7 @@ class Html
     {
         $attributes['id'] = $name;
         $attributes['name'] = $name;
+
         return self::openTag('textarea', $attributes) . $text . self::closeTag('textarea');
     }
 
@@ -692,6 +710,7 @@ class Html
     public static function label($name, $elemId = '', array $attributes = [])
     {
         $attributes['for'] = $elemId;
+
         return self::openTag('label', $attributes) . $name . self::closeTag('label');
     }
 
@@ -758,7 +777,7 @@ class Html
                     unset($option['text']);
                 }
 
-                $opts .= self::option( !empty($option['value']) ? $option['value'] : '' , $text, $attr);
+                $opts .= self::option(!empty($option['value']) ? $option['value'] : '', $text, $attr);
             }
         }
 
@@ -790,6 +809,7 @@ class Html
                 $opts .= self::option($option['value'], $option['text'], $option['attributes']);
             }
         }
+
         return self::openTag('optgroup', $attributes) . $opts . self::closeTag('optgroup');
     }
 
@@ -808,6 +828,7 @@ class Html
     public static function option($value, $text, array $attributes = [])
     {
         $attributes['value'] = $value;
+
         return self::openTag('option', $attributes) . $text . self::closeTag('option');
     }
 
@@ -818,11 +839,13 @@ class Html
      *
      * @return array|null Output array
      */
-    public static function arrayToOptions( array $arr = [] ) {
+    public static function arrayToOptions(array $arr = [])
+    {
         $result = [];
         foreach ($arr AS $n => $m) {
-            $result[] = [ 'value'=>$n , 'text'=>$m ];
+            $result[] = ['value' => $n, 'text' => $m];
         }
+
         return $result;
     }
 
@@ -853,6 +876,7 @@ class Html
             $check = self::checkboxField($name, $checkbox['value'], $checkbox['attributes']);
             $checks .= strtr(strtr($format, '%check%', $check), '%text%', $checkbox['text']);
         }
+
         return $checks;
     }
 
@@ -892,6 +916,7 @@ class Html
         $attributes['type'] = $type;
         $attributes['name'] = $name;
         $attributes['value'] = $value;
+
         return self::tag('input', $attributes);
     }
 
@@ -921,6 +946,7 @@ class Html
                 !empty($radio['attributes']) ? $radio['attributes'] : []);
             $rads .= str_replace(['%radio%', '%text%'], [$rad, $radio['text']], $format);
         }
+
         return $rads;
     }
 
@@ -956,6 +982,7 @@ class Html
     {
         $attributes['type'] = 'reset';
         $attributes['value'] = $label;
+
         return self::tag('input', $attributes);
     }
 
@@ -974,6 +1001,7 @@ class Html
     {
         $attributes['type'] = 'submit';
         $attributes['value'] = $label;
+
         return self::tag('input', $attributes);
     }
 
@@ -1044,6 +1072,7 @@ class Html
     public static function imageField($name, $value = null, $srcFile, array $attributes = [])
     {
         $attributes['src'] = $srcFile;
+
         return self::field('image', $name, $value, $attributes);
     }
 
@@ -1339,12 +1368,13 @@ class Html
         }
         foreach ($tracks AS $track) {
             $srcs .= self::tag('track', [
-                'kind'    => $track['kind'],
-                'src'     => $track['src'],
+                'kind' => $track['kind'],
+                'src' => $track['src'],
                 'srclang' => $track['srclang'],
-                'label'   => $track['label']
+                'label' => $track['label']
             ]);
         }
+
         return self::openTag('video', $attributes) . $srcs . $noCodec . self::closeTag('video');
     }
 
@@ -1369,12 +1399,13 @@ class Html
         }
         foreach ($tracks AS $track) {
             $srcs .= self::tag('track', [
-                'kind'    => $track['kind'],
-                'src'     => $track['src'],
+                'kind' => $track['kind'],
+                'src' => $track['src'],
                 'srclang' => $track['srclang'],
-                'label'   => $track['label']
+                'label' => $track['label']
             ]);
         }
+
         return self::openTag('audio', $attributes) . $srcs . $noCodec . self::closeTag('audio');
     }
 

@@ -41,15 +41,15 @@ abstract class ViewController extends Controller
             $GLOBALS['widgetStack'] = [];
         }
 
-        $filters     = method_exists($this, 'filters') ? $this->filters() : [];
-        $view        = null;
+        $filters = method_exists($this, 'filters') ? $this->filters() : [];
+        $view = null;
         $actionClass = false;
 
 
         if (!method_exists($this, 'action' . ucfirst($name))) {
             $actionClass = $this->getActionClassByName($name);
             if (!$actionClass) {
-                throw new Exception( $this->container, 'Action "' . $name . '" not found into ' . get_class($this));
+                throw new Exception($this->container, 'Action "' . $name . '" not found into ' . get_class($this));
             }
         }
 
@@ -57,7 +57,7 @@ abstract class ViewController extends Controller
 
         if ($actionClass) {
             /** @var \Micro\mvc\Action $cl */
-            $cl = new $actionClass( $this->container );
+            $cl = new $actionClass($this->container);
             $view = $cl->run();
         } else {
             $view = $this->{'action' . ucfirst($name)}();
@@ -71,7 +71,7 @@ abstract class ViewController extends Controller
             $view = $view->__toString();
         }
 
-        $this->response->setBody( $this->applyFilters($name, false, $filters, $view) );
+        $this->response->setBody($this->applyFilters($name, false, $filters, $view));
 
         return $this->response;
     }
@@ -91,6 +91,7 @@ abstract class ViewController extends Controller
             header('Location: ' . $path);
             exit();
         }
+
         return false;
     }
 }

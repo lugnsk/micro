@@ -33,7 +33,7 @@ class ActionsGridColumn extends GridColumn
      * @result void
      * @throws Exception
      */
-    public function __construct( array $params = [] )
+    public function __construct(array $params = [])
     {
         parent::__construct($params);
 
@@ -47,23 +47,24 @@ class ActionsGridColumn extends GridColumn
 
         $this->buttons = [
             'view' => [
-                'link'       => '/',
-                'text'       => 'view',
+                'link' => '/',
+                'text' => 'view',
                 'attributes' => []
             ],
             'edit' => [
-                'link'       => '/edit/',
-                'text'       => 'edit',
+                'link' => '/edit/',
+                'text' => 'edit',
                 'attributes' => []
             ],
             'delete' => [
-                'link'       => '/del/',
-                'text'       => 'delete',
-                'attributes' => ['onclick'=>'return confirm(\'Are you sure?\')']
+                'link' => '/del/',
+                'text' => 'delete',
+                'attributes' => ['onclick' => 'return confirm(\'Are you sure?\')']
             ]
         ];
 
-        $this->buttons = array_merge($this->buttons, (!empty($this->params['buttons']) ? $this->params['buttons'] : []) );
+        $this->buttons = array_merge($this->buttons,
+            (!empty($this->params['buttons']) ? $this->params['buttons'] : []));
     }
 
     /**
@@ -78,13 +79,13 @@ class ActionsGridColumn extends GridColumn
         $result = [];
 
         foreach ($this->buttons AS $key => $row) {
-            $result['{'.$key.'}'] = Html::href(
+            $result['{' . $key . '}'] = Html::href(
                 !empty($row['text']) ? $row['text'] : $key,
                 $this->params['link'] . (!empty($row['link']) ? $row['link'] : '/') . $this->params['pKey'],
                 !empty($row['attributes']) ? $row['attributes'] : []
             );
         }
 
-        return str_replace(array_keys($result), array_values($result), $this->params['template']);
+        return (string)str_replace(array_keys($result), array_values($result), $this->params['template']);
     }
 }

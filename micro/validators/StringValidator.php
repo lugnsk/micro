@@ -33,6 +33,7 @@ class StringValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             $elementLength = strlen($model->$element);
@@ -40,6 +41,7 @@ class StringValidator extends Validator
                 $this->params['min'] = filter_var($this->params['min'], FILTER_VALIDATE_INT);
                 if ($this->params['min'] > $elementLength) {
                     $this->errors[] = $element . ' error: minimal characters not valid.';
+
                     return false;
                 }
             }
@@ -47,10 +49,12 @@ class StringValidator extends Validator
                 $this->params['max'] = filter_var($this->params['max'], FILTER_VALIDATE_INT);
                 if ($this->params['max'] < $elementLength) {
                     $this->errors[] = $element . ' error: maximal characters not valid.';
+
                     return false;
                 }
             }
         }
+
         return true;
     }
 
@@ -74,6 +78,7 @@ class StringValidator extends Validator
             $action .= ' if (this.value.length > ' . $this->params['max'] . ') { e.preventDefault(); this.focus();' .
                 ' alert(\'Value highest, maximum ' . $this->params['max'] . ' symbols\'); }';
         }
+
         return $action;
     }
 }

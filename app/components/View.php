@@ -11,9 +11,9 @@ class View extends PhpView
     public $title = 'Micro';
     public $menu = ['<a href="/">Главная</a>', '<a href="/blog/post">Блог</a>'];
 
-    public function __construct( Registry $container )
+    public function __construct(Registry $container)
     {
-        parent::__construct( $container );
+        parent::__construct($container);
 
         if (!$container->user->isGuest()) {
             $this->menu[] = '<a href="/profile">Профиль</a>';

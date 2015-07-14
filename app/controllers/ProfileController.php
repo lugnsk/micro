@@ -58,6 +58,7 @@ class ProfileController extends Controller
 
         $v = new View($this->container);
         $v->addParameter('user', $user);
+
         return $v;
     }
 }

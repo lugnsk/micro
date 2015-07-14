@@ -58,7 +58,7 @@ class Query
      *
      * @result void
      */
-    public function __construct( Registry $container )
+    public function __construct(Registry $container)
     {
         $this->container = $container;
     }
@@ -253,6 +253,7 @@ class Query
                 $query .= $this->limit;
             }
         }
+
         return $query;
     }
 }

@@ -75,16 +75,16 @@ class GridViewWidget extends Widget
      * @result void
      * @throws Exception
      */
-    public function __construct( array $args = [] )
+    public function __construct(array $args = [])
     {
-        parent::__construct( $args );
+        parent::__construct($args);
 
         if (empty($args['data'])) {
             throw new Exception($this->container, 'Argument "data" not initialized into GridViewWidget');
         }
 
         $this->limit = ($this->limit < 10) ? 10 : $this->limit;
-        $this->page  = ($this->page < 0)   ? 0  : $this->page;
+        $this->page = ($this->page < 0) ? 0 : $this->page;
 
         if ($args['data'] instanceof Query) {
             if ($args['data']->objectName) {
@@ -95,7 +95,7 @@ class GridViewWidget extends Widget
             }
 
             if ($args['data']->having || $args['data']->group) {
-                $res = new Query( $this->container );
+                $res = new Query($this->container);
                 $res->select = 'COUNT(*)';
                 $res->table = '(' . $args['data']->getQuery() . ') micro_count';
                 $res->single = true;
@@ -106,12 +106,12 @@ class GridViewWidget extends Widget
                 $res->single = true;
             }
 
-            $this->totalCount   = $res->run()[0];
+            $this->totalCount = $res->run()[0];
             $this->filterPrefix = $args['data']->table;
 
-            $args['data']->ofset  = $this->page*$this->limit;
-            $args['data']->limit  = $this->limit;
-            $args['data']     = $args['data']->run( $args['data']->objectName ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC );
+            $args['data']->ofset = $this->page * $this->limit;
+            $args['data']->limit = $this->limit;
+            $args['data'] = $args['data']->run($args['data']->objectName ? \PDO::FETCH_CLASS : \PDO::FETCH_ASSOC);
         } else { // array
             $this->totalCount = count($args['data']);
             $args['data'] = array_slice($args['data'], $this->page * $this->limit, $this->limit);
@@ -131,22 +131,22 @@ class GridViewWidget extends Widget
      */
     public function init()
     {
-        $this->filterPrefix                    = ucfirst( $this->filterPrefix ?: 'data' . $this->totalCount );
-        $this->fields                          = (null !== $this->rows) ? array_keys(Type::getVars($this->rows[0])) : [];
-        $this->rowsCount                       = count($this->rows);
-        $this->paginationConfig['countRows']   = $this->totalCount;
-        $this->paginationConfig['limit']       = $this->limit;
+        $this->filterPrefix = ucfirst($this->filterPrefix ?: 'data' . $this->totalCount);
+        $this->fields = (null !== $this->rows) ? array_keys(Type::getVars($this->rows[0])) : [];
+        $this->rowsCount = count($this->rows);
+        $this->paginationConfig['countRows'] = $this->totalCount;
+        $this->paginationConfig['limit'] = $this->limit;
         $this->paginationConfig['currentPage'] = $this->page;
-        $this->tableConfig                     = $this->tableConfig ?: $this->fields;
+        $this->tableConfig = $this->tableConfig ?: $this->fields;
 
         foreach ($this->tableConfig AS $key => $conf) {
             unset($this->tableConfig[$key]);
 
-            $this->tableConfig[ is_string($conf)?$conf:$key ] = array_merge([
+            $this->tableConfig[is_string($conf) ? $conf : $key] = array_merge([
                 'attributesHeader' => !empty($conf['attributesHeader']) ? $conf['attributesHeader'] : [],
                 'attributesFilter' => !empty($conf['attributesFilter']) ? $conf['attributesFilter'] : [],
-                'attributes'       => !empty($conf['attributes'])       ? $conf['attributes']       : []
-            ], is_array($conf)?$conf:[] );
+                'attributes' => !empty($conf['attributes']) ? $conf['attributes'] : []
+            ], is_array($conf) ? $conf : []);
         }
     }
 
@@ -166,9 +166,10 @@ class GridViewWidget extends Widget
         ob_start();
         echo str_replace(
             ['{counter}', '{pager}', '{table}'],
-            [ $this->getCounter(), $this->getPager(), $this->getTable() ],
+            [$this->getCounter(), $this->getPager(), $this->getTable()],
             $this->template
         );
+
         return ob_get_clean();
     }
 
@@ -182,7 +183,7 @@ class GridViewWidget extends Widget
     protected function getCounter()
     {
         return Html::openTag('div', $this->attributesCounter) .
-            $this->counterText . $this->totalCount . Html::closeTag('div');
+        $this->counterText . $this->totalCount . Html::closeTag('div');
     }
 
     /**
@@ -200,6 +201,7 @@ class GridViewWidget extends Widget
 
         $pager = new PaginationWidget($this->paginationConfig);
         $pager->init();
+
         return $pager->run();
     }
 
@@ -213,10 +215,11 @@ class GridViewWidget extends Widget
     protected function getTable()
     {
         $table = str_replace(
-            ['{headers}','{filters}','{rows}'],
-            [$this->renderHeading(),$this->renderFilters(),$this->renderRows()],
+            ['{headers}', '{filters}', '{rows}'],
+            [$this->renderHeading(), $this->renderFilters(), $this->renderRows()],
             $this->templateTable
         );
+
         return Html::openTag('table', $this->attributes) . $table . Html::closeTag('table');
     }
 
@@ -230,17 +233,19 @@ class GridViewWidget extends Widget
     protected function renderHeading()
     {
         $result = Html::openTag('tr', $this->attributesHeading);
-        foreach ($this->tableConfig AS $key=>$row) {
-            $result .= Html::openTag('th', $row['attributesHeader'] );
+        foreach ($this->tableConfig AS $key => $row) {
+            $result .= Html::openTag('th', $row['attributesHeader']);
             if (!empty($row['header'])) {
                 $result .= $row['header'];
             } else {
                 if (is_string($key)) {
-                    $result .= is_subclass_of($this->rows[0], '\Micro\db\Model') ? $this->rows[0]->getLabel($key) : ucfirst($key);
+                    $result .= is_subclass_of($this->rows[0],
+                        '\Micro\db\Model') ? $this->rows[0]->getLabel($key) : ucfirst($key);
                 }
             }
             $result .= Html::closeTag('th');
         }
+
         return $result . Html::closeTag('tr');
     }
 
@@ -258,25 +263,26 @@ class GridViewWidget extends Widget
         }
         $filtersData = $this->container->request->getQueryVar($this->filterPrefix);
 
-        $result  = Html::beginForm(null, 'get', $this->attributesFilterForm);
+        $result = Html::beginForm(null, 'get', $this->attributesFilterForm);
         $result .= Html::openTag('tr', $this->attributesFilter);
 
-        foreach ($this->tableConfig AS $key=>$row) {
-            $result .= Html::openTag('td', $row['attributesFilter'] );
-            if (isset($row['filter']) && $row['filter']===false) {
+        foreach ($this->tableConfig AS $key => $row) {
+            $result .= Html::openTag('td', $row['attributesFilter']);
+            if (isset($row['filter']) && $row['filter'] === false) {
                 continue;
             }
             if (!empty($row['filter'])) {
                 $result .= $row['filter'];
             } else {
-                $buffer    = is_array($row) ? $key : $row;
+                $buffer = is_array($row) ? $key : $row;
                 $fieldName = $this->filterPrefix . '[' . $buffer . ']';
-                $fieldId   = $this->filterPrefix . '_' . $buffer;
+                $fieldId = $this->filterPrefix . '_' . $buffer;
                 $val = !empty($filtersData[$buffer]) ? $filtersData[$buffer] : '';
-                $result   .= Html::textField($fieldName, $val, [ 'id' => $fieldId ]);
+                $result .= Html::textField($fieldName, $val, ['id' => $fieldId]);
             }
             $result .= Html::closeTag('td');
         }
+
         return $result . Html::closeTag('tr') . Html::endForm();
     }
 
@@ -293,7 +299,7 @@ class GridViewWidget extends Widget
 
         if (0 === count($this->rows)) {
             return Html::openTag('tr') .
-                Html::openTag('td', ['cols'=>count($this->fields)]) . $this->emptyText . Html::closeTag('td') .
+            Html::openTag('td', ['cols' => count($this->fields)]) . $this->emptyText . Html::closeTag('td') .
             Html::closeTag('tr');
         }
 
@@ -301,10 +307,10 @@ class GridViewWidget extends Widget
             $result .= Html::openTag('tr');
 
             foreach ($this->tableConfig AS $key => $row) {
-                $result .= Html::openTag('td', $row['attributes'] );
+                $result .= Html::openTag('td', $row['attributes']);
 
                 if (!empty($row['class']) AND is_subclass_of($row['class'], 'Micro\widgets\GridColumn')) {
-                    $primaryKey = $data->{ !empty($row['key']) ? $row['key'] : 'id' };
+                    $primaryKey = $data->{!empty($row['key']) ? $row['key'] : 'id'};
                     $result .= (new $row['class'](
                         $row + ['str' => (null === $data) ?: $data, 'pKey' => $primaryKey]
                     ));
@@ -317,6 +323,7 @@ class GridViewWidget extends Widget
             }
             $result .= Html::closeTag('tr');
         }
+
         return $result;
     }
 }

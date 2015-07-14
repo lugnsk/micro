@@ -30,9 +30,9 @@ class Uploader
      *
      * @result void
      */
-    public function __construct( array $rawData = null )
+    public function __construct(array $rawData = null)
     {
-        $this->setup( $rawData );
+        $this->setup($rawData);
     }
 
     /**
@@ -44,24 +44,24 @@ class Uploader
      *
      * @return void
      */
-    public function setup( array $rawData = [] )
+    public function setup(array $rawData = [])
     {
-        if ( 0 === count( $rawData ) ) {
+        if (0 === count($rawData)) {
             return;
         }
 
-        if ( !empty( $rawData['name'] ) ) {
-            $sumFiles = count( $rawData['name'] );
+        if (!empty($rawData['name'])) {
+            $sumFiles = count($rawData['name']);
             for ($i = 0; $i < $sumFiles; $i++) {
-                if ( empty( $rawData['name'][$i] ) ) {
+                if (empty($rawData['name'][$i])) {
                     continue;
                 }
                 $this->files[] = [
-                    'name'     => $rawData['name'][$i],
-                    'type'     => $rawData['type'][$i],
-                    'error'    => $rawData['error'][$i],
+                    'name' => $rawData['name'][$i],
+                    'type' => $rawData['type'][$i],
+                    'error' => $rawData['error'][$i],
                     'tmp_name' => $rawData['tmp_name'][$i],
-                    'size'     => $rawData['size'][$i]
+                    'size' => $rawData['size'][$i]
                 ];
             }
         } else {

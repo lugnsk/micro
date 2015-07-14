@@ -89,8 +89,10 @@ class RabbitMQ
         $envelop = $queue->get();
         if ($envelop) {
             $queue->ack($envelop->getDeliveryTag());
+
             return $envelop;
         }
+
         return false;
     }
 
@@ -117,6 +119,7 @@ class RabbitMQ
             $queue->ack($envelop->getDeliveryTag());
             $result[] = $envelop;
         }
+
         return $result;
     }
 }

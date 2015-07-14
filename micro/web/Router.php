@@ -74,6 +74,7 @@ class Router
                 return $validated;
             }
         }
+
         // return raw uri
         return $uri;
     }
@@ -115,8 +116,8 @@ class Router
 
         $result .= '?';
         foreach ($attributes AS $key => $val) {
-            if ($key!==$val) {
-                $result .= '&'.$key.'='.$val;
+            if ($key !== $val) {
+                $result .= '&' . $key . '=' . $val;
             }
         }
 
@@ -154,6 +155,7 @@ class Router
                 $attr[$uriBlocks[$i]] = $patBlocks[$i];
             }
         }
+
         return $attr;
     }
 

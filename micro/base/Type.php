@@ -7,7 +7,8 @@ namespace Micro\base;
  * @package Micro
  * @subpackage base
  */
-class Type {
+class Type
+{
 
     /**
      * Return concrete object type
@@ -24,10 +25,12 @@ class Type {
         $type = gettype($var);
         switch ($type) {
             case 'object': {
-                return get_class($var); break;
+                return get_class($var);
+                break;
             }
             case 'double': {
-                return is_float($var) ? 'float' : 'double'; break;
+                return is_float($var) ? 'float' : 'double';
+                break;
             }
             default: {
                 return strtolower($type);
@@ -69,6 +72,7 @@ class Type {
         foreach ($data as $k => $item) {
             $data[$k] = self::arrayWalkRecursive($item, $function);
         }
+
         return $data;
     }
 }

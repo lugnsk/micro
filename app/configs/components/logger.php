@@ -3,7 +3,7 @@
 // Logging
 return [
     'class' => '\Micro\base\Logger',
-    'arguments'=> [
+    'arguments' => [
         'loggers' => [
             'file' => [
                 'class' => '\Micro\loggers\DbLogger',

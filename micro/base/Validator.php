@@ -51,7 +51,7 @@ class Validator
      *
      * @result void
      */
-    public function __construct( array $params )
+    public function __construct(array $params)
     {
         $this->container = $params['container'];
         $this->rule = $params['rule'];
@@ -96,13 +96,14 @@ class Validator
                         $model->$element = call_user_func($name, $model->$element);
                     }
                 }
+
                 return true;
             } else {
                 throw new Exception($this->container, 'Validator ' . $name . ' not defined.');
             }
         }
 
-        $valid = new $className( [ 'container'=>$this->container, 'rule'=>$this->rule] );
+        $valid = new $className(['container' => $this->container, 'rule' => $this->rule]);
         $valid->elements = $elements;
         $valid->params = $this->rule;
         if ($client AND method_exists($valid, 'client')) {
@@ -114,6 +115,7 @@ class Validator
         if ($valid->errors) {
             $this->errors[] = $valid->errors;
         }
+
         return $result;
     }
 
@@ -135,6 +137,7 @@ class Validator
             $id = $object . '_' . $element;
             $result .= 'jQuery("#' . $id . '").bind("change blur submit", function(e){ ' . $this->client($model) . ' });';
         }
+
         return $result;
     }
 

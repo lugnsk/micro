@@ -2,5 +2,5 @@
 
 // Cookie's
 return [
-   'class' => '\Micro\web\Cookie'
+    'class' => '\Micro\web\Cookie'
 ];

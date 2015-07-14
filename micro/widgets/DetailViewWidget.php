@@ -47,7 +47,7 @@ class DetailViewWidget extends Widget
      * @result void
      * @throws \Micro\base\Exception
      */
-    public function __construct( array $args = [] )
+    public function __construct(array $args = [])
     {
         parent::__construct($args);
 
@@ -100,14 +100,14 @@ class DetailViewWidget extends Widget
         $result = [];
 
         // обходим заданные параметры
-        foreach ($this->columns AS $key=>$val) {
+        foreach ($this->columns AS $key => $val) {
             $column = '';
             $data = [];
 
             // если параметр число и вал строка - это ключ
             if (is_int($key) && is_string($val)) {
                 $column = $val;
-            // если параметр строка и вал массив - is good
+                // если параметр строка и вал массив - is good
             } elseif (is_string($key) && is_array($val)) {
                 $column = $key;
             } else {
@@ -115,8 +115,9 @@ class DetailViewWidget extends Widget
             }
 
             $result[] = [
-                'title' => !empty($data['title']) ? $data['title'] : ucfirst( method_exists( $this->data, 'getLabel' ) ? $this->data->getLabel( $column ) : $column ),
-                'type'  => !empty($data['type']) ? $data['type'] : 'text',
+                'title' => !empty($data['title']) ? $data['title'] : ucfirst(method_exists($this->data,
+                    'getLabel') ? $this->data->getLabel($column) : $column),
+                'type' => !empty($data['type']) ? $data['type'] : 'text',
                 'value' => !empty($data['value']) ? $data['value'] : $this->data->{$column}
             ];
         }
@@ -135,7 +136,7 @@ class DetailViewWidget extends Widget
     {
         $result = Html::openTag('dl', $this->attributes);
 
-        foreach ($this->columns AS $key=>$val) {
+        foreach ($this->columns AS $key => $val) {
             $result .= Html::openTag('dt', $this->attributesElement);
             $result .= $val['title'];
             $result .= Html::closeTag('dt');
@@ -160,6 +161,6 @@ class DetailViewWidget extends Widget
             $result .= (strlen($buffer) ? $buffer : '&nbsp;') . Html::closeTag('dd');
         }
 
-        echo $result , Html::closeTag('dl');
+        echo $result, Html::closeTag('dl');
     }
 }

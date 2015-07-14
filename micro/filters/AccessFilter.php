@@ -53,13 +53,15 @@ class AccessFilter extends Filter
             } elseif ($res === false) {
                 $this->result = [
                     'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
-                    'message'  => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
+                    'message' => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
                 ];
+
                 return false;
             } elseif ($res === null) {
                 continue;
             }
         }
+
         return true;
     }
 
@@ -172,6 +174,7 @@ class AccessFilter extends Filter
                 }
             }
         }
+
         return false;
     }
 
@@ -201,6 +204,7 @@ class AccessFilter extends Filter
                 return true;
             }
         }
+
         return false;
     }
 
@@ -235,6 +239,7 @@ class AccessFilter extends Filter
                 return true;
             }
         }
+
         return false;
     }
 
@@ -263,6 +268,7 @@ class AccessFilter extends Filter
         } else {
             return $rule['verb'] === $this->container->request->getMethod();
         }
+
         return false;
     }
 }

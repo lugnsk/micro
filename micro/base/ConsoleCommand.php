@@ -17,9 +17,9 @@ abstract class ConsoleCommand extends Command implements OutputInterface
      *
      * @result void
      */
-    public function __construct( array $params )
+    public function __construct(array $params)
     {
-        parent::__construct( $params );
+        parent::__construct($params);
     }
 
     public function send()

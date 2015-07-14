@@ -32,6 +32,7 @@ class Form
     public function label($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
+
         return Html::label($model->getLabel($property), $element['id'], $options);
     }
 
@@ -49,6 +50,7 @@ class Form
     {
         $cl = get_class($model);
         $smallName = substr($cl, strrpos($cl, '\\') + 1);
+
         return [
             'id' => $smallName . '_' . $property,
             'name' => $smallName . '[' . $property . ']',
@@ -73,6 +75,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::buttonField($element['name'], $element['value'], $options);
     }
 
@@ -91,6 +94,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::checkBoxField($element['name'], $element['value'], $options);
     }
 
@@ -108,6 +112,7 @@ class Form
     public function hiddenField($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
+
         return Html::hiddenField($element['name'], $element['value'], $options);
     }
 
@@ -126,6 +131,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::radioField($element['name'], $element['value'], $options);
     }
 
@@ -178,6 +184,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::fileField($element['name'], $element['value'], $options);
     }
 
@@ -231,6 +238,7 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
         $image = !empty($options['image']) ? $options['image'] : [];
+
         return Html::imageField($element['name'], $element['value'], $image, $options);
     }
 
@@ -285,6 +293,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::passwordField($element['name'], $element['value'], $options);
     }
 
@@ -337,6 +346,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::textField($element['name'], $element['value'], $options);
     }
 
@@ -389,6 +399,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::colorField($element['name'], $element['value'], $options);
     }
 
@@ -441,6 +452,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::dateField($element['name'], $element['value'], $options);
     }
 
@@ -493,6 +505,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::datetimeField($element['name'], $element['value'], $options);
     }
 
@@ -545,6 +558,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::datetimeLocalField($element['name'], $element['value'], $options);
     }
 
@@ -597,6 +611,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::emailField($element['name'], $element['value'], $options);
     }
 
@@ -651,6 +666,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::numberField($element['name'], $element['value'], $options);
     }
 
@@ -703,6 +719,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::rangeField($element['name'], $element['value'], $options);
     }
 
@@ -757,6 +774,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::searchField($element['name'], $element['value'], $options);
     }
 
@@ -809,6 +827,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::telField($element['name'], $element['value'], $options);
     }
 
@@ -863,6 +882,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::timeField($element['name'], $element['value'], $options);
     }
 
@@ -915,6 +935,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::urlField($element['name'], $element['value'], $options);
     }
 
@@ -967,6 +988,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::monthField($element['name'], $element['value'], $options);
     }
 
@@ -1019,6 +1041,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::weekField($element['name'], $element['value'], $options);
     }
 
@@ -1071,6 +1094,7 @@ class Form
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
+
         return Html::textArea($element['name'], $element['value'], $options);
     }
 
@@ -1276,6 +1300,7 @@ class Form
         $element = $this->getField($model, $property);
         $checkboxes = !empty($options['checkboxes']) ? $options['checkboxes'] : [];
         $format = !empty($options['format']) ? $options['format'] : '<p>%check% %text%</p>';
+
         return Html::checkBoxList($element['name'], $checkboxes, $format, $element['value']);
     }
 

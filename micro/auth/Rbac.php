@@ -109,6 +109,7 @@ abstract class Rbac
                 }
             }
         }
+
         return false;
     }
 
@@ -135,6 +136,7 @@ abstract class Rbac
                 unset($elements[$key]);
             }
         }
+
         return $branch;
     }
 
@@ -154,6 +156,7 @@ abstract class Rbac
             return true;
         } else {
             extract($data);
+
             return eval('return ' . $role['data']);
         }
     }
@@ -218,6 +221,7 @@ abstract class Rbac
                 }
             }
         }
+
         return $result;
     }
 }

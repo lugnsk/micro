@@ -36,7 +36,7 @@ abstract class LogInterface
      * @throws Exception
      * @result void
      */
-    public function __construct( Registry $container, array $params = [] )
+    public function __construct(Registry $container, array $params = [])
     {
         $this->container = $container;
 

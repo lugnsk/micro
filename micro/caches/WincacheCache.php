@@ -133,6 +133,7 @@ class WincacheCache implements Cache
 
             return ['expire' => $ttl - $age, 'hitcount' => $hitCount, 'age' => $age, 'ttl' => $ttl];
         }
+
         return false;
     }
 

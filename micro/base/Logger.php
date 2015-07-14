@@ -39,7 +39,7 @@ class Logger
      *
      * @result void
      */
-    public function __construct( array $params = [] )
+    public function __construct(array $params = [])
     {
         foreach ($params['loggers'] AS $name => $log) {
             if (empty($log['class']) OR !class_exists($log['class'])) {

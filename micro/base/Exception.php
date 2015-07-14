@@ -69,7 +69,7 @@ class Exception extends \Exception
         $action = $this->container->__get('errorAction');
 
         /** @var \Micro\mvc\controllers\Controller $mvc controller */
-        $mvc = new $controller( $this->container );
+        $mvc = new $controller($this->container);
 
         $response = null;
         $result = $mvc->action($action);

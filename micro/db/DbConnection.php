@@ -45,7 +45,7 @@ class DbConnection
                 $config['options']);
         } catch (Exception $e) {
             if (!$ignoreFail) {
-               throw new Exception($config['container'], 'Connect to DB failed: ' . $e->getMessage());
+                throw new Exception($config['container'], 'Connect to DB failed: ' . $e->getMessage());
             }
         }
 
@@ -81,7 +81,7 @@ class DbConnection
         $sth = $this->conn->prepare($query);
 
         if ($fetchType === \PDO::FETCH_CLASS) {
-            $sth->setFetchMode($fetchType, ucfirst($fetchClass), ['container'=>$this->container,'new' => false]);
+            $sth->setFetchMode($fetchType, ucfirst($fetchClass), ['container' => $this->container, 'new' => false]);
         } else {
             $sth->setFetchMode($fetchType);
         }
@@ -111,6 +111,7 @@ class DbConnection
         foreach ($sth->fetchAll() AS $row) {
             $result[] = $row[0];
         }
+
         return $result;
     }
 
@@ -138,6 +139,7 @@ class DbConnection
                 'collation' => $row['Collation']
             ];
         }
+
         return $result;
     }
 
@@ -226,6 +228,7 @@ class DbConnection
                 return true;
             }
         }
+
         return false;
     }
 
@@ -253,6 +256,7 @@ class DbConnection
                 'extra' => $row['Extra']
             ];
         }
+
         return $result;
     }
 
@@ -269,6 +273,7 @@ class DbConnection
     public function fieldInfo($field, $table)
     {
         $sth = $this->conn->query('SELECT ' . $field . ' FROM ' . $table . ' LIMIT 1');
+
         return $sth->getColumnMeta(0);
     }
 
@@ -303,8 +308,8 @@ class DbConnection
      */
     public function insert($table, array $line = [], $multi = false)
     {
-        $fields = '`' . implode('`, `', array_keys( $multi?$line[0]:$line )) . '`';
-        $values = ':' . implode(', :', array_keys( $multi?$line[0]:$line ));
+        $fields = '`' . implode('`, `', array_keys($multi ? $line[0] : $line)) . '`';
+        $values = ':' . implode(', :', array_keys($multi ? $line[0] : $line));
 
         $id = null;
         $dbh = null;
@@ -418,6 +423,7 @@ class DbConnection
         if ($sth->execute()) {
             return $sth->fetchColumn();
         }
+
         return false;
     }
 }

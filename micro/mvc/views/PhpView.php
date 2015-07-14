@@ -44,6 +44,7 @@ class PhpView extends View
         if (!$this->view) {
             return false;
         }
+
         return $this->renderRawData(
             ($this->data) ?: $this->renderFile($this->getViewFile($this->view), $this->params)
         );
@@ -115,12 +116,13 @@ class PhpView extends View
     {
         $layoutPath = null;
         if ($this->layout) {
-            $layoutPath = $this->getLayoutFile( $this->container->kernel->getAppDir(), $this->module );
+            $layoutPath = $this->getLayoutFile($this->container->kernel->getAppDir(), $this->module);
         }
 
         if ($layoutPath) {
             $data = $this->insertStyleScripts($this->renderFile($layoutPath, ['content' => $data]));
         }
+
         return $data;
     }
 
@@ -156,11 +158,12 @@ class PhpView extends View
             $path .= dirname($cl) . '/views/' . $className . '/' . $view . '.php';
         }
 
-        $path = str_replace('//','/', $path);
+        $path = str_replace('//', '/', $path);
 
         if (!file_exists($path)) {
             throw new Exception($this->container, 'View path `' . $path . '` not exists.');
         }
+
         return $path;
     }
 
@@ -186,6 +189,7 @@ class PhpView extends View
             }
             throw new Exception($this->request, $this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
         }
+
         return $layout . $afterPath;
     }
 }

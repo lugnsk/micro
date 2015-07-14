@@ -2,9 +2,6 @@
 
 namespace Micro\mvc;
 
-use Micro\base\Registry;
-use Micro\web\Request;
-
 /**
  * Class Controller
  *
@@ -31,7 +28,7 @@ abstract class Widget
      *
      * @result void
      */
-    public function __construct( array $args = [] )
+    public function __construct(array $args = [])
     {
         $this->container = array_key_exists('container', $args) ? $args['container'] : null;
 

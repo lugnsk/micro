@@ -107,6 +107,7 @@ class MemcachedCache implements Cache
     public function get($name)
     {
         $data = $this->driver->get($name);
+
         return is_array($data) ? $data[0] : $data;
     }
 

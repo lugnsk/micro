@@ -51,7 +51,7 @@ class Assets
 
         $tmp = '/' . $this->assetDir . '/' . $this->hash;
         $this->publishDir = $this->container->kernel->HtmlDir . $tmp;
-        $this->sourceDir  = $this->container->kernel->WebDir . $tmp;
+        $this->sourceDir = $this->container->kernel->WebDir . $tmp;
     }
 
     /**

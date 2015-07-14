@@ -41,6 +41,7 @@ class File
             }
         }
         closedir($dirStream);
+
         return $totalSize;
     }
 
@@ -84,7 +85,7 @@ class File
     {
         $dir = opendir($src);
         if (!file_exists($dst)) {
-            @mkdir( $dst, 0777 );
+            @mkdir($dst, 0777);
         }
 
         while (false !== ($file = readdir($dir))) {

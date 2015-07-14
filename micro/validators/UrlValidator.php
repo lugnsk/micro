@@ -33,13 +33,16 @@ class UrlValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             if (filter_var($model->$element, FILTER_VALIDATE_URL) === false) {
                 $this->errors[] = 'Parameter ' . $element . ' is not a valid URL address';
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -56,6 +59,7 @@ class UrlValidator extends Validator
     {
         $jsString = 'if (/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.value' .
             ') != true) { e.preventDefault(); this.focus(); alert(\'Value is not a URL\'); }';
+
         return $jsString;
     }
 }

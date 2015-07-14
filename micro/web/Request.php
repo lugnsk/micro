@@ -91,9 +91,9 @@ class Request
      *
      * @return mixed
      */
-    public function getBrowser( $agent = null )
+    public function getBrowser($agent = null)
     {
-        return get_browser( $agent ?: $_SERVER['HTTP_USER_AGENT'], true);
+        return get_browser($agent ?: $_SERVER['HTTP_USER_AGENT'], true);
     }
 
     /**
@@ -101,8 +101,8 @@ class Request
      *
      * @access public
      *
-     * @param string $name    Key name
-     * @param string $value   Key value
+     * @param string $name Key name
+     * @param string $value Key value
      * @param string $storage Storage name
      *
      * @return void
@@ -117,8 +117,8 @@ class Request
      *
      * @access public
      *
-     * @param string $name    Key name
-     * @param string $value   Key value
+     * @param string $name Key name
+     * @param string $value Key value
      *
      * @return void
      */
@@ -132,8 +132,8 @@ class Request
      *
      * @access public
      *
-     * @param string $name    Key name
-     * @param string $value   Key value
+     * @param string $name Key name
+     * @param string $value Key value
      *
      * @return void
      */
@@ -147,8 +147,8 @@ class Request
      *
      * @access public
      *
-     * @param string $name    Key name
-     * @param string $value   Key value
+     * @param string $name Key name
+     * @param string $value Key value
      *
      * @return void
      */
@@ -162,8 +162,8 @@ class Request
      *
      * @access public
      *
-     * @param string $name    Key name
-     * @param string $value   Key value
+     * @param string $name Key name
+     * @param string $value Key value
      *
      * @return void
      */
@@ -184,7 +184,7 @@ class Request
      */
     public function getVar($name, $storage)
     {
-        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : FALSE;
+        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : false;
     }
 
     /**
@@ -196,7 +196,7 @@ class Request
      *
      * @return bool
      */
-    public function getServerVar( $name )
+    public function getServerVar($name)
     {
         return $this->getVar($name, '_SERVER');
     }
@@ -210,9 +210,9 @@ class Request
      *
      * @return bool
      */
-    public function getQueryVar( $name )
+    public function getQueryVar($name)
     {
-        return $this->getVar($name,'_GET');
+        return $this->getVar($name, '_GET');
     }
 
     /**
@@ -224,7 +224,7 @@ class Request
      *
      * @return bool
      */
-    public function getPostVar( $name )
+    public function getPostVar($name)
     {
         return $this->getVar($name, '_POST');
     }
@@ -238,7 +238,7 @@ class Request
      *
      * @return bool
      */
-    public function getCookieVar( $name )
+    public function getCookieVar($name)
     {
         return $this->getVar($name, '_COOKIE');
     }
@@ -252,7 +252,7 @@ class Request
      *
      * @return bool
      */
-    public function getSessionVar( $name )
+    public function getSessionVar($name)
     {
         return $this->getVar($name, '_SESSION');
     }
@@ -267,6 +267,7 @@ class Request
     public function getArguments()
     {
         global $argv;
+
         return $argv;
     }
 
@@ -279,14 +280,15 @@ class Request
      *
      * @return mixed
      */
-    public function getFiles( $className = '\Micro\web\Uploader' )
+    public function getFiles($className = '\Micro\web\Uploader')
     {
-        if ( !is_array($_FILES) ) {
+        if (!is_array($_FILES)) {
             return false;
         }
 
         /** @var \Micro\web\Uploader $files */
-        $files = new $className( $_FILES );
+        $files = new $className($_FILES);
+
         return $files;
     }
 
@@ -299,7 +301,7 @@ class Request
      *
      * @return mixed
      */
-    public function getStorage( $name )
+    public function getStorage($name)
     {
         return $GLOBALS[$name];
     }
@@ -314,7 +316,7 @@ class Request
      *
      * @return void
      */
-    public function setStorage( $name, array $data = [] )
+    public function setStorage($name, array $data = [])
     {
         $GLOBALS[$name] = $data;
     }

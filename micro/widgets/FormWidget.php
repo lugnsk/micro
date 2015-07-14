@@ -42,6 +42,7 @@ class FormWidget extends Widget
     {
         $this->attributes['type'] = $this->type;
         echo Html::beginForm($this->action, $this->method, $this->attributes);
+
         return new Form;
     }
 

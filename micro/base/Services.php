@@ -33,11 +33,11 @@ class Services
      *
      * @result void
      */
-    public function __construct( array $params = [] )
+    public function __construct(array $params = [])
     {
         $this->container = $params['container'];
         $this->servers = !empty($params['servers']) ? $params['servers'] : [];
-        $this->routes  = !empty($params['routes'])  ? $params['routes']  : [];
+        $this->routes = !empty($params['routes']) ? $params['routes'] : [];
     }
 
     /**
@@ -51,8 +51,8 @@ class Services
         $servers = $this->getServersFromRoute($this->getRoute($uri), $type);
         $server = null;
 
-        for ( $counter = 0; $counter < $retry; $counter++ ) {
-            $random = rand(0, count($servers)-1);
+        for ($counter = 0; $counter < $retry; $counter++) {
+            $random = rand(0, count($servers) - 1);
 
             if (!array_key_exists($servers[$random], $this->brokers)) {
                 $cls = $this->servers[$servers[$random]];
@@ -84,12 +84,13 @@ class Services
         $keys = array_keys($this->routes);
         $countRoutes = count($keys);
 
-        for ($a=0; $a < $countRoutes; $a++) {
-            if (preg_match('/'.$keys[$a].'/', $uri)) {
-                if (!is_array($this->routes[ $keys[$a] ])) {
-                    $this->routes[ $keys[$a] ] = [ '*' => $this->routes[ $keys[$a] ] ];
+        for ($a = 0; $a < $countRoutes; $a++) {
+            if (preg_match('/' . $keys[$a] . '/', $uri)) {
+                if (!is_array($this->routes[$keys[$a]])) {
+                    $this->routes[$keys[$a]] = ['*' => $this->routes[$keys[$a]]];
                 }
-                return $this->routes[ $keys[$a] ]; // роут найден
+
+                return $this->routes[$keys[$a]]; // роут найден
             }
         }
         throw new Exception($this->container, 'Route `' . $uri . '` not found');
@@ -106,15 +107,15 @@ class Services
      * @return array
      * @throws Exception
      */
-    protected function getServersFromRoute( array $route, $type = '*' )
+    protected function getServersFromRoute(array $route, $type = '*')
     {
         $servers = [];
 
-        foreach ($route AS $key=>$val) {
-                if (is_string($val)) {
-                    $route['*'] = [ $val ];
-                    unset($route[$key]);
-                }
+        foreach ($route AS $key => $val) {
+            if (is_string($val)) {
+                $route['*'] = [$val];
+                unset($route[$key]);
+            }
         }
         if (array_key_exists($type, $route)) {
             $servers += $route[$type];
@@ -123,7 +124,7 @@ class Services
             $servers += $route['*'];
         }
         if (!$servers) {
-            throw new Exception( $this->container, 'Type `' . $type . '` not found into route' );
+            throw new Exception($this->container, 'Type `' . $type . '` not found into route');
         }
 
         return $servers;
@@ -142,9 +143,9 @@ class Services
      * @return mixed
      * @throws Exception
      */
-    public function send( $route, array $data = [], $type = 'sync', $retry = 5 )
+    public function send($route, array $data = [], $type = 'sync', $retry = 5)
     {
-        switch($type) {
+        switch ($type) {
             case 'sync': {
                 return $this->getBroker($route, $type, $retry)->sync($route, $data);
                 break;

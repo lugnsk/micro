@@ -43,14 +43,17 @@ class RangeValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             if (!in_array($model->$element, $rang, true)) {
                 $this->errors[] = 'Parameter ' . $element . ' not find in rage ' .
                     $this->params['min'] . '..' . $this->params['max'];
+
                 return false;
             }
         }
+
         return true;
     }
 
@@ -67,6 +70,7 @@ class RangeValidator extends Validator
     {
         $js = 'if (this.value < ' . $this->params['min'] . ' OR this.value > ' . $this->params['max'] . ') {' .
             ' e.preventDefault(); this.focus(); alert(\'Value not find in range\'); }';
+
         return $js;
     }
 }

@@ -29,7 +29,7 @@ abstract class File
      *
      * @result void
      */
-    public function __construct( array $params=[] )
+    public function __construct(array $params = [])
     {
     }
 
@@ -47,7 +47,6 @@ abstract class File
     //* writeStream
     //* updateStream
     //* putStream
-
 
 
     // заголовки для работы с файлами
@@ -128,7 +127,6 @@ abstract class File
     //* createFile
 
 
-
     // заголовки для работы с метой
     /**
      * Get free space on dir or filesystem
@@ -163,8 +161,6 @@ abstract class File
     //* setGroup
     //* mimeType
     //* checksum
-
-
 
 
     // заголовки для работы с директориями

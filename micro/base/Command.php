@@ -35,7 +35,7 @@ abstract class Command
      *
      * @result void
      */
-    public function __construct( array $params )
+    public function __construct(array $params)
     {
         $this->container = $params['container'];
         $this->args = $params['args'];

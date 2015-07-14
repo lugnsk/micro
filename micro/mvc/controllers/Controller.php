@@ -39,7 +39,7 @@ abstract class Controller
      *
      * @result void
      */
-    public function __construct( Registry $registry, $modules='' )
+    public function __construct(Registry $registry, $modules = '')
     {
         $this->container = $registry;
 
@@ -48,12 +48,12 @@ abstract class Controller
             $app = $this->container->kernel->getAppDir();
 
             $path = $app . str_replace('\\', '/', $modules) . '/' .
-                    ucfirst(basename(str_replace('\\', '/', $modules))) . 'Module.php';
+                ucfirst(basename(str_replace('\\', '/', $modules))) . 'Module.php';
 
             // search module class
             if (file_exists($path)) {
                 $path = substr(str_replace('/', '\\', str_replace($app, 'App', $path)), 0, -4);
-                $this->module = new $path( $this->container );
+                $this->module = new $path($this->container);
             }
         }
 
@@ -103,6 +103,7 @@ abstract class Controller
             }
             $data = $res;
         }
+
         return $data;
     }
 
@@ -123,6 +124,7 @@ abstract class Controller
                 return $actions[$name];
             }
         }
+
         return false;
     }
 }

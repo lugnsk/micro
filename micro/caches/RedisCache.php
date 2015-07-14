@@ -46,7 +46,7 @@ class RedisCache implements Cache
                 $result = $this->driver->connect($config['host'], $config['port'], $config['duration']);
             }
         } catch (Exception $e) {
-            throw new Exception( (string)$e );
+            throw new Exception((string)$e);
         }
 
         if (!$result) {
@@ -144,6 +144,7 @@ class RedisCache implements Cache
         if ($value = $this->get($id)) {
             return ['expire' => time() + $this->driver->ttl($id), 'data' => $value];
         }
+
         return false;
     }
 

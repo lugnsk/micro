@@ -50,6 +50,7 @@ class PaginationWidget extends Widget
         if ($this->countRows < 1) {
             $this->totalPages = 0;
             $this->currentPage = 0;
+
             return;
         }
 
@@ -89,14 +90,15 @@ class PaginationWidget extends Widget
         if ($this->totalPages > 0) {
             for ($i = 1; $i <= $this->totalPages; $i++) {
                 $items[] = [
-                    'text' => Html::href($i, $this->url . ($i-1), $this->attributesLink),
+                    'text' => Html::href($i, $this->url . ($i - 1), $this->attributesLink),
                     'attr' => array_merge(
                         $this->attributesElement,
-                        ($i === (int)$this->currentPage+1 ? ['class'=>'active'] : [])
+                        ($i === (int)$this->currentPage + 1 ? ['class' => 'active'] : [])
                     )
                 ];
             }
         }
+
         return Html::lists($items, $this->attributes);
     }
 }

@@ -74,6 +74,7 @@ class FileAcl extends Acl
                 return true;
             }
         }
+
         return false;
     }
 
@@ -93,6 +94,7 @@ class FileAcl extends Acl
         $query->table = 'acl_user';
         $query->addWhere('`user`=' . $userId);
         $query->single = false;
+
         return $query->run();
     }
 

@@ -33,12 +33,14 @@ class NumberValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             if (!is_numeric($model->$element)) {
                 $this->errors[] = 'Parameter ' . $element . ' is not a numeric';
             }
         }
+
         return true;
     }
 

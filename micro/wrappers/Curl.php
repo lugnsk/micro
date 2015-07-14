@@ -124,7 +124,7 @@ class Curl
      *
      * @return void
      */
-    public function get($url, array $data = [] )
+    public function get($url, array $data = [])
     {
         if (count($data) > 0) {
             $this->setopt(CURLOPT_URL, $url . '?' . http_build_query($data));
@@ -183,7 +183,7 @@ class Curl
      *
      * @return void
      */
-    public function post($url, array $data = [] )
+    public function post($url, array $data = [])
     {
         $this->setopt(CURLOPT_URL, $url);
         $this->setopt(CURLOPT_POST, true);
@@ -202,7 +202,7 @@ class Curl
      *
      * @return void
      */
-    public function put($url, array $data = [] )
+    public function put($url, array $data = [])
     {
         $this->setopt(CURLOPT_URL, $url . '?' . http_build_query($data));
         $this->setopt(CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -219,7 +219,7 @@ class Curl
      *
      * @return void
      */
-    public function patch($url, array $data = [] )
+    public function patch($url, array $data = [])
     {
         $this->setopt(CURLOPT_URL, $url);
         $this->setopt(CURLOPT_CUSTOMREQUEST, 'PATCH');
@@ -237,7 +237,7 @@ class Curl
      *
      * @return void
      */
-    public function delete($url, array $data = [] )
+    public function delete($url, array $data = [])
     {
         $this->setopt(CURLOPT_URL, $url . '?' . http_build_query($data));
         $this->setopt(CURLOPT_CUSTOMREQUEST, 'DELETE');

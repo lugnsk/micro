@@ -38,15 +38,14 @@ abstract class RichController extends Controller
      *
      * @access public
      *
-     * @param Request $request
      * @param Registry $registry
      * @param string $modules
      *
      * @result void
      */
-    public function __construct( Registry $registry, $modules='' )
+    public function __construct(Registry $registry, $modules = '')
     {
-        parent::__construct( $registry, $modules );
+        parent::__construct($registry, $modules);
 
         $this->methodType = $this->container->request->getMethod() ?: 'GET';
     }
@@ -71,6 +70,7 @@ abstract class RichController extends Controller
 
             if (!$actionClass) {
                 $this->response->setStatus(500, 'Action "' . $name . '" not found into ' . get_class($this));
+
                 return $this->response;
             }
         }
@@ -80,8 +80,9 @@ abstract class RichController extends Controller
         $types = $this->actionsTypes();
         if (!empty($types[$name]) && $this->methodType !== $types[$name]) {
             $this->response->setStatus(500,
-                'Action "'. $name .'" not run with method "'. $this->methodType .'" into '.get_class($this)
+                'Action "' . $name . '" not run with method "' . $this->methodType . '" into ' . get_class($this)
             );
+
             return $this->response;
         }
 
@@ -91,7 +92,7 @@ abstract class RichController extends Controller
         // running
         if ($actionClass) {
             /** @var \Micro\mvc\Action $cl */
-            $cl = new $actionClass ( $this->container );
+            $cl = new $actionClass ($this->container);
             $view = $cl->run();
         } else {
             $view = $this->{'action' . ucfirst($name)}();
@@ -126,7 +127,7 @@ abstract class RichController extends Controller
     {
         switch ($this->format) {
             case 'application/json': {
-                return json_encode( is_object($data) ? (array)$data : $data );
+                return json_encode(is_object($data) ? (array)$data : $data);
             }
             case 'application/xml': {
                 return is_object($data) ? $data->__toString() : $data;

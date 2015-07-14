@@ -29,7 +29,7 @@ class Session
      *
      * @result void
      */
-    public function __construct( array $config = [] )
+    public function __construct(array $config = [])
     {
         $this->container = $config['container'];
 
@@ -105,7 +105,7 @@ class Session
      */
     public function __isset($name)
     {
-        return (bool) $this->container->request->getSessionVar($name);
+        return (bool)$this->container->request->getSessionVar($name);
     }
 
     /**
@@ -119,6 +119,6 @@ class Session
      */
     public function __unset($name)
     {
-        $this->container->request->setSessionVar($name, NULL);
+        $this->container->request->setSessionVar($name, null);
     }
 }

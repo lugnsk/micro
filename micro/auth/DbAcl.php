@@ -169,6 +169,7 @@ class DbAcl extends Acl
         $query->table = 'acl_role_perm';
         $query->addWhere('role=' . $role);
         $query->single = false;
+
         return $query->run();
     }
 

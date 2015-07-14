@@ -99,6 +99,7 @@ abstract class Threads
         if (!$this->internalIPCKey) {
             return false;
         }
+
         return true;
     }
 
@@ -149,6 +150,7 @@ abstract class Threads
         if (!$this->internalSemaphoreKey) {
             return false;
         }
+
         return true;
     }
 
@@ -242,6 +244,7 @@ abstract class Threads
     public function getVariable($name)
     {
         $this->readFromIPCSegment();
+
         return $this->internalIPCArray[$name];
     }
 
@@ -321,6 +324,7 @@ abstract class Threads
                 break;
             }
         }
+
         return false;
     }
 

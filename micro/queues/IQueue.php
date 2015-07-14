@@ -25,7 +25,7 @@ interface IQueue
      *
      * @result void
      */
-    public function __construct( array $params = [] );
+    public function __construct(array $params = []);
 
     /**
      * Test connection
@@ -45,7 +45,7 @@ interface IQueue
      * @param array $params
      * @return mixed
      */
-    public function sync( $name, array $params = []);
+    public function sync($name, array $params = []);
 
     /**
      * Async message
@@ -56,7 +56,7 @@ interface IQueue
      * @param array $params
      * @return mixed
      */
-    public function async( $name, array $params = []);
+    public function async($name, array $params = []);
 
     /**
      * Stream message
@@ -67,5 +67,5 @@ interface IQueue
      * @param array $params
      * @return mixed
      */
-    public function stream( $name, array $params = []);
+    public function stream($name, array $params = []);
 }

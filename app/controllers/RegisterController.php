@@ -39,6 +39,7 @@ class RegisterController extends Controller
     {
         $v = new View($this->container);
         $v->addParameter('model', new User($this->container));
+
         return $v;
     }
 

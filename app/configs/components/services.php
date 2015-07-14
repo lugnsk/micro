@@ -3,25 +3,25 @@ return [
     'class' => '\Micro\base\Services',
     'arguments' => [
         'servers' => [
-            'server1'=>[
+            'server1' => [
                 'class' => '\Micro\queues\RawQueue',
                 'ip' => '192.168.10.1',
                 'user' => 'name',
                 'pass' => 'word'
             ],
-            'server2'=>[
+            'server2' => [
                 'class' => '\Micro\queues\RedisQueue',
                 'ip' => '192.168.10.2',
                 'user' => 'name',
                 'pass' => 'word'
             ],
-            'server3'=>[
+            'server3' => [
                 'class' => '\Micro\queues\RedisQueue',
                 'ip' => '192.168.10.3',
                 'user' => 'name',
                 'pass' => 'word'
             ],
-            'server4'=>[
+            'server4' => [
                 'class' => '\Micro\queues\RabbitMqQueue',
                 'ip' => '192.168.10.4',
                 'user' => 'name',
@@ -31,12 +31,12 @@ return [
         'routes' => [
             'pipeline.service' => 'server1',
             'master.*' => [
-                'async'=>['server2'],
+                'async' => ['server2'],
                 'server3'
             ],
-            'broadcast.*'=> [
-                'stream'=>['server4', 'server1'],
-                'sync'=>'server2'
+            'broadcast.*' => [
+                'stream' => ['server4', 'server1'],
+                'sync' => 'server2'
             ]
         ]
     ]

@@ -3,11 +3,13 @@
 --
 
 CREATE TABLE IF NOT EXISTS `blogs` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(127) NOT NULL,
-  `content` text NOT NULL,
+  `id`      INT(11)      NOT NULL AUTO_INCREMENT,
+  `name`    VARCHAR(127) NOT NULL,
+  `content` TEXT         NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
 
 -- --------------------------------------------------------
 
@@ -16,10 +18,12 @@ CREATE TABLE IF NOT EXISTS `blogs` (
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(55) NOT NULL,
-  `login` varchar(55) NOT NULL,
-  `pass` varchar(32) NOT NULL,
-  `fio` varchar(127) NOT NULL,
+  `id`    INT(11)      NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(55)  NOT NULL,
+  `login` VARCHAR(55)  NOT NULL,
+  `pass`  VARCHAR(32)  NOT NULL,
+  `fio`   VARCHAR(127) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

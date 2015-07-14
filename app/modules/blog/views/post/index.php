@@ -12,14 +12,14 @@ echo Html::href('Создать', '/blog/post/create');
 ?>
 
 <?php
-    echo $this->widget('\Micro\widgets\ListViewWidget', [
-        'data'=>$blogs,
-        'page'=> $page,
-        'pathView'=>__DIR__ . '/_view.php',
-        'paginationConfig' => [
-            'url'=>'/blog/post/index/'
-        ]
-    ]);
+echo $this->widget('\Micro\widgets\ListViewWidget', [
+    'data' => $blogs,
+    'page' => $page,
+    'pathView' => __DIR__ . '/_view.php',
+    'paginationConfig' => [
+        'url' => '/blog/post/index/'
+    ]
+]);
 ?>
 
 <p><?= $lang->hello; ?></p>

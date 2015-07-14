@@ -134,6 +134,7 @@ final class Ftp
             // fail
         } else {
             $this->error = "Failed to change directory to \"{$directory}\"";
+
             return false;
         }
     }
@@ -154,7 +155,8 @@ final class Ftp
             return true;
             // failed
         } else {
-            $this->error = 'Failed to set file permissions for "'.$remote_file.'"';
+            $this->error = 'Failed to set file permissions for "' . $remote_file . '"';
+
             return false;
         }
     }
@@ -171,7 +173,8 @@ final class Ftp
             // attempt connection
             if (!$this->_stream = ftp_connect($this->_host, $this->_port, $this->_timeout)) {
                 // set last error
-                $this->error = 'Failed to connect to '.$this->_host;
+                $this->error = 'Failed to connect to ' . $this->_host;
+
                 return false;
             }
             // SSL connection
@@ -179,12 +182,14 @@ final class Ftp
             // attempt SSL connection
             if (!$this->_stream = ftp_ssl_connect($this->_host, $this->_port, $this->_timeout)) {
                 // set last error
-                $this->error = 'Failed to connect to '.$this->_host.' (SSL connection)';
+                $this->error = 'Failed to connect to ' . $this->_host . ' (SSL connection)';
+
                 return false;
             }
             // invalid connection type
         } else {
-            $this->error = 'Failed to connect to '.$this->_host.' (invalid connection type)';
+            $this->error = 'Failed to connect to ' . $this->_host . ' (invalid connection type)';
+
             return false;
         }
 
@@ -201,6 +206,7 @@ final class Ftp
             // login failed
         } else {
             $this->error = 'Failed to connect to ' . $this->_host . ' (login failed)';
+
             return false;
         }
     }
@@ -220,7 +226,8 @@ final class Ftp
             return true;
             // fail
         } else {
-            $this->error = 'Failed to delete file "'.$remote_file.'"';
+            $this->error = 'Failed to delete file "' . $remote_file . '"';
+
             return false;
         }
     }
@@ -242,7 +249,8 @@ final class Ftp
             return true;
             // download failed
         } else {
-            $this->error = 'Failed to download file "'.$remote_file.'"';
+            $this->error = 'Failed to download file "' . $remote_file . '"';
+
             return false;
         }
     }
@@ -263,6 +271,7 @@ final class Ftp
             // fail
         } else {
             $this->error = 'Failed to get directory list';
+
             return [];
         }
     }
@@ -282,7 +291,8 @@ final class Ftp
             return true;
             // fail
         } else {
-            $this->error = 'Failed to create directory "'.$directory.'"';
+            $this->error = 'Failed to create directory "' . $directory . '"';
+
             return false;
         }
     }
@@ -304,7 +314,8 @@ final class Ftp
             return true;
             // upload failed
         } else {
-            $this->error = 'Failed to upload file "'.$local_file.'"';
+            $this->error = 'Failed to upload file "' . $local_file . '"';
+
             return false;
         }
     }
@@ -335,7 +346,8 @@ final class Ftp
             return true;
             // fail
         } else {
-            $this->error = 'Failed to rename file "'.$old_name.'"';
+            $this->error = 'Failed to rename file "' . $old_name . '"';
+
             return false;
         }
     }
@@ -355,7 +367,8 @@ final class Ftp
             return true;
             // fail
         } else {
-            $this->error = 'Failed to remove directory "'.$directory.'"';
+            $this->error = 'Failed to remove directory "' . $directory . '"';
+
             return false;
         }
     }

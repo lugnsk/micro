@@ -126,6 +126,7 @@ class ArrayCache implements Cache
         if (!empty($this->driver[$id])) {
             return Type::getType($this->driver[$id]);
         }
+
         return false;
     }
 

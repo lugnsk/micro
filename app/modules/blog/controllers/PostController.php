@@ -48,9 +48,10 @@ class PostController extends Controller
         $crt->table = Blog::tableName();
         $crt->order = 'id DESC';
 
-        $v = new View( $this->container );
+        $v = new View($this->container);
         $v->addParameter('blogs', $crt);
-        $v->addParameter('page', $this->container->request->getQueryVar('page') ?: 0 );
+        $v->addParameter('page', $this->container->request->getQueryVar('page') ?: 0);
+
         return $v;
     }
 
@@ -59,6 +60,7 @@ class PostController extends Controller
         $blog = Blog::findByPk($this->container->request->getQueryVar('id'), $this->container);
         $v = new View($this->container);
         $v->addParameter('model', $blog);
+
         return $v;
     }
 
@@ -77,6 +79,7 @@ class PostController extends Controller
 
         $v = new View($this->container);
         $v->addParameter('model', $blog);
+
         return $v;
     }
 

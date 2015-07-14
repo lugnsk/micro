@@ -21,7 +21,7 @@ abstract class Action
 {
     protected $container;
 
-    public function __construct( Registry $container )
+    public function __construct(Registry $container)
     {
         $this->container = $container;
     }

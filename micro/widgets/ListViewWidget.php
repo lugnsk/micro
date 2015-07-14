@@ -62,7 +62,7 @@ class ListViewWidget extends Widget
      * @result void
      * @throws Exception
      */
-    public function __construct( array $args=[] )
+    public function __construct(array $args = [])
     {
         parent::__construct($args);
 
@@ -91,21 +91,21 @@ class ListViewWidget extends Widget
                 throw new Exception($this->container, 'Data query not set table or objectName');
             }
 
-            $select               = $args['data']->select;
+            $select = $args['data']->select;
 
             $args['data']->select = 'COUNT(id)';
             $args['data']->single = true;
-            $this->totalCount     = $args['data']->run(\PDO::FETCH_BOTH)[0];
+            $this->totalCount = $args['data']->run(\PDO::FETCH_BOTH)[0];
 
             $args['data']->select = $select;
-            $args['data']->ofset  = $this->page*$this->limit;
-            $args['data']->limit  = $this->limit;
+            $args['data']->ofset = $this->page * $this->limit;
+            $args['data']->limit = $this->limit;
             $args['data']->single = false;
-            $args['data']         = $args['data']->run();
+            $args['data'] = $args['data']->run();
         } else {
             $this->totalCount = count($args['data']);
-            $cPage = $this->page===0 ? 1 : $this->page;
-            $args['data'] = array_slice($args['data'], $this->page*$this->limit, $this->limit);
+            $cPage = $this->page === 0 ? 1 : $this->page;
+            $args['data'] = array_slice($args['data'], $this->page * $this->limit, $this->limit);
         }
 
         foreach ($args['data'] AS $model) {
@@ -127,10 +127,10 @@ class ListViewWidget extends Widget
             throw new Exception($this->container, 'View path not valid: ' . $this->pathView);
         }
 
-        $this->rowsCount                       = count($this->rows);
+        $this->rowsCount = count($this->rows);
 
-        $this->paginationConfig['countRows']   = $this->totalCount;
-        $this->paginationConfig['limit']       = $this->limit;
+        $this->paginationConfig['countRows'] = $this->totalCount;
+        $this->paginationConfig['limit'] = $this->limit;
         $this->paginationConfig['currentPage'] = $this->page;
     }
 
@@ -160,7 +160,7 @@ class ListViewWidget extends Widget
     protected function getCounter()
     {
         return Html::openTag('div', $this->attributesCounter) .
-            $this->counterText . $this->totalCount . Html::closeTag('div');
+        $this->counterText . $this->totalCount . Html::closeTag('div');
     }
 
     /**
@@ -178,6 +178,7 @@ class ListViewWidget extends Widget
 
         $pager = new PaginationWidget($this->paginationConfig);
         $pager->init();
+
         return $pager->run();
     }
 

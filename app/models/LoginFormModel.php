@@ -45,9 +45,11 @@ class LoginFormModel extends FormModel
 
         if ($user = User::finder($query, true)) {
             $this->container->session->UserID = $user->id;
+
             return true;
         } else {
             $this->addError('Логин или пароль не верны.');
+
             return false;
         }
     }

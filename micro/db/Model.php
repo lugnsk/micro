@@ -39,7 +39,7 @@ abstract class Model extends FormModel
      *
      * @result void
      */
-    public function __construct( Registry $container, $new = true )
+    public function __construct(Registry $container, $new = true)
     {
         parent::__construct($container);
 
@@ -67,7 +67,7 @@ abstract class Model extends FormModel
      */
     public static function tableName()
     {
-        return NULL;
+        return null;
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class Model extends FormModel
      *
      * @return mixed
      */
-    public function find( $single = false )
+    public function find($single = false)
     {
         return self::findByAttributes(Type::getVars($this), $single, $this->container);
     }
@@ -96,12 +96,13 @@ abstract class Model extends FormModel
      * @return mixed One or more data
      * @static
      */
-    public static function finder($query = null, $single = false, $container=null)
+    public static function finder($query = null, $single = false, $container = null)
     {
         $query = ($query instanceof Query) ? $query : new Query($container);
         $query->table = static::tableName() . ' `m`';
         $query->objectName = get_called_class();
         $query->single = $single;
+
         return $query->run();
     }
 
@@ -116,7 +117,7 @@ abstract class Model extends FormModel
      */
     public static function findByPk($value, Registry $container)
     {
-        return self::findByAttributes( [ self::$primaryKey => $value ], true, $container );
+        return self::findByAttributes([self::$primaryKey => $value], true, $container);
     }
 
     /**
@@ -128,11 +129,11 @@ abstract class Model extends FormModel
      * @param Registry $container
      * @return mixed
      */
-    public static function findByAttributes( array $attributes = [] , $single = false, Registry $container )
+    public static function findByAttributes(array $attributes = [], $single = false, Registry $container)
     {
-        $query = new Query( $container );
-        foreach ($attributes AS $key=>$val) {
-            $query->addWhere( $key . ' = :' . $key );
+        $query = new Query($container);
+        foreach ($attributes AS $key => $val) {
+            $query->addWhere($key . ' = :' . $key);
         }
         $query->params = $attributes;
 
@@ -152,6 +153,7 @@ abstract class Model extends FormModel
         foreach ($this->container->db->listFields(static::tableName()) AS $field) {
             $fields[] = $field['field'];
         }
+
         return $fields;
     }
 
@@ -165,6 +167,7 @@ abstract class Model extends FormModel
     public function relations()
     {
         $keys = new Relations;
+
         // add any keys
         return $keys;
     }
@@ -182,7 +185,7 @@ abstract class Model extends FormModel
     {
         if ($relation = $this->relations()->get($name)) {
             if (empty($this->cacheRelations[$name])) {
-                $sql = new Query( $this->container );
+                $sql = new Query($this->container);
 
                 $sql->addWhere('`m`.`' . $relation['On'][1] . '`=:' . $relation['On'][0]);
 
@@ -196,15 +199,17 @@ abstract class Model extends FormModel
                     $sql->limit = $relation['Limit'];
                 }
 
-                $sql->params[ $relation['On'][0] ] = $this->{$relation['On'][0]};
+                $sql->params[$relation['On'][0]] = $this->{$relation['On'][0]};
 
-                /** @var Model $relation['Model'] */
+                /** @var Model $relation ['Model'] */
                 $this->cacheRelations[$name] = $relation['Model']::finder($sql, !$relation['IsMany'], $this->container);
             }
+
             return $this->cacheRelations[$name];
         } elseif (isset($this->$name)) {
             return $this->$name;
         }
+
         return false;
     }
 
@@ -237,8 +242,8 @@ abstract class Model extends FormModel
                 return false;
             }
 
-            $pKey = self::$primaryKey?:'id';
-            if ($this->checkAttributeExists( $pKey )) {
+            $pKey = self::$primaryKey ?: 'id';
+            if ($this->checkAttributeExists($pKey)) {
                 $this->$pKey = $id;
             }
 
@@ -249,6 +254,7 @@ abstract class Model extends FormModel
 
             return true;
         }
+
         return false;
     }
 
@@ -284,7 +290,7 @@ abstract class Model extends FormModel
      * @return boolean
      * @throws Exception
      */
-    final public function save( $validate = false )
+    final public function save($validate = false)
     {
         if ($validate && !$this->validate()) {
             return false;
@@ -295,9 +301,11 @@ abstract class Model extends FormModel
         } else {
             if ($this->beforeSave() && $this->update()) {
                 $this->afterSave();
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -350,9 +358,11 @@ abstract class Model extends FormModel
 
             if ($this->container->db->update(static::tableName(), $this->mergeAttributesDb(), $where)) {
                 $this->afterUpdate();
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -404,9 +414,11 @@ abstract class Model extends FormModel
             ) {
                 $this->afterDelete();
                 unset($this);
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -463,13 +475,14 @@ abstract class Model extends FormModel
             $buffer[] = $row['field'];
         }
 
-        foreach ($arr AS $key=>$val) {
+        foreach ($arr AS $key => $val) {
             if (!in_array($key, $buffer, true)) {
                 unset($arr[$key]);
             }
         }
 
         unset($arr['isNewRecord']);
+
         return $arr;
     }
 }

@@ -47,7 +47,7 @@ class Dispatcher
      *
      * @return mixed
      */
-    public function signal($listener, array $params = [] )
+    public function signal($listener, array $params = [])
     {
         if ($this->listeners) {
             foreach ($this->listeners AS $key => $obj) {

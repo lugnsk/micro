@@ -29,7 +29,7 @@ class BooleanValidator extends Validator
      *
      * @result void
      */
-    public function __construct( array $params )
+    public function __construct(array $params)
     {
         $this->params['true'] = true;
         $this->params['false'] = false;
@@ -51,15 +51,18 @@ class BooleanValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             $elementValue = $model->$element;
 
             if (($elementValue !== $this->params['true']) AND ($elementValue !== $this->params['false'])) {
                 $this->errors[] = $element . ' error: required element is empty.';
+
                 return false;
             }
         }
+
         return true;
     }
 

@@ -22,9 +22,9 @@ class XssFilter extends Filter
      */
     public function pre(array $params)
     {
-        $clean = trim(strtoupper( !empty($params['clean']) ? $params['clean'] : '*' ));
+        $clean = trim(strtoupper(!empty($params['clean']) ? $params['clean'] : '*'));
 
-        $data = [ 'GET' => &$_GET, 'POST' => &$_POST, 'COOKIE' => &$_COOKIE, 'FILES' => &$_FILES ];
+        $data = ['GET' => &$_GET, 'POST' => &$_POST, 'COOKIE' => &$_COOKIE, 'FILES' => &$_FILES];
         if ($clean === '*') {
             $clean = 'GET,POST,COOKIE,FILES';
         }
@@ -56,6 +56,7 @@ class XssFilter extends Filter
             foreach ($data as $k => $v) {
                 $data[$k] = $this->doXssClean($v);
             }
+
             return $data;
         }
 

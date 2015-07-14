@@ -30,7 +30,7 @@ class Console
      *
      * @result void
      */
-    public function __construct( array $params = [] )
+    public function __construct(array $params = [])
     {
         array_shift($params);
         $this->command = '\\App\\consoles\\' . ucfirst(array_shift($params)) . 'ConsoleCommand';

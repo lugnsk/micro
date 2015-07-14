@@ -2,8 +2,6 @@
 
 namespace Micro\web;
 
-use Micro\base\Registry;
-
 /**
  * Micro user class file
  *
@@ -20,7 +18,7 @@ class User
 {
     protected $container;
 
-    public function __construct( array $config )
+    public function __construct(array $config)
     {
         $this->container = $config['container'];
     }

@@ -35,7 +35,7 @@ class Filesystem
      *
      * @result void
      */
-    public function __construct( array $params = [] )
+    public function __construct(array $params = [])
     {
         $this->setDriver($params);
     }
@@ -49,7 +49,7 @@ class Filesystem
      *
      * @return void
      */
-    public function setDriver( array $params = [] )
+    public function setDriver(array $params = [])
     {
         $driverName = !empty($params['driver']) ? $params['driver'] : 'local';
 
@@ -62,17 +62,18 @@ class Filesystem
      * @access public
      *
      * @param string $methodName Method name to call
-     * @param array  $arguments Arguments for method
+     * @param array $arguments Arguments for method
      *
      * @return mixed
      * @throws \Micro\base\Exception
      */
-    public function __call( $methodName, array $arguments=[] )
+    public function __call($methodName, array $arguments = [])
     {
         if (!method_exists($this->driver, $methodName)) {
-            throw new Exception('Method `' . $methodName.'` not defined in `' . get_class($this->driver) . '` driver.');
+            throw new Exception('Method `' . $methodName . '` not defined in `' . get_class($this->driver) . '` driver.');
         }
-        return call_user_func_array( [$this->driver, $methodName], $arguments );
+
+        return call_user_func_array([$this->driver, $methodName], $arguments);
     }
 }
 

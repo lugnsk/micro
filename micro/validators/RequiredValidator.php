@@ -33,13 +33,16 @@ class RequiredValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             if (!$model->$element) {
                 $this->errors[] = $element . ' error: required element is empty.';
+
                 return false;
             }
         }
+
         return true;
     }
 

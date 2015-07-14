@@ -20,6 +20,7 @@ use Micro\base\Validator;
 abstract class FormModel
 {
     protected $container;
+
     public function __construct(Registry $container)
     {
         $this->container = $container;
@@ -39,7 +40,7 @@ abstract class FormModel
     public function validate()
     {
         foreach ($this->rules() AS $rule) {
-            $validator = new Validator(['container'=>$this->container, 'rule'=>$rule]);
+            $validator = new Validator(['container' => $this->container, 'rule' => $rule]);
 
             if (!$validator->run($this) AND $validator->errors) {
                 $this->errors[] = $validator->errors;
@@ -48,6 +49,7 @@ abstract class FormModel
         if ($this->errors) {
             return false;
         }
+
         return true;
     }
 
@@ -75,7 +77,7 @@ abstract class FormModel
         $result = 'jQuery(document).ready(function(){';
 
         foreach ($this->rules() AS $rule) {
-            $validator = new Validator( [ 'container'=>$this->container, 'rule'=>$rule ] );
+            $validator = new Validator(['container' => $this->container, 'rule' => $rule]);
             if (is_string($js = $validator->run($this, true))) {
                 $result .= ' ' . $js;
             }
@@ -146,6 +148,7 @@ abstract class FormModel
                 $result[] = $error;
             }
         }
+
         return $result;
     }
 
@@ -161,6 +164,7 @@ abstract class FormModel
     public function getLabel($property)
     {
         $elements = $this->attributeLabels();
+
         return !empty($elements[$property]) ? $elements[$property] : $property;
     }
 

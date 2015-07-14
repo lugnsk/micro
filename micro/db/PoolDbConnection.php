@@ -76,6 +76,7 @@ class PoolDbConnection
                 return $key;
             }
         }
+
         return false;
     }
 

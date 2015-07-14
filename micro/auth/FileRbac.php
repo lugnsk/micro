@@ -57,6 +57,7 @@ class FileRbac extends Rbac
                 return $this->conn->insert('rbac_user', ['role' => $name, 'user' => $userId]);
             }
         }
+
         return false;
     }
 

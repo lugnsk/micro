@@ -73,6 +73,7 @@ class XcacheCache implements Cache
                 return false;
             }
         }
+
         return true;
     }
 
@@ -114,6 +115,7 @@ class XcacheCache implements Cache
     public function increment($name, $offset = 1)
     {
         $val = $this->get($name) + $offset;
+
         return $this->set($name, $val);
     }
 
@@ -160,6 +162,7 @@ class XcacheCache implements Cache
     public function decrement($name, $offset = 1)
     {
         $val = $this->get($name) - $offset;
+
         return $this->set($name, $val);
     }
 } 

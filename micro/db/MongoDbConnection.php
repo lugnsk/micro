@@ -99,6 +99,7 @@ class MongoDbConnection
         if (empty($this->collections[$collectionName])) {
             $this->collections[$collectionName] = $this->conn->selectCollection($this->dbName, $collectionName);
         }
+
         return $this->collections[$collectionName];
     }
 
@@ -123,8 +124,10 @@ class MongoDbConnection
                     --$keys[$col];
                 }
             }
+
             return $this->getCollection($collectionName)->ensureIndex($keys, $options);
         }
+
         return false;
     }
 
@@ -157,6 +160,7 @@ class MongoDbConnection
         if ($keys) {
             return $this->getCollection($collectionName)->deleteIndex($keys);
         }
+
         return $this->getCollection($collectionName)->deleteIndexes();
     }
 
@@ -205,6 +209,7 @@ class MongoDbConnection
     public function rawQuery($collectionName, array $params = [], array $fields = [], $single = false)
     {
         $collect = $this->getCollection($collectionName);
+
         return $single ? $collect->findOne($params, $fields) : $collect->find($params, $fields);
     }
 

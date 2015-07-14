@@ -34,6 +34,7 @@ class UniqueValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
             $elementValue = $model->$element;
@@ -49,6 +50,7 @@ class UniqueValidator extends Validator
                 return false;
             }
         }
+
         return true;
     }
 }

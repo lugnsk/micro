@@ -4,6 +4,6 @@
 return [
     'class' => '\Micro\web\User',
     'arguments' => [
-        'container'=>'@this'
+        'container' => '@this'
     ]
 ];

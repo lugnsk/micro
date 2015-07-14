@@ -64,6 +64,7 @@ class Cookie
         if ($this->exists($name)) {
             return $this->set($name, false, time() - 3600);
         }
+
         return false;
     }
 

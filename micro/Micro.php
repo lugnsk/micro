@@ -54,7 +54,7 @@ class Micro
      */
     public function __clone()
     {
-        if ($this->debug){
+        if ($this->debug) {
             $this->startTime = microtime(true);
         }
 
@@ -67,21 +67,21 @@ class Micro
      *
      * @access public
      *
-     * @param string $appDir         Application directory
-     * @param string $microDir       Micro directory
-     * @param string $environment    Application environment: devel , prod , test
-     * @param bool   $debug          Debug-mode flag
-     * @param bool   $registerLoader Register default autoloader
+     * @param string $appDir Application directory
+     * @param string $microDir Micro directory
+     * @param string $environment Application environment: devel , prod , test
+     * @param bool $debug Debug-mode flag
+     * @param bool $registerLoader Register default autoloader
      *
      * @result void
      */
-    public function __construct( $appDir, $microDir, $environment = 'devel', $debug = true, $registerLoader = true )
+    public function __construct($appDir, $microDir, $environment = 'devel', $debug = true, $registerLoader = true)
     {
-        $this->appDir      = realpath($appDir);
-        $this->microDir    = realpath($microDir);
+        $this->appDir = realpath($appDir);
+        $this->microDir = realpath($microDir);
         $this->environment = $environment;
-        $this->debug       = (bool)$debug;
-        $this->loaded      = false;
+        $this->debug = (bool)$debug;
+        $this->loaded = false;
 
         if ($this->debug) {
             $this->startTime = microtime(true);
@@ -111,7 +111,7 @@ class Micro
      *
      * @return bool
      */
-    public function registerAutoload( array $config )
+    public function registerAutoload(array $config)
     {
         if (empty($config['filename']) || !file_exists($config['filename'])) {
             return false;
@@ -120,8 +120,8 @@ class Micro
         $config = array_merge([
             'filename' => '/autoload.php',
             'callable' => '',
-            'throw'    => true,
-            'prepend'  => false
+            'throw' => true,
+            'prepend' => false
         ], $config);
 
         if (!file_exists($config['filename']) || empty($config['callable'])) {
@@ -143,7 +143,7 @@ class Micro
      *
      * @return void
      */
-    public function loader( $configPath = '/configs/index.php' )
+    public function loader($configPath = '/configs/index.php')
     {
         if (true === $this->loaded) {
             return;
@@ -180,15 +180,15 @@ class Micro
      *
      * @return void
      */
-    public function initContainer( $configPath )
+    public function initContainer($configPath)
     {
         $this->container = new Registry;
         $this->container->kernel = $this;
 
-        $this->container->load( $configPath );
+        $this->container->load($configPath);
 
         if (!isset($this->container->dispatcher)) {
-            $this->container->dispatcher = new Dispatcher( $this->container );
+            $this->container->dispatcher = new Dispatcher($this->container);
         }
     }
 
@@ -202,14 +202,14 @@ class Micro
      *
      * @return Response
      */
-    public function run( Request $request, $configPath = '/configs/index.php' )
+    public function run(Request $request, $configPath = '/configs/index.php')
     {
         if (!$this->loaded) {
             $this->loader($configPath);
         }
         $this->container->request = $request;
 
-        $resolver = new Resolver( $this->container );
+        $resolver = new Resolver($this->container);
         $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
 
         $app = $resolver->getApplication();
@@ -221,7 +221,7 @@ class Micro
             $response = $app;
         } else {
             $output = $app->action($resolver->getAction());
-            if (! $output instanceof OutputInterface) {
+            if (!$output instanceof OutputInterface) {
                 $response = $this->container->response ?: new Response;
                 $response->setBody($output);
             } else {
@@ -238,7 +238,7 @@ class Micro
         $this->container->dispatcher->signal('kernel.terminate', []);
 
         if ($this->debug && !$this->container->request->isCli()) {
-            echo '<div class=timer>' , ( microtime(true) - $this->getStartTime() ) , '</div>';
+            echo '<div class=timer>', (microtime(true) - $this->getStartTime()), '</div>';
         }
 
         $this->unloader();
@@ -250,36 +250,44 @@ class Micro
     {
         return 'UTF-8';
     }
+
     public function isDebug()
     {
         return $this->debug;
     }
+
     public function getStartTime()
     {
         return $this->debug ? $this->startTime : null;
     }
+
     public function getEnvironment()
     {
         return $this->environment;
     }
+
     public function getContainer()
     {
         return $this->container;
     }
+
     public function getMicroDir()
     {
         return $this->microDir;
     }
+
     public function getAppDir()
     {
         return $this->appDir;
     }
+
     public function getCacheDir()
     {
-        return $this->appDir.'/cache/'.$this->environment;
+        return $this->appDir . '/cache/' . $this->environment;
     }
+
     public function getLogDir()
     {
-        return $this->appDir.'/logs';
+        return $this->appDir . '/logs';
     }
 }

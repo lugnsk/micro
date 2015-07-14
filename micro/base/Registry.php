@@ -30,9 +30,9 @@ class Registry
      *
      * @return void
      */
-    public function load( $filename )
+    public function load($filename)
     {
-        if ( file_exists($this->kernel->getAppDir() . $filename) ) {
+        if (file_exists($this->kernel->getAppDir() . $filename)) {
             $this->config = array_merge_recursive($this->config, require $this->kernel->getAppDir() . $filename);
         }
     }
@@ -43,7 +43,7 @@ class Registry
      * @access public
      *
      * @param string $name Name attribute
-     * @param mixed  $component Component or option
+     * @param mixed $component Component or option
      *
      * @return void
      */
@@ -121,6 +121,7 @@ class Registry
                     throw new Exception($this, 'Class ' . $name . ' error loading.');
                 }
             }
+
             return;
         }
 
@@ -154,6 +155,7 @@ class Registry
 
         if (empty($options['arguments'])) {
             $this->data[$name] = new $className;
+
             return true;
         }
 
@@ -163,15 +165,15 @@ class Registry
                     $val = $this;
                 } else {
                     $option = substr($val, 1);
-                    if (!array_key_exists($option, $this->__get($option))){
+                    if (!array_key_exists($option, $this->__get($option))) {
                         throw new Exception($this, 'Argument `' . $option . '` not found into container');
                     }
 
-                    $val = $this->__get( $option );
+                    $val = $this->__get($option);
                 }
             }
         }
-        $this->data[$name] = new $className( $options['arguments'] );
+        $this->data[$name] = new $className($options['arguments']);
 
         return true;
     }

@@ -42,7 +42,7 @@ class Resolver
      *
      * @result void
      */
-    public function __construct( Registry $registry )
+    public function __construct(Registry $registry)
     {
         $this->container = $registry;
 
@@ -51,8 +51,8 @@ class Resolver
         }
 
         $query = $this->container->request->getQueryVar('r') ?: '/default';
-        $query = (substr($query, -1) === '/') ? '/default': $query;
-        $this->uri = $this->container->router->parse( $query, $this->container->request->getMethod() );
+        $query = (substr($query, -1) === '/') ? '/default' : $query;
+        $this->uri = $this->container->router->parse($query, $this->container->request->getMethod());
 
         $this->initialize();
     }
@@ -67,8 +67,8 @@ class Resolver
     private function initialize()
     {
         $key = strpos($this->uri, '?');
-        $params = $key ? substr($this->uri, $key+2) : null;
-        $uriBlocks = explode('/', substr($this->uri, 0, $key?:strlen($this->uri)));
+        $params = $key ? substr($this->uri, $key + 2) : null;
+        $uriBlocks = explode('/', substr($this->uri, 0, $key ?: strlen($this->uri)));
 
         if (substr($this->uri, 0, 1) === '/') {
             array_shift($uriBlocks);
@@ -149,8 +149,8 @@ class Resolver
      */
     private function prepareController(&$uriBlocks)
     {
-        $path = $this->container->kernel->getAppDir() . ($this->extensions?:'') . ($this->modules?:'');
-        $str  = array_shift($uriBlocks);
+        $path = $this->container->kernel->getAppDir() . ($this->extensions ?: '') . ($this->modules ?: '');
+        $str = array_shift($uriBlocks);
 
         if (file_exists(str_replace('\\', '/', $path . '/controllers/' . ucfirst($str) . 'Controller.php'))) {
             $this->controller = $str;
@@ -244,15 +244,17 @@ class Resolver
     public function getApplication()
     {
         if ($this->container->request->isCli()) {
-            $console = new Console( $this->container->request->getArguments() );
+            $console = new Console($this->container->request->getArguments());
             $command = $console->getCommand();
 
             /** @var \Micro\base\Command $command */
-            return new $command( ['container'=>$this->container, 'args'=>$console->getParams()] );
+
+            return new $command(['container' => $this->container, 'args' => $console->getParams()]);
         }
 
         /** @var \Micro\mvc\controllers\Controller $cls Controller */
         $cls = $this->getCalculatePath();
-        return new $cls ( $this->container, $this->getModules() );
+
+        return new $cls ($this->container, $this->getModules());
     }
 }

@@ -33,7 +33,7 @@ class CaptchaValidator extends Validator
      *
      * @result void
      */
-    public function __construct( array $params )
+    public function __construct(array $params)
     {
         $this->captcha = $this->container->user->getCaptcha();
 
@@ -55,6 +55,7 @@ class CaptchaValidator extends Validator
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
                 $this->errors[] = 'Parameter ' . $element . ' not defined in class ' . get_class($model);
+
                 return false;
             }
 
@@ -63,6 +64,7 @@ class CaptchaValidator extends Validator
                 return false;
             }
         }
+
         return true;
     }
 }
