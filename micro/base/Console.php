@@ -16,6 +16,8 @@ namespace Micro\base;
  */
 class Console
 {
+    /** @var Registry $container */
+    protected $container;
     /** @var string $command Parsed command */
     protected $command;
     /** @var array $args Arguments from params */
@@ -26,40 +28,43 @@ class Console
      *
      * @access public
      *
-     * @param array $params arguments command
+     * @param Registry $container
      *
      * @result void
      */
-    public function __construct(array $params = [])
+    public function __construct(Registry $container)
     {
-        array_shift($params);
-        $this->command = '\\App\\consoles\\' . ucfirst(array_shift($params)) . 'ConsoleCommand';
+        $this->container = $container;
 
-        foreach ($params AS $param) {
-            $pos = strpos($param, '=');
-            $this->args[substr($param, 0, $pos)] = substr($param, $pos + 1);
+        foreach ($container->request->getArguments() AS $param) {
+            if ($pos = strpos($param, '=')) {
+                $this->args[substr($param, 0, $pos)] = substr($param, $pos + 1);
+            }
         }
     }
 
     /**
-     * Get parsed command
+     * Run action of console command by name
      *
      * @access public
-     * @return string
+     *
+     * @param string $name Command name
+     *
+     * @return bool|ConsoleCommand|string
      */
-    public function getCommand()
+    public function action($name)
     {
-        return $this->command;
-    }
+        $command = '\\Micro\\consoles\\' . $name . 'ConsoleCommand';
+        $command = class_exists($command) ? $command : '\\App\\consoles\\' . $name . 'ConsoleCommand';
 
-    /**
-     * Get parsed arguments
-     *
-     * @access public
-     * @return array
-     */
-    public function getParams()
-    {
-        return $this->args;
+        if (!class_exists($command)) {
+            return false;
+        }
+
+        /** @var \Micro\base\ConsoleCommand $command */
+        $command = new $command (['container' => $this->container, 'args' => $this->args]);
+        $command->execute();
+
+        return $command;
     }
 }

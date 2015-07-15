@@ -8,6 +8,8 @@ use Micro\base\Exception;
 use Micro\base\OutputInterface;
 use Micro\base\Registry;
 use Micro\base\Resolver;
+use Micro\resolvers\ConsoleResolver;
+use Micro\resolvers\HMVCResolver;
 use Micro\web\Request;
 use Micro\web\Response;
 
@@ -209,30 +211,30 @@ class Micro
         }
         $this->container->request = $request;
 
-        $resolver = new Resolver($this->container);
+        $resolver = $request->isCli() ? new ConsoleResolver($this->container) : new HMVCResolver($this->container);
         $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
 
         $app = $resolver->getApplication();
         $this->container->dispatcher->signal('kernel.controller', ['application' => $app]);
 
-        $response = null;
-        if ($request->isCli()) {
-            $app->execute();
-            $response = $app;
-        } else {
-            $output = $app->action($resolver->getAction());
-            if (!$output instanceof OutputInterface) {
-                $response = $this->container->response ?: new Response;
-                $response->setBody($output);
-            } else {
-                $response = $output;
-            }
+        $output = $app->action($resolver->getAction());
+        if (!$output instanceof OutputInterface) {
+            $response = $this->container->response ?: new Response;
+            $response->setBody($output);
+            $output = $response;
         }
-        $this->container->dispatcher->signal('kernel.response', ['output' => $response]);
+        $this->container->dispatcher->signal('kernel.response', ['output' => $output]);
 
-        return $response;
+        return $output;
     }
 
+    /**
+     * Terminate application
+     *
+     * @access public
+     *
+     * @return void
+     */
     public function terminate()
     {
         $this->container->dispatcher->signal('kernel.terminate', []);
