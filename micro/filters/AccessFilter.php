@@ -113,7 +113,7 @@ class AccessFilter extends Filter
      * Match user
      *
      * @access protected
-     * @global      Registry
+     * @global      Container
      *
      * @param array $rule rule definition
      *
@@ -181,7 +181,7 @@ class AccessFilter extends Filter
      * Match role
      *
      * @access protected
-     * @global      Registry
+     * @global      Container
      *
      * @param array $rule rule definition
      *
@@ -211,7 +211,7 @@ class AccessFilter extends Filter
      * Match IP
      *
      * @access protected
-     * @global      Registry
+     * @global      Container
      *
      * @param array $rule rule definition
      *
@@ -246,7 +246,7 @@ class AccessFilter extends Filter
      * Match verbose
      *
      * @access protected
-     * @global      Registry
+     * @global      Container
      *
      * @param array $rule rule definition
      *

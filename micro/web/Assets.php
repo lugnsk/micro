@@ -2,8 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\Container;
 use Micro\base\File as MFile;
-use Micro\base\Registry;
 
 /**
  * Assets class file.
@@ -38,14 +38,14 @@ class Assets
      *
      * @access public
      *
-     * @param Registry $registry
+     * @param Container $Container
      * @param string $directory directory of assets
      *
      * @result void
      */
-    public function __construct(Registry $registry, $directory = '')
+    public function __construct(Container $Container, $directory = '')
     {
-        $this->container = $registry;
+        $this->container = $Container;
         $this->directory = rtrim($directory, '/') . '/assets';
         $this->hash = md5($this->directory);
 

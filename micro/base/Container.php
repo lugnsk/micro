@@ -38,7 +38,7 @@ class Container
     }
 
     /**
-     * Is set component or option name into registry
+     * Is set component or option name into Container
      *
      * @access public
      *
@@ -62,7 +62,7 @@ class Container
     }
 
     /**
-     * Get registry value
+     * Get Container value
      *
      * @access public
      *

@@ -2,7 +2,7 @@
 
 namespace App\components;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 use Micro\mvc\controllers\ViewController as BaseController;
 
 /**
@@ -16,15 +16,15 @@ class Controller extends BaseController
      *
      * @access public
      *
-     * @param Registry $registry
+     * @param Container $container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Registry $registry, $modules = '')
+    public function __construct(Container $container, $modules = '')
     {
         $this->layout = 'maket';
 
-        parent::__construct($registry, $modules);
+        parent::__construct($container, $modules);
     }
 }

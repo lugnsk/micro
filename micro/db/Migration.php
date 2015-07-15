@@ -2,7 +2,7 @@
 
 namespace Micro\db;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Migration class file.
@@ -37,12 +37,12 @@ abstract class Migration
      * Get connection to db
      *
      * @access public
-     * @global Registry
+     * @global Container
      * @return void
      */
     public function getDbConnection()
     {
-        $this->db = Registry::get('db');
+        $this->db = Container::get('db');
     }
 
     /**

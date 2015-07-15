@@ -2,8 +2,8 @@
 
 namespace Micro\mvc\controllers;
 
+use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\base\Registry;
 use Micro\web\Response;
 
 
@@ -13,7 +13,7 @@ abstract class Controller
     public $module;
     /** @var \Micro\web\Response $response Response HTTP data */
     public $response;
-    /** @var Registry $container */
+    /** @var Container $container */
     protected $container;
 
     /**
@@ -21,14 +21,14 @@ abstract class Controller
      *
      * @access public
      *
-     * @param Registry $registry
+     * @param Container $Container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Registry $registry, $modules = '')
+    public function __construct(Container $Container, $modules = '')
     {
-        $this->container = $registry;
+        $this->container = $Container;
 
         // if module defined
         if ($modules) {

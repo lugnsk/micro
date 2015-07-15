@@ -2,7 +2,7 @@
 
 namespace Micro\filters;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Filter class file.
@@ -19,18 +19,18 @@ use Micro\base\Registry;
 abstract class Filter
 {
     public $result;
-    /** @var Registry $registry */
+    /** @var Container $Container */
     protected $container;
     protected $action;
 
     /**
      * @param string $action current action
-     * @param Registry $registry
+     * @param Container $Container
      */
-    public function __construct($action, Registry $registry)
+    public function __construct($action, Container $Container)
     {
         $this->action = $action;
-        $this->container = $registry;
+        $this->container = $Container;
     }
 
     /**

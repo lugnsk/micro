@@ -2,7 +2,7 @@
 
 namespace Micro\web;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 use Micro\base\Validator;
 
 /**
@@ -23,7 +23,7 @@ abstract class FormModel
     /** @var array $errors validation errors */
     protected $errors = [];
 
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

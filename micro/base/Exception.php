@@ -17,13 +17,13 @@ use Micro\web\Response;
  */
 class Exception extends \Exception
 {
-    /** @var Registry $container Container config */
+    /** @var Container $container Container config */
     protected $container;
 
     /**
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      * @param string $message
      * @param int $code
      * @param \Exception $previous

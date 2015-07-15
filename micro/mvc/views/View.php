@@ -2,8 +2,8 @@
 
 namespace Micro\mvc\views;
 
+use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\base\Registry;
 use Micro\wrappers\Html;
 
 /**
@@ -31,7 +31,7 @@ abstract class View
     public $module;
     protected $container;
 
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

@@ -2,8 +2,8 @@
 
 namespace Micro\db;
 
+use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\base\Registry;
 use Micro\base\Type;
 use Micro\web\FormModel;
 
@@ -34,12 +34,12 @@ abstract class Model extends FormModel
      *
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      * @param boolean $new is new model?
      *
      * @result void
      */
-    public function __construct(Registry $container, $new = true)
+    public function __construct(Container $container, $new = true)
     {
         parent::__construct($container);
 
@@ -51,27 +51,13 @@ abstract class Model extends FormModel
      *
      * @access public
      * @param int|string $value unique value
-     * @param Registry $container
+     * @param Container $container
      * @return mixed
      * @static
      */
-    public static function findByPk($value, Registry $container)
+    public static function findByPk($value, Container $container)
     {
         return self::findByAttributes([self::$primaryKey => $value], true, $container);
-    }
-
-    /**
-     * Find by model attribute values
-     *
-     * @access public
-     *
-     * @param bool $single Is a single?
-     *
-     * @return mixed
-     */
-    public function find($single = false)
-    {
-        return self::findByAttributes(Type::getVars($this), $single, $this->container);
     }
 
     /**
@@ -80,10 +66,10 @@ abstract class Model extends FormModel
      * @access public
      * @param array $attributes attributes and data for search
      * @param bool $single single or more
-     * @param Registry $container
+     * @param Container $container
      * @return mixed
      */
-    public static function findByAttributes(array $attributes = [], $single = false, Registry $container)
+    public static function findByAttributes(array $attributes = [], $single = false, Container $container)
     {
         $query = new Query($container);
         foreach ($attributes AS $key => $val) {
@@ -101,7 +87,7 @@ abstract class Model extends FormModel
      *
      * @param Query $query query to search
      * @param boolean $single is single
-     * @param Registry $container
+     * @param Container $container
      *
      * @return mixed One or more data
      * @static
@@ -127,6 +113,20 @@ abstract class Model extends FormModel
     public static function tableName()
     {
         return null;
+    }
+
+    /**
+     * Find by model attribute values
+     *
+     * @access public
+     *
+     * @param bool $single Is a single?
+     *
+     * @return mixed
+     */
+    public function find($single = false)
+    {
+        return self::findByAttributes(Type::getVars($this), $single, $this->container);
     }
 
     /**

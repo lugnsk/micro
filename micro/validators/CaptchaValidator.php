@@ -43,7 +43,7 @@ class CaptchaValidator extends Validator
      * Validate on server, make rule
      *
      * @access public
-     * @global      Registry
+     * @global      Container
      *
      * @param Model $model checked model
      *

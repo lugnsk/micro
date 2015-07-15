@@ -2,7 +2,7 @@
 
 namespace Micro\mvc;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Class Action
@@ -20,7 +20,7 @@ abstract class Action
 {
     protected $container;
 
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

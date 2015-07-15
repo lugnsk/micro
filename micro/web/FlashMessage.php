@@ -2,8 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\base\Registry;
 
 /**
  * FlashMessage is a flash messenger.
@@ -29,7 +29,7 @@ class FlashMessage
     const TYPE_DANGER = 4;
 
 
-    /** @var \Micro\base\Registry $container Container config */
+    /** @var \Micro\base\Container $container Container config */
     protected $container;
 
 
@@ -37,11 +37,11 @@ class FlashMessage
      * Constructor messenger
      *
      * @access public
-     * @global Registry
+     * @global Container
      * @result void
      * @throws Exception
      */
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
 
@@ -86,7 +86,7 @@ class FlashMessage
      * Push a new flash
      *
      * @access public
-     * @global       Registry
+     * @global       Container
      *
      * @param int $type type id
      * @param string $title title flash
@@ -109,7 +109,7 @@ class FlashMessage
      * Has flashes by type
      *
      * @access public
-     * @global    Registry
+     * @global    Container
      *
      * @param int $type type of flash
      *
@@ -130,7 +130,7 @@ class FlashMessage
      * Get flash by type
      *
      * @access public
-     * @global    Registry
+     * @global    Container
      *
      * @param int $type type of flash
      *
@@ -154,7 +154,7 @@ class FlashMessage
      * Get all flashes
      *
      * @access public
-     * @global Registry
+     * @global Container
      * @return mixed
      */
     public function getAll()

@@ -2,7 +2,7 @@
 
 namespace Micro\loggers;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * DB logger class file.
@@ -34,7 +34,7 @@ class DbLogger extends LogInterface
      *
      * @result void
      */
-    public function __construct(Registry $container, array $params = [])
+    public function __construct(Container $container, array $params = [])
     {
         parent::__construct($container, $params);
 

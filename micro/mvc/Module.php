@@ -2,11 +2,11 @@
 
 namespace Micro\mvc;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 abstract class Module
 {
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $path = dirname(
                 str_replace(['\\', 'App'], ['/', $container->kernel->getAppDir()], get_called_class())

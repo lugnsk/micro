@@ -2,7 +2,7 @@
 
 namespace Micro\mvc\controllers;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 abstract class RichController extends Controller
 {
@@ -14,14 +14,14 @@ abstract class RichController extends Controller
      *
      * @access public
      *
-     * @param Registry $registry
+     * @param Container $Container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Registry $registry, $modules = '')
+    public function __construct(Container $Container, $modules = '')
     {
-        parent::__construct($registry, $modules);
+        parent::__construct($Container, $modules);
 
         $this->methodType = $this->container->request->getMethod() ?: 'GET';
     }

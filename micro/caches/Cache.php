@@ -29,7 +29,7 @@ class Cache
     ];
     /** @var array $servers Activated servers */
     protected $servers = [];
-    /** @var Registry $container Config container */
+    /** @var Container $container Config container */
     protected $container;
 
 

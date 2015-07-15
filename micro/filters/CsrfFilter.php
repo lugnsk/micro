@@ -20,7 +20,7 @@ class CsrfFilter extends Filter
      * PreFilter
      *
      * @access public
-     * @global      Registry
+     * @global      Container
      *
      * @param array $params checked items and other params
      *
@@ -63,7 +63,7 @@ class CsrfFilter extends Filter
      * PostFilter
      *
      * @access public
-     * @global      Registry
+     * @global      Container
      *
      * @param array $params checked items and other params
      *

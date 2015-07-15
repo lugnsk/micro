@@ -2,7 +2,7 @@
 
 namespace Micro\web;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Identity class file.
@@ -32,13 +32,13 @@ abstract class Identity
      *
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      * @param string $username
      * @param string $password
      *
      * @result void
      */
-    public function __construct(Registry $container, $username, $password)
+    public function __construct(Container $container, $username, $password)
     {
         $this->container = $container;
         $this->username = $username;
@@ -50,7 +50,7 @@ abstract class Identity
      * Authenticate
      *
      * @access public
-     * @global Registry
+     * @global Container
      * @return bool
      * @abstract
      */
@@ -60,7 +60,7 @@ abstract class Identity
      * Add data into session
      *
      * @access public
-     * @global       Registry
+     * @global       Container
      *
      * @param string $name session parameter name
      * @param mixed $value session parameter value
@@ -76,7 +76,7 @@ abstract class Identity
      * Add data into cookie
      *
      * @access public
-     * @global       Registry
+     * @global       Container
      *
      * @param string $name cookie name
      * @param mixed $value data value

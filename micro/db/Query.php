@@ -2,7 +2,7 @@
 
 namespace Micro\db;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Query class file.
@@ -18,7 +18,7 @@ use Micro\base\Registry;
  */
 class Query
 {
-    /** @var Registry $container Container config */
+    /** @var Container $container Container config */
     public $container;
 
     /** @var string $select selectable columns */
@@ -53,11 +53,11 @@ class Query
      *
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      *
      * @result void
      */
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

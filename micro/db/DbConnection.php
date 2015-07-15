@@ -20,7 +20,7 @@ class DbConnection
 {
     /** @var \PDO|null $conn Connection to DB */
     protected $conn;
-    /** @var \Micro\base\Registry $container Registry container */
+    /** @var \Micro\base\Container $container Container container */
     protected $container;
 
 

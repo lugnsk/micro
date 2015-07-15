@@ -2,8 +2,8 @@
 
 namespace Micro\loggers;
 
+use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\base\Registry;
 
 /**
  * File logger class file.
@@ -30,13 +30,13 @@ class FileLogger extends LogInterface
      *
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      * @param array $params configuration params
      *
      * @result void
      * @throws Exception
      */
-    public function __construct(Registry $container, array $params = [])
+    public function __construct(Container $container, array $params = [])
     {
         parent::__construct($container, $params);
 

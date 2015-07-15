@@ -3,8 +3,8 @@
 namespace Micro;
 
 use Micro\base\Autoload;
+use Micro\base\Container;
 use Micro\base\Dispatcher;
-use Micro\base\Registry;
 use Micro\resolvers\ConsoleResolver;
 use Micro\resolvers\HMVCResolver;
 use Micro\web\OutputInterface;
@@ -41,7 +41,7 @@ class Micro
     protected $startTime;
     /** @var bool $loaded Micro loaded flag */
     protected $loaded;
-    /** @var Registry $container Registry is a container for components and options */
+    /** @var Container $container Container is a container for components and options */
     protected $container;
 
     /**
@@ -177,7 +177,7 @@ class Micro
      *
      * @access public
      *
-     * @param string $configPath Path to configure Registry
+     * @param string $configPath Path to configure Container
      *
      * @return void
      */
@@ -197,13 +197,13 @@ class Micro
      *
      * @access public
      *
-     * @param string $configPath Path to configure Registry
+     * @param string $configPath Path to configure Container
      *
      * @return void
      */
     public function initContainer($configPath)
     {
-        $this->container = new Registry;
+        $this->container = new Container;
         $this->container->kernel = $this;
 
         $this->container->load($configPath);

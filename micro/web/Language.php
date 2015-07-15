@@ -2,8 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\base\Registry;
 
 /**
  * Language getter language tags from *.ini files
@@ -30,12 +30,12 @@ class Language
      *
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      * @param string $viewNameFile path to view
      *
      * @result void
      */
-    public function __construct(Registry $container, $viewNameFile)
+    public function __construct(Container $container, $viewNameFile)
     {
         $this->container = $container;
 

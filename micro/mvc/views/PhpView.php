@@ -76,7 +76,7 @@ class PhpView extends View
      *
      * @access public
      * @global       Micro
-     * @global       Registry
+     * @global       Container
      *
      * @param string $data arguments array
      *

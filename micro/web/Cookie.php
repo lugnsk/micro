@@ -2,7 +2,7 @@
 
 namespace Micro\web;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Cookie class file.
@@ -20,7 +20,7 @@ class Cookie
 {
     protected $container;
 
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

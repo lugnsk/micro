@@ -2,7 +2,7 @@
 
 namespace Micro\auth;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 use Micro\db\DbConnection;
 
 /**
@@ -56,15 +56,15 @@ abstract class Acl
     }
 
     /**
-     * Get current connection from registry
+     * Get current connection from Container
      *
      * @access public
-     * @global Registry
+     * @global Container
      * @return void
      */
     public function getConnect()
     {
-        $this->conn = Registry::get('db');
+        $this->conn = Container::get('db');
     }
 
     /**

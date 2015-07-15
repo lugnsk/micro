@@ -2,7 +2,7 @@
 
 namespace App\components;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 use Micro\mvc\views\PhpView;
 
 class View extends PhpView
@@ -10,7 +10,7 @@ class View extends PhpView
     public $title = 'Micro';
     public $menu = ['<a href="/">Главная</a>', '<a href="/blog/post">Блог</a>'];
 
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         parent::__construct($container);
 

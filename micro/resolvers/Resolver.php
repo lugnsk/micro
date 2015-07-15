@@ -2,7 +2,7 @@
 
 namespace Micro\resolvers;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Resolver class file.
@@ -19,7 +19,7 @@ use Micro\base\Registry;
  */
 abstract class Resolver
 {
-    /** @var Registry $container Registry is a container for components and options */
+    /** @var Container $container Container is a container for components and options */
     protected $container;
 
 
@@ -28,11 +28,11 @@ abstract class Resolver
      *
      * @access public
      *
-     * @param Registry $container Registry is a container for components and options
+     * @param Container $container Container is a container for components and options
      *
      * @result void
      */
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

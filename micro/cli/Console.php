@@ -2,7 +2,7 @@
 
 namespace Micro\cli;
 
-use Micro\base\Registry;
+use Micro\base\Container;
 
 /**
  * Console class file.
@@ -18,7 +18,7 @@ use Micro\base\Registry;
  */
 class Console
 {
-    /** @var Registry $container */
+    /** @var Container $container */
     protected $container;
     /** @var string $command Parsed command */
     protected $command;
@@ -30,11 +30,11 @@ class Console
      *
      * @access public
      *
-     * @param Registry $container
+     * @param Container $container
      *
      * @result void
      */
-    public function __construct(Registry $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
 
