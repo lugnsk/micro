@@ -41,6 +41,40 @@ class Services
     }
 
     /**
+     * Send message into service on selected server
+     *
+     * @access public
+     *
+     * @param string $route
+     * @param array $data
+     * @param string $type
+     * @param int $retry
+     *
+     * @return mixed
+     * @throws Exception
+     */
+    public function send($route, array $data = [], $type = 'sync', $retry = 5)
+    {
+        switch ($type) {
+            case 'sync': {
+                return $this->getBroker($route, $type, $retry)->sync($route, $data);
+                break;
+            }
+            case 'async': {
+                return $this->getBroker($route, $type, $retry)->async($route, $data);
+                break;
+            }
+            case 'stream': {
+                return $this->getBroker($route, $type, $retry)->stream($route, $data);
+                break;
+            }
+            default: {
+                throw new Exception($this->container, 'Service type `' . $type . '` wrong name.');
+            }
+        }
+    }
+
+    /**
      * @param string $uri
      *
      * @return \Micro\queues\IQueue
@@ -67,33 +101,6 @@ class Services
         }
 
         return $this->brokers[$server];
-    }
-
-    /**
-     * Get rules from route by pattern
-     *
-     * @access protected
-     *
-     * @param string $uri URI for match
-     *
-     * @return array Rules for URI
-     * @throws Exception
-     */
-    protected function getRoute($uri)
-    {
-        $keys = array_keys($this->routes);
-        $countRoutes = count($keys);
-
-        for ($a = 0; $a < $countRoutes; $a++) {
-            if (preg_match('/' . $keys[$a] . '/', $uri)) {
-                if (!is_array($this->routes[$keys[$a]])) {
-                    $this->routes[$keys[$a]] = ['*' => $this->routes[$keys[$a]]];
-                }
-
-                return $this->routes[$keys[$a]]; // роут найден
-            }
-        }
-        throw new Exception($this->container, 'Route `' . $uri . '` not found');
     }
 
     /**
@@ -131,36 +138,29 @@ class Services
     }
 
     /**
-     * Send message into service on selected server
+     * Get rules from route by pattern
      *
-     * @access public
+     * @access protected
      *
-     * @param string $route
-     * @param array $data
-     * @param string $type
-     * @param int $retry
+     * @param string $uri URI for match
      *
-     * @return mixed
+     * @return array Rules for URI
      * @throws Exception
      */
-    public function send($route, array $data = [], $type = 'sync', $retry = 5)
+    protected function getRoute($uri)
     {
-        switch ($type) {
-            case 'sync': {
-                return $this->getBroker($route, $type, $retry)->sync($route, $data);
-                break;
-            }
-            case 'async': {
-                return $this->getBroker($route, $type, $retry)->async($route, $data);
-                break;
-            }
-            case 'stream': {
-                return $this->getBroker($route, $type, $retry)->stream($route, $data);
-                break;
-            }
-            default: {
-                throw new Exception($this->container, 'Service type `' . $type . '` wrong name.');
+        $keys = array_keys($this->routes);
+        $countRoutes = count($keys);
+
+        for ($a = 0; $a < $countRoutes; $a++) {
+            if (preg_match('/' . $keys[$a] . '/', $uri)) {
+                if (!is_array($this->routes[$keys[$a]])) {
+                    $this->routes[$keys[$a]] = ['*' => $this->routes[$keys[$a]]];
+                }
+
+                return $this->routes[$keys[$a]]; // роут найден
             }
         }
+        throw new Exception($this->container, 'Route `' . $uri . '` not found');
     }
 }

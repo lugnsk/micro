@@ -3,7 +3,6 @@
 namespace Micro\filters;
 
 use Micro\base\Exception;
-use Micro\base\Registry;
 
 /**
  * Class AccessFilter

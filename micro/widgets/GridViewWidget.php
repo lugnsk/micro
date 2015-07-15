@@ -2,11 +2,11 @@
 
 namespace Micro\widgets;
 
+use Micro\base\Exception;
 use Micro\base\Type;
 use Micro\db\Query;
 use Micro\mvc\Widget;
 use Micro\wrappers\Html;
-use Micro\base\Exception;
 
 /**
  * GridViewWidget class file.

@@ -19,14 +19,13 @@ use Micro\base\Registry;
  */
 abstract class Identity
 {
-    protected $container;
-
     /** @var string $username user name */
     public $username;
     /** @var string $password user password */
     public $password;
     /** @var string $error error string */
     public $error;
+    protected $container;
 
     /**
      * Initialize identity element

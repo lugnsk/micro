@@ -44,24 +44,6 @@ class Micro
     /** @var Registry $container Registry is a container for components and options */
     protected $container;
 
-
-    /**
-     * Clone application
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function __clone()
-    {
-        if ($this->debug) {
-            $this->startTime = microtime(true);
-        }
-
-        $this->loaded = false;
-        $this->container = null;
-    }
-
     /**
      * Initialize framework
      *
@@ -134,62 +116,26 @@ class Micro
         return true;
     }
 
-    /**
-     * Boot Loader
-     *
-     * @access public
-     *
-     * @param string $configPath Path to configure Registry
-     *
-     * @return void
-     */
-    public function loader($configPath = '/configs/index.php')
+    public function getMicroDir()
     {
-        if (true === $this->loaded) {
-            return;
-        }
-
-        $this->initContainer($configPath);
-
-        $this->loaded = true;
+        return $this->microDir;
     }
 
     /**
-     * Unloader subsystem
+     * Clone application
      *
      * @access public
      *
      * @return void
      */
-    public function unloader()
+    public function __clone()
     {
-        if (false === $this->loaded) {
-            return;
+        if ($this->debug) {
+            $this->startTime = microtime(true);
         }
 
-        $this->container = null;
         $this->loaded = false;
-    }
-
-    /**
-     * Initialize container
-     *
-     * @access public
-     *
-     * @param string $configPath Path to configure Registry
-     *
-     * @return void
-     */
-    public function initContainer($configPath)
-    {
-        $this->container = new Registry;
-        $this->container->kernel = $this;
-
-        $this->container->load($configPath);
-
-        if (!isset($this->container->dispatcher)) {
-            $this->container->dispatcher = new Dispatcher($this->container);
-        }
+        $this->container = null;
     }
 
     /**
@@ -227,6 +173,47 @@ class Micro
     }
 
     /**
+     * Boot Loader
+     *
+     * @access public
+     *
+     * @param string $configPath Path to configure Registry
+     *
+     * @return void
+     */
+    public function loader($configPath = '/configs/index.php')
+    {
+        if (true === $this->loaded) {
+            return;
+        }
+
+        $this->initContainer($configPath);
+
+        $this->loaded = true;
+    }
+
+    /**
+     * Initialize container
+     *
+     * @access public
+     *
+     * @param string $configPath Path to configure Registry
+     *
+     * @return void
+     */
+    public function initContainer($configPath)
+    {
+        $this->container = new Registry;
+        $this->container->kernel = $this;
+
+        $this->container->load($configPath);
+
+        if (!isset($this->container->dispatcher)) {
+            $this->container->dispatcher = new Dispatcher($this->container);
+        }
+    }
+
+    /**
      * Terminate application
      *
      * @access public
@@ -246,6 +233,28 @@ class Micro
 
     // Methods for components
 
+    public function getStartTime()
+    {
+        return $this->debug ? $this->startTime : null;
+    }
+
+    /**
+     * Unloader subsystem
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function unloader()
+    {
+        if (false === $this->loaded) {
+            return;
+        }
+
+        $this->container = null;
+        $this->loaded = false;
+    }
+
     public function getCharset()
     {
         return 'UTF-8';
@@ -256,11 +265,6 @@ class Micro
         return $this->debug;
     }
 
-    public function getStartTime()
-    {
-        return $this->debug ? $this->startTime : null;
-    }
-
     public function getEnvironment()
     {
         return $this->environment;
@@ -269,11 +273,6 @@ class Micro
     public function getContainer()
     {
         return $this->container;
-    }
-
-    public function getMicroDir()
-    {
-        return $this->microDir;
     }
 
     public function getAppDir()

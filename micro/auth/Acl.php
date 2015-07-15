@@ -68,18 +68,6 @@ abstract class Acl
     }
 
     /**
-     * Get permissions in role
-     *
-     * @access protected
-     *
-     * @param string $role role name
-     *
-     * @return array
-     * @abstract
-     */
-    abstract protected function rolePerms($role);
-
-    /**
      * Check user access to permission
      *
      * @access public
@@ -92,4 +80,16 @@ abstract class Acl
      * @abstract
      */
     abstract public function check($userId, $permission, array $data = []);
+
+    /**
+     * Get permissions in role
+     *
+     * @access protected
+     *
+     * @param string $role role name
+     *
+     * @return array
+     * @abstract
+     */
+    abstract protected function rolePerms($role);
 }

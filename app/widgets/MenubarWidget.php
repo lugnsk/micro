@@ -4,7 +4,6 @@ namespace App\widgets;
 
 use App\components\View;
 use Micro\mvc\Widget;
-use Micro\mvc\views\PhpView;
 
 class MenubarWidget extends Widget
 {

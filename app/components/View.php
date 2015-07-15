@@ -2,7 +2,6 @@
 
 namespace App\components;
 
-use Micro\web\Request;
 use Micro\base\Registry;
 use Micro\mvc\views\PhpView;
 

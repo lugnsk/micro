@@ -80,25 +80,6 @@ class Form
     }
 
     /**
-     * Render check box field tag
-     *
-     * @access public
-     *
-     * @param \Micro\web\FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function checkBoxField($model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::checkBoxField($element['name'], $element['value'], $options);
-    }
-
-    /**
      * Render hidden field tag
      *
      * @access public
@@ -276,8 +257,6 @@ class Form
         Html::closeTag('div');
     }
 
-    // HTML5 Fields
-
     /**
      * Render password field tag
      *
@@ -296,6 +275,8 @@ class Form
 
         return Html::passwordField($element['name'], $element['value'], $options);
     }
+
+    // HTML5 Fields
 
     /**
      * Render text field row
@@ -615,8 +596,6 @@ class Form
         return Html::emailField($element['name'], $element['value'], $options);
     }
 
-    // LIST Fields
-
     /**
      * Render number field row
      *
@@ -650,6 +629,8 @@ class Form
         $this->numberField($model, $property, $options) .
         Html::closeTag('div');
     }
+
+    // LIST Fields
 
     /**
      * Render number field tag
@@ -723,8 +704,6 @@ class Form
         return Html::rangeField($element['name'], $element['value'], $options);
     }
 
-    // Rows
-
     /**
      * Render search field row
      *
@@ -758,6 +737,8 @@ class Form
         $this->searchField($model, $property, $options) .
         Html::closeTag('div');
     }
+
+    // Rows
 
     /**
      * Render search field tag
@@ -831,8 +812,6 @@ class Form
         return Html::telField($element['name'], $element['value'], $options);
     }
 
-    // HTML5 Rows
-
     /**
      * Render time field row
      *
@@ -866,6 +845,8 @@ class Form
         $this->timeField($model, $property, $options) .
         Html::closeTag('div');
     }
+
+    // HTML5 Rows
 
     /**
      * Render time field tag
@@ -1246,6 +1227,25 @@ class Form
         Html::label($model->getLabel($property), $element['id'], $label) .
         $this->checkBoxField($model, $property, $options) .
         Html::closeTag('div');
+    }
+
+    /**
+     * Render check box field tag
+     *
+     * @access public
+     *
+     * @param \Micro\web\FormModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function checkBoxField($model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::checkBoxField($element['name'], $element['value'], $options);
     }
 
     // LIST Rows

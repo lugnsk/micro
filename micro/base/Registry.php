@@ -38,21 +38,6 @@ class Registry
     }
 
     /**
-     * Set attribute
-     *
-     * @access public
-     *
-     * @param string $name Name attribute
-     * @param mixed $component Component or option
-     *
-     * @return void
-     */
-    public function __set($name, $component)
-    {
-        $this->data[$name] = $component;
-    }
-
-    /**
      * Is set component or option name into registry
      *
      * @access public
@@ -97,6 +82,21 @@ class Registry
         }
 
         return $this->data[$name];
+    }
+
+    /**
+     * Set attribute
+     *
+     * @access public
+     *
+     * @param string $name Name attribute
+     * @param mixed $component Component or option
+     *
+     * @return void
+     */
+    public function __set($name, $component)
+    {
+        $this->data[$name] = $component;
     }
 
     /**

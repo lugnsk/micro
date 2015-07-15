@@ -2,7 +2,6 @@
 
 namespace App\models;
 
-use Micro\base\Registry;
 use Micro\db\Query;
 use Micro\web\FormModel;
 

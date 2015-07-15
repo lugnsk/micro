@@ -5,8 +5,6 @@ namespace App\controllers;
 use App\components\Controller;
 use App\components\View;
 use App\models\LoginFormModel;
-use Micro\base\Registry;
-use Micro\Micro;
 use Micro\web\FormBuilder;
 use Micro\wrappers\Html;
 

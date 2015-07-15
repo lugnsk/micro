@@ -97,6 +97,21 @@ class Request
     }
 
     /**
+     * Set value into query storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $value Key value
+     *
+     * @return void
+     */
+    public function setQueryVar($name, $value)
+    {
+        $this->setVar($name, $value, '_GET');
+    }
+
+    /**
      * Set value into storage
      *
      * @access public
@@ -110,21 +125,6 @@ class Request
     public function setVar($name, $value, $storage)
     {
         $GLOBALS[$storage][$name] = $value;
-    }
-
-    /**
-     * Set value into query storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     * @param string $value Key value
-     *
-     * @return void
-     */
-    public function setQueryVar($name, $value)
-    {
-        $this->setVar($name, $value, '_GET');
     }
 
     /**
@@ -173,6 +173,20 @@ class Request
     }
 
     /**
+     * Get value by key from server storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getServerVar($name)
+    {
+        return $this->getVar($name, '_SERVER');
+    }
+
+    /**
      * Get any var from Request storage
      *
      * @access public
@@ -185,20 +199,6 @@ class Request
     public function getVar($name, $storage)
     {
         return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : false;
-    }
-
-    /**
-     * Get value by key from server storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getServerVar($name)
-    {
-        return $this->getVar($name, '_SERVER');
     }
 
     /**

@@ -51,6 +51,21 @@ class FlashMessage
     }
 
     /**
+     * Get label for type by id
+     *
+     * @access public
+     *
+     * @param int $type type id
+     *
+     * @return mixed
+     * @static
+     */
+    public static function getTypeLabel($type = self::TYPE_SUCCESS)
+    {
+        return self::getTypeLabels()[$type];
+    }
+
+    /**
      * Get labels for types
      *
      * @access public
@@ -65,21 +80,6 @@ class FlashMessage
             self::TYPE_WARNING => 'warning',
             self::TYPE_DANGER => 'danger'
         ];
-    }
-
-    /**
-     * Get label for type by id
-     *
-     * @access public
-     *
-     * @param int $type type id
-     *
-     * @return mixed
-     * @static
-     */
-    public static function getTypeLabel($type = self::TYPE_SUCCESS)
-    {
-        return self::getTypeLabels()[$type];
     }
 
     /**

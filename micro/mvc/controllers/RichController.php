@@ -3,35 +3,11 @@
 namespace Micro\mvc\controllers;
 
 use Micro\base\Registry;
-use Micro\web\Request;
 
 abstract class RichController extends Controller
 {
     /** @var string $format Format for response */
     public $format = 'application/json';
-
-
-    /**
-     * Define types for actions
-     *
-     * <code>
-     *  // DELETE, GET, HEAD, OPTIONS, POST, PUT
-     * public function actionsTypes() {
-     *  return [
-     *     'create' => 'POST',
-     *     'read'   => 'GET',
-     *     'update' => 'UPDATE'
-     *     'delete' => 'DELETE'
-     *  ];
-     * }
-     * </code>
-     *
-     * @access public
-     *
-     * @return array
-     * @abstract
-     */
-    abstract public function actionsTypes();
 
     /**
      * Construct RICH controller
@@ -113,6 +89,28 @@ abstract class RichController extends Controller
 
         return $this->response;
     }
+
+    /**
+     * Define types for actions
+     *
+     * <code>
+     *  // DELETE, GET, HEAD, OPTIONS, POST, PUT
+     * public function actionsTypes() {
+     *  return [
+     *     'create' => 'POST',
+     *     'read'   => 'GET',
+     *     'update' => 'UPDATE'
+     *     'delete' => 'DELETE'
+     *  ];
+     * }
+     * </code>
+     *
+     * @access public
+     *
+     * @return array
+     * @abstract
+     */
+    abstract public function actionsTypes();
 
     /**
      * Switch content type

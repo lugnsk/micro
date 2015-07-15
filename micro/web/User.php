@@ -24,21 +24,6 @@ class User
     }
 
     /**
-     * Set User ID
-     *
-     * @access public
-     * @global      Registry
-     *
-     * @param mixed $id user id
-     *
-     * @return void
-     */
-    public function setID($id)
-    {
-        $this->container->session->UserID = $id;
-    }
-
-    /**
      * Check access by current user
      *
      * @access public
@@ -55,35 +40,6 @@ class User
             return $this->container->permission->check($this->getID(), $permission, $data);
         } else {
             return false;
-        }
-    }
-
-    /**
-     * Login user
-     *
-     * @access public
-     *
-     * @param int|string $userId User identify
-     *
-     * @return void
-     */
-    public function login($userId)
-    {
-        $this->setID($userId);
-    }
-
-    /**
-     * Logout user
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function logout()
-    {
-        if (!$this->isGuest()) {
-            $this->setID(null);
-            $this->container->session->destroy();
         }
     }
 
@@ -109,6 +65,50 @@ class User
     public function getID()
     {
         return (!$this->isGuest()) ? $this->container->session->UserID : false;
+    }
+
+    /**
+     * Login user
+     *
+     * @access public
+     *
+     * @param int|string $userId User identify
+     *
+     * @return void
+     */
+    public function login($userId)
+    {
+        $this->setID($userId);
+    }
+
+    /**
+     * Set User ID
+     *
+     * @access public
+     * @global      Registry
+     *
+     * @param mixed $id user id
+     *
+     * @return void
+     */
+    public function setID($id)
+    {
+        $this->container->session->UserID = $id;
+    }
+
+    /**
+     * Logout user
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        if (!$this->isGuest()) {
+            $this->setID(null);
+            $this->container->session->destroy();
+        }
     }
 
     /**

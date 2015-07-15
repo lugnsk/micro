@@ -2,10 +2,10 @@
 
 namespace Micro\widgets;
 
+use Micro\base\Exception;
 use Micro\db\Query;
 use Micro\mvc\Widget;
 use Micro\wrappers\Html;
-use Micro\base\Exception;
 
 /**
  * ListViewWidget class file.
@@ -164,25 +164,6 @@ class ListViewWidget extends Widget
     }
 
     /**
-     * Get pager
-     *
-     * @access protected
-     *
-     * @return string
-     */
-    protected function getPager()
-    {
-        if (!$this->rows) {
-            return '';
-        }
-
-        $pager = new PaginationWidget($this->paginationConfig);
-        $pager->init();
-
-        return $pager->run();
-    }
-
-    /**
      * Get elements
      *
      * @access protected
@@ -210,5 +191,24 @@ class ListViewWidget extends Widget
         echo Html::closeTag('ul');
 
         return ob_get_clean();
+    }
+
+    /**
+     * Get pager
+     *
+     * @access protected
+     *
+     * @return string
+     */
+    protected function getPager()
+    {
+        if (!$this->rows) {
+            return '';
+        }
+
+        $pager = new PaginationWidget($this->paginationConfig);
+        $pager->init();
+
+        return $pager->run();
     }
 }

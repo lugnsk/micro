@@ -2,8 +2,8 @@
 
 namespace Micro\widgets;
 
-use Micro\wrappers\Html;
 use Micro\base\Exception;
+use Micro\wrappers\Html;
 
 /**
  * Actions grid column class file.

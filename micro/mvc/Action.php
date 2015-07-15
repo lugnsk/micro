@@ -3,7 +3,6 @@
 namespace Micro\mvc;
 
 use Micro\base\Registry;
-use Micro\web\Request;
 
 /**
  * Class Action

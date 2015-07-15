@@ -71,14 +71,6 @@ abstract class Rbac
     abstract public function assign($userId, $name);
 
     /**
-     * Get raw roles
-     *
-     * @access public
-     * @return mixed
-     */
-    abstract public function rawRoles();
-
-    /**
      * Check privileges to operation
      *
      * @access public
@@ -141,25 +133,12 @@ abstract class Rbac
     }
 
     /**
-     * Execute rule
+     * Get raw roles
      *
      * @access public
-     *
-     * @param array $role element
-     * @param array $data action params
-     *
-     * @return bool
+     * @return mixed
      */
-    public function execute(array $role, array $data)
-    {
-        if (!$role['data']) {
-            return true;
-        } else {
-            extract($data);
-
-            return eval('return ' . $role['data']);
-        }
-    }
+    abstract public function rawRoles();
 
     /**
      * Get assigned to user RBAC elements
@@ -180,21 +159,6 @@ abstract class Rbac
         $query->single = false;
 
         return $query->run(\PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Revoke RBAC element from user
-     *
-     * @access public
-     *
-     * @param integer $userId user id
-     * @param string $name element name
-     *
-     * @return bool
-     */
-    public function revoke($userId, $name)
-    {
-        return $this->conn->delete('rbac_user', 'name=:name AND user=:user', ['name' => $name, 'user' => $userId]);
     }
 
     /**
@@ -223,5 +187,41 @@ abstract class Rbac
         }
 
         return $result;
+    }
+
+    /**
+     * Execute rule
+     *
+     * @access public
+     *
+     * @param array $role element
+     * @param array $data action params
+     *
+     * @return bool
+     */
+    public function execute(array $role, array $data)
+    {
+        if (!$role['data']) {
+            return true;
+        } else {
+            extract($data);
+
+            return eval('return ' . $role['data']);
+        }
+    }
+
+    /**
+     * Revoke RBAC element from user
+     *
+     * @access public
+     *
+     * @param integer $userId user id
+     * @param string $name element name
+     *
+     * @return bool
+     */
+    public function revoke($userId, $name)
+    {
+        return $this->conn->delete('rbac_user', 'name=:name AND user=:user', ['name' => $name, 'user' => $userId]);
     }
 }

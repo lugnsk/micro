@@ -94,17 +94,6 @@ class FormBuilder
     }
 
     /**
-     * Get errors from model
-     *
-     * @access public
-     * @return array
-     */
-    public function getModelErrors()
-    {
-        return $this->model->getErrors();
-    }
-
-    /**
      * Getting model
      *
      * @access public
@@ -173,17 +162,14 @@ class FormBuilder
     }
 
     /**
-     * Finish form render
+     * Get errors from model
      *
      * @access public
-     * @return void
+     * @return array
      */
-    public function endRender()
+    public function getModelErrors()
     {
-        if (!empty($this->config['legend'])) {
-            echo Html::closeTag('fieldset');
-        }
-        $this->widget->run();
+        return $this->model->getErrors();
     }
 
     /**
@@ -219,5 +205,19 @@ class FormBuilder
             $type = $button['type'] . 'Button';
             echo Html::$type($button['label'], !empty($button['options']) ? $button['options'] : []);
         }
+    }
+
+    /**
+     * Finish form render
+     *
+     * @access public
+     * @return void
+     */
+    public function endRender()
+    {
+        if (!empty($this->config['legend'])) {
+            echo Html::closeTag('fieldset');
+        }
+        $this->widget->run();
     }
 }

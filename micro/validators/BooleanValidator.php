@@ -3,7 +3,6 @@
 namespace Micro\validators;
 
 use Micro\base\Validator;
-use Micro\base\Registry;
 use Micro\db\Model;
 
 /**

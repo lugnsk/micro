@@ -2,8 +2,6 @@
 
 namespace Micro\web;
 
-use Micro\base\Registry;
-
 /**
  * Session is a Session manager
  *

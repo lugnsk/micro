@@ -3,7 +3,6 @@
 namespace Micro\filters;
 
 use Micro\base\Registry;
-use Micro\web\Request;
 
 /**
  * Filter class file.
@@ -19,10 +18,9 @@ use Micro\web\Request;
  */
 abstract class Filter
 {
+    public $result;
     /** @var Registry $registry */
     protected $container;
-
-    public $result;
     protected $action;
 
     /**

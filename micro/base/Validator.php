@@ -15,12 +15,6 @@ namespace Micro\base;
  */
 class Validator
 {
-    /** @var array $errors errors summary */
-    public $errors = [];
-    /** @var array $elements validation elements */
-    public $elements = [];
-    /** @var array $params validation parameters */
-    public $params = [];
     /** @var array $validators supported validations */
     protected static $validators = [
         'required' => 'RequiredValidator',
@@ -36,11 +30,15 @@ class Validator
         'url' => 'UrlValidator',
         'file' => 'FileValidator'
     ];
+    /** @var array $errors errors summary */
+    public $errors = [];
+    /** @var array $elements validation elements */
+    public $elements = [];
+    /** @var array $params validation parameters */
+    public $params = [];
+    protected $container;
     /** @var array $rule current rule */
     private $rule = [];
-
-    protected $container;
-
 
     /**
      * Constructor validator object

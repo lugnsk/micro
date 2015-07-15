@@ -2,9 +2,8 @@
 
 namespace App\components;
 
-use Micro\mvc\controllers\ViewController as BaseController;
-use Micro\web\Request;
 use Micro\base\Registry;
+use Micro\mvc\controllers\ViewController as BaseController;
 
 /**
  * Class Controller

@@ -2,8 +2,8 @@
 
 namespace Micro\mvc\controllers;
 
-use Micro\base\Registry;
 use Micro\base\Exception;
+use Micro\base\Registry;
 use Micro\web\Response;
 
 
@@ -15,19 +15,6 @@ abstract class Controller
     public $response;
     /** @var Registry $container */
     protected $container;
-
-
-    /**
-     * Master action
-     *
-     * @access public
-     *
-     * @param string $name Called action name
-     *
-     * @return string
-     * @abstract
-     */
-    abstract public function action($name = 'index');
 
     /**
      * Constructor controller
@@ -63,6 +50,18 @@ abstract class Controller
             $this->response = new Response;
         }
     }
+
+    /**
+     * Master action
+     *
+     * @access public
+     *
+     * @param string $name Called action name
+     *
+     * @return string
+     * @abstract
+     */
+    abstract public function action($name = 'index');
 
     /**
      * Apply filters

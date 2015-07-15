@@ -87,17 +87,6 @@ class Assets
     }
 
     /**
-     * Get publish directory
-     *
-     * @access public
-     * @return string
-     */
-    public function getPublishDir()
-    {
-        return $this->publishDir;
-    }
-
-    /**
      * Get source directory
      *
      * @access public
@@ -106,5 +95,16 @@ class Assets
     public function getSourceDir()
     {
         return $this->sourceDir;
+    }
+
+    /**
+     * Get publish directory
+     *
+     * @access public
+     * @return string
+     */
+    public function getPublishDir()
+    {
+        return $this->publishDir;
     }
 }

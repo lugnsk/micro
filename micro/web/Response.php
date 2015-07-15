@@ -52,65 +52,6 @@ class Response implements OutputInterface
     }
 
     /**
-     * Add header into headers array
-     *
-     * @access public
-     *
-     * @param string $name Name of header
-     * @param string $value Value header
-     * @param bool $replace Replaced if exists?
-     *
-     * @return void
-     */
-    public function addHeader($name, $value, $replace = true)
-    {
-        $header = empty($this->headers[$name]) ? $value : $this->headers[$name];
-        $this->headers[$name] = $replace ? $value : $header;
-    }
-
-    /**
-     * Get header if defined
-     *
-     * @access public
-     *
-     * @param string $name Name of header to get
-     *
-     * @return string|null
-     */
-    public function getHeader($name)
-    {
-        return $this->headers ? $this->headers[$name] : null;
-    }
-
-    /**
-     * Set HTTP version
-     *
-     * @access public
-     *
-     * @param string $version
-     *
-     * @return void
-     */
-    public function setHttpVersion($version = 'HTTP/1.1')
-    {
-        $this->httpVersion = $version;
-    }
-
-    /**
-     * Resets all headers
-     *
-     * @access public
-     *
-     * @param array $headers New headers array
-     *
-     * @return void
-     */
-    public function setHeaders(array $headers = [])
-    {
-        $this->headers = $headers;
-    }
-
-    /**
      * Set status for response
      *
      * @access public
@@ -170,6 +111,79 @@ class Response implements OutputInterface
     }
 
     /**
+     * Resets all headers
+     *
+     * @access public
+     *
+     * @param array $headers New headers array
+     *
+     * @return void
+     */
+    public function setHeaders(array $headers = [])
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * Set body for response
+     *
+     * @access public
+     *
+     * @param string $data Data for HTTP response body
+     *
+     * @return void
+     */
+    public function setBody($data = '')
+    {
+        $this->body = $data;
+    }
+
+    /**
+     * Add header into headers array
+     *
+     * @access public
+     *
+     * @param string $name Name of header
+     * @param string $value Value header
+     * @param bool $replace Replaced if exists?
+     *
+     * @return void
+     */
+    public function addHeader($name, $value, $replace = true)
+    {
+        $header = empty($this->headers[$name]) ? $value : $this->headers[$name];
+        $this->headers[$name] = $replace ? $value : $header;
+    }
+
+    /**
+     * Get header if defined
+     *
+     * @access public
+     *
+     * @param string $name Name of header to get
+     *
+     * @return string|null
+     */
+    public function getHeader($name)
+    {
+        return $this->headers ? $this->headers[$name] : null;
+    }
+
+    /**
+     * Set HTTP version
+     *
+     * @access public
+     *
+     * @param string $version
+     *
+     * @return void
+     */
+    public function setHttpVersion($version = 'HTTP/1.1')
+    {
+        $this->httpVersion = $version;
+    }
+
+    /**
      * Get HTTP Content Type
      *
      * @access public
@@ -193,20 +207,6 @@ class Response implements OutputInterface
     public function setContentType($newType = '')
     {
         $this->contentType = $newType ?: 'text/html';
-    }
-
-    /**
-     * Set body for response
-     *
-     * @access public
-     *
-     * @param string $data Data for HTTP response body
-     *
-     * @return void
-     */
-    public function setBody($data = '')
-    {
-        $this->body = $data;
     }
 
     /**

@@ -5,8 +5,6 @@ namespace App\controllers;
 use App\components\Controller;
 use App\components\View;
 use App\models\User;
-use Micro\base\Registry;
-use Micro\db\Query;
 
 class ProfileController extends Controller
 {

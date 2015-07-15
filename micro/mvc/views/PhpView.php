@@ -3,8 +3,6 @@
 namespace Micro\mvc\views;
 
 use Micro\base\Exception;
-use Micro\base\Registry;
-use Micro\Micro;
 use Micro\web\Language;
 
 /**
@@ -29,26 +27,6 @@ class PhpView extends View
     public $path;
     /** @var string $data Return data */
     public $data = '';
-
-
-    /**
-     * Render insert data into view
-     *
-     * @access protected
-     *
-     * @return string
-     * @throws \Micro\base\Exception
-     */
-    public function render()
-    {
-        if (!$this->view) {
-            return false;
-        }
-
-        return $this->renderRawData(
-            ($this->data) ?: $this->renderFile($this->getViewFile($this->view), $this->params)
-        );
-    }
 
     /**
      * Render partial
@@ -75,29 +53,22 @@ class PhpView extends View
     }
 
     /**
-     * Render file by path
+     * Render insert data into view
      *
      * @access protected
      *
-     * @param string $fileName file name
-     * @param array $data arguments array
-     *
      * @return string
-     * @throws Exception widget not declared
+     * @throws \Micro\base\Exception
      */
-    protected function renderFile($fileName, array $data = [])
+    public function render()
     {
-        $lang = new Language($this->container, $fileName);
-        extract($data, EXTR_PREFIX_SAME || EXTR_REFS, 'data');
-        ob_start();
-
-        include str_replace('\\', '/', $fileName);
-
-        if ($GLOBALS['widgetStack']) {
-            throw new Exception($this->container, count($GLOBALS['widgetStack']) . ' widgets not endings.');
+        if (!$this->view) {
+            return false;
         }
 
-        return ob_get_clean();
+        return $this->renderRawData(
+            ($this->data) ?: $this->renderFile($this->getViewFile($this->view), $this->params)
+        );
     }
 
     /**
@@ -124,6 +95,58 @@ class PhpView extends View
         }
 
         return $data;
+    }
+
+    /**
+     * Get layout path
+     *
+     * @access protected
+     *
+     * @param string $baseDir path to base dir
+     * @param string $module module name
+     *
+     * @return string
+     * @throws Exception
+     */
+    protected function getLayoutFile($baseDir, $module)
+    {
+        $layout = $baseDir . '/' . (($module) ? $module . '/' : $module);
+        $afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
+
+        if (!file_exists($layout . $afterPath)) {
+            if (file_exists($baseDir . '/' . $afterPath)) {
+                return $baseDir . '/' . $afterPath;
+            }
+            throw new Exception($this->request, $this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
+        }
+
+        return $layout . $afterPath;
+    }
+
+    /**
+     * Render file by path
+     *
+     * @access protected
+     *
+     * @param string $fileName file name
+     * @param array $data arguments array
+     *
+     * @return string
+     * @throws Exception widget not declared
+     */
+    protected function renderFile($fileName, array $data = [])
+    {
+        $lang = new Language($this->container, $fileName);
+        extract($data, EXTR_PREFIX_SAME || EXTR_REFS, 'data');
+        ob_start();
+
+        include str_replace('\\', '/', $fileName);
+
+        if ($GLOBALS['widgetStack']) {
+            throw new Exception($this->container, count($GLOBALS['widgetStack']) . ' widgets not endings.');
+        }
+
+        return ob_get_clean();
     }
 
     /**
@@ -165,31 +188,5 @@ class PhpView extends View
         }
 
         return $path;
-    }
-
-    /**
-     * Get layout path
-     *
-     * @access protected
-     *
-     * @param string $baseDir path to base dir
-     * @param string $module module name
-     *
-     * @return string
-     * @throws Exception
-     */
-    protected function getLayoutFile($baseDir, $module)
-    {
-        $layout = $baseDir . '/' . (($module) ? $module . '/' : $module);
-        $afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
-
-        if (!file_exists($layout . $afterPath)) {
-            if (file_exists($baseDir . '/' . $afterPath)) {
-                return $baseDir . '/' . $afterPath;
-            }
-            throw new Exception($this->request, $this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
-        }
-
-        return $layout . $afterPath;
     }
 }

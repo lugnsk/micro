@@ -3,8 +3,8 @@
 namespace Micro\mvc\views;
 
 use Micro\base\Exception;
-use Micro\wrappers\Html;
 use Micro\base\Registry;
+use Micro\wrappers\Html;
 
 /**
  * Class View
@@ -28,35 +28,12 @@ abstract class View
     public $params = [];
     /** @var array $stack */
     public $stack = [];
-
-    protected $container;
     public $module;
-
+    protected $container;
 
     public function __construct(Registry $container)
     {
         $this->container = $container;
-    }
-
-    /**
-     * Render
-     *
-     * @abstract
-     * @access public
-     * @return mixed
-     */
-    abstract public function render();
-
-
-    /**
-     * Convert object to string
-     *
-     * @access public
-     * @return string
-     */
-    public function __toString()
-    {
-        return '' . $this->render();
     }
 
     /**
@@ -125,6 +102,26 @@ abstract class View
     }
 
     /**
+     * Convert object to string
+     *
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return '' . $this->render();
+    }
+
+    /**
+     * Render
+     *
+     * @abstract
+     * @access public
+     * @return mixed
+     */
+    abstract public function render();
+
+    /**
      * Begin widget
      *
      * @access public
@@ -183,41 +180,6 @@ abstract class View
         $v = $widget->run();
         unset($widget);
         echo $v;
-    }
-
-    /**
-     * Insert styles and scripts into cache
-     *
-     * @access protected
-     *
-     * @param string $cache cache of generated page
-     *
-     * @return string
-     */
-    protected function insertStyleScripts($cache)
-    {
-        $heads = '';
-        $ends = '';
-        $result = '';
-
-        foreach ($this->styleScripts AS $element) {
-            if ($element['isHead']) {
-                $heads .= $element['body'];
-            } else {
-                $ends .= $element['body'];
-            }
-        }
-
-        $positionHead = strpos($cache, Html::closeTag('head'));
-        $positionBody = strpos($cache, Html::closeTag('body'), $positionHead);
-
-        $result .= substr($cache, 0, $positionHead);
-        $result .= $heads;
-        $result .= substr($cache, $positionHead, $positionBody);
-        $result .= $ends;
-        $result .= substr($cache, $positionHead + $positionBody);
-
-        return $result;
     }
 
     /**
@@ -290,5 +252,40 @@ abstract class View
             'isHead' => $isHead,
             'body' => Html::cssFile($source)
         ];
+    }
+
+    /**
+     * Insert styles and scripts into cache
+     *
+     * @access protected
+     *
+     * @param string $cache cache of generated page
+     *
+     * @return string
+     */
+    protected function insertStyleScripts($cache)
+    {
+        $heads = '';
+        $ends = '';
+        $result = '';
+
+        foreach ($this->styleScripts AS $element) {
+            if ($element['isHead']) {
+                $heads .= $element['body'];
+            } else {
+                $ends .= $element['body'];
+            }
+        }
+
+        $positionHead = strpos($cache, Html::closeTag('head'));
+        $positionBody = strpos($cache, Html::closeTag('body'), $positionHead);
+
+        $result .= substr($cache, 0, $positionHead);
+        $result .= $heads;
+        $result .= substr($cache, $positionHead, $positionBody);
+        $result .= $ends;
+        $result .= substr($cache, $positionHead + $positionBody);
+
+        return $result;
     }
 }

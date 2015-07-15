@@ -2,9 +2,9 @@
 
 namespace Micro\db;
 
-use Micro\base\Type;
 use Micro\base\Exception;
 use Micro\base\Registry;
+use Micro\base\Type;
 use Micro\web\FormModel;
 
 /**
@@ -21,10 +21,10 @@ use Micro\web\FormModel;
  */
 abstract class Model extends FormModel
 {
-    /** @var boolean $_isNewRecord is new record? */
-    protected $_isNewRecord = false;
     /** @var string $primaryKey Primary key on table */
     public static $primaryKey = 'id';
+    /** @var boolean $_isNewRecord is new record? */
+    protected $_isNewRecord = false;
     /** @var array $cacheRelations cached loads relations */
     protected $cacheRelations = [];
 
@@ -47,27 +47,17 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Is new record?
+     * Finder by primary key
      *
      * @access public
-     * @return boolean
-     */
-    public function isNewRecord()
-    {
-        return $this->_isNewRecord;
-    }
-
-    /**
-     * Get name of table
-     *
-     * @access public
-     *
-     * @return string
+     * @param int|string $value unique value
+     * @param Registry $container
+     * @return mixed
      * @static
      */
-    public static function tableName()
+    public static function findByPk($value, Registry $container)
     {
-        return null;
+        return self::findByAttributes([self::$primaryKey => $value], true, $container);
     }
 
     /**
@@ -82,6 +72,26 @@ abstract class Model extends FormModel
     public function find($single = false)
     {
         return self::findByAttributes(Type::getVars($this), $single, $this->container);
+    }
+
+    /**
+     * Find models by attributes
+     *
+     * @access public
+     * @param array $attributes attributes and data for search
+     * @param bool $single single or more
+     * @param Registry $container
+     * @return mixed
+     */
+    public static function findByAttributes(array $attributes = [], $single = false, Registry $container)
+    {
+        $query = new Query($container);
+        foreach ($attributes AS $key => $val) {
+            $query->addWhere($key . ' = :' . $key);
+        }
+        $query->params = $attributes;
+
+        return self::finder($query, $single);
     }
 
     /**
@@ -107,37 +117,16 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Finder by primary key
+     * Get name of table
      *
      * @access public
-     * @param int|string $value unique value
-     * @param Registry $container
-     * @return mixed
+     *
+     * @return string
      * @static
      */
-    public static function findByPk($value, Registry $container)
+    public static function tableName()
     {
-        return self::findByAttributes([self::$primaryKey => $value], true, $container);
-    }
-
-    /**
-     * Find models by attributes
-     *
-     * @access public
-     * @param array $attributes attributes and data for search
-     * @param bool $single single or more
-     * @param Registry $container
-     * @return mixed
-     */
-    public static function findByAttributes(array $attributes = [], $single = false, Registry $container)
-    {
-        $query = new Query($container);
-        foreach ($attributes AS $key => $val) {
-            $query->addWhere($key . ' = :' . $key);
-        }
-        $query->params = $attributes;
-
-        return self::finder($query, $single);
+        return null;
     }
 
     /**
@@ -155,21 +144,6 @@ abstract class Model extends FormModel
         }
 
         return $fields;
-    }
-
-    /**
-     * Relations for model
-     *
-     * @access public
-     * @return Relations
-     * ]
-     */
-    public function relations()
-    {
-        $keys = new Relations;
-
-        // add any keys
-        return $keys;
     }
 
     /**
@@ -214,14 +188,58 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Before create actions
+     * Relations for model
+     *
+     * @access public
+     * @return Relations
+     * ]
+     */
+    public function relations()
+    {
+        $keys = new Relations;
+
+        // add any keys
+        return $keys;
+    }
+
+    /**
+     * Save changes
+     *
+     * @access public
+     *
+     * @param bool $validate Validated data?
+     *
+     * @return boolean
+     * @throws Exception
+     */
+    final public function save($validate = false)
+    {
+        if ($validate && !$this->validate()) {
+            return false;
+        }
+
+        if ($this->isNewRecord()) {
+            return $this->create();
+        } else {
+            if ($this->beforeSave() && $this->update()) {
+                $this->afterSave();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Is new record?
      *
      * @access public
      * @return boolean
      */
-    public function beforeCreate()
+    public function isNewRecord()
     {
-        return true;
+        return $this->_isNewRecord;
     }
 
     /**
@@ -259,14 +277,14 @@ abstract class Model extends FormModel
     }
 
     /**
-     * After create actions
+     * Before create actions
      *
      * @access public
-     *
-     * @return void
+     * @return boolean
      */
-    public function afterCreate()
+    public function beforeCreate()
     {
+        return true;
     }
 
     /**
@@ -281,32 +299,68 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Save changes
+     * Merge local attributes and db attributes
      *
-     * @access public
+     * @access protected
      *
-     * @param bool $validate Validated data?
-     *
-     * @return boolean
-     * @throws Exception
+     * @return array
+     * @throws \Micro\base\Exception
      */
-    final public function save($validate = false)
+    protected function mergeAttributesDb()
     {
-        if ($validate && !$this->validate()) {
-            return false;
+        $arr = Type::getVars($this);
+
+        $buffer = [];
+        foreach ($this->container->db->listFields(static::tableName()) AS $row) {
+            $buffer[] = $row['field'];
         }
 
-        if ($this->isNewRecord()) {
-            return $this->create();
-        } else {
-            if ($this->beforeSave() && $this->update()) {
-                $this->afterSave();
-
-                return true;
+        foreach ($arr AS $key => $val) {
+            if (!in_array($key, $buffer, true)) {
+                unset($arr[$key]);
             }
         }
 
-        return false;
+        unset($arr['isNewRecord']);
+
+        return $arr;
+    }
+
+    /**
+     * Check attribute exists into table
+     *
+     * @access public
+     *
+     * @param string $name Attribute name
+     *
+     * @return array
+     */
+    public function checkAttributeExists($name)
+    {
+        if (isset($this->$name)) {
+            return true;
+        }
+
+        $res = false;
+        foreach ($this->container->db->listFields(static::tableName()) AS $row) {
+            if ($row['field'] === $name) {
+                $res = true;
+                break;
+            }
+        }
+
+        return $res;
+    }
+
+    /**
+     * After create actions
+     *
+     * @access public
+     *
+     * @return void
+     */
+    public function afterCreate()
+    {
     }
 
     /**
@@ -317,17 +371,6 @@ abstract class Model extends FormModel
      */
     public function afterSave()
     {
-    }
-
-    /**
-     * Before update actions
-     *
-     * @access public
-     * @return boolean
-     */
-    public function beforeUpdate()
-    {
-        return true;
     }
 
     /**
@@ -367,6 +410,17 @@ abstract class Model extends FormModel
     }
 
     /**
+     * Before update actions
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeUpdate()
+    {
+        return true;
+    }
+
+    /**
      * After update actions
      *
      * @access public
@@ -374,17 +428,6 @@ abstract class Model extends FormModel
      */
     public function afterUpdate()
     {
-    }
-
-    /**
-     * Before delete actions
-     *
-     * @access public
-     * @return boolean
-     */
-    public function beforeDelete()
-    {
-        return true;
     }
 
     /**
@@ -423,6 +466,17 @@ abstract class Model extends FormModel
     }
 
     /**
+     * Before delete actions
+     *
+     * @access public
+     * @return boolean
+     */
+    public function beforeDelete()
+    {
+        return true;
+    }
+
+    /**
      * After delete actions
      *
      * @access public
@@ -430,59 +484,5 @@ abstract class Model extends FormModel
      */
     public function afterDelete()
     {
-    }
-
-    /**
-     * Check attribute exists into table
-     *
-     * @access public
-     *
-     * @param string $name Attribute name
-     *
-     * @return array
-     */
-    public function checkAttributeExists($name)
-    {
-        if (isset($this->$name)) {
-            return true;
-        }
-
-        $res = false;
-        foreach ($this->container->db->listFields(static::tableName()) AS $row) {
-            if ($row['field'] === $name) {
-                $res = true;
-                break;
-            }
-        }
-
-        return $res;
-    }
-
-    /**
-     * Merge local attributes and db attributes
-     *
-     * @access protected
-     *
-     * @return array
-     * @throws \Micro\base\Exception
-     */
-    protected function mergeAttributesDb()
-    {
-        $arr = Type::getVars($this);
-
-        $buffer = [];
-        foreach ($this->container->db->listFields(static::tableName()) AS $row) {
-            $buffer[] = $row['field'];
-        }
-
-        foreach ($arr AS $key => $val) {
-            if (!in_array($key, $buffer, true)) {
-                unset($arr[$key]);
-            }
-        }
-
-        unset($arr['isNewRecord']);
-
-        return $arr;
     }
 }

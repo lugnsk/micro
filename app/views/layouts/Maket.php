@@ -1,6 +1,5 @@
 <?php
 
-use Micro\Micro;
 use Micro\wrappers\Html;
 
 /** @var string $content */

@@ -20,14 +20,13 @@ use Micro\base\Validator;
 abstract class FormModel
 {
     protected $container;
+    /** @var array $errors validation errors */
+    protected $errors = [];
 
     public function __construct(Registry $container)
     {
         $this->container = $container;
     }
-
-    /** @var array $errors validation errors */
-    protected $errors = [];
 
     /**
      * Run validation

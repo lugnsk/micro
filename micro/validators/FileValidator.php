@@ -4,7 +4,6 @@ namespace Micro\validators;
 
 use Micro\base\Validator;
 use Micro\db\Model;
-use Micro\web\Uploader;
 
 /**
  * EmailValidator class file.

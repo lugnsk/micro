@@ -19,12 +19,11 @@ use Micro\base\Registry;
  */
 class Language
 {
+    protected $container;
     /** @var array $language language array */
     private $language = [];
     /** @var string $defaultLang default language */
     private $defaultLang = 'en';
-    protected $container;
-
 
     /**
      * Constructor language

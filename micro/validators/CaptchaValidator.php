@@ -2,7 +2,6 @@
 
 namespace Micro\validators;
 
-use Micro\base\Registry;
 use Micro\base\Validator;
 use Micro\db\Model;
 
