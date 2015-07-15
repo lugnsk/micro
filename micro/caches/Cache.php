@@ -1,111 +1,85 @@
 <?php /** MicroCache */
 
-namespace Micro\caches;
+namespace Micro\base;
 
 /**
- * Interface Cache
+ * Cache class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
- * @subpackage caches
+ * @subpackage wrappers
  * @version 1.0
  * @since 1.0
  */
-interface Cache
+class Cache
 {
-    /**
-     * Check driver
-     *
-     * @access public
-     * @return mixed
-     */
-    public function check();
+    /** @var array $drivers Supported drivers */
+    protected static $drivers = [
+        'array' => '\\Micro\\caches\\ArrayCache',
+        'apc' => '\\Micro\\caches\\ApcCache',
+        'file' => '\\Micro\\caches\\FileCache',
+        'memcache' => '\\Micro\\caches\\MemcacheCache',
+        'memcached' => '\\Micro\\caches\\MemcacheCache',
+        'redis' => '\\Micro\\caches\\RedisCache',
+        'wincache' => '\\Micro\\caches\\WincacheCache',
+        'xcache' => '\\Micro\\caches\\XcacheCache'
+    ];
+    /** @var array $servers Activated servers */
+    protected $servers = [];
+    /** @var Registry $container Config container */
+    protected $container;
+
 
     /**
-     * Get value by name
+     * Constructor is a initialize Caches
      *
      * @access public
      *
-     * @param string $name key name
+     * @param array $config Caching config
      *
-     * @return mixed
+     * @result void
+     * @throws Exception
      */
-    public function get($name);
+    public function __construct(array $config = [])
+    {
+        $this->container = $config['container'];
+
+        if (empty($config['servers'])) {
+            throw new Exception($this->container, 'Caching not configured');
+        }
+
+        foreach ($config['servers'] AS $key => $server) {
+            if (in_array($server['driver'], array_keys(self::$drivers), true)) {
+                $this->servers[$key] = new self::$drivers[$server['driver']] ($server);
+            } else {
+                throw new Exception($this->container, 'Cache driver `' . $server['driver'] . '` not found');
+            }
+        }
+    }
 
     /**
-     * Set value of element
+     * Get cache server by name
      *
      * @access public
      *
-     * @param string $name key name
-     * @param mixed $value value
+     * @param string $driver server name
      *
      * @return mixed
+     * @throws Exception
      */
-    public function set($name, $value);
+    public function get($driver = null)
+    {
+        if (!$driver) {
+            return $this->servers[0];
+        }
 
-    /**
-     * Delete by key name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
-     */
-    public function delete($name);
-
-    /**
-     * Clean all data from cache
-     *
-     * @access public
-     * @return mixed
-     */
-    public function clean();
-
-    /**
-     * Summary info about cache
-     *
-     * @access public
-     * @return mixed
-     */
-    public function info();
-
-    /**
-     * Get meta-data of key id
-     *
-     * @access public
-     *
-     * @param string $id key id
-     *
-     * @return mixed
-     */
-    public function getMeta($id);
-
-    /**
-     * Increment value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset increment value
-     *
-     * @return mixed
-     */
-    public function increment($name, $offset = 1);
-
-    /**
-     * Decrement value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset decrement value
-     *
-     * @return mixed
-     */
-    public function decrement($name, $offset = 1);
+        if (in_array($driver, $this->servers, true)) {
+            return $this->servers[$driver];
+        } else {
+            throw new Exception($this->container, 'Cache `' . $driver . '` not found.');
+        }
+    }
 }

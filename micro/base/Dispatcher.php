@@ -49,12 +49,8 @@ class Dispatcher
      */
     public function signal($listener, array $params = [])
     {
-        if ($this->listeners) {
-            foreach ($this->listeners AS $key => $obj) {
-                if ($key === $listener) {
-                    return call_user_func($obj, $params);
-                }
-            }
+        if ($this->listeners && array_key_exists($listener, $this->listeners)) {
+            return call_user_func($this->listeners[$listener], $params);
         }
     }
 }

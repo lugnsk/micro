@@ -1,7 +1,9 @@
 <?php /** MicroConsoleCommand */
 
-namespace Micro\base;
+namespace Micro\cli;
 
+use Micro\base\Command;
+use Micro\web\OutputInterface;
 
 abstract class ConsoleCommand extends Command implements OutputInterface
 {

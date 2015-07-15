@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class ApcCache implements Cache
+class ApcCache implements CacheInterface
 {
     /**
      * Constructor

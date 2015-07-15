@@ -1,11 +1,9 @@
-<?php /** MicroArrayCache */
+<?php /** MicroCache */
 
 namespace Micro\caches;
 
-use Micro\base\Type;
-
 /**
- * Class ArrayCache
+ * Interface Cache
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro
@@ -16,34 +14,15 @@ use Micro\base\Type;
  * @version 1.0
  * @since 1.0
  */
-class ArrayCache implements CacheInterface
+interface CacheInterface
 {
-    /** @var array $driver array as driver */
-    protected $driver = [];
-
-    /**
-     * Constructor
-     *
-     * @access public
-     *
-     * @param array $config array config
-     *
-     * @result void
-     */
-    public function __construct(array $config = [])
-    {
-    }
-
     /**
      * Check driver
      *
      * @access public
      * @return mixed
      */
-    public function check()
-    {
-        return true;
-    }
+    public function check();
 
     /**
      * Get value by name
@@ -54,10 +33,7 @@ class ArrayCache implements CacheInterface
      *
      * @return mixed
      */
-    public function get($name)
-    {
-        return !empty($this->driver[$name]) ? $this->driver[$name] : false;
-    }
+    public function get($name);
 
     /**
      * Set value of element
@@ -69,10 +45,7 @@ class ArrayCache implements CacheInterface
      *
      * @return mixed
      */
-    public function set($name, $value)
-    {
-        $this->driver[$name] = $value;
-    }
+    public function set($name, $value);
 
     /**
      * Delete by key name
@@ -83,12 +56,7 @@ class ArrayCache implements CacheInterface
      *
      * @return mixed
      */
-    public function delete($name)
-    {
-        if (!empty($this->driver[$name])) {
-            unset($this->driver[$name]);
-        }
-    }
+    public function delete($name);
 
     /**
      * Clean all data from cache
@@ -96,10 +64,7 @@ class ArrayCache implements CacheInterface
      * @access public
      * @return mixed
      */
-    public function clean()
-    {
-        $this->driver = [];
-    }
+    public function clean();
 
     /**
      * Summary info about cache
@@ -107,10 +72,7 @@ class ArrayCache implements CacheInterface
      * @access public
      * @return mixed
      */
-    public function info()
-    {
-        return count($this->driver);
-    }
+    public function info();
 
     /**
      * Get meta-data of key id
@@ -121,14 +83,7 @@ class ArrayCache implements CacheInterface
      *
      * @return mixed
      */
-    public function getMeta($id)
-    {
-        if (!empty($this->driver[$id])) {
-            return Type::getType($this->driver[$id]);
-        }
-
-        return false;
-    }
+    public function getMeta($id);
 
     /**
      * Increment value
@@ -140,10 +95,7 @@ class ArrayCache implements CacheInterface
      *
      * @return mixed
      */
-    public function increment($name, $offset = 1)
-    {
-        $this->driver[$name] += $offset;
-    }
+    public function increment($name, $offset = 1);
 
     /**
      * Decrement value
@@ -155,8 +107,5 @@ class ArrayCache implements CacheInterface
      *
      * @return mixed
      */
-    public function decrement($name, $offset = 1)
-    {
-        $this->driver[$name] -= $offset;
-    }
+    public function decrement($name, $offset = 1);
 }

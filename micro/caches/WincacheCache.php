@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class WincacheCache implements Cache
+class WincacheCache implements CacheInterface
 {
     /**
      * Constructor

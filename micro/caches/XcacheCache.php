@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class XcacheCache implements Cache
+class XcacheCache implements CacheInterface
 {
     /**
      * Constructor

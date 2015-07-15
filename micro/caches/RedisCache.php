@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class RedisCache implements Cache
+class RedisCache implements CacheInterface
 {
     /** @var \Redis $driver driver redis */
     protected $driver;

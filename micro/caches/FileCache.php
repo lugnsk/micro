@@ -14,7 +14,7 @@ namespace Micro\caches;
  * @version 1.0
  * @since 1.0
  */
-class FileCache implements Cache
+class FileCache implements CacheInterface
 {
     /** @var string $driver directory name */
     protected $driver;

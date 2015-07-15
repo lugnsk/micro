@@ -1,6 +1,8 @@
 <?php /** MicroConsole */
 
-namespace Micro\base;
+namespace Micro\cli;
+
+use Micro\base\Registry;
 
 /**
  * Console class file.

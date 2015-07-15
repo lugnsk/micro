@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class MemcachedCache implements Cache
+class MemcachedCache implements CacheInterface
 {
     /** @var \Memcache|\Memcached $driver driver memcache(d) */
     protected $driver;

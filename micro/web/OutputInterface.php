@@ -1,6 +1,6 @@
 <?php
 
-namespace Micro\base;
+namespace Micro\web;
 
 
 interface OutputInterface

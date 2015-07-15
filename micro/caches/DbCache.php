@@ -17,7 +17,7 @@ use Micro\db\Query;
  * @version 1.0
  * @since 1.0
  */
-class DbCache implements Cache
+class DbCache implements CacheInterface
 {
     /** @var DbConnection $driver DB driver */
     protected $driver;
@@ -88,7 +88,7 @@ class DbCache implements Cache
      */
     protected function getElement($name)
     {
-        $query = new Query;
+        $query = new Query($this->driver);
         $query->table = $this->table;
         $query->addWhere('`name`=:name');
         $query->params = ['name' => $name];

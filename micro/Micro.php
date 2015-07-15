@@ -4,10 +4,10 @@ namespace Micro;
 
 use Micro\base\Autoload;
 use Micro\base\Dispatcher;
-use Micro\base\OutputInterface;
 use Micro\base\Registry;
 use Micro\resolvers\ConsoleResolver;
 use Micro\resolvers\HMVCResolver;
+use Micro\web\OutputInterface;
 use Micro\web\Request;
 use Micro\web\Response;
 
