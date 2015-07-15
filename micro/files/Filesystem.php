@@ -1,9 +1,8 @@
 <?php /** MicroFilesystem */
 
-namespace Micro\wrappers;
+namespace Micro\files;
 
 use Micro\base\Exception;
-use Micro\files;
 
 /**
  * Class Filesystem is a abstraction access for filesystems
@@ -17,7 +16,7 @@ use Micro\files;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
- * @subpackage wrappers
+ * @subpackage files
  * @version 1.0
  * @since 1.0
  */
