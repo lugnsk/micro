@@ -1,9 +1,9 @@
-<?php /** MicroRegistry */
+<?php /** MicroContainer */
 
 namespace Micro\base;
 
 /**
- * Registry class file.
+ * Container class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro
@@ -13,11 +13,11 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-class Registry
+class Container
 {
-    /** @var array $data registry data */
+    /** @var array $data data */
     protected $data = [];
-    /** @var array $config Config array */
+    /** @var array $config Configs */
     protected $config = [];
 
 

@@ -3,7 +3,6 @@
 namespace Micro\loggers;
 
 use Micro\base\Exception;
-use Micro\base\Logger;
 use Micro\base\Registry;
 
 /**

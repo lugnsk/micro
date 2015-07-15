@@ -1,19 +1,20 @@
-<?php /** MicroServices */
+<?php /** MicroQueue */
 
-namespace Micro\base;
+namespace Micro\queues;
 
 /**
- * Services class file.
+ * Queue class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
+ * @subpackage queues
  * @version 1.0
  * @since 1.0
  */
-class Services
+class Queue
 {
     /** @var array $servers Configuration servers */
     protected $servers = [];

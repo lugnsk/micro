@@ -1,6 +1,6 @@
 <?php /** MicroFile */
 
-namespace Micro\base;
+namespace Micro\wrappers;
 
 /**
  * MFile io class
@@ -10,6 +10,7 @@ namespace Micro\base;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
+ * @subpackage wrappers
  * @version 1.0
  * @since 1.0
  */

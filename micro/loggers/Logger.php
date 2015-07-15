@@ -1,6 +1,6 @@
 <?php /** MicroLogger */
 
-namespace Micro\base;
+namespace Micro\loggers;
 
 /**
  * Logger manager
@@ -10,6 +10,7 @@ namespace Micro\base;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
+ * @subpackage loggers
  * @version 1.0
  * @since 1.0
  */

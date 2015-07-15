@@ -1,11 +1,11 @@
 <?php /** MicroType */
 
-namespace Micro\base;
+namespace Micro\wrappers;
 
 /**
  * Class Type
  * @package Micro
- * @subpackage base
+ * @subpackage wrappers
  */
 class Type
 {
