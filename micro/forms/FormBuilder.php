@@ -1,6 +1,6 @@
 <?php /** MicroFormBuilder */
 
-namespace Micro\web;
+namespace Micro\forms;
 
 use Micro\db\Model;
 use Micro\widgets\FormWidget;

@@ -1,9 +1,9 @@
 <?php /** MicroFormModel */
 
-namespace Micro\web;
+namespace Micro\forms;
 
 use Micro\base\Container;
-use Micro\base\Validator;
+use Micro\validators\Validator;
 
 /**
  * Class FormModel.

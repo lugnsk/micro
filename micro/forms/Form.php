@@ -1,6 +1,6 @@
 <?php /** MicroForm */
 
-namespace Micro\web;
+namespace Micro\forms;
 
 use Micro\wrappers\Html;
 
@@ -23,7 +23,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -41,7 +41,7 @@ class Form
      *
      * @access private
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      *
      * @return array
@@ -58,14 +58,12 @@ class Form
         ];
     }
 
-    // Fields
-
     /**
      * Render button field tag
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -79,12 +77,14 @@ class Form
         return Html::buttonField($element['name'], $element['value'], $options);
     }
 
+    // Fields
+
     /**
      * Render hidden field tag
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -102,7 +102,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -121,7 +121,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -132,22 +132,21 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->fileField($model, $property, $options) .
         Html::closeTag('div');
+    }
+
+    protected function getBlock($name, &$options)
+    {
+        $block = [];
+        if (!empty($options[$name])) {
+            $block = $options[$name];
+            unset($options[$name]);
+        }
+
+        return $block;
     }
 
     /**
@@ -155,7 +154,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -174,7 +173,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -185,20 +184,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->imageField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -208,7 +195,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -228,7 +215,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -239,20 +226,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->passwordField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -262,7 +237,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -283,7 +258,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -294,20 +269,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->textField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -317,7 +280,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -336,7 +299,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -347,20 +310,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->colorField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -370,7 +321,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -389,7 +340,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -400,20 +351,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->dateField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -423,7 +362,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -442,7 +381,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -453,20 +392,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->dateTimeField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -476,7 +403,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -495,7 +422,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -506,20 +433,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->dateTimeLocalField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -529,7 +444,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -548,7 +463,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -559,20 +474,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->emailField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -582,7 +485,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -601,7 +504,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -612,20 +515,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->numberField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -637,7 +528,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -656,7 +547,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -667,20 +558,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->rangeField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -690,7 +569,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -709,7 +588,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -720,20 +599,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->searchField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -745,7 +612,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -764,7 +631,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -775,20 +642,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->telField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -798,7 +653,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -817,7 +672,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -828,20 +683,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->timeField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -853,7 +696,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -872,7 +715,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -883,20 +726,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->urlField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -906,7 +737,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -925,7 +756,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -936,20 +767,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->monthField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -959,7 +778,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -978,7 +797,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -989,20 +808,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->weekField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1012,7 +819,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -1031,7 +838,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -1042,20 +849,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->textAreaField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1065,7 +860,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -1084,7 +879,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -1095,20 +890,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->listBoxField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1118,7 +901,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attrubtes array
      *
@@ -1130,17 +913,11 @@ class Form
         $options['id'] = $element['id'];
         $options['selected'] = $element['value'];
 
-        $elements = [];
-        if (!empty($options['elements'])) {
-            $elements = $options['elements'];
-            unset($options['elements']);
-        }
-
         if (empty($options['size'])) {
             $options['size'] = 3;
         }
 
-        return Html::listBox($element['name'], $elements, $options);
+        return Html::listBox($element['name'], $this->getBlock('elements', $options), $options);
     }
 
     /**
@@ -1148,7 +925,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -1159,20 +936,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->dropDownListField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1182,7 +947,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -1197,34 +962,27 @@ class Form
             $options['selected'] = $element['value'];
         }
 
-        $elements = [];
-        if (!empty($options['elements'])) {
-            $elements = $options['elements'];
-            unset($options['elements']);
-        }
-
-        return Html::dropDownList($element['name'], $elements, $options);
+        return Html::dropDownList($element['name'], $this->getBlock('elements', $options), $options);
     }
 
+    /**
+     * Render checkbox field row
+     *
+     * @access public
+     *
+     * @param FormModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
     public function checkboxFieldRow($model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->checkBoxField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1234,7 +992,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -1255,7 +1013,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options options array
      *
@@ -1266,20 +1024,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->checkBoxListField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1289,7 +1035,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property property model
      * @param array $options options array
      *
@@ -1309,7 +1055,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options options array
      *
@@ -1320,20 +1066,8 @@ class Form
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
 
-        $block = [];
-        if (!empty($options['block'])) {
-            $block = $options['block'];
-            unset($options['block']);
-        }
-
-        $label = [];
-        if (!empty($options['label'])) {
-            $label = $options['label'];
-            unset($options['label']);
-        }
-
-        return Html::openTag('div', $block) .
-        Html::label($model->getLabel($property), $element['id'], $label) .
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
         $this->radioButtonListField($model, $property, $options) .
         Html::closeTag('div');
     }
@@ -1343,7 +1077,7 @@ class Form
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param FormModel $model model
      * @param string $property model property
      * @param array $options options array
      *
