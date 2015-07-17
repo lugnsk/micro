@@ -4,7 +4,7 @@ namespace Micro\form;
 
 use Micro\db\Model;
 use Micro\web\Html;
-use Micro\widgets\FormWidget;
+use Micro\widget\FormWidget;
 
 /**
  * Class FormBuilder.

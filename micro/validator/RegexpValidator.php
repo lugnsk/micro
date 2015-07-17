@@ -55,7 +55,10 @@ class RegexpValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         $js = 'if (!this.value.match(' . $this->params['pattern'] . ')) {' .
             ' e.preventDefault(); this.focus(); alert(\'Value not valid with regular expression\'); }';

@@ -67,6 +67,7 @@ class Autoload
         $path .= strtr(substr($className, $lastNsPos + 1), '_', DIRECTORY_SEPARATOR) . '.php';
 
         if (is_file($path)) {
+            /** @noinspection PhpIncludeInspection */
             require_once $path;
 
             return true;

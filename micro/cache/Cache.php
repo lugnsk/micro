@@ -2,6 +2,9 @@
 
 namespace Micro\cache;
 
+use Micro\base\Container;
+use Micro\base\Exception;
+
 /**
  * Cache class file.
  *
@@ -52,7 +55,7 @@ class Cache
         }
 
         foreach ($config['servers'] AS $key => $server) {
-            if (in_array($server['driver'], array_keys(self::$drivers), true)) {
+            if (array_key_exists($server['driver'], array_keys(self::$drivers))) {
                 $this->servers[$key] = new self::$drivers[$server['driver']] ($server);
             } else {
                 throw new Exception($this->container, 'Cache driver `' . $server['driver'] . '` not found');

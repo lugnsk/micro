@@ -53,5 +53,7 @@ class Dispatcher
         if ($this->listeners && array_key_exists($listener, $this->listeners)) {
             return call_user_func($this->listeners[$listener], $params);
         }
+
+        return false;
     }
 }

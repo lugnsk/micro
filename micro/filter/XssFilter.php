@@ -30,11 +30,9 @@ class XssFilter extends Filter
         }
         $dataForClean = explode(',', $clean);
 
-        if (count($dataForClean)) {
-            foreach ($dataForClean as $key => $value) {
-                if (!empty($data[$value]) && count($data[$value])) {
-                    $this->doXssClean($data[$value]);
-                }
+        foreach ($dataForClean as $key => &$value) {
+            if (!empty($data[$key]) && count($data[$key])) {
+                $value = $this->doXssClean($data[$key]);
             }
         }
 
@@ -50,11 +48,11 @@ class XssFilter extends Filter
      *
      * @return mixed
      */
-    private function doXssClean(&$data)
+    private function doXssClean($data)
     {
         if (is_array($data) && count($data)) {
-            foreach ($data as $k => $v) {
-                $data[$k] = $this->doXssClean($v);
+            foreach ($data as $k => &$v) {
+                $v = $this->doXssClean($data[$k]);
             }
 
             return $data;

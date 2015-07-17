@@ -30,6 +30,7 @@ abstract class LogInterface
      *
      * @access public
      *
+     * @param Container $container Container
      * @param array $params configuration params
      *
      * @throws Exception

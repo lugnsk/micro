@@ -69,8 +69,8 @@ class Type
         if (!is_array($data)) {
             return call_user_func($function, $data);
         }
-        foreach ($data as $k => $item) {
-            $data[$k] = self::arrayWalkRecursive($item, $function);
+        foreach ($data as $k => &$item) {
+            $item = self::arrayWalkRecursive($data[$k], $function);
         }
 
         return $data;

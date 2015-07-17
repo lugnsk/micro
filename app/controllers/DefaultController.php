@@ -5,8 +5,8 @@ namespace App\controllers;
 use App\components\Controller;
 use App\components\View;
 use App\models\LoginFormModel;
-use Micro\web\FormBuilder;
-use Micro\wrappers\Html;
+use Micro\form\FormBuilder;
+use Micro\web\Html;
 
 class DefaultController extends Controller
 {
@@ -56,6 +56,7 @@ class DefaultController extends Controller
 
     public function actionLogin()
     {
+        /** @noinspection PhpIncludeInspection */
         $form = new FormBuilder(
             include $this->container->kernel->getAppDir() . '/views/default/loginform.php',
             new LoginFormModel($this->container),
@@ -64,6 +65,7 @@ class DefaultController extends Controller
 
         if ($post = $this->container->request->getPostVar('LoginFormModel')) {
             $form->setModelData($post);
+            /** @noinspection PhpUndefinedMethodInspection */
             if ($form->validateModel() && $form->getModel()->logined()) {
                 $this->redirect('/profile');
             }
@@ -78,6 +80,7 @@ class DefaultController extends Controller
     public function actionError()
     {
         $result = null;
+        /** @var array $errors */
         if ($errors = $this->container->request->getPostVar('errors')) {
             foreach ($errors AS $err) {
                 $result .= Html::heading(3, $err, ['class' => 'text-danger bg-danger']);

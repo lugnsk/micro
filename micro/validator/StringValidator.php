@@ -66,7 +66,10 @@ class StringValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         $action = '';
         if (!empty($this->params['min'])) {

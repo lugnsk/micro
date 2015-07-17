@@ -54,7 +54,10 @@ class UrlValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         $jsString = 'if (/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.value' .
             ') != true) { e.preventDefault(); this.focus(); alert(\'Value is not a URL\'); }';

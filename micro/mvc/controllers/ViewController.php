@@ -68,7 +68,7 @@ abstract class ViewController extends Controller
             $view->layout = (!$view->layout) ? $this->layout : $view->layout;
             $view->view = (!$view->view) ? $name : $view->name;
             $view->path = get_called_class();
-            $view = $view->__toString();
+            $view = (string)$view;
         }
 
         $this->response->setBody($this->applyFilters($name, false, $filters, $view));

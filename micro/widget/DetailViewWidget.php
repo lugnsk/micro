@@ -64,6 +64,7 @@ class DetailViewWidget extends Widget
             case 'object': {
                 if ($args['data'] instanceof Query) {
                     if ($args['data']->objectName) {
+                        /** @var Model $cls */
                         $cls = $args['data']->objectName;
                         $args['data']->table = $cls::tableName();
                     } elseif (!$args['data']->table) {
@@ -101,7 +102,6 @@ class DetailViewWidget extends Widget
 
         // обходим заданные параметры
         foreach ($this->columns AS $key => $val) {
-            $column = '';
             $data = [];
 
             // если параметр число и вал строка - это ключ
@@ -143,8 +143,11 @@ class DetailViewWidget extends Widget
             $result .= Html::openTag('dd', $this->attributesValue);
 
             $buffer = '';
+            /** @noinspection DegradedSwitchInspection */
             switch ($val['type']) {
                 case 'raw': {
+                    /** @noinspection OnlyWritesOnParameterInspection */
+                    /** @noinspection PhpUnusedLocalVariableInspection */
                     $data = $this->data; // for eval
                     $buffer .= eval('return ' . $val['value']);
                     break;

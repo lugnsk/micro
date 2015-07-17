@@ -65,7 +65,10 @@ class RangeValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         $js = 'if (this.value < ' . $this->params['min'] . ' OR this.value > ' . $this->params['max'] . ') {' .
             ' e.preventDefault(); this.focus(); alert(\'Value not find in range\'); }';

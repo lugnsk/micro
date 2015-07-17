@@ -54,7 +54,10 @@ class EmailValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         $js = 'if (/^[\w.-]{1,}@[\w.-]{1,}$/.test(this.value) != true) {' .
             ' e.preventDefault(); this.focus(); alert(\'Value is not a valid e-mail\'); }';

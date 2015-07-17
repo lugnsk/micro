@@ -1,5 +1,5 @@
 <?php
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /** @var \App\components\View $this */
 $this->title .= ' - Главная';

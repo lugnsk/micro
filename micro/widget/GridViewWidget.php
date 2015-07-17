@@ -4,6 +4,7 @@ namespace Micro\widget;
 
 use Micro\base\Exception;
 use Micro\base\Type;
+use Micro\db\Model;
 use Micro\db\Query;
 use Micro\mvc\Widget;
 use Micro\web\Html;
@@ -88,10 +89,11 @@ class GridViewWidget extends Widget
 
         if ($args['data'] instanceof Query) {
             if ($args['data']->objectName) {
+                /** @var Model $cls */
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
-                throw new Exception('Data query not set table or objectName');
+                throw new Exception($this->container, 'Data query not set table or objectName');
             }
 
             if ($args['data']->having || $args['data']->group) {
@@ -239,6 +241,7 @@ class GridViewWidget extends Widget
                 $result .= $row['header'];
             } else {
                 if (is_string($key)) {
+                    /** @noinspection PhpUndefinedMethodInspection */
                     $result .= is_subclass_of($this->rows[0],
                         '\Micro\db\Model') ? $this->rows[0]->getLabel($key) : ucfirst($key);
                 }
@@ -268,7 +271,7 @@ class GridViewWidget extends Widget
 
         foreach ($this->tableConfig AS $key => $row) {
             $result .= Html::openTag('td', $row['attributesFilter']);
-            if (isset($row['filter']) && $row['filter'] === false) {
+            if (array_key_exists('filter', $row) && $row['filter'] === false) {
                 continue;
             }
             if (!empty($row['filter'])) {

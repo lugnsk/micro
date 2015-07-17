@@ -86,7 +86,7 @@ abstract class Threads
      */
     protected function createIPCSegment()
     {
-        $this->fileIPC1 = '/tmp/' . rand() . md5($this->getName()) . '.shm';
+        $this->fileIPC1 = '/tmp/' . mt_rand() . md5($this->getName()) . '.shm';
 
         touch($this->fileIPC1);
 
@@ -137,7 +137,7 @@ abstract class Threads
      */
     protected function createIPCSemaphore()
     {
-        $this->fileIPC2 = '/tmp/' . rand() . md5($this->getName()) . '.sem';
+        $this->fileIPC2 = '/tmp/' . mt_rand() . md5($this->getName()) . '.sem';
 
         touch($this->fileIPC2);
 

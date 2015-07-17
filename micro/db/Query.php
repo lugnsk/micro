@@ -38,7 +38,7 @@ class Query
     /** @var integer $limit count result rows */
     public $limit = -1;
     /** @var integer $offset offset on start result rows */
-    public $ofset = -1;
+    public $offset = -1;
     /** @var array $params masks for where */
     public $params = [];
     /** @var string $table table for query */
@@ -239,13 +239,13 @@ class Query
         $query .= ($this->having) ? ' HAVING ' . $this->having : '';
         $query .= ($this->order) ? ' ORDER BY ' . $this->order : '';
 
-        if ($this->limit !== -1 OR $this->ofset !== -1) {
+        if ($this->limit !== -1 OR $this->offset !== -1) {
             $query .= ' LIMIT ';
 
-            if ($this->ofset !== -1) {
-                $query .= $this->ofset;
+            if ($this->offset !== -1) {
+                $query .= $this->offset;
             }
-            if ($this->limit !== -1 AND $this->ofset !== -1) {
+            if ($this->limit !== -1 AND $this->offset !== -1) {
                 $query .= ',';
             }
             if ($this->limit !== -1) {

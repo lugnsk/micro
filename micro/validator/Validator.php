@@ -2,6 +2,8 @@
 
 namespace Micro\validator;
 
+use Micro\base\Exception;
+
 /**
  * Validator is a runner validation process
  *
@@ -72,7 +74,7 @@ class Validator
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param \Micro\form\FormModel $model model
      * @param bool $client run on client side?
      *
      * @return bool|string
@@ -102,6 +104,7 @@ class Validator
             }
         }
 
+        /** @var Validator $valid */
         $valid = new $className(['container' => $this->container, 'rule' => $this->rule]);
         $valid->elements = $elements;
         $valid->params = $this->rule;
@@ -123,7 +126,7 @@ class Validator
      *
      * @access public
      *
-     * @param \Micro\web\FormModel $model model
+     * @param \Micro\form\FormModel $model model
      *
      * @return string
      */
@@ -134,6 +137,7 @@ class Validator
         $result = null;
         foreach ($this->elements AS $element) {
             $id = $object . '_' . $element;
+            /** @noinspection PhpUndefinedMethodInspection */
             $result .= 'jQuery("#' . $id . '").bind("change blur submit", function(e){ ' . $this->client($model) . ' });';
         }
 

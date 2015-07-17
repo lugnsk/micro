@@ -1,6 +1,6 @@
 <?php
+use Micro\web\Html;
 use Micro\web\Language;
-use Micro\wrappers\Html;
 
 /** @var App\components\View $this */
 /** @var array $blogs */

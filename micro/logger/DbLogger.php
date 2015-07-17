@@ -3,6 +3,7 @@
 namespace Micro\logger;
 
 use Micro\base\Container;
+use Micro\base\Exception;
 
 /**
  * DB logger class file.
@@ -30,9 +31,11 @@ class DbLogger extends LogInterface
      *
      * @access public
      *
+     * @param Container $container Container
      * @param array $params configuration params
      *
      * @result void
+     * @throws Exception
      */
     public function __construct(Container $container, array $params = [])
     {

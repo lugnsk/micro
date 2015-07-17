@@ -122,7 +122,7 @@ abstract class File
     //* getSize
     //* size
     //* readAndDelete
-    //* listcontents
+    //* listContents
     //* touch
     //* createFile
 

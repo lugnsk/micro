@@ -18,31 +18,20 @@ use Micro\base\Container;
  */
 abstract class Migration
 {
-    /** @var DbConnection $db connection to db */
-    protected $db = false;
+    /** @var Container $container */
+    protected $container;
 
 
     /**
      * Constructor for model
      *
      * @access public
+     * @param Container $container
      * @result void
      */
-    public function __construct()
+    public function __construct(Container $container)
     {
-        $this->getDbConnection();
-    }
-
-    /**
-     * Get connection to db
-     *
-     * @access public
-     * @global Container
-     * @return void
-     */
-    public function getDbConnection()
-    {
-        $this->db = Container::get('db');
+        $this->container = $container;
     }
 
     /**

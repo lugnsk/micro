@@ -1,13 +1,13 @@
 <?php
 
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /** @var App\components\View $this */
 /** @var App\models\User $model */
 
 echo Html::heading(2, 'Регистрация');
 
-/** @var \Micro\web\Form $form */
+/** @var \Micro\form\Form $form */
 $form = $this->beginWidget('\Micro\widgets\FormWidget', [
     'method' => 'post',
     'action' => '/register/post',

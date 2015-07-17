@@ -2,8 +2,8 @@
 
 namespace Micro\widget;
 
+use Micro\form\Form;
 use Micro\mvc\Widget;
-use Micro\web\Form;
 use Micro\web\Html;
 
 /**

@@ -81,6 +81,7 @@ class DbConnection
         $sth = $this->conn->prepare($query);
 
         if ($fetchType === \PDO::FETCH_CLASS) {
+            /** @noinspection PhpMethodParametersCountMismatchInspection */
             $sth->setFetchMode($fetchType, ucfirst($fetchClass), ['container' => $this->container, 'new' => false]);
         } else {
             $sth->setFetchMode($fetchType);
@@ -93,6 +94,7 @@ class DbConnection
         if ($sth->execute()) {
             return $sth->fetchAll();
         } else {
+            /** @noinspection ForgottenDebugOutputInspection */
             throw new Exception($this->container, $sth->errorCode() . ': ' . print_r($sth->errorInfo()));
         }
     }
@@ -208,7 +210,7 @@ class DbConnection
      */
     public function removeTable($name)
     {
-        return $this->exec('DROP TABLE `' . $name . '`;');
+        return $this->conn->exec('DROP TABLE `' . $name . '`;');
     }
 
     /**
@@ -345,10 +347,16 @@ class DbConnection
      */
     public function update($table, array $elements = [], $conditions = '')
     {
+        $keys = array_keys($elements);
+        if (!$keys) {
+            return false;
+        }
+
         $valStr = [];
-        foreach (array_keys($elements) as $key) {
+        foreach ($keys as $key) {
             $valStr[] = '`' . $key . '` = :' . $key;
         }
+
         if ($conditions) {
             $conditions = 'WHERE ' . $conditions;
         }

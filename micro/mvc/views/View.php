@@ -87,7 +87,7 @@ abstract class View
             $result->asWidget = true;
             $result->path = get_class($widget);
 
-            $result = $result->__toString();
+            $result = (string)$result;
         }
 
         unset($widget);
@@ -142,9 +142,9 @@ abstract class View
             throw new Exception($this->container, 'This widget (' . $name . ') already started!');
         }
 
-        /** @var \Micro\mvc\Widget $GLOBALS ['widgetStack'][$name] widget */
         $GLOBALS['widgetStack'][$name] = new $name($options, $this->container);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $GLOBALS['widgetStack'][$name]->init();
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /** @var string $content */
 /** @var \App\components\View $this */

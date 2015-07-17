@@ -120,7 +120,7 @@ class HMVCResolver extends Resolver
         $path = $this->container->kernel->getAppDir() . ($this->extensions ?: '');
 
         foreach ($uriBlocks AS $i => $block) {
-            if (!empty($block) && file_exists($path . $this->modules . '/modules/' . $block)) {
+            if ($block && file_exists($path . $this->modules . '/modules/' . $block)) {
                 $this->modules .= '/modules/' . $block;
                 unset($uriBlocks[$i]);
             } else {

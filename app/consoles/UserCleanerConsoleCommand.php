@@ -2,7 +2,7 @@
 
 namespace App\consoles;
 
-use Micro\base\ConsoleCommand;
+use Micro\cli\ConsoleCommand;
 
 class UserCleanerConsoleCommand extends ConsoleCommand
 {

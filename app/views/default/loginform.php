@@ -1,6 +1,6 @@
 <?php
 
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 return [
     'description' => Html::heading(2, 'Входилка'),

@@ -3,7 +3,7 @@
 namespace Micro\filters;
 
 /**
- * Class CrsfFilter
+ * Class CsrfFilter
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro

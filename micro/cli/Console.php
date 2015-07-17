@@ -63,7 +63,7 @@ class Console
             return false;
         }
 
-        /** @var \Micro\base\ConsoleCommand $command */
+        /** @var \Micro\cli\ConsoleCommand $command */
         $command = new $command (['container' => $this->container, 'args' => $this->args]);
         $command->execute();
 

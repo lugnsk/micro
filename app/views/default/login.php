@@ -1,2 +1,2 @@
-<?php /** @var \Micro\web\FormBuilder $form */ ?>
+<?php /** @var \Micro\form\FormBuilder $form */ ?>
 <?= $form;

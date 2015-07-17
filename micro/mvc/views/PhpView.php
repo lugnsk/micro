@@ -117,7 +117,7 @@ class PhpView extends View
             if (file_exists($baseDir . '/' . $afterPath)) {
                 return $baseDir . '/' . $afterPath;
             }
-            throw new Exception($this->request, $this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
+            throw new Exception($this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
         }
 
         return $layout . $afterPath;
@@ -136,10 +136,13 @@ class PhpView extends View
      */
     protected function renderFile($fileName, array $data = [])
     {
+        /** @noinspection OnlyWritesOnParameterInspection */
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $lang = new Language($this->container, $fileName);
         extract($data, EXTR_PREFIX_SAME || EXTR_REFS, 'data');
         ob_start();
 
+        /** @noinspection PhpIncludeInspection */
         include str_replace('\\', '/', $fileName);
 
         if ($GLOBALS['widgetStack']) {

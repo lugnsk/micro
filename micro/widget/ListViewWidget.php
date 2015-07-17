@@ -3,6 +3,7 @@
 namespace Micro\widget;
 
 use Micro\base\Exception;
+use Micro\db\Model;
 use Micro\db\Query;
 use Micro\mvc\Widget;
 use Micro\web\Html;
@@ -84,7 +85,9 @@ class ListViewWidget extends Widget
         }
 
         if ($args['data'] instanceof Query) {
-            if (strlen($args['data']->objectName)) {
+            /** @var Query $args ['data'] */
+            if ($args['data']->objectName) {
+                /** @var Model $cls */
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
@@ -104,7 +107,7 @@ class ListViewWidget extends Widget
             $args['data'] = $args['data']->run();
         } else {
             $this->totalCount = count($args['data']);
-            $cPage = $this->page === 0 ? 1 : $this->page;
+            $this->page = $this->page === 0 ? 1 : $this->page;
             $args['data'] = array_slice($args['data'], $this->page * $this->limit, $this->limit);
         }
 
@@ -180,9 +183,11 @@ class ListViewWidget extends Widget
         echo Html::openTag('ul', $this->attributes);
 
 
+        /** @noinspection PhpUnusedLocalVariableInspection */
         foreach ($this->rows AS $element) {
             echo Html::openTag('li', $this->attributesElement);
 
+            /** @noinspection PhpIncludeInspection */
             include $this->pathView;
 
             echo Html::closeTag('li');

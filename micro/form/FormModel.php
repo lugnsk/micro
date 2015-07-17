@@ -3,7 +3,7 @@
 namespace Micro\form;
 
 use Micro\base\Container;
-use Micro\validators\Validator;
+use Micro\validator\Validator;
 
 /**
  * Class FormModel.

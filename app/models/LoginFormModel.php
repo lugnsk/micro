@@ -3,7 +3,7 @@
 namespace App\models;
 
 use Micro\db\Query;
-use Micro\web\FormModel;
+use Micro\form\FormModel;
 
 class LoginFormModel extends FormModel
 {

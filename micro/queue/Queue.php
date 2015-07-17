@@ -2,6 +2,8 @@
 
 namespace Micro\queue;
 
+use Micro\base\Exception;
+
 /**
  * Queue class file.
  *
@@ -77,8 +79,10 @@ class Queue
 
     /**
      * @param string $uri
+     * @param string $type
+     * @param string $retry
      *
-     * @return \Micro\queues\IQueue
+     * @return \Micro\queue\IQueue
      * @throws Exception
      */
     private function getBroker($uri, $type, $retry)
@@ -87,12 +91,13 @@ class Queue
         $server = null;
 
         for ($counter = 0; $counter < $retry; $counter++) {
-            $random = rand(0, count($servers) - 1);
+            $random = mt_rand(0, count($servers) - 1);
 
             if (!array_key_exists($servers[$random], $this->brokers)) {
                 $cls = $this->servers[$servers[$random]];
                 $this->brokers[$servers[$random]] = new $cls['class']($cls);
             }
+            /** @noinspection PhpUndefinedMethodInspection */
             if ($this->brokers[$servers[$random]]->test()) {
                 $server = $servers[$random];
             }

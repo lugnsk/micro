@@ -37,7 +37,9 @@ class FlashMessage
      * Constructor messenger
      *
      * @access public
-     * @global Container
+     *
+     * @param Container $container
+     *
      * @result void
      * @throws Exception
      */

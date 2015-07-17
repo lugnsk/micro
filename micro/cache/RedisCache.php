@@ -38,7 +38,6 @@ class RedisCache implements CacheInterface
         }
         $this->driver = new \Redis;
 
-        $result = false;
         try {
             if (!empty($config['socket_type']) AND $config['socket_type'] === 'unix') {
                 $result = $this->driver->connect($config['socket']);

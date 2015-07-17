@@ -52,7 +52,10 @@ class NumberValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         return 'if (! ((this.value ^ 0) === this.value) ) { e.preventDefault(); this.focus(); alert(\'Value is not number\'); }';
     }

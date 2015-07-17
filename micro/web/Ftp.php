@@ -119,7 +119,7 @@ final class Ftp
     }
 
     /**
-     * Change currect directory on FTP server
+     * Change current directory on FTP server
      *
      * @param string $directory
      *

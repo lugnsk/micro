@@ -128,7 +128,7 @@ abstract class RichController extends Controller
                 return json_encode(is_object($data) ? (array)$data : $data);
             }
             case 'application/xml': {
-                return is_object($data) ? $data->__toString() : $data;
+                return is_object($data) ? (string)$data : $data;
             }
             default: {
                 return $data;

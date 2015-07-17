@@ -14,7 +14,7 @@ namespace Micro\web;
  * @since 1.0
  * @property
  */
-class Session
+class Session extends \stdClass
 {
     protected $container;
 

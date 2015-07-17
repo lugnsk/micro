@@ -109,7 +109,7 @@ class ApcCache implements CacheInterface
      */
     public function clean()
     {
-        if (extension_loaded('apcu')) {
+        if (extension_loaded('apc')) {
             return apc_clear_cache();
         } else {
             return apc_clear_cache('user');

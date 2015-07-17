@@ -54,7 +54,10 @@ class RequiredValidator extends Validator
      *
      * @return string
      */
-    public function client($model)
+    public function client(
+        /** @noinspection PhpUnusedParameterInspection */
+        $model
+    )
     {
         return 'if (!this.value) { e.preventDefault(); this.focus(); alert(\'Required element!\'); }';
     }

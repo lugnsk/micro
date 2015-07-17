@@ -47,7 +47,7 @@ class EmailLogger extends LogInterface
 
         $this->from = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
         $this->to = !empty($params['to']) ? $params['to'] : $this->from;
-        $this->subject = !empty($params['subject']) ? $params['subject'] : $this->container->getServerVar('SERVER_NAME') . ' log message';
+        $this->subject = $params['subject'] ?: $this->container->request->getServerVar('SERVER_NAME') . ' log message';
     }
 
     /**

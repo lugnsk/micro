@@ -1,1 +1,1 @@
-<?= \Micro\wrappers\Html::heading(2, 'Регистрация удачно завершена.');
+<?= \Micro\web\Html::heading(2, 'Регистрация удачно завершена.');

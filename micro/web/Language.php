@@ -15,10 +15,10 @@ use Micro\base\Exception;
  * @package micro
  * @version 1.0
  * @since 1.0
- * @property-read
  */
-class Language
+class Language extends \stdClass
 {
+    /** @var Container $container */
     protected $container;
     /** @var array $language language array */
     private $language = [];
@@ -42,7 +42,7 @@ class Language
         $viewName = substr($viewNameFile, 0, -3);
 
         $lang = $this->container->lang;
-        $lang = !empty($lang) ? $lang : $this->defaultLang;
+        $lang = $lang ?: $this->defaultLang;
 
         if (!file_exists($viewName . $lang . '.ini')) {
             return;

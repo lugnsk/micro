@@ -37,6 +37,8 @@ class LocalDriver extends File
      */
     public function __destruct()
     {
+        parent::__destruct();
+
         unset($this->stream);
     }
 

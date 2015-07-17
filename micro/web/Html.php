@@ -731,7 +731,7 @@ class Html
         $attributes['id'] = $name;
         $attributes['size'] = 1;
 
-        return self::listbox($name, $options, $attributes);
+        return self::listBox($name, $options, $attributes);
     }
 
     /**
@@ -804,7 +804,7 @@ class Html
         $opts = '';
         foreach ($options AS $option) {
             if (!empty($option['label'])) {
-                $opts .= self::optgroup($option['label'], $option['options'], $option['attributes']);
+                $opts .= self::optGroup($option['label'], $option['options'], $option['attributes']);
             } else {
                 $opts .= self::option($option['value'], $option['text'], $option['attributes']);
             }
@@ -873,7 +873,7 @@ class Html
             if ($checkbox['value'] === $selected) {
                 $checkbox['attributes']['selected'] = 'selected';
             }
-            $check = self::checkboxField($name, $checkbox['value'], $checkbox['attributes']);
+            $check = self::checkBoxField($name, $checkbox['value'], $checkbox['attributes']);
             $checks .= strtr(strtr($format, '%check%', $check), '%text%', $checkbox['text']);
         }
 

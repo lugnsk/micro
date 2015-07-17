@@ -175,7 +175,7 @@ abstract class Model extends FormModel
 
                 $sql->params[$relation['On'][0]] = $this->{$relation['On'][0]};
 
-                /** @var Model $relation ['Model'] */
+                /** @noinspection PhpUndefinedMethodInspection */
                 $this->cacheRelations[$name] = $relation['Model']::finder($sql, !$relation['IsMany'], $this->container);
             }
 

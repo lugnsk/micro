@@ -77,6 +77,6 @@ class MultiDbConnection
      */
     public function switchDB($name)
     {
-        $this->curr = in_array($name, array_keys($this->servers), true) ? $name : $this->servers[0];
+        $this->curr = array_key_exists($name, array_keys($this->servers)) ? $name : $this->servers[0];
     }
 }

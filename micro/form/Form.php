@@ -903,7 +903,7 @@ class Form
      *
      * @param FormModel $model model
      * @param string $property model property
-     * @param array $options attrubtes array
+     * @param array $options attributes array
      *
      * @return string
      */

@@ -37,5 +37,6 @@
     "lib-pcre": ">=8.31"
   },
   "require-dev": {
+    "phpunit/phpunit": "*"
   }
 }

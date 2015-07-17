@@ -117,18 +117,16 @@ class MongoDbConnection
     public function addIndexes($collectionName, array $keys = [], array $options = [])
     {
         if ($keys) {
-            foreach ($keys as $col => $val) {
-                $keys[$col] = 1;
-
-                if ($val === -1 || $val === false || strtolower($val) === 'desc') {
-                    --$keys[$col];
-                }
-            }
-
-            return $this->getCollection($collectionName)->ensureIndex($keys, $options);
+            return false;
         }
 
-        return false;
+        foreach ($keys as $col => &$val) {
+            if ($val === -1 || $val === false || strtolower($val) === 'desc') {
+                --$val;
+            }
+        }
+
+        return $this->getCollection($collectionName)->ensureIndex($keys, $options);
     }
 
     /**
@@ -293,7 +291,7 @@ class MongoDbConnection
      * @access public
      *
      * @param string $collectionName collection name
-     * @param string|array|null $keys key or keys to dilete
+     * @param string|array|null $keys key or keys to delete
      *
      * @return mixed
      */

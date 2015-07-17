@@ -30,7 +30,7 @@ class Exception extends \Exception
      *
      * @result void
      */
-    public function __construct($container, $message = "", $code = 0, \Exception $previous = null)
+    public function __construct($container, $message = '', $code = 0, \Exception $previous = null)
     {
         $this->container = $container;
 
@@ -42,12 +42,13 @@ class Exception extends \Exception
      *
      * @access public
      *
-     * @return mixed|string|void
+     * @return string
      * @throws Exception
      */
     public function __toString()
     {
         if (!defined('DEBUG_MICRO') || DEBUG_MICRO === false) {
+            /** @noinspection NestedPositiveIfStatementsInspection */
             if (ob_get_level()) {
                 ob_end_clean();
             }
@@ -83,13 +84,16 @@ class Exception extends \Exception
 
         $response->send();
         error_reporting(0);
+
+        return '';
     }
 
     protected function makeErrors()
     {
-        $errors = $this->container->request->getPostVar('errors') ?: [];
-
-        $errors += ['Error - ' . $this->getMessage()];
+        $errors = array_merge(
+            $this->container->request->getPostVar('errors') ?: [],
+            ['Error - ' . $this->getMessage()]
+        );
 
         $this->container->request->setPostVar('errors', $errors);
     }

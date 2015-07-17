@@ -30,6 +30,7 @@ class RabbitMQ
      * @param array $params connect to broker
      *
      * @result void
+     * @throws \AMQPConnectionException
      */
     public function __construct(array $params = [])
     {
@@ -59,13 +60,15 @@ class RabbitMQ
      * @param string $route name route
      * @param string $chat name chat room
      *
-     * @return void
+     * @return bool
+     * @throws \AMQPExchangeException
      */
     public function send($message, $route, $chat)
     {
         $exchange = new \AMQPExchange($this->channel);
         $exchange->setName($chat);
-        $exchange->publish($message, $route);
+
+        return $exchange->publish($message, $route);
     }
 
     /**

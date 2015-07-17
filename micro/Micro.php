@@ -5,8 +5,8 @@ namespace Micro;
 use Micro\base\Autoload;
 use Micro\base\Container;
 use Micro\base\Dispatcher;
-use Micro\resolvers\ConsoleResolver;
-use Micro\resolvers\HMVCResolver;
+use Micro\resolver\ConsoleResolver;
+use Micro\resolver\HMVCResolver;
 use Micro\web\OutputInterface;
 use Micro\web\Request;
 use Micro\web\Response;
@@ -106,10 +106,11 @@ class Micro
             'prepend' => false
         ], $config);
 
-        if (!file_exists($config['filename']) || empty($config['callable'])) {
+        if (empty($config['callable']) || !file_exists($config['filename'])) {
             return false;
         }
 
+        /** @noinspection PhpIncludeInspection */
         require $config['filename'];
         spl_autoload_register($config['callable'], (bool)$config['throw'], (bool)$config['prepend']);
 
@@ -273,6 +274,12 @@ class Micro
     public function getContainer()
     {
         return $this->container;
+    }
+
+
+    public function getWebDir()
+    {
+        return $_SERVER['DOCUMENT_ROOT'];
     }
 
     public function getAppDir()

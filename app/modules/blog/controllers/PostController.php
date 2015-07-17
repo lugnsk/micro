@@ -87,7 +87,7 @@ class PostController extends Controller
     {
         $blog = Blog::findByPk($this->container->request->getQueryVar('id'), $this->container);
 
-        $blog->name = 'setupher';
+        $blog->name = 'setup-er';
 
         return $blog->save();
     }

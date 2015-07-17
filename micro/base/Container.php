@@ -12,8 +12,23 @@ namespace Micro\base;
  * @package micro
  * @version 1.0
  * @since 1.0
+ *
+ * @property string $company
+ * @property string $slogan
+ * @property string $lang
+ * @property string $errorController
+ * @property string $errorAction
+ *
+ * @property \Micro\Micro $kernel
+ * @property \Micro\web\Router $router
+ * @property \Micro\web\Request $request
+ * @property \Micro\web\Response $response
+ * @property \Micro\web\Session $session
+ * @property \Micro\web\Cookie $cookie
+ * @property \Micro\db\DbConnection $db
+ * @property \Micro\web\User $user
  */
-class Container
+class Container extends \stdClass
 {
     /** @var array $data data */
     protected $data = [];
@@ -33,6 +48,7 @@ class Container
     public function load($filename)
     {
         if (file_exists($this->kernel->getAppDir() . $filename)) {
+            /** @noinspection PhpIncludeInspection */
             $this->config = array_merge_recursive($this->config, require $this->kernel->getAppDir() . $filename);
         }
     }
@@ -159,8 +175,9 @@ class Container
             return true;
         }
 
+        /** @noinspection AlterInForeachInspection */
         foreach ($options['arguments'] AS $key => &$val) {
-            if (is_string($val) && $val{0} === '@') {
+            if (is_string($options['arguments'][$key]) AND $val{0} === '@') {
                 if ($val === '@this') {
                     $val = $this;
                 } else {
