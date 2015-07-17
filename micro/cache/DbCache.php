@@ -1,6 +1,6 @@
 <?php /** MicroDbCache */
 
-namespace Micro\caches;
+namespace Micro\cache;
 
 use Micro\db\DbConnection;
 use Micro\db\Query;

@@ -2,8 +2,6 @@
 
 namespace Micro\web;
 
-use Micro\base\OutputInterface;
-
 /**
  * Response class file.
  *

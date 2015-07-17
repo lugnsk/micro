@@ -1,8 +1,7 @@
 <?php /** MicroUniqueValidator */
 
-namespace Micro\validators;
+namespace Micro\validator;
 
-use Micro\base\Validator;
 use Micro\db\Model;
 use Micro\db\Query;
 

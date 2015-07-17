@@ -1,6 +1,6 @@
 <?php /** MicroRawQueue */
 
-namespace Micro\queues;
+namespace Micro\queue;
 
 /**
  * RawQueue class file.

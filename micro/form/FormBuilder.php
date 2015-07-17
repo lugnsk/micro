@@ -1,10 +1,10 @@
 <?php /** MicroFormBuilder */
 
-namespace Micro\forms;
+namespace Micro\form;
 
 use Micro\db\Model;
+use Micro\web\Html;
 use Micro\widgets\FormWidget;
-use Micro\wrappers\Html;
 
 /**
  * Class FormBuilder.

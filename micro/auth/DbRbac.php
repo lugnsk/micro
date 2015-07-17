@@ -131,7 +131,7 @@ class DbRbac extends Rbac
     {
         $tree = $this->searchRoleRecursive($this->tree($this->rawRoles()), $name);
         if ($tree) {
-            $this->recursiveDelete($tree, $name);
+            $this->recursiveDelete($tree);
         }
     }
 

@@ -1,9 +1,9 @@
 <?php /** MicroEmailLogger */
 
-namespace Micro\loggers;
+namespace Micro\logger;
 
 use Micro\base\Container;
-use Micro\wrappers\Mail;
+use Micro\web\Mail;
 
 /**
  * Email logger class file.

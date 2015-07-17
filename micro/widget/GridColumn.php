@@ -1,6 +1,6 @@
 <?php /** MicroGridColumn */
 
-namespace Micro\widgets;
+namespace Micro\widget;
 
 /**
  * Abstract grid column class file.

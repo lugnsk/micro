@@ -1,6 +1,6 @@
 <?php /** MicroFormModel */
 
-namespace Micro\forms;
+namespace Micro\form;
 
 use Micro\base\Container;
 use Micro\validators\Validator;

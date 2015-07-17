@@ -1,8 +1,8 @@
 <?php /** MicroConsoleResolver */
 
-namespace Micro\resolvers;
+namespace Micro\resolver;
 
-use Micro\base\Console;
+use Micro\cli\Console;
 
 /**
  * CLI Resolver class file.

@@ -1,8 +1,8 @@
 <?php /** MicroForm */
 
-namespace Micro\forms;
+namespace Micro\form;
 
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * Form class file.

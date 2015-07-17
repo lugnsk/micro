@@ -1,9 +1,9 @@
 <?php /** MicroActionsGridColumn */
 
-namespace Micro\widgets;
+namespace Micro\widget;
 
 use Micro\base\Exception;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * Actions grid column class file.

@@ -42,7 +42,8 @@ class Exception extends \Exception
      *
      * @access public
      *
-     * @return mixed|string
+     * @return mixed|string|void
+     * @throws Exception
      */
     public function __toString()
     {
@@ -58,15 +59,15 @@ class Exception extends \Exception
             return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';
         }
 
-        if (!$this->container->__get('errorController')) {
+        if (!$this->container->errorController) {
             return 'Option `errorController` not configured';
         }
-        if (!$this->container->__get('errorAction')) {
+        if (!$this->container->errorAction) {
             return 'Option `errorAction` not configured';
         }
 
-        $controller = $this->container->__get('errorController');
-        $action = $this->container->__get('errorAction');
+        $controller = $this->container->errorController;
+        $action = $this->container->errorAction;
 
         /** @var \Micro\mvc\controllers\Controller $mvc controller */
         $mvc = new $controller($this->container);

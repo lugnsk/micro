@@ -1,10 +1,10 @@
 <?php /** MicroFormWidget */
 
-namespace Micro\widgets;
+namespace Micro\widget;
 
 use Micro\mvc\Widget;
 use Micro\web\Form;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * FormWidget class file.

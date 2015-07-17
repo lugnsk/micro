@@ -1,6 +1,6 @@
 <?php /** MicroMemcachedCache */
 
-namespace Micro\caches;
+namespace Micro\cache;
 
 use Micro\base\Exception;
 

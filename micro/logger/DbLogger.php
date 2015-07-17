@@ -1,6 +1,6 @@
 <?php /** MicroDbLogger */
 
-namespace Micro\loggers;
+namespace Micro\logger;
 
 use Micro\base\Container;
 

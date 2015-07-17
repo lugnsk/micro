@@ -1,6 +1,6 @@
 <?php /** MicroValidator */
 
-namespace Micro\validators;
+namespace Micro\validator;
 
 /**
  * Validator is a runner validation process

@@ -44,6 +44,7 @@ class Dispatcher
      * @access public
      *
      * @param string $listener listener name
+     * @param array $params Signal parameters
      *
      * @return mixed
      */

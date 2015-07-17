@@ -1,8 +1,7 @@
 <?php /** MicroCaptchaValidator */
 
-namespace Micro\validators;
+namespace Micro\validator;
 
-use Micro\base\Validator;
 use Micro\db\Model;
 
 /**

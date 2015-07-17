@@ -1,6 +1,6 @@
 <?php /** MicroLogInterface */
 
-namespace Micro\loggers;
+namespace Micro\logger;
 
 use Micro\base\Container;
 use Micro\base\Exception;

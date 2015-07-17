@@ -1,11 +1,11 @@
 <?php /** MicroDetailViewWidget */
-namespace Micro\widgets;
+namespace Micro\widget;
 
 use Micro\base\Exception;
 use Micro\db\Model;
 use Micro\db\Query;
 use Micro\mvc\Widget;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * DetailViewWidget class file.

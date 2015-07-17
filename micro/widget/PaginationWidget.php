@@ -1,9 +1,9 @@
 <?php /** MicroPaginationWidget */
 
-namespace Micro\widgets;
+namespace Micro\widget;
 
 use Micro\mvc\Widget;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * PaginationWidget class file.

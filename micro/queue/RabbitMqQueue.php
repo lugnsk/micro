@@ -1,6 +1,6 @@
 <?php /** MicroRabbitMqQueue */
 
-namespace Micro\queues;
+namespace Micro\queue;
 
 /**
  * RabbitMqQueue class file.

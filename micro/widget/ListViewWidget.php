@@ -1,11 +1,11 @@
 <?php /** MicroListViewWidget */
 
-namespace Micro\widgets;
+namespace Micro\widget;
 
 use Micro\base\Exception;
 use Micro\db\Query;
 use Micro\mvc\Widget;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * ListViewWidget class file.

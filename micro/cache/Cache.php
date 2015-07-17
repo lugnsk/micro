@@ -1,6 +1,6 @@
 <?php /** MicroCache */
 
-namespace Micro\base;
+namespace Micro\cache;
 
 /**
  * Cache class file.

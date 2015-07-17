@@ -1,6 +1,6 @@
 <?php /** MicroRabbitMQ */
 
-namespace Micro\wrappers;
+namespace Micro\queue;
 
 /**
  * RabbitMQ class file.

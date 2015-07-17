@@ -1,6 +1,6 @@
 <?php /** MicroResolver */
 
-namespace Micro\resolvers;
+namespace Micro\resolver;
 
 use Micro\base\Container;
 

@@ -5,7 +5,7 @@ namespace Micro\db;
 use Micro\base\Container;
 use Micro\base\Exception;
 use Micro\base\Type;
-use Micro\web\FormModel;
+use Micro\form\FormModel;
 
 /**
  * Model class file.

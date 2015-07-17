@@ -1,6 +1,6 @@
 <?php /** MicroHMVCResolver */
 
-namespace Micro\resolvers;
+namespace Micro\resolver;
 
 /**
  * hMVC Resolver class file.

@@ -1,6 +1,6 @@
 <?php /** MicroLogger */
 
-namespace Micro\loggers;
+namespace Micro\logger;
 
 /**
  * Logger manager

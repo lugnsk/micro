@@ -1,6 +1,6 @@
 <?php /** MicroFile */
 
-namespace Micro\wrappers;
+namespace Micro\base;
 
 /**
  * MFile io class

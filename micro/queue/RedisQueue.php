@@ -1,6 +1,6 @@
 <?php /** MicroRedisQueue */
 
-namespace Micro\queues;
+namespace Micro\queue;
 
 /**
  * RedisQueue class file.

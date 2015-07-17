@@ -1,6 +1,6 @@
 <?php
 
-namespace Micro\queues;
+namespace Micro\queue;
 
 /**
  * IQueue interface file.

@@ -4,7 +4,7 @@ namespace Micro\mvc\views;
 
 use Micro\base\Container;
 use Micro\base\Exception;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * Class View

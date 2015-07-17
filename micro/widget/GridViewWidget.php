@@ -1,12 +1,12 @@
 <?php /** MicroGridViewWidget */
 
-namespace Micro\widgets;
+namespace Micro\widget;
 
 use Micro\base\Exception;
 use Micro\base\Type;
 use Micro\db\Query;
 use Micro\mvc\Widget;
-use Micro\wrappers\Html;
+use Micro\web\Html;
 
 /**
  * GridViewWidget class file.
