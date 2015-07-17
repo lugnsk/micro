@@ -207,10 +207,10 @@ class AccessFilter extends Filter
             $rule['ips'][] = $rule['ips'];
         }
 
-        $ip = $this->container->request->getUserIP();
+        $userIp = $this->container->request->getUserIP();
 
         foreach ($rule['ips'] AS $r) {
-            if ($r === '*' || $r === $ip || (($pos = strpos($r, '*')) !== false && !strncmp($ip, $r, $pos))) {
+            if ($r === '*' || $r === $userIp || (($pos = strpos($r, '*')) !== false && !strncmp($userIp, $r, $pos))) {
                 return true;
             }
         }
