@@ -102,11 +102,12 @@ class AccessFilter extends Filter
         if (empty($rule['actions'])) {
             return true;
         }
+
         if (is_array($rule['actions'])) {
             return in_array($this->action, $rule['actions'], true);
-        } else {
-            return $this->action === $rule['actions'];
         }
+
+        return $this->action === $rule['actions'];
     }
 
     /**
@@ -124,33 +125,13 @@ class AccessFilter extends Filter
         if (empty($rule['users'])) {
             return true;
         }
-        if (is_array($rule['users'])) {
-            foreach ($rule['users'] AS $u) {
-                switch ($u) {
-                    case '*': {
-                        return true;
-                    }
-                    case '?': {
-                        if ($this->container->user->isGuest()) {
-                            return true;
-                        }
-                        break;
-                    }
-                    case '@': {
-                        if (!$this->container->user->isGuest()) {
-                            return true;
-                        }
-                        break;
-                    }
-                    default: {
-                        if ($this->container->user->getID() === $u) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        } else {
-            switch ($rule['users']) {
+
+        if (!is_array($rule['users'])) {
+            $rule['users'][] = $rule['users'];
+        }
+
+        foreach ($rule['users'] AS $u) {
+            switch ($u) {
                 case '*': {
                     return true;
                 }
@@ -167,7 +148,7 @@ class AccessFilter extends Filter
                     break;
                 }
                 default: {
-                    if ($this->container->user->getID() === $rule['users']) {
+                    if ($this->container->user->getID() === $u) {
                         return true;
                     }
                 }
@@ -192,14 +173,13 @@ class AccessFilter extends Filter
         if (empty($rule['roles'])) {
             return true;
         }
-        if (is_array($rule['roles'])) {
-            foreach ($rule['roles'] AS $role) {
-                if ($this->container->user->check($role)) {
-                    return true;
-                }
-            }
-        } else {
-            if ($this->container->user->check($rule['roles'])) {
+
+        if (!is_array($rule['roles'])) {
+            $rule['roles'][] = $rule['roles'];
+        }
+
+        foreach ($rule['roles'] AS $role) {
+            if ($this->container->user->check($role)) {
                 return true;
             }
         }
@@ -222,18 +202,14 @@ class AccessFilter extends Filter
         if (empty($rule['ips'])) {
             return true;
         }
+
+        if (!is_array($rule['ips'])) {
+            $rule['ips'][] = $rule['ips'];
+        }
+
         $ip = $this->container->request->getUserIP();
 
-        if (is_array($rule['ips'])) {
-            foreach ($rule['ips'] AS $r) {
-                if ($r === '*' || $r === $ip || (($pos = strpos($r, '*')) !== false && !strncmp($ip, $r,
-                            $pos))
-                ) {
-                    return true;
-                }
-            }
-        } else {
-            $r = $rule['ips'];
+        foreach ($rule['ips'] AS $r) {
             if ($r === '*' || $r === $ip || (($pos = strpos($r, '*')) !== false && !strncmp($ip, $r, $pos))) {
                 return true;
             }
@@ -257,15 +233,16 @@ class AccessFilter extends Filter
         if (empty($rule['verb'])) {
             return true;
         }
+
         if (is_array($rule['verb'])) {
-            $verb = $this->container->request->getMethod();
-            foreach ($rule['verb'] AS $v) {
-                if ($v === $verb) {
-                    return true;
-                }
+            $rule['verb'][] = $rule['verb'];
+        }
+
+        $verb = $this->container->request->getMethod();
+        foreach ($rule['verb'] AS $v) {
+            if ($v === $verb) {
+                return true;
             }
-        } else {
-            return $rule['verb'] === $this->container->request->getMethod();
         }
 
         return false;
