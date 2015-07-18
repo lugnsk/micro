@@ -35,7 +35,7 @@ class MongoDbConnection
      * @result void
      * @throws Exception
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config = [], $ignoreFail = false)
     {
         if (!empty($config['dbname'])) {
             $this->dbName = $config['dbname'];
@@ -43,14 +43,16 @@ class MongoDbConnection
             throw new Exception('MongoDB database name not defined!');
         }
 
-        if (!empty($config['connectionString'])) {
-            $this->conn = new \MongoClient($config['connectionString'], $config['options']);
-        } else {
-            $this->conn = new \MongoClient;
-        }
-
-        if (!$this->conn instanceof \MongoClient) {
-            throw new Exception('MongoDB error connect to database');
+        try {
+            if (!empty($config['connectionString'])) {
+                $this->conn = new \MongoClient($config['connectionString'], $config['options']);
+            } else {
+                $this->conn = new \MongoClient;
+            }
+        } catch (Exception $e) {
+            if (!$ignoreFail) {
+                throw new Exception('MongoDB error connect to database');
+            }
         }
     }
 

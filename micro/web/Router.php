@@ -16,7 +16,7 @@ namespace Micro\web;
  * @version 1.0
  * @since 1.0
  */
-class Router
+class Router implements IRouter
 {
     /** @var array $routes routes for routing */
     public $routes = [];

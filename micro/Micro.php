@@ -35,6 +35,8 @@ class Micro
     protected $appDir;
     /** @var string $microDir Micro directory */
     protected $microDir;
+    /** @var string $webDir Document root */
+    protected $webDir;
     /** @var bool $debug Debug-mode flag */
     protected $debug = true;
     /** @var float $startTime Time of start framework */
@@ -61,6 +63,7 @@ class Micro
     {
         $this->appDir = realpath($appDir);
         $this->microDir = realpath($microDir);
+        $this->webDir = $_SERVER['DOCUMENT_ROOT'];
         $this->environment = $environment;
         $this->debug = (bool)$debug;
         $this->loaded = false;
@@ -209,7 +212,7 @@ class Micro
 
         $this->container->load($configPath);
 
-        if (!isset($this->container->dispatcher)) {
+        if (null === $this->container->dispatcher) {
             $this->container->dispatcher = new Dispatcher($this->container);
         }
     }
@@ -226,7 +229,7 @@ class Micro
         $this->container->dispatcher->signal('kernel.terminate', []);
 
         if ($this->debug && !$this->container->request->isCli()) {
-            echo '<div class=timer>', (microtime(true) - $this->getStartTime()), '</div>';
+            echo '<div class=debug_timer>', (microtime(true) - $this->getStartTime()), '</div>';
         }
 
         $this->unloader();
@@ -256,14 +259,14 @@ class Micro
         $this->loaded = false;
     }
 
-    public function getCharset()
-    {
-        return 'UTF-8';
-    }
-
     public function isDebug()
     {
         return $this->debug;
+    }
+
+    public function getCharset()
+    {
+        return 'UTF-8';
     }
 
     public function getEnvironment()
@@ -271,20 +274,21 @@ class Micro
         return $this->environment;
     }
 
+    // Methods helpers
+
     public function getContainer()
     {
         return $this->container;
     }
 
-
-    public function getWebDir()
-    {
-        return $_SERVER['DOCUMENT_ROOT'];
-    }
-
     public function getAppDir()
     {
         return $this->appDir;
+    }
+
+    public function getWebDir()
+    {
+        return $this->webDir;
     }
 
     public function getCacheDir()

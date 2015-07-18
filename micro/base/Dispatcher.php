@@ -13,7 +13,7 @@ namespace Micro\base;
  * @version 1.0
  * @since 1.0
  */
-class Dispatcher
+class Dispatcher implements IDispatcher
 {
     /** @var array $listeners listeners objects on events */
     protected $listeners = [];

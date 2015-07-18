@@ -2,8 +2,6 @@
 
 namespace Micro\web;
 
-use Micro\base\Container;
-
 /**
  * Cookie class file.
  *
@@ -16,13 +14,24 @@ use Micro\base\Container;
  * @version 1.0
  * @since 1.0
  */
-class Cookie
+class Cookie implements ICookie
 {
-    protected $container;
+    /** @var IRequest $request */
+    protected $request;
 
-    public function __construct(Container $container)
+
+    /**
+     * Constructor of object
+     *
+     * @access public
+     *
+     * @param array $params Configuration array
+     *
+     * @result void
+     */
+    public function __construct(array $params)
     {
-        $this->container = $container;
+        $this->request = $params['request'];
     }
 
     /**
@@ -36,7 +45,7 @@ class Cookie
      */
     public function get($name)
     {
-        return $this->container->request->getCookieVar($name);
+        return $this->request->getCookieVar($name);
     }
 
     /**
@@ -47,7 +56,7 @@ class Cookie
      */
     public function getAll()
     {
-        return $this->container->request->getStorage('_COOKIE');
+        return $this->request->getStorage('_COOKIE');
     }
 
     /**
@@ -79,7 +88,7 @@ class Cookie
      */
     public function exists($name)
     {
-        return (bool)$this->container->request->getCookieVar($name);
+        return (bool)$this->request->getCookieVar($name);
     }
 
     /**

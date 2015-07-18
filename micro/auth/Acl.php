@@ -20,7 +20,7 @@ use Micro\db\DbConnection;
  * @since 1.0
  * @abstract
  */
-abstract class Acl
+abstract class Acl implements IAuth
 {
     /** @var string $groupTable name of group table */
     protected $groupTable;

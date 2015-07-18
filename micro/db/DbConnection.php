@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class DbConnection
+class DbConnection implements IDbConnection
 {
     /** @var \PDO|null $conn Connection to DB */
     protected $conn;
@@ -30,26 +30,28 @@ class DbConnection
      * @access public
      *
      * @param array $config configuration array
-     * @param bool $ignoreFail ignore PDO fail create?
      *
      * @result void
      * @throws Exception
      */
-    public function __construct(array $config = [], $ignoreFail = false)
+    public function __construct(array $config = [])
     {
         try {
             if (empty($config['options'])) {
                 $config['options'] = null;
             }
-            $this->conn = new \PDO($config['connectionString'], $config['username'], $config['password'],
-                $config['options']);
+
+            $this->conn = new \PDO(
+                $config['connectionString'],
+                $config['username'],
+                $config['password'],
+                $config['options']
+            );
         } catch (Exception $e) {
-            if (!$ignoreFail) {
-                throw new Exception($config['container'], 'Connect to DB failed: ' . $e->getMessage());
+            if (!array_key_exists('ignoreFail', $config) || !$config['ignoreFail']) {
+                throw new Exception('Connect to DB failed: ' . $e->getMessage());
             }
         }
-
-        $this->container = $config['container'];
     }
 
     /**
@@ -91,12 +93,9 @@ class DbConnection
             $sth->bindValue($name, $value);
         }
 
-        if ($sth->execute()) {
-            return $sth->fetchAll();
-        } else {
-            /** @noinspection ForgottenDebugOutputInspection */
-            throw new Exception($this->container, $sth->errorCode() . ': ' . print_r($sth->errorInfo()));
-        }
+        $sth->execute();
+
+        return $sth->fetchAll();
     }
 
     /**

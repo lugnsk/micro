@@ -20,12 +20,14 @@ namespace Micro\base;
  * @property string $errorAction
  *
  * @property \Micro\Micro $kernel
- * @property \Micro\web\Router $router
- * @property \Micro\web\Request $request
- * @property \Micro\web\Response $response
+ * @property \Micro\db\IDbConnection $db
+ * @property \Micro\web\IRouter $router
+ * @property \Micro\web\IRequest $request
+ * @property \Micro\web\IResponse $response
+ * @property \Micro\web\ICookie $cookie
+ * @property \Micro\auth\IAuth $auth
+ * @property \Micro\base\IDispatcher $dispatcher
  * @property \Micro\web\Session $session
- * @property \Micro\web\Cookie $cookie
- * @property \Micro\db\DbConnection $db
  * @property \Micro\web\User $user
  */
 class Container extends \stdClass

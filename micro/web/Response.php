@@ -14,7 +14,7 @@ namespace Micro\web;
  * @version 1.0
  * @since 1.0
  */
-class Response implements OutputInterface
+class Response implements OutputInterface, IResponse
 {
     /** @var string $httpVersion Protocol version */
     protected $httpVersion = 'HTTP/1.1';

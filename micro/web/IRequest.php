@@ -1,39 +1,9 @@
-<?php /** MicroRequest */
+<?php
 
 namespace Micro\web;
 
-/**
- * Request class file.
- *
- * @author Oleg Lunegov <testuser@mail.linpax.org>
- * @link https://github.com/lugnsk/micro
- * @copyright Copyright &copy; 2013 Oleg Lunegov
- * @license /LICENSE
- * @package micro
- * @subpackage web
- * @version 1.0
- * @since 1.0
- */
-class Request implements IRequest
+interface IRequest
 {
-    /** @var bool $cli Is running as CLI */
-    protected $cli;
-    /** @var array $data Data from request */
-    protected $data;
-
-
-    /**
-     * Constructor Request
-     *
-     * @access public
-     *
-     * @result void
-     */
-    public function __construct()
-    {
-        $this->cli = php_sapi_name() === 'cli';
-    }
-
     /**
      * Get flag of running as CLI
      *
@@ -41,10 +11,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function isCli()
-    {
-        return $this->cli;
-    }
+    public function isCli();
 
     /**
      * Get request method
@@ -53,10 +20,7 @@ class Request implements IRequest
      *
      * @return string
      */
-    public function getMethod()
-    {
-        return $_SERVER['REQUEST_METHOD'];
-    }
+    public function getMethod();
 
     /**
      * Check request is AJAX ?
@@ -65,10 +29,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function isAjax()
-    {
-        return !empty($_SERVER['HTTP_X_REQUEST_WITH']) && $_SERVER['HTTP_X_REQUEST_WITH'] === 'XMLHttpRequest';
-    }
+    public function isAjax();
 
     /**
      * Get user IP-address
@@ -77,10 +38,7 @@ class Request implements IRequest
      *
      * @return string
      */
-    public function getUserIP()
-    {
-        return !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
-    }
+    public function getUserIP();
 
     /**
      * Get browser data from user user agent string
@@ -91,10 +49,7 @@ class Request implements IRequest
      *
      * @return mixed
      */
-    public function getBrowser($agent = null)
-    {
-        return get_browser($agent ?: $_SERVER['HTTP_USER_AGENT'], true);
-    }
+    public function getBrowser($agent = null);
 
     /**
      * Set value into query storage
@@ -106,10 +61,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setQueryVar($name, $value)
-    {
-        $this->setVar($name, $value, '_GET');
-    }
+    public function setQueryVar($name, $value);
 
     /**
      * Set value into storage
@@ -122,10 +74,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setVar($name, $value, $storage)
-    {
-        $GLOBALS[$storage][$name] = $value;
-    }
+    public function setVar($name, $value, $storage);
 
     /**
      * Set value into post storage
@@ -137,10 +86,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setPostVar($name, $value)
-    {
-        $this->setVar($name, $value, '_POST');
-    }
+    public function setPostVar($name, $value);
 
     /**
      * Set value into cookie storage
@@ -152,10 +98,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setCookieVar($name, $value)
-    {
-        $this->setVar($name, $value, '_COOKIE');
-    }
+    public function setCookieVar($name, $value);
 
     /**
      * Set value into session storage
@@ -167,10 +110,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setSessionVar($name, $value)
-    {
-        $this->setVar($name, $value, '_SESSION');
-    }
+    public function setSessionVar($name, $value);
 
     /**
      * Get value by key from server storage
@@ -181,10 +121,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getServerVar($name)
-    {
-        return $this->getVar($name, '_SERVER');
-    }
+    public function getServerVar($name);
 
     /**
      * Get any var from Request storage
@@ -196,10 +133,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getVar($name, $storage)
-    {
-        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : false;
-    }
+    public function getVar($name, $storage);
 
     /**
      * Get value by key from query storage
@@ -210,10 +144,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getQueryVar($name)
-    {
-        return $this->getVar($name, '_GET');
-    }
+    public function getQueryVar($name);
 
     /**
      * Get value by key from post storage
@@ -224,10 +155,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getPostVar($name)
-    {
-        return $this->getVar($name, '_POST');
-    }
+    public function getPostVar($name);
 
     /**
      * Get value by key from cookie storage
@@ -238,10 +166,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getCookieVar($name)
-    {
-        return $this->getVar($name, '_COOKIE');
-    }
+    public function getCookieVar($name);
 
     /**
      * Get value by key from session storage
@@ -252,10 +177,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getSessionVar($name)
-    {
-        return $this->getVar($name, '_SESSION');
-    }
+    public function getSessionVar($name);
 
     /**
      * Get arguments from command line
@@ -264,12 +186,7 @@ class Request implements IRequest
      *
      * @return array
      */
-    public function getArguments()
-    {
-        global $argv;
-
-        return $argv;
-    }
+    public function getArguments();
 
     /**
      * Get files mapper
@@ -280,17 +197,7 @@ class Request implements IRequest
      *
      * @return mixed
      */
-    public function getFiles($className = '\Micro\web\Uploader')
-    {
-        if (!is_array($_FILES)) {
-            return false;
-        }
-
-        /** @var \Micro\web\Uploader $files */
-        $files = new $className($_FILES);
-
-        return $files;
-    }
+    public function getFiles($className = '\Micro\web\Uploader');
 
     /**
      * Get all data from storage
@@ -301,10 +208,7 @@ class Request implements IRequest
      *
      * @return mixed
      */
-    public function getStorage($name)
-    {
-        return $GLOBALS[$name];
-    }
+    public function getStorage($name);
 
     /**
      * Set all data into storage
@@ -316,8 +220,5 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setStorage($name, array $data = [])
-    {
-        $GLOBALS[$name] = $data;
-    }
+    public function setStorage($name, array $data = []);
 }
