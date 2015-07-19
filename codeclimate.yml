@@ -15,13 +15,7 @@
 engines:
 # to turn on an engine, add it here and set enabled to `true`
 # to turn off an engine, set enabled to `false` or remove it
-  rubocop:
-    enabled: true
-  golint:
-    enabled: true
-  gofmt:
-    enabled: true
-  eslint:
+  phpcodesniffer:
     enabled: true
   csslint:
     enabled: true
@@ -44,7 +38,8 @@ engines:
 # exclude_paths key.
 
 languages:
-  PHP: true
+   PHP: true
+   JavaScript: true
 
 exclude_paths:
 - "micro/tests/*"
