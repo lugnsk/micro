@@ -14,7 +14,7 @@ class DefaultController extends Controller
     {
         return [
             [
-                'class' => '\Micro\filters\AccessFilter',
+                'class' => '\Micro\filter\AccessFilter',
                 'actions' => ['login', 'logout', 'index', 'error'],
                 'rules' => [
                     [
@@ -38,11 +38,11 @@ class DefaultController extends Controller
                 ]
             ],
             [
-                'class' => '\Micro\filters\CsrfFilter',
+                'class' => '\Micro\filter\CsrfFilter',
                 'actions' => ['login']
             ],
             [
-                'class' => '\Micro\filters\XssFilter',
+                'class' => '\Micro\filter\XssFilter',
                 'actions' => ['index', 'login', 'logout'],
                 'clean' => '*'
             ]

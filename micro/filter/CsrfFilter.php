@@ -1,6 +1,6 @@
 <?php /** CsrfFilterMicro */
 
-namespace Micro\filters;
+namespace Micro\filter;
 
 /**
  * Class CsrfFilter

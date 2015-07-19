@@ -12,7 +12,7 @@ class RegisterController extends Controller
     {
         return [
             [
-                'class' => '\Micro\filters\AccessFilter',
+                'class' => '\Micro\filter\AccessFilter',
                 'actions' => ['success', 'error', 'index', 'post'],
                 'rules' => [
                     [
@@ -24,11 +24,11 @@ class RegisterController extends Controller
                 ]
             ],
             [
-                'class' => '\Micro\filters\CsrfFilter',
+                'class' => '\Micro\filter\CsrfFilter',
                 'actions' => ['index']
             ],
             [
-                'class' => '\Micro\filters\XssFilter',
+                'class' => '\Micro\filter\XssFilter',
                 'actions' => ['post'],
                 'clean' => '*'
             ]

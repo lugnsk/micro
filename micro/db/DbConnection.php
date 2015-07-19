@@ -49,9 +49,11 @@ class DbConnection implements IDbConnection
             );
         } catch (Exception $e) {
             if (!array_key_exists('ignoreFail', $config) || !$config['ignoreFail']) {
-                throw new Exception('Connect to DB failed: ' . $e->getMessage());
+                throw new Exception($config['container'], 'Connect to DB failed: ' . $e->getMessage());
             }
         }
+
+        $this->container = $config['container'];
     }
 
     /**

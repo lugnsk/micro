@@ -8,7 +8,7 @@ use Micro\web\Html;
 echo Html::heading(2, 'Регистрация');
 
 /** @var \Micro\form\Form $form */
-$form = $this->beginWidget('\Micro\widgets\FormWidget', [
+$form = $this->beginWidget('\Micro\widget\FormWidget', [
     'method' => 'post',
     'action' => '/register/post',
     'client' => $model->getClient()
@@ -20,4 +20,4 @@ echo $form->passwordFieldRow($model, 'pass');
 echo $form->textFieldRow($model, 'fio');
 echo Html::submitButton('Зарегистрироваться');
 
-$this->endWidget('\Micro\widgets\FormWidget');
+$this->endWidget('\Micro\widget\FormWidget');

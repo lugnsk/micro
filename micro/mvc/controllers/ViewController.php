@@ -3,6 +3,7 @@
 namespace Micro\mvc\controllers;
 
 use Micro\base\Exception;
+use Micro\web\Response;
 
 /**
  * Class Controller
@@ -71,9 +72,10 @@ abstract class ViewController extends Controller
             $view = (string)$view;
         }
 
-        $this->response->setBody($this->applyFilters($name, false, $filters, $view));
+        $response = new Response();
+        $response->setBody($this->applyFilters($name, false, $filters, $view));
 
-        return $this->response;
+        return $response;
     }
 
     /**

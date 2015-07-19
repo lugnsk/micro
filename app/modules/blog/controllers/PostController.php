@@ -13,7 +13,7 @@ class PostController extends Controller
     {
         return [
             [
-                'class' => '\Micro\filters\AccessFilter',
+                'class' => '\Micro\filter\AccessFilter',
                 'actions' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
@@ -31,11 +31,11 @@ class PostController extends Controller
                 ]
             ],
             [
-                'class' => '\Micro\filters\CsrfFilter',
+                'class' => '\Micro\filter\CsrfFilter',
                 'actions' => ['login']
             ],
             [
-                'class' => '\Micro\filters\XssFilter',
+                'class' => '\Micro\filter\XssFilter',
                 'actions' => ['index', 'login', 'logout'],
                 'clean' => '*'
             ]

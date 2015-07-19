@@ -1,6 +1,6 @@
 <?php /** XssFilterMicro */
 
-namespace Micro\filters;
+namespace Micro\filter;
 
 /**
  * Class XssFilter

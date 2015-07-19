@@ -1,6 +1,6 @@
 <?php /** FilterMicro */
 
-namespace Micro\filters;
+namespace Micro\filter;
 
 use Micro\base\Container;
 

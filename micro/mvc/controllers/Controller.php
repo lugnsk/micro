@@ -89,7 +89,7 @@ abstract class Controller
                 continue;
             }
 
-            /** @var \Micro\filters\Filter $_filter */
+            /** @var \Micro\filter\Filter $_filter */
             $_filter = new $filter['class']($action, $this->container);
 
             $res = $isPre ? $_filter->pre($filter) : $_filter->post($filter + ['data' => $data]);

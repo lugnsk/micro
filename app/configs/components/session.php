@@ -4,7 +4,7 @@
 return [
     'class' => '\Micro\web\Session',
     'arguments' => [
-        'container' => '@request',
+        'request' => '@request',
         'autoStart' => true
     ]
 ];

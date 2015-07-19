@@ -14,10 +14,10 @@ class MenubarWidget extends Widget
     public function run()
     {
         $view = new View($this->container);
-        $view->path = get_class($this);
+        //$view->addParameter('menu', $this->links);
         $view->view = 'menubar';
         $view->asWidget = true;
 
-        echo $view;
+        return $view;
     }
 }

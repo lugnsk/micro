@@ -33,8 +33,6 @@ abstract class Widget
      */
     public function __construct(array $args = [])
     {
-        $this->container = array_key_exists('container', $args) ? $args['container'] : null;
-
         foreach ($args AS $name => $value) {
             $this->$name = $value;
         }

@@ -12,7 +12,7 @@ echo Html::href('Создать', '/blog/post/create');
 ?>
 
 <?php
-echo $this->widget('\Micro\widgets\ListViewWidget', [
+echo $this->widget('\Micro\widget\ListViewWidget', [
     'data' => $blogs,
     'page' => $page,
     'pathView' => __DIR__ . '/_view.php',

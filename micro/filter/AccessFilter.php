@@ -1,6 +1,6 @@
 <?php /** AccessFilterMicro */
 
-namespace Micro\filters;
+namespace Micro\filter;
 
 use Micro\base\Exception;
 
