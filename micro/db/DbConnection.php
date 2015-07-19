@@ -129,7 +129,7 @@ class DbConnection implements IDbConnection
      */
     public function infoDatabase($dbName)
     {
-        $sth = $this->conn->query('SHOW TABLE STATUS FROM ' . $dbName . ';');
+        $sth = $this->conn->query("SHOW TABLE STATUS FROM {$dbName};");
 
         $result = [];
         foreach ($sth->fetchAll() AS $row) {
@@ -182,8 +182,9 @@ class DbConnection implements IDbConnection
      */
     public function createTable($name, array $elements = [], $params = '')
     {
-        return $this->conn->exec('CREATE TABLE IF NOT EXISTS ' . $name . ' (' . implode(',',
-                $elements) . ') ' . $params . ';');
+        return $this->conn->exec(
+            "CREATE TABLE IF NOT EXISTS {$name} ({implode(',', $elements)}) {$params};"
+        );
     }
 
     /**
@@ -197,7 +198,7 @@ class DbConnection implements IDbConnection
      */
     public function clearTable($name)
     {
-        return $this->conn->exec('TRUNCATE `' . $name . '`;');
+        return $this->conn->exec("TRUNCATE {$name};");
     }
 
     /**
@@ -211,7 +212,7 @@ class DbConnection implements IDbConnection
      */
     public function removeTable($name)
     {
-        return $this->conn->exec('DROP TABLE `' . $name . '`;');
+        return $this->conn->exec("DROP TABLE {$name};");
     }
 
     /**
@@ -246,7 +247,7 @@ class DbConnection implements IDbConnection
      */
     public function listFields($table)
     {
-        $sth = $this->conn->query('SHOW COLUMNS FROM ' . $table . ';');
+        $sth = $this->conn->query("SHOW COLUMNS FROM {$table};");
 
         $result = [];
         foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
@@ -275,7 +276,7 @@ class DbConnection implements IDbConnection
      */
     public function fieldInfo($field, $table)
     {
-        $sth = $this->conn->query('SELECT ' . $field . ' FROM ' . $table . ' LIMIT 1');
+        $sth = $this->conn->query("SELECT {$field} FROM {$table} LIMIT 1;");
 
         return $sth->getColumnMeta(0);
     }
@@ -291,7 +292,7 @@ class DbConnection implements IDbConnection
      */
     public function switchDatabase($dbName)
     {
-        if ($this->conn->exec('USE ' . $dbName . ';') !== false) {
+        if ($this->conn->exec("USE {$dbName};") !== false) {
             return true;
         } else {
             return false;
@@ -320,14 +321,14 @@ class DbConnection implements IDbConnection
             $this->conn->beginTransaction();
             foreach ($line AS $l) {
                 $dbh = $this->conn->prepare(
-                    'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
+                    "INSERT INTO {$table} ({$fields}) VALUES ({$values});"
                 )->execute($l);
             }
             $id = $dbh ? $this->conn->lastInsertId() : false;
             $this->conn->commit();
         } else {
             $dbh = $this->conn->prepare(
-                'INSERT INTO ' . $table . ' (' . $fields . ') VALUES (' . $values . ');'
+                "INSERT INTO {$table} ({$fields}) VALUES ({$values});"
             )->execute($line);
             $id = $dbh ? $this->conn->lastInsertId() : false;
         }
@@ -363,7 +364,7 @@ class DbConnection implements IDbConnection
         }
 
         return $this->conn->prepare(
-            'UPDATE `' . $table . '` SET ' . implode(', ', $valStr) . ' ' . $conditions
+            "UPDATE {$table} SET {implode(', ', $valStr)} {$conditions};"
         )->execute($elements);
     }
 
@@ -381,7 +382,7 @@ class DbConnection implements IDbConnection
     public function delete($table, $conditions, array $ph = [])
     {
         return $this->conn->prepare(
-            'DELETE FROM ' . $table . ' WHERE ' . $conditions
+            "DELETE FROM {$table} WHERE {$conditions};"
         )->execute($ph);
     }
 
@@ -403,7 +404,7 @@ class DbConnection implements IDbConnection
         }
 
         $sth = $this->conn->prepare(
-            'SELECT * FROM ' . $table . ' WHERE ' . implode(' AND ', $keys) . ' LIMIT 1;'
+            "SELECT * FROM {$table} WHERE {implode(' AND ', $keys)} LIMIT 1;"
         );
         $sth->execute();
 
@@ -423,9 +424,9 @@ class DbConnection implements IDbConnection
     public function count($subQuery = '', $table = '')
     {
         if ($subQuery) {
-            $sth = $this->conn->prepare('SELECT COUNT(*) FROM (' . $subQuery . ') AS m;');
+            $sth = $this->conn->prepare("SELECT COUNT(*) FROM ({$subQuery}) AS m;");
         } elseif ($table) {
-            $sth = $this->conn->prepare('SELECT COUNT(*) FROM `' . $table . '` AS m;');
+            $sth = $this->conn->prepare("SELECT COUNT(*) FROM {$table} AS m;");
         } else {
             return false;
         }
