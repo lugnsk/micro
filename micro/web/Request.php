@@ -47,18 +47,6 @@ class Request implements IRequest
     }
 
     /**
-     * Get request method
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getMethod()
-    {
-        return $_SERVER['REQUEST_METHOD'];
-    }
-
-    /**
      * Check request is AJAX ?
      *
      * @access public
@@ -68,6 +56,18 @@ class Request implements IRequest
     public function isAjax()
     {
         return !empty($_SERVER['HTTP_X_REQUEST_WITH']) && $_SERVER['HTTP_X_REQUEST_WITH'] === 'XMLHttpRequest';
+    }
+
+    /**
+     * Get request method
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     /**
@@ -95,6 +95,161 @@ class Request implements IRequest
     {
         return get_browser($agent ?: $_SERVER['HTTP_USER_AGENT'], true);
     }
+
+    /**
+     * Get arguments from command line
+     *
+     * @access public
+     *
+     * @return array
+     */
+    public function getArguments()
+    {
+        global $argv;
+
+        return $argv;
+    }
+
+    /**
+     * Get files mapper
+     *
+     * @access public
+     *
+     * @param string $className Class name of mapper
+     *
+     * @return mixed
+     */
+    public function getFiles($className = '\Micro\web\Uploader')
+    {
+        if (!is_array($_FILES)) {
+            return false;
+        }
+
+        /** @var \Micro\web\Uploader $files */
+        $files = new $className($_FILES);
+
+        return $files;
+    }
+
+    // Storage's
+
+    /**
+     * Get all data from storage
+     *
+     * @access public
+     *
+     * @param string $name Storage name
+     *
+     * @return mixed
+     */
+    public function getStorage($name)
+    {
+        return $GLOBALS[$name];
+    }
+
+    /**
+     * Set all data into storage
+     *
+     * @access public
+     *
+     * @param string $name Storage name
+     * @param array $data Any data
+     *
+     * @return void
+     */
+    public function setStorage($name, array $data = [])
+    {
+        $GLOBALS[$name] = $data;
+    }
+
+    // Getters
+
+    /**
+     * Get value by key from query storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getQueryVar($name)
+    {
+        return $this->getVar($name, '_GET');
+    }
+
+    /**
+     * Get any var from Request storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $storage Storage name
+     *
+     * @return bool
+     */
+    public function getVar($name, $storage)
+    {
+        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : false;
+    }
+
+    /**
+     * Get value by key from post storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getPostVar($name)
+    {
+        return $this->getVar($name, '_POST');
+    }
+
+    /**
+     * Get value by key from cookie storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getCookieVar($name)
+    {
+        return $this->getVar($name, '_COOKIE');
+    }
+
+    /**
+     * Get value by key from session storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getSessionVar($name)
+    {
+        return $this->getVar($name, '_SESSION');
+    }
+
+    /**
+     * Get value by key from server storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return bool
+     */
+    public function getServerVar($name)
+    {
+        return $this->getVar($name, '_SERVER');
+    }
+
+    // Setters
 
     /**
      * Set value into query storage
@@ -172,152 +327,25 @@ class Request implements IRequest
         $this->setVar($name, $value, '_SESSION');
     }
 
-    /**
-     * Get value by key from server storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getServerVar($name)
+    // Unset's
+
+    public function unsetQueryVar($name)
     {
-        return $this->getVar($name, '_SERVER');
+        $this->unsetVar($name, '_GET');
     }
 
-    /**
-     * Get any var from Request storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     * @param string $storage Storage name
-     *
-     * @return bool
-     */
-    public function getVar($name, $storage)
+    public function unsetVar($name, $storage)
     {
-        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : false;
+        unset($GLOBALS[$storage][$name]);
     }
 
-    /**
-     * Get value by key from query storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getQueryVar($name)
+    public function unsetPostVar($name)
     {
-        return $this->getVar($name, '_GET');
+        $this->unsetVar($name, '_POST');
     }
 
-    /**
-     * Get value by key from post storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getPostVar($name)
+    public function unsetSessionVar($name)
     {
-        return $this->getVar($name, '_POST');
-    }
-
-    /**
-     * Get value by key from cookie storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getCookieVar($name)
-    {
-        return $this->getVar($name, '_COOKIE');
-    }
-
-    /**
-     * Get value by key from session storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getSessionVar($name)
-    {
-        return $this->getVar($name, '_SESSION');
-    }
-
-    /**
-     * Get arguments from command line
-     *
-     * @access public
-     *
-     * @return array
-     */
-    public function getArguments()
-    {
-        global $argv;
-
-        return $argv;
-    }
-
-    /**
-     * Get files mapper
-     *
-     * @access public
-     *
-     * @param string $className Class name of mapper
-     *
-     * @return mixed
-     */
-    public function getFiles($className = '\Micro\web\Uploader')
-    {
-        if (!is_array($_FILES)) {
-            return false;
-        }
-
-        /** @var \Micro\web\Uploader $files */
-        $files = new $className($_FILES);
-
-        return $files;
-    }
-
-    /**
-     * Get all data from storage
-     *
-     * @access public
-     *
-     * @param string $name Storage name
-     *
-     * @return mixed
-     */
-    public function getStorage($name)
-    {
-        return $GLOBALS[$name];
-    }
-
-    /**
-     * Set all data into storage
-     *
-     * @access public
-     *
-     * @param string $name Storage name
-     * @param array $data Any data
-     *
-     * @return void
-     */
-    public function setStorage($name, array $data = [])
-    {
-        $GLOBALS[$name] = $data;
+        $this->unsetVar($name, '_SESSION');
     }
 }

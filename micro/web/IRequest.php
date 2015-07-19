@@ -14,15 +14,6 @@ interface IRequest
     public function isCli();
 
     /**
-     * Get request method
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getMethod();
-
-    /**
      * Check request is AJAX ?
      *
      * @access public
@@ -30,6 +21,15 @@ interface IRequest
      * @return bool
      */
     public function isAjax();
+
+    /**
+     * Get request method
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getMethod();
 
     /**
      * Get user IP-address
@@ -52,76 +52,51 @@ interface IRequest
     public function getBrowser($agent = null);
 
     /**
-     * Set value into query storage
+     * Get arguments from command line
      *
      * @access public
      *
-     * @param string $name Key name
-     * @param string $value Key value
+     * @return array
+     */
+    public function getArguments();
+
+    /**
+     * Get files mapper
+     *
+     * @access public
+     *
+     * @param string $className Class name of mapper
+     *
+     * @return mixed
+     */
+    public function getFiles($className = '\Micro\web\Uploader');
+
+    // Storage's
+
+    /**
+     * Get all data from storage
+     *
+     * @access public
+     *
+     * @param string $name Storage name
+     *
+     * @return mixed
+     */
+    public function getStorage($name);
+
+    /**
+     * Set all data into storage
+     *
+     * @access public
+     *
+     * @param string $name Storage name
+     * @param array $data Any data
      *
      * @return void
      */
-    public function setQueryVar($name, $value);
+    public function setStorage($name, array $data = []);
 
-    /**
-     * Set value into storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     * @param string $value Key value
-     * @param string $storage Storage name
-     *
-     * @return void
-     */
-    public function setVar($name, $value, $storage);
-
-    /**
-     * Set value into post storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     * @param string $value Key value
-     *
-     * @return void
-     */
-    public function setPostVar($name, $value);
-
-    /**
-     * Set value into cookie storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     * @param string $value Key value
-     *
-     * @return void
-     */
-    public function setCookieVar($name, $value);
-
-    /**
-     * Set value into session storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     * @param string $value Key value
-     *
-     * @return void
-     */
-    public function setSessionVar($name, $value);
-
-    /**
-     * Get value by key from server storage
-     *
-     * @access public
-     *
-     * @param string $name Key name
-     *
-     * @return bool
-     */
-    public function getServerVar($name);
+    // Getters
 
     /**
      * Get any var from Request storage
@@ -180,45 +155,123 @@ interface IRequest
     public function getSessionVar($name);
 
     /**
-     * Get arguments from command line
+     * Get value by key from server storage
      *
      * @access public
      *
-     * @return array
+     * @param string $name Key name
+     *
+     * @return bool
      */
-    public function getArguments();
+    public function getServerVar($name);
+
+    // Setters
 
     /**
-     * Get files mapper
+     * Set value into storage
      *
      * @access public
      *
-     * @param string $className Class name of mapper
-     *
-     * @return mixed
-     */
-    public function getFiles($className = '\Micro\web\Uploader');
-
-    /**
-     * Get all data from storage
-     *
-     * @access public
-     *
-     * @param string $name Storage name
-     *
-     * @return mixed
-     */
-    public function getStorage($name);
-
-    /**
-     * Set all data into storage
-     *
-     * @access public
-     *
-     * @param string $name Storage name
-     * @param array $data Any data
+     * @param string $name Key name
+     * @param string $value Key value
+     * @param string $storage Storage name
      *
      * @return void
      */
-    public function setStorage($name, array $data = []);
+    public function setVar($name, $value, $storage);
+
+    /**
+     * Set value into query storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $value Key value
+     *
+     * @return void
+     */
+    public function setQueryVar($name, $value);
+
+    /**
+     * Set value into post storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $value Key value
+     *
+     * @return void
+     */
+    public function setPostVar($name, $value);
+
+    /**
+     * Set value into cookie storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $value Key value
+     *
+     * @return void
+     */
+    public function setCookieVar($name, $value);
+
+    /**
+     * Set value into session storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $value Key value
+     *
+     * @return void
+     */
+    public function setSessionVar($name, $value);
+
+    // Unset's
+
+    /**
+     * Unset var into storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     * @param string $storage Storage name
+     *
+     * @return void
+     */
+    public function unsetVar($name, $storage);
+
+    /**
+     * Unset var into query storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return void
+     */
+    public function unsetQueryVar($name);
+
+    /**
+     * Unset var into post storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return void
+     */
+    public function unsetPostVar($name);
+
+    /**
+     * Unset var into session storage
+     *
+     * @access public
+     *
+     * @param string $name Key name
+     *
+     * @return void
+     */
+    public function unsetSessionVar($name);
 }

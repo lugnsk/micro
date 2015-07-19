@@ -35,18 +35,19 @@ class Response implements OutputInterface, IResponse
      *
      * @access public
      *
-     * @param string $body response body
-     * @param int $status HTTP status code, default 200
-     * @param string $message HTTP status message, default OK
-     * @param array $headers HTTP headers
+     * @param array $params Params response
      *
      * @result void
      */
-    public function __construct($body = '', $status = 200, $message = null, array $headers = [])
+    public function __construct(array $params = [])
     {
-        $this->setStatus($status, $message);
-        $this->setHeaders($headers);
-        $this->setBody($body);
+        $this->setStatus(
+            array_key_exists('status', $params) ? $params['status'] : 200,
+            array_key_exists('message', $params) ? $params['message'] : ''
+        );
+
+        $this->setHeaders(array_key_exists('headers', $params) ? $params['headers'] : []);
+        $this->setBody(array_key_exists('body', $params) ? $params['body'] : '');
     }
 
     /**

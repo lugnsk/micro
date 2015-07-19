@@ -9,14 +9,11 @@ interface IResponse
      *
      * @access public
      *
-     * @param string $body response body
-     * @param int $status HTTP status code, default 200
-     * @param string $message HTTP status message, default OK
-     * @param array $headers HTTP headers
+     * @param array $params Params response
      *
      * @result void
      */
-    public function __construct($body = '', $status = 200, $message = null, array $headers = []);
+    public function __construct(array $params = []);
 
     /**
      * Set status for response

@@ -12,11 +12,13 @@ namespace Micro\web;
  * @package micro
  * @version 1.0
  * @since 1.0
- * @property
+ *
+ * @property array $flash FlashMessages
  */
-class Session extends \stdClass
+class Session extends \stdClass implements ISession
 {
-    protected $container;
+    /** @var IRequest $request */
+    protected $request;
 
     /**
      * Construct for this class
@@ -29,7 +31,7 @@ class Session extends \stdClass
      */
     public function __construct(array $config = [])
     {
-        $this->container = $config['container'];
+        $this->request = $config['request'];
 
         if (!empty($config['autoStart']) AND ($config['autoStart'] === true)) {
             $this->create();
@@ -74,7 +76,7 @@ class Session extends \stdClass
      */
     public function __get($name)
     {
-        return $this->container->request->getSessionVar($name);
+        return $this->request->getSessionVar($name);
     }
 
     /**
@@ -89,7 +91,7 @@ class Session extends \stdClass
      */
     public function __set($name, $value)
     {
-        $this->container->request->setSessionVar($name, $value);
+        $this->request->setSessionVar($name, $value);
     }
 
     /**
@@ -103,7 +105,7 @@ class Session extends \stdClass
      */
     public function __isset($name)
     {
-        return (bool)$this->container->request->getSessionVar($name);
+        return (bool)$this->request->getSessionVar($name);
     }
 
     /**
@@ -117,6 +119,6 @@ class Session extends \stdClass
      */
     public function __unset($name)
     {
-        $this->container->request->setSessionVar($name, null);
+        $this->request->unsetSessionVar($name);
     }
 }

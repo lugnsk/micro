@@ -20,15 +20,15 @@ namespace Micro\base;
  * @property string $errorAction
  *
  * @property \Micro\Micro $kernel
+ * @property \Micro\auth\IAuth $auth
+ * @property \Micro\base\IDispatcher $dispatcher
  * @property \Micro\db\IDbConnection $db
  * @property \Micro\web\IRouter $router
  * @property \Micro\web\IRequest $request
  * @property \Micro\web\IResponse $response
  * @property \Micro\web\ICookie $cookie
- * @property \Micro\auth\IAuth $auth
- * @property \Micro\base\IDispatcher $dispatcher
- * @property \Micro\web\Session $session
- * @property \Micro\web\User $user
+ * @property \Micro\web\ISession $session
+ * @property \Micro\web\IUser $user
  */
 class Container extends \stdClass
 {
@@ -87,7 +87,6 @@ class Container extends \stdClass
      * @param string $name element name
      *
      * @return mixed
-     * @throws Exception
      */
     public function __get($name = '')
     {
@@ -95,8 +94,8 @@ class Container extends \stdClass
             return $this->config[$name];
         }
 
-        if (empty($this->data[$name])) {
-            $this->configure($name);
+        if (empty($this->data[$name]) AND !$this->configure($name)) {
+            return false;
         }
 
         return $this->data[$name];
@@ -124,33 +123,33 @@ class Container extends \stdClass
      *
      * @param string|null $name name element to initialize
      *
-     * @return void
-     * @throws \Micro\base\Exception
+     * @return bool
      */
     public function configure($name = null)
     {
         if (empty($this->config['components'])) {
-            throw new Exception($this, 'Components not configured');
+            return false;
         }
 
         if ($name === null) {
             foreach ($this->config['components'] AS $name => $options) {
                 if (!$this->loadComponent($name, $options)) {
-                    throw new Exception($this, 'Class ' . $name . ' error loading.');
+                    return false;
                 }
             }
 
-            return;
+            return true;
         }
 
         if (empty($this->config['components'][$name])) {
-            throw new Exception($this, 'Class ' . $name . ' not configured.');
+            return false;
         }
 
         if (!$this->loadComponent($name, $this->config['components'][$name])) {
-            throw new Exception($this, 'Class ' . $name . ' error loading.');
+            return false;
         }
 
+        return true;
     }
 
     /**
@@ -162,7 +161,6 @@ class Container extends \stdClass
      * @param array $options component configs
      *
      * @return bool
-     * @throws Exception
      */
     public function loadComponent($name, $options)
     {
@@ -183,12 +181,10 @@ class Container extends \stdClass
                 if ($val === '@this') {
                     $val = $this;
                 } else {
-                    $option = substr($val, 1);
-                    if (!array_key_exists($option, $this->__get($option))) {
-                        throw new Exception($this, 'Argument `' . $option . '` not found into container');
+                    if (empty($this->__get(substr($val, 1)))) {
+                        return false;
                     }
-
-                    $val = $this->__get($option);
+                    $val = $this->__get(substr($val, 1));
                 }
             }
         }

@@ -2,9 +2,6 @@
 
 namespace Micro\web;
 
-use Micro\base\Container;
-use Micro\base\Exception;
-
 /**
  * FlashMessage is a flash messenger.
  *
@@ -29,8 +26,8 @@ class FlashMessage
     const TYPE_DANGER = 4;
 
 
-    /** @var \Micro\base\Container $container Container config */
-    protected $container;
+    /** @var ISession $session Session component */
+    protected $session;
 
 
     /**
@@ -38,18 +35,13 @@ class FlashMessage
      *
      * @access public
      *
-     * @param Container $container
+     * @param array $params
      *
      * @result void
-     * @throws Exception
      */
-    public function __construct(Container $container)
+    public function __construct(array $params = [])
     {
-        $this->container = $container;
-
-        if ($this->container->session === null) {
-            throw new Exception($this->container, 'Sessions not activated');
-        }
+        $this->session = $params['session'];
     }
 
     /**
@@ -98,13 +90,13 @@ class FlashMessage
      */
     public function push($type = FlashMessage::TYPE_SUCCESS, $title = '', $description = '')
     {
-        $flashes = $this->container->session->flash;
+        $flashes = $this->session->flash;
         $flashes[] = [
             'type' => $type,
             'title' => $title,
             'description' => $description
         ];
-        $this->container->session->flash = $flashes;
+        $this->session->flash = $flashes;
     }
 
     /**
@@ -119,7 +111,7 @@ class FlashMessage
      */
     public function has($type = FlashMessage::TYPE_SUCCESS)
     {
-        foreach ($this->container->session->flash AS $element) {
+        foreach ($this->session->flash AS $element) {
             if (!empty($element['type']) && $element['type'] === $type) {
                 return true;
             }
@@ -140,10 +132,10 @@ class FlashMessage
      */
     public function get($type = FlashMessage::TYPE_SUCCESS)
     {
-        foreach ($this->container->session->flash AS $key => $element) {
+        foreach ($this->session->flash AS $key => $element) {
             if (!empty($element['type']) && $element['type'] === $type) {
                 $result = $element;
-                unset($this->container->session->flash[$key]);
+                unset($this->session->flash[$key]);
 
                 return $result;
             }
@@ -161,8 +153,8 @@ class FlashMessage
      */
     public function getAll()
     {
-        $result = $this->container->session->flash;
-        $this->container->session->flash = [];
+        $result = $this->session->flash;
+        $this->session->flash = [];
 
         return $result;
     }

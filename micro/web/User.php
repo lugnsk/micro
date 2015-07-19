@@ -14,7 +14,7 @@ namespace Micro\web;
  * @version 1.0
  * @since 1.0
  */
-class User
+class User implements IUser
 {
     protected $container;
 

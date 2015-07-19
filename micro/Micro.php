@@ -120,6 +120,13 @@ class Micro
         return true;
     }
 
+    /**
+     * Git Micro dir
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getMicroDir()
     {
         return $this->microDir;
@@ -212,10 +219,12 @@ class Micro
 
         $this->container->load($configPath);
 
-        if (null === $this->container->dispatcher) {
+        if (empty($this->container->dispatcher)) {
             $this->container->dispatcher = new Dispatcher($this->container);
         }
     }
+
+    // Methods for components
 
     /**
      * Terminate application
@@ -235,8 +244,13 @@ class Micro
         $this->unloader();
     }
 
-    // Methods for components
-
+    /**
+     * Get start time
+     *
+     * @access public
+     *
+     * @return float|null
+     */
     public function getStartTime()
     {
         return $this->debug ? $this->startTime : null;
@@ -259,16 +273,37 @@ class Micro
         $this->loaded = false;
     }
 
+    /**
+     * Get status of debug
+     *
+     * @access public
+     *
+     * @return bool
+     */
     public function isDebug()
     {
         return $this->debug;
     }
 
+    /**
+     * Get character set
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getCharset()
     {
         return 'UTF-8';
     }
 
+    /**
+     * Get environment name
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getEnvironment()
     {
         return $this->environment;
@@ -276,26 +311,61 @@ class Micro
 
     // Methods helpers
 
+    /**
+     * Get components container
+     *
+     * @access public
+     *
+     * @return Container
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * Get application dir
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getAppDir()
     {
         return $this->appDir;
     }
 
+    /**
+     * Get web root dir
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getWebDir()
     {
         return $this->webDir;
     }
 
+    /**
+     * Get cache dir
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getCacheDir()
     {
         return $this->appDir . '/cache/' . $this->environment;
     }
 
+    /**
+     * Get logs dir
+     *
+     * @access public
+     *
+     * @return string
+     */
     public function getLogDir()
     {
         return $this->appDir . '/logs';
