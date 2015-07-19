@@ -181,7 +181,7 @@ class Container extends \stdClass
                 if ($val === '@this') {
                     $val = $this;
                 } else {
-                    if (empty($this->__get(substr($val, 1)))) {
+                    if (null === $this->{substr($val, 1)}) {
                         return false;
                     }
                     $val = $this->__get(substr($val, 1));
