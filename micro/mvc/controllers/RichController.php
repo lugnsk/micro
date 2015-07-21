@@ -41,16 +41,11 @@ abstract class RichController extends Controller
         $view = null;
         $actionClass = false;
 
-        if (!method_exists($this, 'action' . ucfirst($name))) {
-            $actionClass = $this->getActionClassByName($name);
+        if (!method_exists($this, 'action' . ucfirst($name)) && !$actionClass = $this->getActionClassByName($name)) {
+            $this->response->setStatus(500, 'Action "' . $name . '" not found into ' . get_class($this));
 
-            if (!$actionClass) {
-                $this->response->setStatus(500, 'Action "' . $name . '" not found into ' . get_class($this));
-
-                return $this->response;
-            }
+            return $this->response;
         }
-        $filters = method_exists($this, 'filters') ? $this->filters() : [];
 
         // new logic - check headers
         $types = $this->actionsTypes();
@@ -61,6 +56,8 @@ abstract class RichController extends Controller
 
             return $this->response;
         }
+
+        $filters = method_exists($this, 'filters') ? $this->filters() : [];
 
         // pre - operations
         $this->applyFilters($name, true, $filters, null);
@@ -79,13 +76,8 @@ abstract class RichController extends Controller
             $this->response->setContentType($this->format);
         }
 
-
         // post - operations
-        $this->response->setBody(
-            $this->switchContentType(
-                $this->applyFilters($name, false, $filters, $view)
-            )
-        );
+        $this->response->setBody($this->switchContentType($this->applyFilters($name, false, $filters, $view)));
 
         return $this->response;
     }
@@ -125,14 +117,15 @@ abstract class RichController extends Controller
     {
         switch ($this->format) {
             case 'application/json': {
-                return json_encode(is_object($data) ? (array)$data : $data);
+                $data = json_encode(is_object($data) ? (array)$data : $data);
+                break;
             }
             case 'application/xml': {
-                return is_object($data) ? (string)$data : $data;
-            }
-            default: {
-                return $data;
+                $data = is_object($data) ? (string)$data : $data;
+                break;
             }
         }
+
+        return $data;
     }
 }

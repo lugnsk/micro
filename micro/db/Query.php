@@ -239,18 +239,14 @@ class Query
         $query .= ($this->having) ? ' HAVING ' . $this->having : '';
         $query .= ($this->order) ? ' ORDER BY ' . $this->order : '';
 
-        if ($this->limit !== -1 OR $this->offset !== -1) {
+        if ($this->limit !== -1) {
             $query .= ' LIMIT ';
 
             if ($this->offset !== -1) {
-                $query .= $this->offset;
+                $query .= $this->offset . ',';
             }
-            if ($this->limit !== -1 AND $this->offset !== -1) {
-                $query .= ',';
-            }
-            if ($this->limit !== -1) {
-                $query .= $this->limit;
-            }
+
+            $query .= $this->limit;
         }
 
         return $query;

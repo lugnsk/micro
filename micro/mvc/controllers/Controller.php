@@ -21,14 +21,14 @@ abstract class Controller
      *
      * @access public
      *
-     * @param Container $Container
+     * @param Container $container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Container $Container, $modules = '')
+    public function __construct(Container $container, $modules = '')
     {
-        $this->container = $Container;
+        $this->container = $container;
 
         // if module defined
         if ($modules) {
@@ -44,24 +44,10 @@ abstract class Controller
             }
         }
 
-        try {
-            $this->response = $this->container->response;
-        } catch (Exception $e) {
+        if (!$this->response = $this->container->response) {
             $this->response = new Response;
         }
     }
-
-    /**
-     * Master action
-     *
-     * @access public
-     *
-     * @param string $name Called action name
-     *
-     * @return string
-     * @abstract
-     */
-    abstract public function action($name = 'index');
 
     /**
      * Apply filters
@@ -81,11 +67,12 @@ abstract class Controller
         if (!$filters) {
             return $data;
         }
+
         foreach ($filters AS $filter) {
-            if (empty($filter['class']) OR !class_exists($filter['class'])) {
+            if (empty($filter['class']) || !class_exists($filter['class'])) {
                 continue;
             }
-            if (empty($filter['actions']) OR !in_array($action, $filter['actions'], true)) {
+            if (empty($filter['actions']) || !in_array($action, $filter['actions'], true)) {
                 continue;
             }
 
@@ -119,11 +106,23 @@ abstract class Controller
     {
         if (method_exists($this, 'actions')) {
             $actions = $this->actions();
-            if (!empty($actions[$name]) AND class_exists($actions[$name])) {
+            if (!empty($actions[$name]) && class_exists($actions[$name])) {
                 return $actions[$name];
             }
         }
 
         return false;
     }
+
+    /**
+     * Master action
+     *
+     * @access public
+     *
+     * @param string $name Called action name
+     *
+     * @return string
+     * @abstract
+     */
+    abstract public function action($name = 'index');
 }

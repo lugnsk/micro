@@ -2,6 +2,8 @@
 
 namespace Micro\resolver;
 
+use Micro\base\Exception;
+
 /**
  * hMVC Resolver class file.
  *
@@ -47,6 +49,9 @@ class HMVCResolver extends Resolver
         /** @var \Micro\mvc\controllers\Controller $cls */
         $cls = $this->getCalculatePath();
 
+        if (!class_exists($cls)) {
+            throw new Exception($this->container, 'Controller ' . $cls . ' not found');
+        }
         return new $cls ($this->container, $this->getModules());
     }
 

@@ -42,7 +42,6 @@ abstract class ViewController extends Controller
             $GLOBALS['widgetStack'] = [];
         }
 
-        $filters = method_exists($this, 'filters') ? $this->filters() : [];
         $view = null;
         $actionClass = false;
 
@@ -53,6 +52,8 @@ abstract class ViewController extends Controller
                 throw new Exception($this->container, 'Action "' . $name . '" not found into ' . get_class($this));
             }
         }
+
+        $filters = method_exists($this, 'filters') ? $this->filters() : [];
 
         $this->applyFilters($name, true, $filters, null);
 
@@ -72,7 +73,7 @@ abstract class ViewController extends Controller
             $view = (string)$view;
         }
 
-        $response = new Response();
+        $response = $this->container->response ?: new Response;
         $response->setBody($this->applyFilters($name, false, $filters, $view));
 
         return $response;
