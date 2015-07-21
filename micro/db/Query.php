@@ -2,8 +2,6 @@
 
 namespace Micro\db;
 
-use Micro\base\Container;
-
 /**
  * Query class file.
  *
@@ -18,8 +16,8 @@ use Micro\base\Container;
  */
 class Query
 {
-    /** @var Container $container Container config */
-    public $container;
+    /** @var IDbConnection $db DbConnection */
+    public $db;
 
     /** @var string $select selectable columns */
     public $select = '*';
@@ -53,13 +51,13 @@ class Query
      *
      * @access public
      *
-     * @param Container $container
+     * @param IDbConnection $db
      *
      * @result void
      */
-    public function __construct(Container $container)
+    public function __construct(IDbConnection $db)
     {
-        $this->container = $container;
+        $this->db = $db;
     }
 
     /**
@@ -214,7 +212,7 @@ class Query
      */
     public function run($as = \PDO::FETCH_CLASS)
     {
-        $res = $this->container->db->rawQuery($this->getQuery(), $this->params, $as, $this->objectName);
+        $res = $this->db->rawQuery($this->getQuery(), $this->params, $as, $this->objectName);
         if ($this->single) {
             return !empty($res[0]) ? $res[0] : false;
         } else {
