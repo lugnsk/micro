@@ -19,12 +19,10 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class DbLogger extends LogInterface
+class DbLog extends Log
 {
     /** @var string $tableName logger table name */
     public $tableName;
-    /** @var \Micro\db\DbConnection $conn connect to DB */
-    protected $conn;
 
     /**
      * Constructor prepare DB

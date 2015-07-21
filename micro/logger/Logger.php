@@ -28,7 +28,7 @@ class Logger
         'debug'
     );
 
-    /** @var array $loggers defined loggers */
+    /** @var ILogger[] $loggers defined loggers */
     protected $loggers = array();
 
     /**

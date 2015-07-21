@@ -19,10 +19,10 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-abstract class LogInterface
+abstract class Log implements ILogger
 {
     /** @var array $supportedLevels supported log levels */
-    protected $supportedLevels = array();
+    protected $supportedLevels = [];
     protected $container;
 
     /**
@@ -41,13 +41,11 @@ abstract class LogInterface
         $this->container = $container;
 
         $levels = explode(',', strtr(strtolower($params['levels']), ' ', ''));
+
         foreach ($levels AS $level) {
             if (in_array($level, Logger::$supportedLevels, true)) {
                 $this->supportedLevels[] = $level;
             }
-        }
-        if (!$levels) {
-            throw new Exception($this->container, 'Logger ' . get_class($this) . ' empty levels.');
         }
     }
 
@@ -64,16 +62,4 @@ abstract class LogInterface
     {
         return in_array($level, $this->supportedLevels, false) === false ?: true;
     }
-
-    /**
-     * Send log message
-     *
-     * @access public
-     *
-     * @param integer $level level number
-     * @param string $message message to write
-     *
-     * @return void
-     */
-    abstract public function sendMessage($level, $message);
 }

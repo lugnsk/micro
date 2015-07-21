@@ -19,7 +19,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class FileLogger extends LogInterface
+class FileLog extends Log
 {
     /** @var resource $connect File handler */
     protected $connect;
@@ -48,15 +48,7 @@ class FileLogger extends LogInterface
     }
 
     /**
-     * Send message in file log
-     *
-     * @access public
-     *
-     * @param integer $level level number
-     * @param string $message message to write
-     *
-     * @result void
-     * @throws Exception error write to log
+     * @inheritdoc
      */
     public function sendMessage($level, $message)
     {

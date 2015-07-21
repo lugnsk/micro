@@ -19,7 +19,7 @@ use Micro\web\Mail;
  * @version 1.0
  * @since 1.0
  */
-class EmailLogger extends LogInterface
+class EmailLog extends Log
 {
     /** @var string $from email for sender attribute */
     private $from;
@@ -47,18 +47,11 @@ class EmailLogger extends LogInterface
 
         $this->from = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
         $this->to = !empty($params['to']) ? $params['to'] : $this->from;
-        $this->subject = $params['subject'] ?: $this->container->request->getServerVar('SERVER_NAME') . ' log message';
+        $this->subject = $params['subject'] ?: getenv('SERVER_NAME') . ' log message';
     }
 
     /**
-     * Send log message
-     *
-     * @access public
-     *
-     * @param integer $level level number
-     * @param string $message message to write
-     *
-     * @return void
+     * @inheritdoc
      */
     public function sendMessage($level, $message)
     {
