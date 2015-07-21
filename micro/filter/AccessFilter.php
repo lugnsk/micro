@@ -116,26 +116,22 @@ class AccessFilter extends Filter
 
         foreach ($rule['users'] AS $u) {
             switch ($u) {
-                case '*': {
+                case '*':
                     return true;
-                }
-                case '?': {
+                case '?':
                     if ($this->container->user->isGuest()) {
                         return true;
                     }
                     break;
-                }
-                case '@': {
+                case '@':
                     if (!$this->container->user->isGuest()) {
                         return true;
                     }
                     break;
-                }
-                default: {
+                default:
                     if ($this->container->user->getID() === $u) {
                         return true;
                     }
-                }
             }
         }
 
