@@ -33,7 +33,7 @@ class LoginFormModel extends FormModel
 
     public function logined()
     {
-        $query = new Query($this->container);
+        $query = new Query($this->container->db);
         $query->addWhere('login = :login');
         $query->addWhere('pass = :pass');
 

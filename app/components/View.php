@@ -14,7 +14,7 @@ class View extends PhpView
     {
         parent::__construct($container);
 
-        if (!$container->user->isGuest()) {
+        if (!$this->container->user->isGuest()) {
             $this->menu[] = '<a href="/profile">Профиль</a>';
             $this->menu[] = ' (<a href="/logout">Выйти</a>)';
         } else {

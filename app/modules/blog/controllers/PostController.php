@@ -44,7 +44,7 @@ class PostController extends Controller
 
     public function actionIndex()
     {
-        $crt = new Query($this->container);
+        $crt = new Query($this->container->db);
         $crt->table = Blog::tableName();
         $crt->order = 'id DESC';
 
