@@ -16,7 +16,7 @@ use Micro\base\Container;
  * @version 1.0
  * @since 1.0
  */
-abstract class Filter
+abstract class Filter implements IFilter
 {
     public $result;
     /** @var Container $Container */
@@ -32,26 +32,4 @@ abstract class Filter
         $this->action = $action;
         $this->container = $Container;
     }
-
-    /**
-     * PreFilter
-     *
-     * @access public
-     *
-     * @param array $params checked items and other params
-     *
-     * @return boolean
-     */
-    abstract public function pre(array $params);
-
-    /**
-     * PostFilter
-     *
-     * @access public
-     *
-     * @param array $params checked items and other params
-     *
-     * @return mixed
-     */
-    abstract public function post(array $params);
 }

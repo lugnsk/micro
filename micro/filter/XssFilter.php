@@ -12,13 +12,7 @@ namespace Micro\filter;
 class XssFilter extends Filter
 {
     /**
-     * PreFilter
-     *
-     * @access public
-     *
-     * @param array $params checked items and other params
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function pre(array $params)
     {
@@ -101,13 +95,7 @@ class XssFilter extends Filter
     }
 
     /**
-     * PostFilter
-     *
-     * @access public
-     *
-     * @param array $params checked items and other params
-     *
-     * @return string
+     * @inheritdoc
      */
     public function post(array $params)
     {

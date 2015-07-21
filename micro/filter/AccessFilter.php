@@ -2,8 +2,6 @@
 
 namespace Micro\filter;
 
-use Micro\base\Exception;
-
 /**
  * Class AccessFilter
  *
@@ -19,45 +17,31 @@ use Micro\base\Exception;
 class AccessFilter extends Filter
 {
     /**
-     * PostFilter
-     *
-     * @access public
-     *
-     * @param array $params checked items and other params
-     *
-     * @return mixed
-     */
-    public function post(array $params)
-    {
-        return $params['data'];
-    }
-
-    /**
-     * PreFilter
-     *
-     * @access public
-     *
-     * @param array $params checked items and other params
-     *
-     * @return boolean
-     * @throws Exception
+     * @inheritdoc
      */
     public function pre(array $params)
     {
         foreach ($params['rules'] AS $rule) {
             $res = $this->checkRule($rule);
 
-            if ($res === true) {
-                return true;
-            } elseif ($res === false) {
-                $this->result = [
-                    'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
-                    'message' => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
-                ];
+            switch ($res) {
+                case true: {
+                    return true;
+                    break;
+                }
+                case false: {
+                    $this->result = [
+                        'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
+                        'message' => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
+                    ];
 
-                return false;
-            } elseif ($res === null) {
-                continue;
+                    return false;
+                    break;
+                }
+                case null: {
+                    continue 2;
+                    break;
+                }
             }
         }
 
@@ -77,10 +61,10 @@ class AccessFilter extends Filter
     {
         if (
             $this->matchAction($rule)
-            AND $this->matchUser($rule)
-            AND $this->matchRole($rule)
-            AND $this->matchIP($rule)
-            AND $this->matchVerb($rule)
+            && $this->matchUser($rule)
+            && $this->matchRole($rule)
+            && $this->matchIP($rule)
+            && $this->matchVerb($rule)
         ) {
             return $rule['allow'];
         } else {
@@ -234,7 +218,7 @@ class AccessFilter extends Filter
             return true;
         }
 
-        if (is_array($rule['verb'])) {
+        if (!is_array($rule['verb'])) {
             $rule['verb'][] = $rule['verb'];
         }
 
@@ -246,5 +230,13 @@ class AccessFilter extends Filter
         }
 
         return false;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function post(array $params)
+    {
+        return $params['data'];
     }
 }

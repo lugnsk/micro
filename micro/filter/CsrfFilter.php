@@ -17,14 +17,7 @@ namespace Micro\filter;
 class CsrfFilter extends Filter
 {
     /**
-     * PreFilter
-     *
-     * @access public
-     * @global      Container
-     *
-     * @param array $params checked items and other params
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function pre(array $params)
     {
@@ -60,14 +53,7 @@ class CsrfFilter extends Filter
     }
 
     /**
-     * PostFilter
-     *
-     * @access public
-     * @global      Container
-     *
-     * @param array $params checked items and other params
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function post(array $params)
     {
@@ -94,6 +80,6 @@ class CsrfFilter extends Filter
 
         $s->csrf = array_merge(is_array($s->csrf) ? $s->csrf : [], [md5($gen)]);
 
-        return $matches[1] . "<input type=\"hidden\" name=\"csrf\" value=\"" . $gen . "\" />" . $matches[2] . $matches[3];
+        return $matches[1] . '<input type="hidden" name="csrf" value="' . $gen . '" />' . $matches[2] . $matches[3];
     }
 }

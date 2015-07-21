@@ -71,7 +71,7 @@ abstract class Model extends FormModel
      */
     public static function findByAttributes(array $attributes = [], $single = false, Container $container)
     {
-        $query = new Query($container);
+        $query = new Query($container->db);
         foreach ($attributes AS $key => $val) {
             $query->addWhere($key . ' = :' . $key);
         }
@@ -94,7 +94,7 @@ abstract class Model extends FormModel
      */
     public static function finder($query = null, $single = false, $container = null)
     {
-        $query = ($query instanceof Query) ? $query : new Query($container);
+        $query = ($query instanceof Query) ? $query : new Query($container->db);
         $query->table = static::tableName() . ' `m`';
         $query->objectName = get_called_class();
         $query->single = $single;
@@ -159,7 +159,7 @@ abstract class Model extends FormModel
     {
         if ($relation = $this->relations()->get($name)) {
             if (empty($this->cacheRelations[$name])) {
-                $sql = new Query($this->container);
+                $sql = new Query($this->container->db);
 
                 $sql->addWhere('`m`.`' . $relation['On'][1] . '`=:' . $relation['On'][0]);
 
