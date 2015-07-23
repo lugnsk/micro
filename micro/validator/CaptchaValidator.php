@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class CaptchaValidator extends Validator
+class CaptchaValidator extends BaseValidator implements IValidator
 {
     /** @var string $captcha compiled captcha */
     protected $captcha = '';
@@ -33,9 +33,9 @@ class CaptchaValidator extends Validator
      */
     public function __construct(array $params)
     {
-        $this->captcha = $this->container->user->getCaptcha();
-
         parent::__construct($params);
+
+        $this->captcha = $this->container->user->getCaptcha();
     }
 
     /**
@@ -64,5 +64,10 @@ class CaptchaValidator extends Validator
         }
 
         return true;
+    }
+
+    public function client($model)
+    {
+        return '';
     }
 }

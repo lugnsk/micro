@@ -3,6 +3,7 @@
 namespace Micro\validator;
 
 use Micro\base\Exception;
+use Micro\db\IModel;
 
 /**
  * Validator is a runner validation process
@@ -59,17 +60,6 @@ class Validator
     }
 
     /**
-     * Get errors after run validation
-     *
-     * @access public
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->errors;
-    }
-
-    /**
      * Running validation process
      *
      * @access public
@@ -84,32 +74,27 @@ class Validator
     {
         $elements = explode(',', str_replace(' ', '', array_shift($this->rule)));
         $name = array_shift($this->rule);
-        $className = null;
 
-        if (!empty(self::$validators[$name])) {
-            $className = '\\Micro\\validator\\' . self::$validators[$name];
-        } elseif (file_exists($this->container->kernel->getAppDir() . '/validators/' . $name . '.php')) {
-            $className = '\\App\\validator\\' . $name . '.php';
-        } else {
+        $className = $this->getValidatorClass($name);
+        if (!$className) {
             if (function_exists($name)) {
                 foreach ($elements AS $element) {
                     if (property_exists($model, $element)) {
                         $model->$element = call_user_func($name, $model->$element);
                     }
                 }
-
                 return true;
             } else {
                 throw new Exception($this->container, 'Validator ' . $name . ' not defined.');
             }
         }
 
-        /** @var Validator $valid */
+        /** @var IValidator $valid */
         $valid = new $className(['container' => $this->container, 'rule' => $this->rule]);
         $valid->elements = $elements;
-        $valid->params = $this->rule;
-        if ($client AND method_exists($valid, 'client')) {
-            $result = $valid->clientValidate($model);
+
+        if ($client && method_exists($valid, 'client')) {
+            $result = $this->clientValidate($valid, $model);
         } else {
             $result = $valid->validate($model);
         }
@@ -121,27 +106,54 @@ class Validator
         return $result;
     }
 
+    protected function getValidatorClass($name)
+    {
+        if (!empty(self::$validators[$name])) {
+            return '\\Micro\\validator\\' . self::$validators[$name];
+        } elseif (class_exists($name) && is_subclass_of($name, '\Micro\validator\IValidator')) {
+            return $name;
+        } elseif (file_exists($this->container->kernel->getAppDir() . '/validator/' . $name . '.php')) {
+            return '\\App\\validator\\' . $name;
+        }
+
+        return false;
+    }
+
     /**
      * Client validation making
      *
      * @access public
      *
-     * @param \Micro\form\FormModel $model model
+     * @param IValidator $validator
+     * @param IModel $model
      *
      * @return string
      */
-    public function clientValidate($model)
+    public function clientValidate(IValidator $validator, IModel $model)
     {
         $object = substr(get_class($model), strrpos(get_class($model), '\\') + 1);
 
         $result = null;
-        foreach ($this->elements AS $element) {
+        foreach ($validator->elements AS $element) {
             $id = $object . '_' . $element;
             /** @noinspection PhpUndefinedMethodInspection */
-            $result .= 'jQuery("#' . $id . '").bind("change blur submit", function(e){ ' . $this->client($model) . ' });';
+            $result .= 'jQuery("#' . $id . '").bind("change blur submit", function(e){ ';
+            $result .= $validator->client($model);
+            $result .= ' });';
         }
 
         return $result;
+    }
+
+    /**
+     * Get errors after run validation
+     *
+     * @access public
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     /**

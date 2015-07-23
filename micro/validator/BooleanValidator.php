@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class BooleanValidator extends Validator
+class BooleanValidator extends BaseValidator implements IValidator
 {
     /**
      * Initial validator

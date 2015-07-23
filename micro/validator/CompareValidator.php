@@ -16,25 +16,8 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class CompareValidator extends Validator
+class CompareValidator extends BaseValidator implements IValidator
 {
-    /**
-     * Initial validator
-     *
-     * @access public
-     *
-     * @param array $params Configuration array
-     *
-     * @result void
-     */
-    public function __construct(array $params)
-    {
-        $this->params['attribute'] = null;
-        $this->params['value'] = null;
-
-        parent::__construct($params);
-    }
-
     /**
      * Validate on server, make rule
      *

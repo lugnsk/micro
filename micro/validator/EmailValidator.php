@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class EmailValidator extends Validator
+class EmailValidator extends BaseValidator implements IValidator
 {
     /**
      * Validate on server, make rule

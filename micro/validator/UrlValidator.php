@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class UrlValidator extends Validator
+class UrlValidator extends BaseValidator implements IValidator
 {
     /**
      * Validate on server, make rule

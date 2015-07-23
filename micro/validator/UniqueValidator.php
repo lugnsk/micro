@@ -17,7 +17,7 @@ use Micro\db\Query;
  * @version 1.0
  * @since 1.0
  */
-class UniqueValidator extends Validator
+class UniqueValidator extends BaseValidator implements IValidator
 {
     /**
      * Validate on server, make rule
@@ -51,5 +51,10 @@ class UniqueValidator extends Validator
         }
 
         return true;
+    }
+
+    public function client($model)
+    {
+        return '';
     }
 }

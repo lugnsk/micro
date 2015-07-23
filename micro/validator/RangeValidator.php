@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class RangeValidator extends Validator
+class RangeValidator extends BaseValidator implements IValidator
 {
     /**
      * Validate on server, make rule

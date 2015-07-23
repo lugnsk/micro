@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class FileValidator extends Validator
+class FileValidator extends BaseValidator implements IValidator
 {
     /**
      * Validate on server, make rule
@@ -60,5 +60,10 @@ class FileValidator extends Validator
         }
 
         return true;
+    }
+
+    public function client($model)
+    {
+        return '';
     }
 }

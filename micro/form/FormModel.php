@@ -3,6 +3,7 @@
 namespace Micro\form;
 
 use Micro\base\Container;
+use Micro\db\IModel;
 use Micro\validator\Validator;
 
 /**
@@ -17,7 +18,7 @@ use Micro\validator\Validator;
  * @version 1.0
  * @since 1.0
  */
-abstract class FormModel
+abstract class FormModel implements IModel
 {
     protected $container;
     /** @var array $errors validation errors */
