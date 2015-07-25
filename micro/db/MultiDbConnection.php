@@ -18,6 +18,8 @@ use Micro\base\Exception;
  */
 class MultiDbConnection
 {
+    /** @var \Micro\base\IContainer $container Container container */
+    protected $container;
     /** @var array $servers Servers into multi system */
     protected $servers;
     /** @var string $curr current server for operations */
@@ -35,8 +37,10 @@ class MultiDbConnection
      */
     public function __construct(array $params = [])
     {
+        $this->container = $params['container'];
+
         if (empty($params['servers'])) {
-            throw new Exception('Servers not defined');
+            throw new Exception($params['container'], 'Servers not defined');
         }
 
         foreach ($params['servers'] AS $key => $server) {
@@ -60,7 +64,7 @@ class MultiDbConnection
     public function __call($name, $args)
     {
         if (!method_exists($this->servers[$this->curr], $name)) {
-            throw new Exception('Method not existed into DB');
+            throw new Exception($this->container, 'Method not existed into DB');
         }
 
         return call_user_func_array(array($this->servers[$this->curr], $name), $args);

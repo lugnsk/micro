@@ -16,7 +16,7 @@ use Micro\base\Type;
  * @version 1.0
  * @since 1.0
  */
-class ArrayCache implements CacheInterface
+class ArrayCache extends BaseCache
 {
     /** @var array $driver array as driver */
     protected $driver = [];
@@ -32,6 +32,7 @@ class ArrayCache implements CacheInterface
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
     }
 
     /**

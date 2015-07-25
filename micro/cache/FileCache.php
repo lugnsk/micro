@@ -14,7 +14,7 @@ namespace Micro\cache;
  * @version 1.0
  * @since 1.0
  */
-class FileCache implements CacheInterface
+class FileCache extends BaseCache
 {
     /** @var string $driver directory name */
     protected $driver;
@@ -30,6 +30,8 @@ class FileCache implements CacheInterface
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
+
         $path = !empty($config['path']) ? $config['path'] : sys_get_temp_dir() . '/cache';
         if (!is_dir($path)) {
             mkdir($path, 0600);

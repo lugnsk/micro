@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class XcacheCache implements CacheInterface
+class XcacheCache extends BaseCache
 {
     /**
      * Constructor
@@ -30,8 +30,10 @@ class XcacheCache implements CacheInterface
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
+
         if (!$this->check()) {
-            throw new Exception('Extension XCache not installed');
+            throw new Exception($this->container, 'Extension XCache not installed');
         }
     }
 

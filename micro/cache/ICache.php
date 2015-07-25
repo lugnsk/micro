@@ -1,4 +1,4 @@
-<?php /** MicroCache */
+<?php /** MicroInterfaceCache */
 
 namespace Micro\cache;
 
@@ -14,7 +14,7 @@ namespace Micro\cache;
  * @version 1.0
  * @since 1.0
  */
-interface CacheInterface
+interface ICache
 {
     /**
      * Check driver

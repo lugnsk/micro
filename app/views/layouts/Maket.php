@@ -13,7 +13,7 @@ $this->registerCssFile('/css/main.css');
 <head>
     <?= Html::charset('utf-8') ?>
     <?= Html::meta('language', 'ru') ?>
-    <?= Html::favicon('/favicon.png') ?>
+    <?= Html::favicon('/favicon.ico') ?>
     <?= Html::meta('viewport', 'width=device-width, initial-scale=1.0') ?>
     <?= Html::title($this->title) ?>
 </head>

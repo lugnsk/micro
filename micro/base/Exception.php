@@ -17,7 +17,7 @@ use Micro\web\Response;
  */
 class Exception extends \Exception
 {
-    /** @var Container $container Container config */
+    /** @var IContainer $container Container config */
     protected $container;
 
     /**
@@ -30,7 +30,7 @@ class Exception extends \Exception
      *
      * @result void
      */
-    public function __construct($container, $message = '', $code = 0, \Exception $previous = null)
+    public function __construct(IContainer $container, $message = '', $code = 0, \Exception $previous = null)
     {
         $this->container = $container;
 

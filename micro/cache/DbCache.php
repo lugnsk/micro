@@ -17,7 +17,7 @@ use Micro\db\Query;
  * @version 1.0
  * @since 1.0
  */
-class DbCache implements CacheInterface
+class DbCache extends BaseCache
 {
     /** @var DbConnection $driver DB driver */
     protected $driver;
@@ -35,6 +35,8 @@ class DbCache implements CacheInterface
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
+
         $this->table = 'cache';
         if (!empty($config['table'])) {
             $this->table = $config['table'];

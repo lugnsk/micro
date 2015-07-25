@@ -5,10 +5,11 @@ namespace Micro;
 use Micro\base\Autoload;
 use Micro\base\Container;
 use Micro\base\Dispatcher;
+use Micro\base\IContainer;
 use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
+use Micro\web\IRequest;
 use Micro\web\OutputInterface;
-use Micro\web\Request;
 use Micro\web\Response;
 
 /**
@@ -43,7 +44,7 @@ class Micro
     protected $startTime;
     /** @var bool $loaded Micro loaded flag */
     protected $loaded;
-    /** @var Container $container Container is a container for components and options */
+    /** @var IContainer $container Container is a container for components and options */
     protected $container;
 
     /**
@@ -154,12 +155,12 @@ class Micro
      *
      * @access public
      *
-     * @param Request $request Request object
+     * @param IRequest $request Request object
      * @param string $configPath Path to config file
      *
      * @return Response
      */
-    public function run(Request $request, $configPath = '/configs/index.php')
+    public function run(IRequest $request, $configPath = '/configs/index.php')
     {
         if (!$this->loaded) {
             $this->loader($configPath);
@@ -203,6 +204,8 @@ class Micro
         $this->loaded = true;
     }
 
+    // Methods for components
+
     /**
      * Initialize container
      *
@@ -219,12 +222,10 @@ class Micro
 
         $this->container->load($configPath);
 
-        if (empty($this->container->dispatcher)) {
+        if (false === $this->container->dispatcher) {
             $this->container->dispatcher = new Dispatcher($this->container);
         }
     }
-
-    // Methods for components
 
     /**
      * Terminate application
@@ -297,6 +298,8 @@ class Micro
         return 'UTF-8';
     }
 
+    // Methods helpers
+
     /**
      * Get environment name
      *
@@ -309,14 +312,12 @@ class Micro
         return $this->environment;
     }
 
-    // Methods helpers
-
     /**
      * Get components container
      *
      * @access public
      *
-     * @return Container
+     * @return IContainer
      */
     public function getContainer()
     {

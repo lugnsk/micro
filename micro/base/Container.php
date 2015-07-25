@@ -12,25 +12,8 @@ namespace Micro\base;
  * @package micro
  * @version 1.0
  * @since 1.0
- *
- * @property string $company
- * @property string $slogan
- * @property string $lang
- * @property string $errorController
- * @property string $errorAction
- *
- * @property \Micro\Micro $kernel
- * @property \Micro\auth\IAuth $auth
- * @property \Micro\base\IDispatcher $dispatcher
- * @property \Micro\db\IDbConnection $db
- * @property \Micro\web\IRouter $router
- * @property \Micro\web\IRequest $request
- * @property \Micro\web\IResponse $response
- * @property \Micro\web\ICookie $cookie
- * @property \Micro\web\ISession $session
- * @property \Micro\web\IUser $user
  */
-class Container extends \stdClass
+class Container extends \stdClass implements IContainer
 {
     /** @var array $data data */
     protected $data = [];

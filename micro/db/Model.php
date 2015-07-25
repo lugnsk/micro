@@ -2,8 +2,8 @@
 
 namespace Micro\db;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
 use Micro\base\Type;
 use Micro\form\FormModel;
 
@@ -19,7 +19,7 @@ use Micro\form\FormModel;
  * @version 1.0
  * @since 1.0
  */
-abstract class Model extends FormModel
+abstract class Model extends FormModel implements IModel
 {
     /** @var string $primaryKey Primary key on table */
     public static $primaryKey = 'id';
@@ -34,12 +34,12 @@ abstract class Model extends FormModel
      *
      * @access public
      *
-     * @param Container $container
+     * @param IContainer $container
      * @param boolean $new is new model?
      *
      * @result void
      */
-    public function __construct(Container $container, $new = true)
+    public function __construct(IContainer $container, $new = true)
     {
         parent::__construct($container);
 
@@ -51,11 +51,11 @@ abstract class Model extends FormModel
      *
      * @access public
      * @param int|string $value unique value
-     * @param Container $container
+     * @param IContainer $container
      * @return mixed
      * @static
      */
-    public static function findByPk($value, Container $container)
+    public static function findByPk($value, IContainer $container)
     {
         return self::findByAttributes([self::$primaryKey => $value], true, $container);
     }
@@ -66,10 +66,10 @@ abstract class Model extends FormModel
      * @access public
      * @param array $attributes attributes and data for search
      * @param bool $single single or more
-     * @param Container $container
+     * @param IContainer $container
      * @return mixed
      */
-    public static function findByAttributes(array $attributes = [], $single = false, Container $container)
+    public static function findByAttributes(array $attributes = [], $single = false, IContainer $container)
     {
         $query = new Query($container->db);
         foreach ($attributes AS $key => $val) {
@@ -85,14 +85,14 @@ abstract class Model extends FormModel
      *
      * @access public
      *
-     * @param Query $query query to search
+     * @param IQuery $query query to search
      * @param boolean $single is single
-     * @param Container $container
+     * @param IContainer $container
      *
      * @return mixed One or more data
      * @static
      */
-    public static function finder($query = null, $single = false, $container = null)
+    public static function finder(IQuery $query = null, $single = false, IContainer $container = null)
     {
         $query = ($query instanceof Query) ? $query : new Query($container->db);
         $query->table = static::tableName() . ' `m`';
@@ -100,19 +100,6 @@ abstract class Model extends FormModel
         $query->single = $single;
 
         return $query->run();
-    }
-
-    /**
-     * Get name of table
-     *
-     * @access public
-     *
-     * @return string
-     * @static
-     */
-    public static function tableName()
-    {
-        return null;
     }
 
     /**
@@ -188,11 +175,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Relations for model
-     *
-     * @access public
-     * @return Relations
-     * ]
+     * @inheritdoc
      */
     public function relations()
     {
@@ -277,10 +260,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Before create actions
-     *
-     * @access public
-     * @return boolean
+     * @inheritdoc
      */
     public function beforeCreate()
     {
@@ -288,10 +268,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Before save actions
-     *
-     * @access public
-     * @return boolean
+     * @inheritdoc
      */
     public function beforeSave()
     {
@@ -353,21 +330,14 @@ abstract class Model extends FormModel
     }
 
     /**
-     * After create actions
-     *
-     * @access public
-     *
-     * @return void
+     * @inheritdoc
      */
     public function afterCreate()
     {
     }
 
     /**
-     * After save actions
-     *
-     * @access public
-     * @return void
+     * @inheritdoc
      */
     public function afterSave()
     {
@@ -410,10 +380,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Before update actions
-     *
-     * @access public
-     * @return boolean
+     * @inheritdoc
      */
     public function beforeUpdate()
     {
@@ -421,10 +388,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * After update actions
-     *
-     * @access public
-     * @return boolean
+     * @inheritdoc
      */
     public function afterUpdate()
     {
@@ -466,10 +430,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * Before delete actions
-     *
-     * @access public
-     * @return boolean
+     * @inheritdoc
      */
     public function beforeDelete()
     {
@@ -477,10 +438,7 @@ abstract class Model extends FormModel
     }
 
     /**
-     * After delete actions
-     *
-     * @access public
-     * @return void
+     * @inheritdoc
      */
     public function afterDelete()
     {

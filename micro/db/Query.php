@@ -14,7 +14,7 @@ namespace Micro\db;
  * @version 1.0
  * @since 1.0
  */
-class Query
+class Query implements IQuery
 {
     /** @var IDbConnection $db DbConnection */
     public $db;

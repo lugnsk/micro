@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class MongoDbConnection
+class MongoDbConnection implements IDbConnection
 {
     /** @var \MongoClient $conn Connection to MongoDB */
     public $conn;
@@ -24,6 +24,7 @@ class MongoDbConnection
     protected $collections = [];
     /** @var string $dbName Database name */
     private $dbName;
+
 
     /**
      * Construct MongoDB
@@ -68,19 +69,51 @@ class MongoDbConnection
     }
 
     /**
-     * Aggregate
-     *
-     * @access public
-     *
-     * @param string $collectionName collection name
-     * @param array $params params
-     * @param array $options options
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function aggregate($collectionName, array $params = [], array $options = [])
+    public function infoDatabase($dbName)
     {
-        return $this->getCollection($collectionName)->aggregate($params, $options);
+        return $this->conn->listDBs();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function tableExists($table)
+    {
+        // TODO: Implement tableExists() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function listTables()
+    {
+        // TODO: Implement listTables() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createTable($name, array $elements = [], $params = '')
+    {
+        // TODO: Implement createTable() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function clearTable($name)
+    {
+        // TODO: Implement clearTable() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeTable($name)
+    {
+        $this->getCollection($name)->drop();
     }
 
     /**
@@ -103,6 +136,63 @@ class MongoDbConnection
         }
 
         return $this->collections[$collectionName];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function fieldExists($field, $table)
+    {
+        // TODO: Implement fieldExists() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function listFields($table)
+    {
+        // TODO: Implement listFields() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function fieldInfo($field, $table)
+    {
+        // TODO: Implement fieldInfo() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function exists($table, array $params = [])
+    {
+        // TODO: Implement exists() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function count($subQuery = '', $table = '')
+    {
+        $this->getCollection($table)->count();
+        // TODO: Implement count() method.
+    }
+
+    /**
+     * Aggregate
+     *
+     * @access public
+     *
+     * @param string $collectionName collection name
+     * @param array $params params
+     * @param array $options options
+     *
+     * @return array
+     */
+    public function aggregate($collectionName, array $params = [], array $options = [])
+    {
+        return $this->getCollection($collectionName)->aggregate($params, $options);
     }
 
     /**
@@ -195,6 +285,15 @@ class MongoDbConnection
     }
 
     /**
+     * @inheritDoc
+     */
+    public function rawQuery($query = '', array $params = [], $fetchType = \PDO::FETCH_ASSOC, $fetchClass = 'Model')
+    {
+    }
+
+
+
+    /**
      * Send raw query
      *
      * @access public
@@ -205,24 +304,13 @@ class MongoDbConnection
      * @param bool $single return single document?
      *
      * @return array|\MongoCursor|null
-     */
-    public function rawQuery($collectionName, array $params = [], array $fields = [], $single = false)
-    {
-        $collect = $this->getCollection($collectionName);
-
-        return $single ? $collect->findOne($params, $fields) : $collect->find($params, $fields);
-    }
-
-    /**
-     * List databases into MongoDB server
      *
-     * @access public
-     * @return array
-     */
-    public function listDatabases()
-    {
-        return $this->conn->listDBs();
-    }
+     * public function rawQuery($collectionName, array $params = [], array $fields = [], $single = false)
+    * {
+        * $collect = $this->getCollection($collectionName);
+ *
+* return $single ? $collect->findOne($params, $fields) : $collect->find($params, $fields);
+     * }*/
 
     /**
      * Delete collection
@@ -243,13 +331,7 @@ class MongoDbConnection
     }
 
     /**
-     * Set current database name
-     *
-     * @access public
-     *
-     * @param string $dbName database name
-     *
-     * @return void
+     * @inheritdoc
      */
     public function switchDatabase($dbName)
     {
@@ -257,18 +339,21 @@ class MongoDbConnection
     }
 
     /**
-     * Insert document into collection
-     *
-     * @access public
-     *
-     * @param string $collectionName collection name
-     * @param array $document
-     *
-     * @return array|bool
+     * @inheritdoc
      */
-    public function insert($collectionName, array $document = [])
+    public function insert($collectionName, array $document = [], $multi = false)
     {
-        return $this->getCollection($collectionName)->insert($document);
+        $result = null;
+
+        if ($multi) {
+            foreach ($document AS $key => $row) {
+                $result[$key] = $this->getCollection($collectionName)->insert($row);
+            }
+        } else {
+            $result = $this->getCollection($collectionName)->insert($document);;
+        }
+
+        return $result;
     }
 
     /**
@@ -283,7 +368,7 @@ class MongoDbConnection
      *
      * @return bool
      */
-    public function update($collectionName, array $conditions = [], array $newDocument = [], array $options = [])
+    public function update($collectionName, array $newDocument = [], array $conditions = [], array $options = [])
     {
         return $this->getCollection($collectionName)->update($conditions, $newDocument, $options);
     }

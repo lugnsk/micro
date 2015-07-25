@@ -2,7 +2,7 @@
 
 namespace Micro\db;
 
-use Micro\base\Container;
+use Micro\base\IContainer;
 
 /**
  * Migration class file.
@@ -18,7 +18,7 @@ use Micro\base\Container;
  */
 abstract class Migration
 {
-    /** @var Container $container */
+    /** @var IContainer $container */
     protected $container;
 
 
@@ -29,7 +29,7 @@ abstract class Migration
      * @param Container $container
      * @result void
      */
-    public function __construct(Container $container)
+    public function __construct(IContainer $container)
     {
         $this->container = $container;
     }

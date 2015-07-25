@@ -22,7 +22,7 @@ abstract class Command
     public $result = false;
     /** @var string $message status message of execute command */
     public $message = '';
-    /** @var Container $container Container config */
+    /** @var IContainer $container Container config */
     protected $container;
 
 

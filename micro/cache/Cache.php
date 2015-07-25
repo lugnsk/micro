@@ -2,8 +2,8 @@
 
 namespace Micro\cache;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
 
 /**
  * Cache class file.
@@ -32,7 +32,7 @@ class Cache
     ];
     /** @var array $servers Activated servers */
     protected $servers = [];
-    /** @var Container $container Config container */
+    /** @var IContainer $container Config container */
     protected $container;
 
 
@@ -56,7 +56,9 @@ class Cache
 
         foreach ($config['servers'] AS $key => $server) {
             if (array_key_exists($server['driver'], array_keys(self::$drivers))) {
-                $this->servers[$key] = new self::$drivers[$server['driver']] ($server);
+                $this->servers[$key] = new self::$drivers[$server['driver']] (
+                    array_merge($server, ['container' => $this->container])
+                );
             } else {
                 throw new Exception($this->container, 'Cache driver `' . $server['driver'] . '` not found');
             }

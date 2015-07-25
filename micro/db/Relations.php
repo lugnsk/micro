@@ -14,7 +14,7 @@ namespace Micro\db;
  * @version 1.0
  * @since 1.0
  */
-class Relations
+class Relations implements IRelations
 {
     /** @var array $data relations setup */
     protected $data;

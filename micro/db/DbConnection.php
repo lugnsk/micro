@@ -68,17 +68,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Send RAW query to DB
-     *
-     * @access public
-     *
-     * @param string $query raw query to db
-     * @param array $params params for query
-     * @param int $fetchType fetching type
-     * @param string $fetchClass fetching class
-     *
-     * @return \PDOStatement|array
-     * @throws Exception
+     * @inheritdoc
      */
     public function rawQuery($query = '', array $params = [], $fetchType = \PDO::FETCH_ASSOC, $fetchClass = 'Model')
     {
@@ -101,10 +91,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * List database names on this connection
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function listDatabases()
     {
@@ -119,13 +106,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Info of database
-     *
-     * @access public
-     *
-     * @param string $dbName database name
-     *
-     * @return array
+     * @inheritdoc
      */
     public function infoDatabase($dbName)
     {
@@ -147,13 +128,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Table exists in db
-     *
-     * @access public
-     *
-     * @param string $table table name
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function tableExists($table)
     {
@@ -161,10 +136,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * List tables in db
-     *
-     * @access public
-     * @return array
+     * @inheritdoc
      */
     public function listTables()
     {
@@ -172,13 +144,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Create a new table
-     *
-     * @param string $name table name
-     * @param array $elements table elements
-     * @param string $params table params
-     *
-     * @return int
+     * @inheritdoc
      */
     public function createTable($name, array $elements = [], $params = '')
     {
@@ -188,13 +154,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Clear all data from table
-     *
-     * @access public
-     *
-     * @param string $name table name
-     *
-     * @return int
+     * @inheritdoc
      */
     public function clearTable($name)
     {
@@ -202,13 +162,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Remove table from database
-     *
-     * @access public
-     *
-     * @param string $name table name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function removeTable($name)
     {
@@ -216,14 +170,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Field exists in table
-     *
-     * @access public
-     *
-     * @param string $field field name
-     * @param string $table table name
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function fieldExists($field, $table)
     {
@@ -237,13 +184,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Get array fields into table
-     *
-     * @access public
-     *
-     * @param string $table table name
-     *
-     * @return array
+     * @inheritdoc
      */
     public function listFields($table)
     {
@@ -265,14 +206,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Get info of a field
-     *
-     * @access public
-     *
-     * @param string $field field name
-     * @param string $table table name
-     *
-     * @return array
+     * @inheritdoc
      */
     public function fieldInfo($field, $table)
     {
@@ -282,13 +216,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Set current database
-     *
-     * @access public
-     *
-     * @param string $dbName database name
-     *
-     * @return boolean
+     * @inheritdoc
      */
     public function switchDatabase($dbName)
     {
@@ -300,15 +228,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Insert row into table
-     *
-     * @access public
-     *
-     * @param string $table table name
-     * @param array $line lines to added
-     * @param bool $multi is multi rows
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function insert($table, array $line = [], $multi = false)
     {
@@ -337,15 +257,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Update row in table
-     *
-     * @access public
-     *
-     * @param string $table table name
-     * @param array $elements elements to update
-     * @param string $conditions conditions for search
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function update($table, array $elements = [], $conditions = '')
     {
@@ -369,15 +281,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Delete row from table
-     *
-     * @access public
-     *
-     * @param string $table table name
-     * @param string $conditions conditions to search
-     * @param array $ph params array
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function delete($table, $conditions, array $ph = [])
     {
@@ -387,14 +291,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Exists element in the table by params
-     *
-     * @access public
-     *
-     * @param string $table table name
-     * @param array $params params array
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function exists($table, array $params = [])
     {
@@ -412,14 +309,7 @@ class DbConnection implements IDbConnection
     }
 
     /**
-     * Count element in sub-query
-     *
-     * @access public
-     *
-     * @param string $subQuery subject query
-     * @param string $table table name
-     *
-     * @return bool|integer
+     * @inheritdoc
      */
     public function count($subQuery = '', $table = '')
     {

@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class MemcachedCache implements CacheInterface
+class MemcachedCache extends BaseCache
 {
     /** @var \Memcache|\Memcached $driver driver memcache(d) */
     protected $driver;
@@ -33,8 +33,10 @@ class MemcachedCache implements CacheInterface
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
+
         if (!$this->check() OR empty($config['type'])) {
-            throw new Exception('Memcache(d) not installed or not select type');
+            throw new Exception($this->container, 'Memcache(d) not installed or not select type');
         }
 
         switch ($config['type']) {
@@ -47,7 +49,7 @@ class MemcachedCache implements CacheInterface
                 break;
             }
             default: {
-                throw new Exception('Selected type not valid in the driver');
+                throw new Exception($this->container, 'Selected type not valid in the driver');
             }
         }
 
@@ -67,7 +69,7 @@ class MemcachedCache implements CacheInterface
                 $this->driver->addServer($server['hostname'], $server['port'], true, $server['weight']);
             }
         } else {
-            throw new Exception('Server(s) not configured');
+            throw new Exception($this->container, 'Server(s) not configured');
         }
     }
 

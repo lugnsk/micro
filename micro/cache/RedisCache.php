@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class RedisCache implements CacheInterface
+class RedisCache extends BaseCache
 {
     /** @var \Redis $driver driver redis */
     protected $driver;
@@ -33,8 +33,10 @@ class RedisCache implements CacheInterface
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
+
         if (!$this->check()) {
-            throw new Exception('Redis not installed on system');
+            throw new Exception($this->container, 'Redis not installed on system');
         }
         $this->driver = new \Redis;
 
@@ -44,12 +46,12 @@ class RedisCache implements CacheInterface
             } else {
                 $result = $this->driver->connect($config['host'], $config['port'], $config['duration']);
             }
-        } catch (Exception $e) {
-            throw new Exception((string)$e);
+        } catch (\RedisException $e) {
+            throw new Exception($this->container, (string)$e);
         }
 
         if (!$result) {
-            throw new Exception('Redis configuration failed');
+            throw new Exception($this->container, 'Redis configuration failed');
         }
     }
 

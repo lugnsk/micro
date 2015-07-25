@@ -20,6 +20,8 @@ use Micro\base\Exception;
  */
 class PoolDbConnection
 {
+    /** @var \Micro\base\IContainer $container Container container */
+    protected $container;
     /** @var DbConnection $master master server */
     protected $master;
     /** @var array $servers defined slaves servers */
@@ -41,8 +43,10 @@ class PoolDbConnection
      */
     public function __construct(array $params = [])
     {
+        $this->container = $params['container'];
+
         if (empty($params['servers'])) {
-            throw new Exception('Servers not defined');
+            throw new Exception($params['container'], 'Servers not defined');
         }
 
         if (empty($params['master'])) {
@@ -107,7 +111,7 @@ class PoolDbConnection
         }
 
         if (!method_exists($curr, $name)) {
-            throw new Exception('Method not existed into DB');
+            throw new Exception($this->container, 'Method not existed into DB');
         }
 
         return call_user_func_array(array($curr, $name), $args);

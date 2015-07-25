@@ -15,7 +15,7 @@ class DefaultController extends Controller
         return [
             [
                 'class' => '\Micro\filter\AccessFilter',
-                'actions' => ['login', 'logout', 'index', 'error'],
+                'actions' => ['login', 'logout', 'index'],
                 'rules' => [
                     [
                         'allow' => false,
