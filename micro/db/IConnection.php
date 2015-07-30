@@ -2,7 +2,13 @@
 
 namespace Micro\db;
 
-interface IDbConnection
+use Micro\base\Exception;
+
+/**
+ * Interface for a connections to data bases
+ * @package Micro\db
+ */
+interface IConnection
 {
     /**
      * Send RAW query to DB

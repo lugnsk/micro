@@ -1,6 +1,6 @@
-<?php /** MicroFile */
+<?php /** MicroFileHelper */
 
-namespace Micro\base;
+namespace Micro\file;
 
 /**
  * MFile io class
@@ -10,11 +10,11 @@ namespace Micro\base;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
- * @subpackage wrappers
+ * @subpackage file
  * @version 1.0
  * @since 1.0
  */
-class File
+class FileHelper
 {
     /**
      * Directory size

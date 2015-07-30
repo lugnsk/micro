@@ -14,7 +14,7 @@ namespace Micro\base;
  * @since 1.0
  * @abstract
  */
-abstract class Command
+abstract class Command implements ICommand
 {
     /** @var array $args arguments for command */
     public $args = [];
@@ -40,10 +40,4 @@ abstract class Command
         $this->container = $params['container'];
         $this->args = $params['args'];
     }
-
-    /**
-     * Execute command
-     * @abstract
-     */
-    public abstract function execute();
 }

@@ -2,7 +2,7 @@
 
 namespace Micro\cache;
 
-use Micro\db\IDbConnection;
+use Micro\db\IConnection;
 use Micro\db\Query;
 
 /**
@@ -19,7 +19,7 @@ use Micro\db\Query;
  */
 class DbCache extends BaseCache
 {
-    /** @var IDbConnection $driver DB driver */
+    /** @var IConnection $driver DB driver */
     protected $driver;
     /** @var string $table table name */
     protected $table;
@@ -60,7 +60,7 @@ class DbCache extends BaseCache
      */
     public function check()
     {
-        return ($this->driver instanceof IDbConnection) ?: false;
+        return ($this->driver instanceof IConnection) ?: false;
     }
 
     /**

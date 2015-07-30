@@ -22,7 +22,7 @@ namespace Micro\base;
  * @property \Micro\Micro $kernel
  * @property \Micro\auth\IAuth $auth
  * @property \Micro\base\IDispatcher $dispatcher
- * @property \Micro\db\IDbConnection $db
+ * @property \Micro\db\IConnection $db
  * @property \Micro\web\IRouter $router
  * @property \Micro\web\IRequest $request
  * @property \Micro\web\IResponse $response

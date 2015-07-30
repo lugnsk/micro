@@ -1,6 +1,6 @@
 <?php /** RelationsMicro */
 
-namespace Micro\db;
+namespace Micro\mvc\models;
 
 /**
  * Relations class file.

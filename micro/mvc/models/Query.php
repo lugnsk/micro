@@ -1,6 +1,6 @@
 <?php /** MicroQuery */
 
-namespace Micro\db;
+namespace Micro\mvc\models;
 
 /**
  * Query class file.
@@ -16,7 +16,7 @@ namespace Micro\db;
  */
 class Query implements IQuery
 {
-    /** @var IDbConnection $db DbConnection */
+    /** @var IDbConnection $db Connection */
     public $db;
 
     /** @var string $select selectable columns */

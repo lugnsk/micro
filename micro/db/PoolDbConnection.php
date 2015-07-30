@@ -22,7 +22,7 @@ class PoolDbConnection
 {
     /** @var \Micro\base\IContainer $container Container container */
     protected $container;
-    /** @var DbConnection $master master server */
+    /** @var Connection $master master server */
     protected $master;
     /** @var array $servers defined slaves servers */
     protected $servers = [];
@@ -53,10 +53,10 @@ class PoolDbConnection
             $params['master'] = $params['servers'][$params['servers'][0]];
         }
 
-        $this->master = new DbConnection($params['master']); // TODO: Fixme
+        $this->master = new Connection($params['master']); // TODO: Fixme
 
         foreach ($params['servers'] AS $key => $server) {
-            $this->servers[$key] = new DbConnection($server, true);
+            $this->servers[$key] = new Connection($server, true);
         }
 
         $this->curr = $this->getCurrentServer();

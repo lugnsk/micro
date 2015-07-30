@@ -25,6 +25,7 @@ class AccessFilter extends Filter
             $res = $this->checkRule($rule);
 
             switch ($res) {
+                /** @todo: Bug */
                 case true: {
                     return true;
                     break;

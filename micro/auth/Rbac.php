@@ -3,7 +3,7 @@
 namespace Micro\auth;
 
 use Micro\base\Container;
-use Micro\db\DbConnection;
+use Micro\db\Connection;
 use Micro\db\Query;
 
 /**
@@ -24,7 +24,7 @@ abstract class Rbac
     const TYPE_PERMISSION = 1;
     const TYPE_OPERATION = 2;
 
-    /** @var DbConnection $conn connection DB */
+    /** @var Connection $conn connection DB */
     protected $conn;
 
     /**

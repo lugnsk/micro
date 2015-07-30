@@ -3,7 +3,7 @@
 namespace Micro\auth;
 
 use Micro\base\Container;
-use Micro\db\DbConnection;
+use Micro\db\Connection;
 
 /**
  * Abstract ACL class file.
@@ -24,7 +24,7 @@ abstract class Acl implements IAuth
 {
     /** @var string $groupTable name of group table */
     protected $groupTable;
-    /** @var DbConnection $conn connection to DB */
+    /** @var Connection $conn connection to DB */
     protected $conn;
 
 

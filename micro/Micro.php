@@ -8,8 +8,8 @@ use Micro\base\Dispatcher;
 use Micro\base\IContainer;
 use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
+use Micro\web\IOutput;
 use Micro\web\IRequest;
-use Micro\web\OutputInterface;
 use Micro\web\Response;
 
 /**
@@ -30,6 +30,7 @@ class Micro
     /** @const string VERSION Version framework */
     const VERSION = '1.1';
 
+
     /** @var string $environment Application environment */
     protected $environment = 'devel';
     /** @var string $appDir Application directory */
@@ -46,6 +47,7 @@ class Micro
     protected $loaded;
     /** @var IContainer $container Container is a container for components and options */
     protected $container;
+
 
     /**
      * Initialize framework
@@ -168,13 +170,15 @@ class Micro
         $this->container->request = $request;
 
         $resolver = $request->isCli() ? new ConsoleResolver($this->container) : new HMVCResolver($this->container);
+        /** @FIXME: native logic , move into container */
+
         $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
 
         $app = $resolver->getApplication();
         $this->container->dispatcher->signal('kernel.controller', ['application' => $app]);
 
         $output = $app->action($resolver->getAction());
-        if (!$output instanceof OutputInterface) {
+        if (!$output instanceof IOutput) {
             $response = $this->container->response ?: new Response;
             $response->setBody($output);
             $output = $response;
@@ -183,6 +187,8 @@ class Micro
 
         return $output;
     }
+
+    // Methods for components
 
     /**
      * Boot Loader
@@ -203,8 +209,6 @@ class Micro
 
         $this->loaded = true;
     }
-
-    // Methods for components
 
     /**
      * Initialize container
@@ -239,6 +243,7 @@ class Micro
         $this->container->dispatcher->signal('kernel.terminate', []);
 
         if ($this->debug && !$this->container->request->isCli()) {
+            // Add timer into page
             echo '<div class=debug_timer>', (microtime(true) - $this->getStartTime()), '</div>';
         }
 
@@ -286,6 +291,8 @@ class Micro
         return $this->debug;
     }
 
+    // Methods helpers
+
     /**
      * Get character set
      *
@@ -297,8 +304,6 @@ class Micro
     {
         return 'UTF-8';
     }
-
-    // Methods helpers
 
     /**
      * Get environment name

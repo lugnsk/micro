@@ -190,7 +190,7 @@ class Request implements IRequest
      */
     public function getVar($name, $storage)
     {
-        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : false;
+        return array_key_exists($name, $GLOBALS[$storage]) ? $GLOBALS[$storage][$name] : null;
     }
 
     /**

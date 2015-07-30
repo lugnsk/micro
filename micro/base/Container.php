@@ -19,6 +19,8 @@ class Container extends \stdClass implements IContainer
     protected $data = [];
     /** @var array $config Configs */
     protected $config = [];
+    /** @var array $components Components config */
+    protected $components = [];
 
 
     /**
@@ -32,9 +34,11 @@ class Container extends \stdClass implements IContainer
      */
     public function load($filename)
     {
-        if (file_exists($this->kernel->getAppDir() . $filename)) {
+        if (file_exists($filename = $this->kernel->getAppDir() . $filename)) {
             /** @noinspection PhpIncludeInspection */
-            $this->config = array_merge_recursive($this->config, require $this->kernel->getAppDir() . $filename);
+            $this->config = array_merge_recursive($this->config, require $filename);
+            $this->components = array_merge_recursive($this->components, $this->config['components']);
+            unset($this->config['components']);
         }
     }
 
@@ -55,7 +59,7 @@ class Container extends \stdClass implements IContainer
         if (array_key_exists($name, $this->data)) {
             return true;
         }
-        if (array_key_exists($name, $this->config['components'])) {
+        if (array_key_exists($name, $this->components)) {
             return true;
         }
 
@@ -110,12 +114,12 @@ class Container extends \stdClass implements IContainer
      */
     public function configure($name = null)
     {
-        if (empty($this->config['components'])) {
+        if (empty($this->components)) {
             return false;
         }
 
         if ($name === null) {
-            foreach ($this->config['components'] AS $name => $options) {
+            foreach ($this->components AS $name => $options) {
                 if (!$this->loadComponent($name, $options)) {
                     return false;
                 }
@@ -124,11 +128,11 @@ class Container extends \stdClass implements IContainer
             return true;
         }
 
-        if (empty($this->config['components'][$name])) {
+        if (empty($this->components[$name])) {
             return false;
         }
 
-        if (!$this->loadComponent($name, $this->config['components'][$name])) {
+        if (!$this->loadComponent($name, $this->components[$name])) {
             return false;
         }
 

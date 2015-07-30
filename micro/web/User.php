@@ -2,6 +2,8 @@
 
 namespace Micro\web;
 
+use Micro\base\IContainer;
+
 /**
  * Micro user class file
  *
@@ -16,6 +18,7 @@ namespace Micro\web;
  */
 class User implements IUser
 {
+    /** @var IContainer $container */
     protected $container;
 
     public function __construct(array $config)

@@ -3,7 +3,7 @@
 namespace Micro\web;
 
 use Micro\base\Container;
-use Micro\base\File as MFile;
+use Micro\file\Filehelper;
 
 /**
  * Assets class file.
@@ -72,7 +72,7 @@ class Assets
         }
 
         if (is_dir($this->directory)) {
-            MFile::recurseCopyIfEdited($this->directory, $this->sourceDir);
+            FileHelper::recurseCopyIfEdited($this->directory, $this->sourceDir);
         } else {
             if (substr($hashDir, strlen($hashDir) - strlen($exclude)) !== $exclude) {
                 if (!file_exists($hashDir)) {

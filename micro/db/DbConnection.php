@@ -5,7 +5,7 @@ namespace Micro\db;
 use Micro\base\Exception;
 
 /**
- * DbConnection class file.
+ * Connection class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro
@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class DbConnection implements IDbConnection
+class DbConnection implements IConnection
 {
     /** @var \PDO|null $conn Connection to DB */
     protected $conn;

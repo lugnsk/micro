@@ -1,6 +1,6 @@
 <?php /** MicroMigration */
 
-namespace Micro\db;
+namespace Micro\mvc\models;
 
 use Micro\base\IContainer;
 

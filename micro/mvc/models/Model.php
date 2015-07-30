@@ -1,6 +1,6 @@
 <?php /** MicroModel */
 
-namespace Micro\db;
+namespace Micro\mvc\models;
 
 use Micro\base\Exception;
 use Micro\base\IContainer;
