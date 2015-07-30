@@ -16,12 +16,10 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class DbConnection implements IConnection
+class DbConnection extends Connection
 {
     /** @var \PDO|null $conn Connection to DB */
     protected $conn;
-    /** @var \Micro\base\Container $container Container container */
-    protected $container;
 
 
     /**
@@ -36,6 +34,8 @@ class DbConnection implements IConnection
      */
     public function __construct(array $config = [])
     {
+        parent::__construct($config);
+
         try {
             if (empty($config['options'])) {
                 $config['options'] = null;
@@ -49,11 +49,9 @@ class DbConnection implements IConnection
             );
         } catch (Exception $e) {
             if (!array_key_exists('ignoreFail', $config) || !$config['ignoreFail']) {
-                throw new Exception($config['container'], 'Connect to DB failed: ' . $e->getMessage());
+                throw new Exception($this->container, 'Connect to DB failed: ' . $e->getMessage());
             }
         }
-
-        $this->container = $config['container'];
     }
 
     /**

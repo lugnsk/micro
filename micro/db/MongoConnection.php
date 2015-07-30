@@ -16,7 +16,7 @@ use Micro\base\Exception;
  * @version 1.0
  * @since 1.0
  */
-class MongoConnection implements IConnection
+class MongoConnection extends Connection
 {
     /** @var \MongoClient $conn Connection to MongoDB */
     public $conn;
