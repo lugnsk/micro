@@ -38,10 +38,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Check driver
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function check()
     {
@@ -49,13 +46,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Delete by key name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function delete($name)
     {
@@ -63,10 +54,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Clean all data from cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function clean()
     {
@@ -80,10 +68,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Summary info about cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function info()
     {
@@ -91,13 +76,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Get meta-data of key id
-     *
-     * @access public
-     *
-     * @param string $id key id
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getMeta($id)
     {
@@ -105,14 +84,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Increment value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset increment value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function increment($name, $offset = 1)
     {
@@ -122,13 +94,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Get value by name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($name)
     {
@@ -136,15 +102,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Set value of element
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param mixed $value value
-     * @param integer $duration time duration
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function set($name, $value, $duration = 0)
     {
@@ -152,14 +110,7 @@ class XcacheCache extends BaseCache
     }
 
     /**
-     * Decrement value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset decrement value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function decrement($name, $offset = 1)
     {

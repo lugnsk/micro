@@ -22,24 +22,7 @@ class ArrayCache extends BaseCache
     protected $driver = [];
 
     /**
-     * Constructor
-     *
-     * @access public
-     *
-     * @param array $config array config
-     *
-     * @result void
-     */
-    public function __construct(array $config = [])
-    {
-        parent::__construct($config);
-    }
-
-    /**
-     * Check driver
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function check()
     {
@@ -47,13 +30,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Get value by name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($name)
     {
@@ -61,14 +38,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Set value of element
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param mixed $value value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function set($name, $value)
     {
@@ -76,13 +46,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Delete by key name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * 2@inheritdoc
      */
     public function delete($name)
     {
@@ -92,10 +56,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Clean all data from cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function clean()
     {
@@ -103,10 +64,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Summary info about cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function info()
     {
@@ -114,13 +72,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Get meta-data of key id
-     *
-     * @access public
-     *
-     * @param string $id key id
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getMeta($id)
     {
@@ -132,14 +84,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Increment value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset increment value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function increment($name, $offset = 1)
     {
@@ -147,14 +92,7 @@ class ArrayCache extends BaseCache
     }
 
     /**
-     * Decrement value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset decrement value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function decrement($name, $offset = 1)
     {

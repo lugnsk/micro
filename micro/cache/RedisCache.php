@@ -56,10 +56,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Check driver
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function check()
     {
@@ -80,15 +77,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Set value of element
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param mixed $value value
-     * @param integer $duration time duration
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function set($name, $value, $duration = 0)
     {
@@ -96,13 +85,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Delete by key name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function delete($name)
     {
@@ -110,10 +93,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Clean all data from cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function clean()
     {
@@ -121,10 +101,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Summary info about cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function info()
     {
@@ -132,13 +109,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Get meta-data of key id
-     *
-     * @access public
-     *
-     * @param string $id key id
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getMeta($id)
     {
@@ -150,13 +121,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Get value by name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($name)
     {
@@ -164,14 +129,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Increment value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset increment value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function increment($name, $offset = 1)
     {
@@ -179,14 +137,7 @@ class RedisCache extends BaseCache
     }
 
     /**
-     * Decrement value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset decrement value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function decrement($name, $offset = 1)
     {

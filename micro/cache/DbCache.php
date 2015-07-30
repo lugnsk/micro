@@ -2,7 +2,7 @@
 
 namespace Micro\cache;
 
-use Micro\db\DbConnection;
+use Micro\db\IDbConnection;
 use Micro\db\Query;
 
 /**
@@ -19,7 +19,7 @@ use Micro\db\Query;
  */
 class DbCache extends BaseCache
 {
-    /** @var DbConnection $driver DB driver */
+    /** @var IDbConnection $driver DB driver */
     protected $driver;
     /** @var string $table table name */
     protected $table;
@@ -43,7 +43,8 @@ class DbCache extends BaseCache
             unset($config['table']);
         }
 
-        $this->driver = new DbConnection($config);
+        $cls = $config['class'];
+        $this->driver = new $cls($config);
 
         $this->driver->createTable($this->table, [
             '`name` VARCHAR(127) NOT NULL',
@@ -55,24 +56,15 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Check driver
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function check()
     {
-        return ($this->driver instanceof DbConnection) ?: false;
+        return ($this->driver instanceof IDbConnection) ?: false;
     }
 
     /**
-     * Get value by name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($name)
     {
@@ -80,13 +72,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Get element from DB
-     *
-     * @access protected
-     *
-     * @param string $name key name
-     *
-     * @return array|bool
+     * @inheritdoc
      */
     protected function getElement($name)
     {
@@ -101,14 +87,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Set value of element
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param mixed $value value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function set($name, $value)
     {
@@ -116,13 +95,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Delete by key name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function delete($name)
     {
@@ -130,10 +103,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Clean all data from cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function clean()
     {
@@ -141,10 +111,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Summary info about cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function info()
     {
@@ -152,13 +119,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Get meta-data of key id
-     *
-     * @access public
-     *
-     * @param string $id key id
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getMeta($id)
     {
@@ -166,14 +127,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Increment value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset increment value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function increment($name, $offset = 1)
     {
@@ -181,14 +135,7 @@ class DbCache extends BaseCache
     }
 
     /**
-     * Decrement value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset decrement value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function decrement($name, $offset = 1)
     {

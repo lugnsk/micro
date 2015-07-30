@@ -2,6 +2,8 @@
 
 namespace Micro\cache;
 
+use Micro\file\FileHelper;
+
 /**
  * Class FileCache
  *
@@ -40,10 +42,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Check driver
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function check()
     {
@@ -51,13 +50,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Delete by key name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function delete($name)
     {
@@ -65,53 +58,15 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Clean all data from cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function clean()
     {
-        $this->unlinkRecursive($this->driver);
+        FileHelper::removeDir($this->driver);
     }
 
     /**
-     * Clean directory
-     *
-     * @access protected
-     *
-     * @param string $dir directory to clean
-     * @param bool $deleteRootToo delete root dir?
-     *
-     * @return void
-     */
-    protected function unlinkRecursive($dir, $deleteRootToo = false)
-    {
-        if (!$dh = opendir($dir)) {
-            return;
-        }
-        while (false !== ($obj = readdir($dh))) {
-            if ($obj === '.' || $obj === '..') {
-                continue;
-            }
-
-            if (!unlink($dir . '/' . $obj)) {
-                $this->unlinkRecursive($dir . '/' . $obj, true);
-            }
-        }
-
-        closedir($dh);
-
-        if ($deleteRootToo) {
-            rmdir($dir);
-        }
-    }
-
-    /**
-     * Summary info about cache
-     *
-     * @access public
-     * @return mixed
+     * @inheritdoc
      */
     public function info()
     {
@@ -119,13 +74,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Get meta-data of key id
-     *
-     * @access public
-     *
-     * @param string $id key id
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getMeta($id)
     {
@@ -133,14 +82,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Increment value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset increment value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function increment($name, $offset = 1)
     {
@@ -148,14 +90,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Set value of element
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param mixed $value value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function set($name, $value)
     {
@@ -163,13 +98,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Get value by name
-     *
-     * @access public
-     *
-     * @param string $name key name
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function get($name)
     {
@@ -177,14 +106,7 @@ class FileCache extends BaseCache
     }
 
     /**
-     * Decrement value
-     *
-     * @access public
-     *
-     * @param string $name key name
-     * @param int $offset decrement value
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function decrement($name, $offset = 1)
     {
