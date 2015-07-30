@@ -3,9 +3,22 @@
 namespace Micro\cli;
 
 use Micro\base\Command;
-use Micro\web\OutputInterface;
+use Micro\web\IOutput;
 
-abstract class ConsoleCommand extends Command implements OutputInterface
+/**
+ * Class ConsoleCommand
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package micro
+ * @subpackage cli
+ * @version 1.0
+ * @since 1.0
+ * @abstract
+ */
+abstract class ConsoleCommand extends Command implements IOutput
 {
     /** @var int $status Status of running console command */
     protected $status = 0;
@@ -24,6 +37,9 @@ abstract class ConsoleCommand extends Command implements OutputInterface
         parent::__construct($params);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function send()
     {
         if (!$this->result || $this->status > 0) {

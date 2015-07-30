@@ -12,6 +12,7 @@ use Micro\base\IContainer;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
+ * @subpackage cli
  * @version 1.0
  * @since 1.0
  * @abstract
