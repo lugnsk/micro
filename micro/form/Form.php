@@ -2,6 +2,7 @@
 
 namespace Micro\form;
 
+use Micro\mvc\models\IModel;
 use Micro\web\Html;
 
 /**
@@ -29,7 +30,7 @@ class Form
      *
      * @return string
      */
-    public function label($model, $property, array $options = [])
+    public function label(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
 
@@ -46,7 +47,7 @@ class Form
      *
      * @return array
      */
-    private function getField($model, $property)
+    private function getField(IModel $model, $property)
     {
         $cl = get_class($model);
         $smallName = substr($cl, strrpos($cl, '\\') + 1);
@@ -69,7 +70,7 @@ class Form
      *
      * @return string
      */
-    public function buttonField($model, $property, array $options = [])
+    public function buttonField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -90,7 +91,7 @@ class Form
      *
      * @return string
      */
-    public function hiddenField($model, $property, array $options = [])
+    public function hiddenField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
 
@@ -108,7 +109,7 @@ class Form
      *
      * @return string
      */
-    public function radioField($model, $property, array $options = [])
+    public function radioField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -127,7 +128,7 @@ class Form
      *
      * @return string
      */
-    public function fileFieldRow($model, $property, array $options = [])
+    public function fileFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -138,7 +139,7 @@ class Form
         Html::closeTag('div');
     }
 
-    protected function getBlock($name, &$options)
+    protected function getBlock(IModel $name, &$options)
     {
         $block = [];
         if (!empty($options[$name])) {
@@ -160,7 +161,7 @@ class Form
      *
      * @return string
      */
-    public function fileField($model, $property, array $options = [])
+    public function fileField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -179,7 +180,7 @@ class Form
      *
      * @return string
      */
-    public function imageFieldRow($model, $property, array $options = [])
+    public function imageFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -201,7 +202,7 @@ class Form
      *
      * @return string
      */
-    public function imageField($model, $property, array $options = [])
+    public function imageField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -221,7 +222,7 @@ class Form
      *
      * @return string
      */
-    public function passwordFieldRow($model, $property, array $options = [])
+    public function passwordFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -243,7 +244,7 @@ class Form
      *
      * @return string
      */
-    public function passwordField($model, $property, array $options = [])
+    public function passwordField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -264,7 +265,7 @@ class Form
      *
      * @return string
      */
-    public function textFieldRow($model, $property, array $options = [])
+    public function textFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -286,7 +287,7 @@ class Form
      *
      * @return string
      */
-    public function textField($model, $property, array $options = [])
+    public function textField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -305,7 +306,7 @@ class Form
      *
      * @return string
      */
-    public function colorFieldRow($model, $property, array $options = [])
+    public function colorFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -327,7 +328,7 @@ class Form
      *
      * @return string
      */
-    public function colorField($model, $property, array $options = [])
+    public function colorField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -346,7 +347,7 @@ class Form
      *
      * @return string
      */
-    public function dateFieldRow($model, $property, array $options = [])
+    public function dateFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -368,7 +369,7 @@ class Form
      *
      * @return string
      */
-    public function dateField($model, $property, array $options = [])
+    public function dateField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -387,7 +388,7 @@ class Form
      *
      * @return string
      */
-    public function dateTimeFieldRow($model, $property, array $options = [])
+    public function dateTimeFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -409,7 +410,7 @@ class Form
      *
      * @return string
      */
-    public function dateTimeField($model, $property, array $options = [])
+    public function dateTimeField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -428,7 +429,7 @@ class Form
      *
      * @return string
      */
-    public function dateTimeLocalFieldRow($model, $property, array $options = [])
+    public function dateTimeLocalFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -450,7 +451,7 @@ class Form
      *
      * @return string
      */
-    public function dateTimeLocalField($model, $property, array $options = [])
+    public function dateTimeLocalField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -469,7 +470,7 @@ class Form
      *
      * @return string
      */
-    public function emailFieldRow($model, $property, array $options = [])
+    public function emailFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -491,7 +492,7 @@ class Form
      *
      * @return string
      */
-    public function emailField($model, $property, array $options = [])
+    public function emailField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -510,7 +511,7 @@ class Form
      *
      * @return string
      */
-    public function numberFieldRow($model, $property, array $options = [])
+    public function numberFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -534,7 +535,7 @@ class Form
      *
      * @return string
      */
-    public function numberField($model, $property, array $options = [])
+    public function numberField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -553,7 +554,7 @@ class Form
      *
      * @return string
      */
-    public function rangeFieldRow($model, $property, array $options = [])
+    public function rangeFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -575,7 +576,7 @@ class Form
      *
      * @return string
      */
-    public function rangeField($model, $property, array $options = [])
+    public function rangeField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -594,7 +595,7 @@ class Form
      *
      * @return string
      */
-    public function searchFieldRow($model, $property, array $options = [])
+    public function searchFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -618,7 +619,7 @@ class Form
      *
      * @return string
      */
-    public function searchField($model, $property, array $options = [])
+    public function searchField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -637,7 +638,7 @@ class Form
      *
      * @return string
      */
-    public function telFieldRow($model, $property, array $options = [])
+    public function telFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -659,7 +660,7 @@ class Form
      *
      * @return string
      */
-    public function telField($model, $property, array $options = [])
+    public function telField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -678,7 +679,7 @@ class Form
      *
      * @return string
      */
-    public function timeFieldRow($model, $property, array $options = [])
+    public function timeFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -702,7 +703,7 @@ class Form
      *
      * @return string
      */
-    public function timeField($model, $property, array $options = [])
+    public function timeField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -721,7 +722,7 @@ class Form
      *
      * @return string
      */
-    public function urlFieldRow($model, $property, array $options = [])
+    public function urlFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -743,7 +744,7 @@ class Form
      *
      * @return string
      */
-    public function urlField($model, $property, array $options = [])
+    public function urlField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -762,7 +763,7 @@ class Form
      *
      * @return string
      */
-    public function monthFieldRow($model, $property, array $options = [])
+    public function monthFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -784,7 +785,7 @@ class Form
      *
      * @return string
      */
-    public function monthField($model, $property, array $options = [])
+    public function monthField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -803,7 +804,7 @@ class Form
      *
      * @return string
      */
-    public function weekFieldRow($model, $property, array $options = [])
+    public function weekFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -825,7 +826,7 @@ class Form
      *
      * @return string
      */
-    public function weekField($model, $property, array $options = [])
+    public function weekField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -844,7 +845,7 @@ class Form
      *
      * @return string
      */
-    public function textAreaFieldRow($model, $property, array $options = [])
+    public function textAreaFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -866,7 +867,7 @@ class Form
      *
      * @return string
      */
-    public function textAreaField($model, $property, array $options = [])
+    public function textAreaField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -885,7 +886,7 @@ class Form
      *
      * @return string
      */
-    public function listBoxFieldRow($model, $property, array $options = [])
+    public function listBoxFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -907,7 +908,7 @@ class Form
      *
      * @return string
      */
-    public function listBoxField($model, $property, array $options = [])
+    public function listBoxField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -931,7 +932,7 @@ class Form
      *
      * @return string
      */
-    public function dropDownListFieldRow($model, $property, array $options = [])
+    public function dropDownListFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -953,7 +954,7 @@ class Form
      *
      * @return string
      */
-    public function dropDownListField($model, $property, array $options = [])
+    public function dropDownListField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -976,7 +977,7 @@ class Form
      *
      * @return string
      */
-    public function checkboxFieldRow($model, $property, array $options = [])
+    public function checkboxFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -998,7 +999,7 @@ class Form
      *
      * @return string
      */
-    public function checkBoxField($model, $property, array $options = [])
+    public function checkBoxField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -1019,7 +1020,7 @@ class Form
      *
      * @return string
      */
-    public function checkBoxListFieldRow($model, $property, array $options = [])
+    public function checkBoxListFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -1041,7 +1042,7 @@ class Form
      *
      * @return string
      */
-    public function checkBoxListField($model, $property, array $options = [])
+    public function checkBoxListField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $checkboxes = !empty($options['checkboxes']) ? $options['checkboxes'] : [];
@@ -1061,7 +1062,7 @@ class Form
      *
      * @return string
      */
-    public function radioButtonListFieldRow($model, $property, array $options = [])
+    public function radioButtonListFieldRow(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $options['id'] = $element['id'];
@@ -1083,7 +1084,7 @@ class Form
      *
      * @return string
      */
-    public function radioButtonListField($model, $property, array $options = [])
+    public function radioButtonListField(IModel $model, $property, array $options = [])
     {
         $element = $this->getField($model, $property);
         $radios = !empty($options['radios']) ? $options['radios'] : [];

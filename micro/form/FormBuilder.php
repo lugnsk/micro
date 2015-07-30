@@ -2,7 +2,7 @@
 
 namespace Micro\form;
 
-use Micro\db\Model;
+use Micro\mvc\models\IModel;
 use Micro\web\Html;
 use Micro\widget\FormWidget;
 
@@ -26,7 +26,7 @@ class FormBuilder
     protected $form;
     /** @var array $config config array */
     private $config;
-    /** @var Model $model model for get data */
+    /** @var IModel $model model for get data */
     private $model;
 
 
