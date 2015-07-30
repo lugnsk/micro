@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS `blogs` (
   `id`      INT(11)      NOT NULL AUTO_INCREMENT,
-  `name`    VARCHAR(127) NOT NULL,
+  `name`    VARCHAR(127) NOT NULL DEFAULT '',
   `content` TEXT         NOT NULL,
   PRIMARY KEY (`id`)
 )
@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS `blogs` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id`    INT(11)      NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(55)  NOT NULL,
-  `login` VARCHAR(55)  NOT NULL,
-  `pass`  VARCHAR(32)  NOT NULL,
-  `fio`   VARCHAR(127) NOT NULL,
+  `email` VARCHAR(55)  NOT NULL DEFAULT '',
+  `login` VARCHAR(55)  NOT NULL DEFAULT '',
+  `pass`  VARCHAR(32)  NOT NULL DEFAULT '',
+  `fio`   VARCHAR(127) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB
