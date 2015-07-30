@@ -18,9 +18,11 @@ use Micro\base\IContainer;
  */
 abstract class Filter implements IFilter
 {
+    /** @var array|string|bool $result Result array */
     public $result;
     /** @var IContainer $Container */
     protected $container;
+    /** @var string $action Current action */
     protected $action;
 
     /**
