@@ -17,7 +17,7 @@ use Micro\base\IContainer;
  * @since 1.0
  * @abstract
  */
-abstract class Resolver
+abstract class Resolver implements IResolver
 {
     /** @var IContainer $container Container is a container for components and options */
     protected $container;
@@ -36,14 +36,4 @@ abstract class Resolver
     {
         $this->container = $container;
     }
-
-    /**
-     * Get instance application
-     *
-     * @access public
-     *
-     * @return mixed
-     * @abstract
-     */
-    abstract public function getApplication();
 }

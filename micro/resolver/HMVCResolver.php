@@ -3,6 +3,7 @@
 namespace Micro\resolver;
 
 use Micro\base\Exception;
+use Micro\mvc\controllers\IController;
 
 /**
  * hMVC Resolver class file.
@@ -24,7 +25,7 @@ class HMVCResolver extends Resolver
     private $extensions;
     /** @var string $modules Modules in request */
     private $modules;
-    /** @var string $controller Controller to run */
+    /** @var string $controller IController to run */
     private $controller;
     /** @var string $action Action to run */
     private $action;
@@ -35,7 +36,8 @@ class HMVCResolver extends Resolver
      *
      * @access public
      *
-     * @return \Micro\mvc\controllers\Controller
+     * @return IController
+     * @throws Exception
      */
     public function getApplication()
     {
@@ -46,7 +48,7 @@ class HMVCResolver extends Resolver
 
         $this->initialize();
 
-        /** @var \Micro\mvc\controllers\Controller $cls */
+        /** @var string $cls */
         $cls = $this->getCalculatePath();
 
         if (!class_exists($cls)) {
