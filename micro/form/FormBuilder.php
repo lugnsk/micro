@@ -47,7 +47,7 @@ class FormBuilder
      */
     public function __construct(
         array $config = [],
-        $model = null,
+        IModel $model = null,
         $method = 'GET',
         $type = 'text/plain',
         $action = '',

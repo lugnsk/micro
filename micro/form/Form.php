@@ -24,7 +24,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -42,12 +42,12 @@ class Form
      *
      * @access private
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      *
      * @return array
      */
-    private function getField(IModel $model, $property)
+    protected function getField(IModel $model, $property)
     {
         $cl = get_class($model);
         $smallName = substr($cl, strrpos($cl, '\\') + 1);
@@ -60,32 +60,11 @@ class Form
     }
 
     /**
-     * Render button field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function buttonField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::buttonField($element['name'], $element['value'], $options);
-    }
-
-    // Fields
-
-    /**
      * Render hidden field tag
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -99,11 +78,30 @@ class Form
     }
 
     /**
+     * Render button field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function buttonField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::buttonField($element['name'], $element['value'], $options);
+    }
+
+    /**
      * Render radio field tag
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -118,11 +116,75 @@ class Form
     }
 
     /**
+     * Render text field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function textFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->textField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    // Fields
+
+    /**
+     * Get block from options
+     *
+     * @access protected
+     *
+     * @param string $name Block name
+     * @param array $options Options array
+     *
+     * @return array
+     */
+    protected function getBlock($name, array &$options)
+    {
+        $block = [];
+        if (!empty($options[$name])) {
+            $block = $options[$name];
+            unset($options[$name]);
+        }
+
+        return $block;
+    }
+
+    /**
+     * Render text field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function textField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::textField($element['name'], $element['value'], $options);
+    }
+
+    /**
      * Render file field row
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -139,23 +201,12 @@ class Form
         Html::closeTag('div');
     }
 
-    protected function getBlock(IModel $name, &$options)
-    {
-        $block = [];
-        if (!empty($options[$name])) {
-            $block = $options[$name];
-            unset($options[$name]);
-        }
-
-        return $block;
-    }
-
     /**
      * Render file field tag
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -174,7 +225,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -196,7 +247,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -216,7 +267,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -238,7 +289,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -252,594 +303,12 @@ class Form
         return Html::passwordField($element['name'], $element['value'], $options);
     }
 
-    // HTML5 Fields
-
-    /**
-     * Render text field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function textFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->textField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render text field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function textField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::textField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render color field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function colorFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->colorField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render color field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function colorField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::colorField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render number field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function dateFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->dateField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render date field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function dateField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::dateField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render datetime field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function dateTimeFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->dateTimeField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render datetime field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function dateTimeField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::datetimeField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render datetime-local field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function dateTimeLocalFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->dateTimeLocalField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render datetime-local field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function dateTimeLocalField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::datetimeLocalField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render email field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function emailFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->emailField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render email field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function emailField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::emailField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render number field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function numberFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->numberField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    // LIST Fields
-
-    /**
-     * Render number field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function numberField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::numberField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render range field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function rangeFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->rangeField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render range field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function rangeField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::rangeField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render search field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function searchFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->searchField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    // Rows
-
-    /**
-     * Render search field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function searchField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::searchField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render telephone field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function telFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->telField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render telephone tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function telField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::telField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render time field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function timeFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->timeField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    // HTML5 Rows
-
-    /**
-     * Render time field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function timeField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::timeField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render url field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function urlFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->urlField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render url field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function urlField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::urlField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render month field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function monthFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->monthField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render moth field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function monthField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::monthField($element['name'], $element['value'], $options);
-    }
-
-    /**
-     * Render week field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function weekFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->weekField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render week field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function weekField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::weekField($element['name'], $element['value'], $options);
-    }
-
     /**
      * Render textArea field row
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -861,7 +330,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -876,11 +345,54 @@ class Form
     }
 
     /**
+     * Render checkbox field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function checkboxFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->checkBoxField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render check box field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function checkBoxField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::checkBoxField($element['name'], $element['value'], $options);
+    }
+
+    // Lists
+
+    /**
      * Render listBox field row
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -902,7 +414,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attributes array
      *
@@ -926,7 +438,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -948,7 +460,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options attribute array
      *
@@ -967,54 +479,11 @@ class Form
     }
 
     /**
-     * Render checkbox field row
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attribute array
-     *
-     * @return string
-     */
-    public function checkboxFieldRow(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::openTag('div', $this->getBlock('block', $options)) .
-        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
-        $this->checkBoxField($model, $property, $options) .
-        Html::closeTag('div');
-    }
-
-    /**
-     * Render check box field tag
-     *
-     * @access public
-     *
-     * @param FormModel $model model
-     * @param string $property model property
-     * @param array $options attributes array
-     *
-     * @return string
-     */
-    public function checkBoxField(IModel $model, $property, array $options = [])
-    {
-        $element = $this->getField($model, $property);
-        $options['id'] = $element['id'];
-
-        return Html::checkBoxField($element['name'], $element['value'], $options);
-    }
-
-    // LIST Rows
-
-    /**
      * Render text field row
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options options array
      *
@@ -1036,7 +505,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property property model
      * @param array $options options array
      *
@@ -1056,7 +525,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options options array
      *
@@ -1078,7 +547,7 @@ class Form
      *
      * @access public
      *
-     * @param FormModel $model model
+     * @param IModel $model model
      * @param string $property model property
      * @param array $options options array
      *
@@ -1091,5 +560,540 @@ class Form
         $format = !empty($options['format']) ? $options['format'] : '<p>%radio% %text%</p>';
 
         return Html::radioButtonList($element['name'], $radios, $format, $element['value']);
+    }
+
+    // HTML5 Fields
+
+    /**
+     * Render color field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function colorFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->colorField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render color field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function colorField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::colorField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render number field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function dateFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->dateField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render date field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function dateField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::dateField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render datetime field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function dateTimeFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->dateTimeField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render datetime field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function dateTimeField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::datetimeField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render datetime-local field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function dateTimeLocalFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->dateTimeLocalField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render datetime-local field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function dateTimeLocalField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::datetimeLocalField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render email field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function emailFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->emailField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render email field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function emailField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::emailField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render number field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function numberFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->numberField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render number field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function numberField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::numberField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render range field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function rangeFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->rangeField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render range field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function rangeField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::rangeField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render search field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function searchFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->searchField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render search field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function searchField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::searchField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render telephone field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function telFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->telField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render telephone tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function telField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::telField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render time field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function timeFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->timeField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render time field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function timeField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::timeField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render url field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function urlFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->urlField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render url field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function urlField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::urlField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render month field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function monthFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->monthField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render moth field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function monthField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::monthField($element['name'], $element['value'], $options);
+    }
+
+    /**
+     * Render week field row
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attribute array
+     *
+     * @return string
+     */
+    public function weekFieldRow(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::openTag('div', $this->getBlock('block', $options)) .
+        Html::label($model->getLabel($property), $element['id'], $this->getBlock('label', $options)) .
+        $this->weekField($model, $property, $options) .
+        Html::closeTag('div');
+    }
+
+    /**
+     * Render week field tag
+     *
+     * @access public
+     *
+     * @param IModel $model model
+     * @param string $property model property
+     * @param array $options attributes array
+     *
+     * @return string
+     */
+    public function weekField(IModel $model, $property, array $options = [])
+    {
+        $element = $this->getField($model, $property);
+        $options['id'] = $element['id'];
+
+        return Html::weekField($element['name'], $element['value'], $options);
     }
 }

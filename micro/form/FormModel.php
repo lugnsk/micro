@@ -2,41 +2,31 @@
 
 namespace Micro\form;
 
-use Micro\base\Container;
-use Micro\db\IModel;
+use Micro\base\IContainer;
 use Micro\validator\Validator;
 
-/**
- * Class FormModel.
- *
- * @author Oleg Lunegov <testuser@mail.linpax.org>
- * @link https://github.com/lugnsk/micro
- * @copyright Copyright &copy; 2013 Oleg Lunegov
- * @license /LICENSE
- * @package micro
- * @subpackage web
- * @version 1.0
- * @since 1.0
- */
-abstract class FormModel implements IModel
+abstract class FormModel implements IFormModel
 {
+    /** @var IContainer $container */
     protected $container;
     /** @var array $errors validation errors */
     protected $errors = [];
 
-    public function __construct(Container $container)
+
+    /**
+     * Constructor form
+     *
+     * @access public
+     *
+     * @param IContainer $container
+     *
+     * @result void
+     */
+    public function __construct(IContainer $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * Run validation
-     *
-     * @access public
-     *
-     * @return bool
-     * @throws \Micro\base\Exception
-     */
     public function validate()
     {
         foreach ($this->rules() AS $rule) {
@@ -53,25 +43,11 @@ abstract class FormModel implements IModel
         return true;
     }
 
-    /**
-     * Define rules for validation
-     *
-     * @access public
-     * @return array
-     */
     public function rules()
     {
         return [];
     }
 
-    /**
-     * Get client code for validation
-     *
-     * @access public
-     *
-     * @return string
-     * @throws \Micro\base\Exception
-     */
     public function getClient()
     {
         $result = 'jQuery(document).ready(function(){';
@@ -86,17 +62,6 @@ abstract class FormModel implements IModel
         return $result . '});';
     }
 
-    /**
-     * Set model data
-     *
-     * Loading data in model from array
-     *
-     * @access public
-     *
-     * @param array $data array to change
-     *
-     * @return void
-     */
     public function setModelData(array $data = [])
     {
         foreach ($data AS $key => $value) {
@@ -104,26 +69,11 @@ abstract class FormModel implements IModel
         }
     }
 
-    /**
-     * Add error model
-     *
-     * @access public
-     *
-     * @param string $description error text
-     *
-     * @return void
-     */
     public function addError($description)
     {
         $this->errors[] = $description;
     }
 
-    /**
-     * Get errors after validation
-     *
-     * @access public
-     * @return array
-     */
     public function getErrors()
     {
         return $this->convertMultiArrayToArray($this->errors);
@@ -152,15 +102,6 @@ abstract class FormModel implements IModel
         return $result;
     }
 
-    /**
-     * Get element label
-     *
-     * @access public
-     *
-     * @param string $property property name
-     *
-     * @return null
-     */
     public function getLabel($property)
     {
         $elements = $this->attributeLabels();
@@ -168,26 +109,11 @@ abstract class FormModel implements IModel
         return !empty($elements[$property]) ? $elements[$property] : $property;
     }
 
-    /**
-     * Define labels for elements
-     *
-     * @access public
-     * @return array
-     */
     public function attributeLabels()
     {
         return [];
     }
 
-    /**
-     * Check exists attribute in model
-     *
-     * @access public
-     *
-     * @param string $name property name
-     *
-     * @return bool
-     */
     public function checkAttributeExists($name)
     {
         return property_exists($this, $name);
