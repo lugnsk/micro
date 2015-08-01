@@ -2,7 +2,7 @@
 
 namespace Micro\validator;
 
-use Micro\db\Model;
+use Micro\form\IFormModel;
 
 /**
  * RegexpValidator class file.
@@ -16,18 +16,12 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class RegexpValidator extends BaseValidator implements IValidator
+class RegexpValidator extends BaseValidator
 {
     /**
-     * Validate on server, make rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validate($model)
+    public function validate(IFormModel $model)
     {
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
@@ -47,18 +41,9 @@ class RegexpValidator extends BaseValidator implements IValidator
     }
 
     /**
-     * Client-side validation, make js rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function client(
-        /** @noinspection PhpUnusedParameterInspection */
-        $model
-    )
+    public function client(IFormModel $model)
     {
         $js = 'if (!this.value.match(' . $this->params['pattern'] . ')) {' .
             ' e.preventDefault(); this.focus(); alert(\'Value not valid with regular expression\'); }';

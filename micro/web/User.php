@@ -21,21 +21,18 @@ class User implements IUser
     /** @var IContainer $container */
     protected $container;
 
+    /**
+     * @access public
+     * @param array $config
+     * @result void
+     */
     public function __construct(array $config)
     {
         $this->container = $config['container'];
     }
 
     /**
-     * Check access by current user
-     *
-     * @access public
-     * @global       Container
-     *
-     * @param string $permission permission to check
-     * @param array $data arguments
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function check($permission, array $data = [])
     {
@@ -47,11 +44,7 @@ class User implements IUser
     }
 
     /**
-     * Get state user
-     *
-     * @access public
-     * @global Container
-     * @return bool
+     * @inheritdoc
      */
     public function isGuest()
     {
@@ -59,11 +52,7 @@ class User implements IUser
     }
 
     /**
-     * Get user ID
-     *
-     * @access public
-     * @global Container
-     * @return bool|integer
+     * @inheritdoc
      */
     public function getID()
     {
@@ -71,13 +60,7 @@ class User implements IUser
     }
 
     /**
-     * Login user
-     *
-     * @access public
-     *
-     * @param int|string $userId User identify
-     *
-     * @return void
+     * @inheritdoc
      */
     public function login($userId)
     {
@@ -85,14 +68,7 @@ class User implements IUser
     }
 
     /**
-     * Set User ID
-     *
-     * @access public
-     * @global      Container
-     *
-     * @param mixed $id user id
-     *
-     * @return void
+     * @inheritdoc
      */
     public function setID($id)
     {
@@ -100,11 +76,7 @@ class User implements IUser
     }
 
     /**
-     * Logout user
-     *
-     * @access public
-     *
-     * @return void
+     * @inheritdoc
      */
     public function logout()
     {
@@ -115,11 +87,7 @@ class User implements IUser
     }
 
     /**
-     * Get captcha code
-     *
-     * @access public
-     * @global Container
-     * @return string
+     * @inheritdoc
      */
     public function getCaptcha()
     {
@@ -127,16 +95,22 @@ class User implements IUser
     }
 
     /**
-     * Make captcha from source
-     *
-     * @access public
-     *
-     * @param string $code source captcha
-     *
-     * @return void
+     * @inheritdoc
      */
     public function setCaptcha($code)
     {
         $this->container->session->captchaCode = md5($code);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function checkCaptcha($code)
+    {
+        if (!$this->container->session->captchaCode) {
+            return null;
+        }
+
+        return $this->container->session->captchaCode === md5($code);
     }
 }

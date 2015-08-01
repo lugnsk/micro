@@ -2,7 +2,9 @@
 
 namespace Micro\mvc\models;
 
-interface IModel
+use Micro\form\IFormModel;
+
+interface IModel extends IFormModel
 {
     /**
      * Get name of table

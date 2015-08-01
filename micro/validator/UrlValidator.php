@@ -2,7 +2,7 @@
 
 namespace Micro\validator;
 
-use Micro\db\Model;
+use Micro\form\IFormModel;
 
 /**
  * UrlValidator class file.
@@ -16,18 +16,12 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class UrlValidator extends BaseValidator implements IValidator
+class UrlValidator extends BaseValidator
 {
     /**
-     * Validate on server, make rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validate($model)
+    public function validate(IFormModel $model)
     {
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
@@ -46,18 +40,9 @@ class UrlValidator extends BaseValidator implements IValidator
     }
 
     /**
-     * Client-side validation, make js rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function client(
-        /** @noinspection PhpUnusedParameterInspection */
-        $model
-    )
+    public function client(IFormModel $model)
     {
         $jsString = 'if (/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(this.value' .
             ') != true) { e.preventDefault(); this.focus(); alert(\'Value is not a URL\'); }';

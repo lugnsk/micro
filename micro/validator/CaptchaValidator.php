@@ -2,7 +2,7 @@
 
 namespace Micro\validator;
 
-use Micro\db\Model;
+use Micro\form\IFormModel;
 
 /**
  * CaptchaValidator class file.
@@ -16,7 +16,7 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class CaptchaValidator extends BaseValidator implements IValidator
+class CaptchaValidator extends BaseValidator
 {
     /** @var string $captcha compiled captcha */
     protected $captcha = '';
@@ -39,16 +39,9 @@ class CaptchaValidator extends BaseValidator implements IValidator
     }
 
     /**
-     * Validate on server, make rule
-     *
-     * @access public
-     * @global      Container
-     *
-     * @param Model $model checked model
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validate($model)
+    public function validate(IFormModel $model)
     {
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
@@ -57,8 +50,7 @@ class CaptchaValidator extends BaseValidator implements IValidator
                 return false;
             }
 
-            $convert = $this->container->user->makeCaptcha($model->$element);
-            if ($convert !== $this->captcha) {
+            if ($this->container->user->checkCaptcha($this->captcha)) {
                 return false;
             }
         }
@@ -66,7 +58,10 @@ class CaptchaValidator extends BaseValidator implements IValidator
         return true;
     }
 
-    public function client($model)
+    /**
+     * @inheritdoc
+     */
+    public function client(IFormModel $model)
     {
         return '';
     }

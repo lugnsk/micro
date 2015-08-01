@@ -7,7 +7,7 @@ use Micro\base\Exception;
 use Micro\web\Response;
 
 
-abstract class Controller
+abstract class Controller implements IController
 {
     /** @var \Object $module */
     public $module;

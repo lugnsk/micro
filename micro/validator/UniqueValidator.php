@@ -2,8 +2,8 @@
 
 namespace Micro\validator;
 
-use Micro\db\Model;
-use Micro\db\Query;
+use Micro\form\IFormModel;
+use Micro\mvc\models\Query;
 
 /**
  * UniqueValidator class file.
@@ -17,18 +17,12 @@ use Micro\db\Query;
  * @version 1.0
  * @since 1.0
  */
-class UniqueValidator extends BaseValidator implements IValidator
+class UniqueValidator extends BaseValidator
 {
     /**
-     * Validate on server, make rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validate($model)
+    public function validate(IFormModel $model)
     {
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
@@ -38,7 +32,7 @@ class UniqueValidator extends BaseValidator implements IValidator
             }
             $elementValue = $model->$element;
 
-            $query = new Query($this->container);
+            $query = new Query($this->container->db);
             $query->select = $this->params['attribute'];
             $query->table = $this->params['table'];
             $query->addWhere($this->params['attribute'] . '="' . $elementValue . '"');
@@ -53,7 +47,10 @@ class UniqueValidator extends BaseValidator implements IValidator
         return true;
     }
 
-    public function client($model)
+    /**
+     * @inheritdoc
+     */
+    public function client(IFormModel $model)
     {
         return '';
     }

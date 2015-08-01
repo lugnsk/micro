@@ -2,7 +2,7 @@
 
 namespace Micro\validator;
 
-use Micro\db\Model;
+use Micro\form\IFormModel;
 
 /**
  * RangeValidator class file.
@@ -16,18 +16,12 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class RangeValidator extends BaseValidator implements IValidator
+class RangeValidator extends BaseValidator
 {
     /**
-     * Validate on server, make rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validate($model)
+    public function validate(IFormModel $model)
     {
         if (empty($this->params['min'])) {
             $this->errors[] = 'Minimal value not declared to Range validator';
@@ -57,18 +51,9 @@ class RangeValidator extends BaseValidator implements IValidator
     }
 
     /**
-     * Client-side validation, make js rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return string
+     * @inheritdoc
      */
-    public function client(
-        /** @noinspection PhpUnusedParameterInspection */
-        $model
-    )
+    public function client(IFormModel $model)
     {
         $js = 'if (this.value < ' . $this->params['min'] . ' OR this.value > ' . $this->params['max'] . ') {' .
             ' e.preventDefault(); this.focus(); alert(\'Value not find in range\'); }';

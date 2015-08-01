@@ -2,7 +2,7 @@
 
 namespace Micro\validator;
 
-use Micro\db\Model;
+use Micro\form\IFormModel;
 
 /**
  * EmailValidator class file.
@@ -16,18 +16,12 @@ use Micro\db\Model;
  * @version 1.0
  * @since 1.0
  */
-class FileValidator extends BaseValidator implements IValidator
+class FileValidator extends BaseValidator
 {
     /**
-     * Validate on server, make rule
-     *
-     * @access public
-     *
-     * @param Model $model checked model
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function validate($model)
+    public function validate(IFormModel $model)
     {
         foreach ($this->elements AS $element) {
             if (!$model->checkAttributeExists($element)) {
@@ -62,7 +56,10 @@ class FileValidator extends BaseValidator implements IValidator
         return true;
     }
 
-    public function client($model)
+    /**
+     * @inheritdoc
+     */
+    public function client(IFormModel $model)
     {
         return '';
     }

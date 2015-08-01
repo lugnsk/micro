@@ -2,6 +2,8 @@
 
 namespace Micro\mvc\models;
 
+use Micro\db\IConnection;
+
 /**
  * Query class file.
  *
@@ -16,7 +18,7 @@ namespace Micro\mvc\models;
  */
 class Query implements IQuery
 {
-    /** @var IDbConnection $db Connection */
+    /** @var IConnection $db Connection */
     public $db;
 
     /** @var string $select selectable columns */
@@ -55,7 +57,7 @@ class Query implements IQuery
      *
      * @result void
      */
-    public function __construct(IDbConnection $db)
+    public function __construct(IConnection $db)
     {
         $this->db = $db;
     }

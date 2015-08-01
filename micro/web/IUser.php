@@ -86,4 +86,15 @@ interface IUser
      * @return void
      */
     public function setCaptcha($code);
+
+    /**
+     * Check captcha
+     *
+     * @access public
+     *
+     * @param string $code source captcha
+     *
+     * @return string
+     */
+    public function checkCaptcha($code);
 }

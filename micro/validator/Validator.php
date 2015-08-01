@@ -3,7 +3,8 @@
 namespace Micro\validator;
 
 use Micro\base\Exception;
-use Micro\db\IModel;
+use Micro\base\IContainer;
+use Micro\form\IFormModel;
 
 /**
  * Validator is a runner validation process
@@ -40,9 +41,10 @@ class Validator
     public $elements = [];
     /** @var array $params validation parameters */
     public $params = [];
+    /** @var IContainer $container Container */
     protected $container;
     /** @var array $rule current rule */
-    private $rule = [];
+    protected $rule = [];
 
     /**
      * Constructor validator object
@@ -64,7 +66,7 @@ class Validator
      *
      * @access public
      *
-     * @param \Micro\form\FormModel $model model
+     * @param IFormModel $model model
      * @param bool $client run on client side?
      *
      * @return bool|string
@@ -106,6 +108,10 @@ class Validator
         return $result;
     }
 
+    /**
+     * @param $name
+     * @return bool|string
+     */
     protected function getValidatorClass($name)
     {
         if (!empty(self::$validators[$name])) {
@@ -125,11 +131,11 @@ class Validator
      * @access public
      *
      * @param IValidator $validator
-     * @param IModel $model
+     * @param IFormModel $model
      *
      * @return string
      */
-    public function clientValidate(IValidator $validator, IModel $model)
+    public function clientValidate(IValidator $validator, IFormModel $model)
     {
         $object = substr(get_class($model), strrpos(get_class($model), '\\') + 1);
 

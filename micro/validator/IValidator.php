@@ -1,9 +1,16 @@
-<?php
+<?php /** MicroInterfaceValidator */
 
 namespace Micro\validator;
 
-use Micro\db\IModel;
+use Micro\form\IFormModel;
 
+/**
+ * Interface IValidator
+ *
+ * @package Micro\validator
+ *
+ * @property array $errors
+ */
 interface IValidator
 {
     /**
@@ -11,20 +18,20 @@ interface IValidator
      *
      * @access public
      *
-     * @param IModel $model checked model
+     * @param IFormModel $model checked model
      *
      * @return bool
      */
-    public function validate($model);
+    public function validate(IFormModel $model);
 
     /**
      * Client-side validation, make js rule
      *
      * @access public
      *
-     * @param IModel $model model from elements
+     * @param IFormModel $model model from elements
      *
      * @return string
      */
-    public function client($model);
+    public function client(IFormModel $model);
 }
