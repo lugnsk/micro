@@ -17,6 +17,48 @@ namespace Micro\web;
 class Html
 {
     // BASIC Elements
+
+    /**
+     * Render meta tag
+     *
+     * @access public
+     *
+     * @param  string $name name of element
+     * @param  string $content content of element
+     * @param  array $attributes attributes tag
+     *
+     * @return string
+     * @static
+     */
+    public static function meta($name, $content, array $attributes = [])
+    {
+        $attributes['name'] = $name;
+        $attributes['content'] = $content;
+
+        return self::tag('meta', $attributes);
+    }
+
+    /**
+     * Render tag
+     *
+     * @access public
+     *
+     * @param  string $name tag name
+     * @param  array $attributes tag attributes
+     *
+     * @return string
+     * @static
+     */
+    public static function tag($name, array $attributes = [])
+    {
+        $result = '';
+        foreach ($attributes AS $elem => $value) {
+            $result .= ' ' . $elem . '="' . $value . '" ';
+        }
+
+        return '<' . $name . $result . '/>';
+    }
+
     /**
      * Render link tag
      *
@@ -35,6 +77,8 @@ class Html
 
         return self::openTag('link', $attributes) . $name . self::closeTag('link');
     }
+
+    // HEAD Elements
 
     /**
      * Render open tag
@@ -70,49 +114,6 @@ class Html
     public static function closeTag($name)
     {
         return '</' . $name . '>';
-    }
-
-    /**
-     * Render meta tag
-     *
-     * @access public
-     *
-     * @param  string $name name of element
-     * @param  string $content content of element
-     * @param  array $attributes attributes tag
-     *
-     * @return string
-     * @static
-     */
-    public static function meta($name, $content, array $attributes = [])
-    {
-        $attributes['name'] = $name;
-        $attributes['content'] = $content;
-
-        return self::tag('meta', $attributes);
-    }
-
-    // HEAD Elements
-
-    /**
-     * Render tag
-     *
-     * @access public
-     *
-     * @param  string $name tag name
-     * @param  array $attributes tag attributes
-     *
-     * @return string
-     * @static
-     */
-    public static function tag($name, array $attributes = [])
-    {
-        $result = '';
-        foreach ($attributes AS $elem => $value) {
-            $result .= ' ' . $elem . '="' . $value . '" ';
-        }
-
-        return '<' . $name . $result . '/>';
     }
 
     /**

@@ -37,14 +37,7 @@ class Router implements IRouter
     }
 
     /**
-     * Parsing uri
-     *
-     * @access public
-     *
-     * @param string $uri current check URI
-     * @param string $method current Request method
-     *
-     * @return string
+     * @inheritdoc
      */
     public function parse($uri, $method = 'GET')
     {
@@ -140,7 +133,7 @@ class Router implements IRouter
 
         $countUriBlocks = count($uriBlocks);
         for ($i = 0; $i < $countUriBlocks; $i++) {
-            if ($patBlocks[$i]{0} === '<') {
+            if (substr($patBlocks[$i], 0, 1) === '<') {
                 $cut = strpos($patBlocks[$i], ':');
 
                 if (preg_match('/' . substr($patBlocks[$i], $cut + 1, -1) . '/', $uriBlocks[$i])) {
@@ -173,7 +166,7 @@ class Router implements IRouter
     {
         $result = null;
         foreach ($repBlocks AS $value) {
-            if ($value{0} !== '<') {
+            if (substr($value, 0, 1) !== '<') {
                 $result .= '/' . $value;
                 unset($attr[$value]);
             } else {

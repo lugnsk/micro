@@ -2,8 +2,8 @@
 
 namespace Micro\web;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
 
 /**
  * Language getter language tags from *.ini files
@@ -18,7 +18,7 @@ use Micro\base\Exception;
  */
 class Language extends \stdClass
 {
-    /** @var Container $container */
+    /** @var IContainer $container */
     protected $container;
     /** @var array $language language array */
     private $language = [];
@@ -35,7 +35,7 @@ class Language extends \stdClass
      *
      * @result void
      */
-    public function __construct(Container $container, $viewNameFile)
+    public function __construct(IContainer $container, $viewNameFile)
     {
         $this->container = $container;
 
