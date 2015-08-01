@@ -2,7 +2,7 @@
 
 namespace Micro\logger;
 
-use Micro\base\Container;
+use Micro\base\IContainer;
 use Micro\web\Mail;
 
 /**
@@ -35,13 +35,13 @@ class EmailLog extends Log
      *
      * @access public
      *
-     * @param Container $container
+     * @param IContainer $container
      * @param array $params configuration params
      *
      * @result void
      * @throws \Micro\base\Exception
      */
-    public function __construct(Container $container, array $params = [])
+    public function __construct(IContainer $container, array $params = [])
     {
         parent::__construct($container, $params);
 

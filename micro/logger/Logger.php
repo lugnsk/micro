@@ -68,7 +68,7 @@ class Logger
     public function send($level, $message)
     {
         foreach ($this->loggers AS $log) {
-            /** @var \Micro\logger\LogInterface $log logger */
+            /** @var ILogger $log logger */
             if ($log->isSupportedLevel($level)) {
                 $log->sendMessage($level, $message);
             }

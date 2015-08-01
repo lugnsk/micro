@@ -2,8 +2,8 @@
 
 namespace Micro\logger;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
 
 /**
  * Base logger class file.
@@ -23,6 +23,7 @@ abstract class Log implements ILogger
 {
     /** @var array $supportedLevels supported log levels */
     protected $supportedLevels = [];
+    /** @var IContainer $container */
     protected $container;
 
     /**
@@ -36,7 +37,7 @@ abstract class Log implements ILogger
      * @throws Exception
      * @result void
      */
-    public function __construct(Container $container, array $params = [])
+    public function __construct(IContainer $container, array $params = [])
     {
         $this->container = $container;
 

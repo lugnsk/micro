@@ -2,8 +2,8 @@
 
 namespace Micro\logger;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
 
 /**
  * DB logger class file.
@@ -29,13 +29,13 @@ class DbLog extends Log
      *
      * @access public
      *
-     * @param Container $container Container
+     * @param IContainer $container Container
      * @param array $params configuration params
      *
      * @result void
      * @throws Exception
      */
-    public function __construct(Container $container, array $params = [])
+    public function __construct(IContainer $container, array $params = [])
     {
         parent::__construct($container, $params);
 
