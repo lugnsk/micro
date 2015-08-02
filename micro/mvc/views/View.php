@@ -2,8 +2,9 @@
 
 namespace Micro\mvc\views;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
+use Micro\mvc\Module;
 use Micro\web\Html;
 
 /**
@@ -28,10 +29,15 @@ abstract class View
     public $params = [];
     /** @var array $stack */
     public $stack = [];
+    /** @var Module $module */
     public $module;
+    /** @var IContainer $container */
     protected $container;
 
-    public function __construct(Container $container)
+    /**
+     * @param IContainer $container
+     */
+    public function __construct(IContainer $container)
     {
         $this->container = $container;
     }
@@ -102,26 +108,6 @@ abstract class View
     }
 
     /**
-     * Convert object to string
-     *
-     * @access public
-     * @return string
-     */
-    public function __toString()
-    {
-        return '' . $this->render();
-    }
-
-    /**
-     * Render
-     *
-     * @abstract
-     * @access public
-     * @return mixed
-     */
-    abstract public function render();
-
-    /**
      * Begin widget
      *
      * @access public
@@ -145,6 +131,7 @@ abstract class View
         $GLOBALS['widgetStack'][$name] = new $name($options, $this->container);
 
         /** @noinspection PhpUndefinedMethodInspection */
+
         return $GLOBALS['widgetStack'][$name]->init();
     }
 
@@ -181,6 +168,26 @@ abstract class View
         unset($widget);
         echo $v;
     }
+
+    /**
+     * Convert object to string
+     *
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return '' . $this->render();
+    }
+
+    /**
+     * Render
+     *
+     * @access public
+     * @return mixed
+     * @abstract
+     */
+    abstract public function render();
 
     /**
      * Register JS script
