@@ -2,7 +2,7 @@
 
 namespace Micro\mvc\controllers;
 
-use Micro\base\Container;
+use Micro\base\IContainer;
 
 abstract class RichController extends Controller
 {
@@ -14,40 +14,30 @@ abstract class RichController extends Controller
      *
      * @access public
      *
-     * @param Container $Container
+     * @param IContainer $container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Container $Container, $modules = '')
+    public function __construct(IContainer $container, $modules = '')
     {
-        parent::__construct($Container, $modules);
+        parent::__construct($container, $modules);
 
         $this->methodType = $this->container->request->getMethod() ?: 'GET';
     }
 
     /**
-     * Master action
-     *
-     * @access public
-     *
-     * @param string $name Called action name
-     *
-     * @return string
-     * @throws \Micro\base\Exception
+     * @inheritdoc
      */
     public function action($name = 'index')
     {
-        $view = null;
         $actionClass = false;
-
         if (!method_exists($this, 'action' . ucfirst($name)) && !$actionClass = $this->getActionClassByName($name)) {
             $this->response->setStatus(500, 'Action "' . $name . '" not found into ' . get_class($this));
 
             return $this->response;
         }
 
-        // new logic - check headers
         $types = $this->actionsTypes();
         if (!empty($types[$name]) && $this->methodType !== $types[$name]) {
             $this->response->setStatus(500,
@@ -59,10 +49,9 @@ abstract class RichController extends Controller
 
         $filters = method_exists($this, 'filters') ? $this->filters() : [];
 
-        // pre - operations
         $this->applyFilters($name, true, $filters, null);
 
-        // running
+        $view = null;
         if ($actionClass) {
             /** @var \Micro\mvc\Action $cl */
             $cl = new $actionClass ($this->container);
@@ -71,12 +60,10 @@ abstract class RichController extends Controller
             $view = $this->{'action' . ucfirst($name)}();
         }
 
-        // if not define specify content type
         if ($this->response->getContentType() !== $this->format) {
             $this->response->setContentType($this->format);
         }
 
-        // post - operations
         $this->response->setBody($this->switchContentType($this->applyFilters($name, false, $filters, $view)));
 
         return $this->response;
@@ -125,7 +112,6 @@ abstract class RichController extends Controller
                 break;
             }
         }
-
         return $data;
     }
 }

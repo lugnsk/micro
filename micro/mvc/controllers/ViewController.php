@@ -26,14 +26,7 @@ abstract class ViewController extends Controller
 
 
     /**
-     * Master action
-     *
-     * @access public
-     *
-     * @param string $name Called action name
-     *
-     * @return string
-     * @throws Exception
+     * @inheritdoc
      */
     public function action($name = 'index')
     {

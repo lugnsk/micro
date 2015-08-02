@@ -2,18 +2,20 @@
 
 namespace Micro\mvc\controllers;
 
-use Micro\base\Container;
 use Micro\base\Exception;
+use Micro\base\IContainer;
+use Micro\mvc\Module;
+use Micro\web\IResponse;
 use Micro\web\Response;
 
 
 abstract class Controller implements IController
 {
-    /** @var \Object $module */
+    /** @var Module $module */
     public $module;
-    /** @var \Micro\web\Response $response Response HTTP data */
+    /** @var IResponse $response Response HTTP data */
     public $response;
-    /** @var Container $container */
+    /** @var IContainer $container */
     protected $container;
 
     /**
@@ -21,12 +23,12 @@ abstract class Controller implements IController
      *
      * @access public
      *
-     * @param Container $container
+     * @param IContainer $container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Container $container, $modules = '')
+    public function __construct(IContainer $container, $modules = '')
     {
         $this->container = $container;
 
@@ -76,7 +78,7 @@ abstract class Controller implements IController
                 continue;
             }
 
-            /** @var \Micro\filter\Filter $_filter */
+            /** @var \Micro\filter\IFilter $_filter */
             $_filter = new $filter['class']($action, $this->container);
 
             $res = $isPre ? $_filter->pre($filter) : $_filter->post($filter + ['data' => $data]);
@@ -113,16 +115,4 @@ abstract class Controller implements IController
 
         return false;
     }
-
-    /**
-     * Master action
-     *
-     * @access public
-     *
-     * @param string $name Called action name
-     *
-     * @return string
-     * @abstract
-     */
-    abstract public function action($name = 'index');
 }
