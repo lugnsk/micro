@@ -173,7 +173,7 @@ class PhpView extends View
             $path = $this->container->kernel->getMicroDir();
         }
 
-        $cl = strtolower(dirname(str_replace($calledClass, '\\', '/')));
+        $cl = strtolower(dirname(str_replace('\\', '/', $calledClass)));
         $cl = substr($cl, strpos($cl, '/'));
 
         if ($this->asWidget) {
