@@ -2,7 +2,7 @@
 
 namespace Micro\mvc;
 
-use Micro\base\Container;
+use Micro\base\IContainer;
 
 /**
  * Class Action
@@ -18,9 +18,13 @@ use Micro\base\Container;
  */
 abstract class Action
 {
+    /** @var IContainer $container */
     protected $container;
 
-    public function __construct(Container $container)
+    /**
+     * @param IContainer $container
+     */
+    public function __construct(IContainer $container)
     {
         $this->container = $container;
     }

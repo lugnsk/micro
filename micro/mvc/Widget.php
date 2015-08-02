@@ -2,7 +2,7 @@
 
 namespace Micro\mvc;
 
-use Micro\base\Container;
+use Micro\base\IContainer;
 
 /**
  * Class Controller
@@ -18,7 +18,7 @@ use Micro\base\Container;
  */
 abstract class Widget
 {
-    /** @var Container $container */
+    /** @var IContainer $container */
     protected $container;
 
 
