@@ -63,16 +63,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add search where
-     *
-     * @access public
-     *
-     * @param string $column column name
-     * @param string $keyword keyword for search
-     * @param boolean $escaped escaping keyword?
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addSearch($column, $keyword, $escaped = false, $operand = 'AND')
     {
@@ -81,14 +72,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add where
-     *
-     * @access public
-     *
-     * @param string $sql condition element
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addWhere($sql, $operand = 'AND')
     {
@@ -96,16 +80,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add not search where
-     *
-     * @access public
-     *
-     * @param string $column column name
-     * @param string $keyword keyword for search
-     * @param boolean $escaped escaping keyword?
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addNotSearch($column, $keyword, $escaped, $operand = 'AND')
     {
@@ -114,15 +89,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add in where
-     *
-     * @access public
-     *
-     * @param string $column column name
-     * @param array|string $params array values or string
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addIn($column, $params, $operand = 'AND')
     {
@@ -134,15 +101,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add not in where
-     *
-     * @access public
-     *
-     * @param string $column column name
-     * @param array|string $params array values or string
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addNotIn($column, $params, $operand = 'AND')
     {
@@ -154,16 +113,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add between where
-     *
-     * @access public
-     *
-     * @param string $column column name
-     * @param mixed $start start value
-     * @param mixed $stop stop value
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addBetween($column, $start, $stop, $operand = 'AND')
     {
@@ -171,16 +121,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add not between where
-     *
-     * @access public
-     *
-     * @param string $column column name
-     * @param mixed $start start value
-     * @param mixed $stop stop value
-     * @param string $operand before added element
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addNotBetween($column, $start, $stop, $operand = 'AND')
     {
@@ -188,15 +129,7 @@ class Query implements IQuery
     }
 
     /**
-     * Add join
-     *
-     * @access public
-     *
-     * @param string $table table name
-     * @param string $condition condition to search
-     * @param string $type type join
-     *
-     * @return void
+     * @inheritdoc
      */
     public function addJoin($table, $condition, $type = 'LEFT')
     {
@@ -204,13 +137,7 @@ class Query implements IQuery
     }
 
     /**
-     * Running this query
-     *
-     * @access public
-     *
-     * @param integer $as result as?
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function run($as = \PDO::FETCH_CLASS)
     {
@@ -223,10 +150,7 @@ class Query implements IQuery
     }
 
     /**
-     * Generate query string
-     *
-     * @access public
-     * @return string
+     * @inheritdoc
      */
     public function getQuery()
     {

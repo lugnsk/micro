@@ -144,6 +144,7 @@ abstract class Model extends FormModel implements IModel
      */
     public function __get($name)
     {
+        /** @var array $relation */
         if ($relation = $this->relations()->get($name)) {
             if (empty($this->cacheRelations[$name])) {
                 $sql = new Query($this->container->db);
