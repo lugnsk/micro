@@ -5,7 +5,7 @@ namespace App\modules\blog\controllers;
 use App\components\Controller;
 use App\components\View;
 use App\modules\blog\models\Blog;
-use Micro\db\Query;
+use Micro\mvc\models\Query;
 
 class PostController extends Controller
 {
@@ -68,6 +68,7 @@ class PostController extends Controller
     {
         $blog = new Blog($this->container);
 
+        /** @var array $blogData */
         if ($blogData = $this->container->request->getPostVar('Blog')) {
             $blog->name = $blogData['name'];
             $blog->content = $blogData['content'];

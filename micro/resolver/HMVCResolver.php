@@ -108,7 +108,7 @@ class HMVCResolver extends Resolver
                 break;
             }
         }
-        $this->extensions = strtr($this->extensions, '/', '\\');
+        $this->extensions = str_replace('/', '\\', $this->extensions);
     }
 
     /**
@@ -135,7 +135,7 @@ class HMVCResolver extends Resolver
             }
         }
 
-        $this->modules = strtr($this->modules, '/', '\\');
+        $this->modules = str_replace('/', '\\', $this->modules);
     }
 
     /**

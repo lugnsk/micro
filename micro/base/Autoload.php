@@ -61,10 +61,10 @@ class Autoload
                 $lastNsPos -= $firstNsPos;
             }
             // Add in path
-            $path .= strtr(substr($className, 0, $lastNsPos), '\\', DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            $path .= str_replace('\\', DIRECTORY_SEPARATOR, substr($className, 0, $lastNsPos)) . DIRECTORY_SEPARATOR;
         }
         // result path
-        $path .= strtr(substr($className, $lastNsPos + 1), '_', DIRECTORY_SEPARATOR) . '.php';
+        $path .= str_replace('_', DIRECTORY_SEPARATOR, substr($className, $lastNsPos + 1)) . '.php';
 
         if (is_file($path)) {
             /** @noinspection PhpIncludeInspection */

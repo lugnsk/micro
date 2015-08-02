@@ -23,19 +23,6 @@ abstract class ConsoleCommand extends Command implements IOutput
     /** @var int $status Status of running console command */
     protected $status = 0;
 
-    /**
-     * Set arguments class
-     *
-     * @access public
-     *
-     * @param array $params configuration array
-     *
-     * @result void
-     */
-    public function __construct(array $params)
-    {
-        parent::__construct($params);
-    }
 
     /**
      * @inheritdoc

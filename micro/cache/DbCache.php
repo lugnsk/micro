@@ -3,7 +3,7 @@
 namespace Micro\cache;
 
 use Micro\db\IConnection;
-use Micro\db\Query;
+use Micro\mvc\models\Query;
 
 /**
  * Class DbCache
@@ -68,7 +68,12 @@ class DbCache extends BaseCache
      */
     public function get($name)
     {
-        return $this->getElement($name)['value'];
+        /** @var array $element */
+        if ($element = $this->getElement($name)) {
+            return array_key_exists('value', $element) ? $element['value'] : null;
+        }
+
+        return null;
     }
 
     /**

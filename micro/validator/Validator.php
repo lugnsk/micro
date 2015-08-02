@@ -144,6 +144,7 @@ class Validator
             $id = $object . '_' . $element;
             /** @noinspection PhpUndefinedMethodInspection */
             $result .= 'jQuery("#' . $id . '").bind("change blur submit", function(e){ ';
+            /** @noinspection DisconnectedForeachInstructionInspection */
             $result .= $validator->client($model);
             $result .= ' });';
         }

@@ -33,7 +33,7 @@ class Session extends \stdClass implements ISession
     {
         $this->request = $config['request'];
 
-        if (!empty($config['autoStart']) AND ($config['autoStart'] === true)) {
+        if (array_key_exists('autoStart', $config) && $config['autoStart'] === true) {
             $this->create();
         }
     }

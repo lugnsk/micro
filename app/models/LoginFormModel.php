@@ -2,8 +2,8 @@
 
 namespace App\models;
 
-use Micro\db\Query;
 use Micro\form\FormModel;
+use Micro\mvc\models\Query;
 
 class LoginFormModel extends FormModel
 {

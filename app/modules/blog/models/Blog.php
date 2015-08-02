@@ -2,7 +2,7 @@
 
 namespace App\modules\blog\models;
 
-use Micro\db\Model;
+use Micro\mvc\models\Model;
 
 /**
  * Class Blog

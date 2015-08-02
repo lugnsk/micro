@@ -24,25 +24,17 @@ class AccessFilter extends Filter
         foreach ($params['rules'] AS $rule) {
             $res = $this->checkRule($rule);
 
-            switch ($res) {
-                /** @todo: Bug */
-                case true: {
-                    return true;
-                    break;
-                }
-                case false: {
-                    $this->result = [
-                        'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
-                        'message' => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
-                    ];
+            if ($res === true) {
+                return true;
+            } elseif ($res === false) {
+                $this->result = [
+                    'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
+                    'message' => !empty($rule['message']) ? $rule['message'] : 'Access denied!'
+                ];
 
-                    return false;
-                    break;
-                }
-                case null: {
-                    continue 2;
-                    break;
-                }
+                return false;
+            } elseif ($res === null) {
+                continue;
             }
         }
 

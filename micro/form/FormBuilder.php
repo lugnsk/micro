@@ -2,7 +2,6 @@
 
 namespace Micro\form;
 
-use Micro\mvc\models\IModel;
 use Micro\web\Html;
 use Micro\widget\FormWidget;
 
@@ -26,7 +25,7 @@ class FormBuilder
     protected $form;
     /** @var array $config config array */
     private $config;
-    /** @var IModel $model model for get data */
+    /** @var IFormModel $model model for get data */
     private $model;
 
 
@@ -36,7 +35,7 @@ class FormBuilder
      * @access public
      *
      * @param array $config
-     * @param \Micro\db\Model $model
+     * @param IFormModel $model
      * @param string $method method of request
      * @param string $type type data
      * @param string $action path URL action
@@ -47,7 +46,7 @@ class FormBuilder
      */
     public function __construct(
         array $config = [],
-        IModel $model = null,
+        IFormModel $model = null,
         $method = 'GET',
         $type = 'text/plain',
         $action = '',

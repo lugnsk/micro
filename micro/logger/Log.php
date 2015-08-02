@@ -41,7 +41,7 @@ abstract class Log implements ILogger
     {
         $this->container = $container;
 
-        $levels = explode(',', strtr(strtolower($params['levels']), ' ', ''));
+        $levels = explode(',', str_replace(' ', '', strtolower($params['levels'])));
 
         foreach ($levels AS $level) {
             if (in_array($level, Logger::$supportedLevels, true)) {

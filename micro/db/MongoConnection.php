@@ -87,6 +87,14 @@ class MongoConnection extends Connection
     /**
      * @inheritDoc
      */
+    public function listDatabases()
+    {
+        // TODO: Implement listDatabases() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function listTables()
     {
         // TODO: Implement listTables() method.

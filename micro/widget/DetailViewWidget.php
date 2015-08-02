@@ -2,8 +2,8 @@
 namespace Micro\widget;
 
 use Micro\base\Exception;
-use Micro\db\Model;
-use Micro\db\Query;
+use Micro\mvc\models\IModel;
+use Micro\mvc\models\IQuery;
 use Micro\mvc\Widget;
 use Micro\web\Html;
 
@@ -52,7 +52,7 @@ class DetailViewWidget extends Widget
         parent::__construct($args);
 
         if (empty($args['data'])) {
-            throw new Exception('Argument "data" not initialized into DetailViewWidget');
+            throw new Exception($this->container, 'Argument "data" not initialized into DetailViewWidget');
         }
 
         switch (gettype($args['data'])) {
@@ -62,16 +62,16 @@ class DetailViewWidget extends Widget
                 break;
             }
             case 'object': {
-                if ($args['data'] instanceof Query) {
+                if ($args['data'] instanceof IQuery) {
                     if ($args['data']->objectName) {
-                        /** @var Model $cls */
+                        /** @var IModel $cls */
                         $cls = $args['data']->objectName;
                         $args['data']->table = $cls::tableName();
                     } elseif (!$args['data']->table) {
                         throw new Exception($this->container, 'Data query not set table or objectName');
                     }
                     $this->data = $args['data']->run();
-                } elseif (is_subclass_of($args['data'], 'Micro\db\Model')) {
+                } elseif (is_subclass_of($args['data'], 'Micro\mvc\models\IModel')) {
                     $this->data = $args['data'];
                 } else {
                     throw new Exception($this->container, 'Argument "model" not supported type into DetailViewWidget');

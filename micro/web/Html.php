@@ -875,7 +875,7 @@ class Html
                 $checkbox['attributes']['selected'] = 'selected';
             }
             $check = self::checkBoxField($name, $checkbox['value'], $checkbox['attributes']);
-            $checks .= strtr(strtr($format, '%check%', $check), '%text%', $checkbox['text']);
+            $checks .= str_replace('%text%', $checkbox['text'], str_replace('%check%', $check, $format));
         }
 
         return $checks;

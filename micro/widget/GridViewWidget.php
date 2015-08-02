@@ -4,8 +4,9 @@ namespace Micro\widget;
 
 use Micro\base\Exception;
 use Micro\base\Type;
-use Micro\db\Model;
-use Micro\db\Query;
+use Micro\mvc\models\IModel;
+use Micro\mvc\models\IQuery;
+use Micro\mvc\models\Query;
 use Micro\mvc\Widget;
 use Micro\web\Html;
 
@@ -87,9 +88,9 @@ class GridViewWidget extends Widget
         $this->limit = ($this->limit < 10) ? 10 : $this->limit;
         $this->page = ($this->page < 0) ? 0 : $this->page;
 
-        if ($args['data'] instanceof Query) {
+        if ($args['data'] instanceof IQuery) {
             if ($args['data']->objectName) {
-                /** @var Model $cls */
+                /** @var IModel $cls */
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
@@ -97,7 +98,7 @@ class GridViewWidget extends Widget
             }
 
             if ($args['data']->having || $args['data']->group) {
-                $res = new Query($this->container);
+                $res = new Query($this->container->db);
                 $res->select = 'COUNT(*)';
                 $res->table = '(' . $args['data']->getQuery() . ') micro_count';
                 $res->single = true;

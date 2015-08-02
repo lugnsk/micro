@@ -3,8 +3,8 @@
 namespace Micro\widget;
 
 use Micro\base\Exception;
-use Micro\db\Model;
-use Micro\db\Query;
+use Micro\mvc\models\IModel;
+use Micro\mvc\models\IQuery;
 use Micro\mvc\Widget;
 use Micro\web\Html;
 
@@ -84,10 +84,10 @@ class ListViewWidget extends Widget
             $this->page = 0;
         }
 
-        if ($args['data'] instanceof Query) {
-            /** @var Query $args ['data'] */
+        if ($args['data'] instanceof IQuery) {
+            /** @var |Query $args ['data'] */
             if ($args['data']->objectName) {
-                /** @var Model $cls */
+                /** @var IModel $cls */
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
@@ -112,7 +112,7 @@ class ListViewWidget extends Widget
         }
 
         foreach ($args['data'] AS $model) {
-            $this->rows[] = is_subclass_of($model, 'Micro\db\Model') ? $model : (object)$model;
+            $this->rows[] = is_subclass_of($model, 'Micro\mvc\models\IModel') ? $model : (object)$model;
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Micro\auth;
 
-use Micro\db\Query;
+use Micro\mvc\models\Query;
 
 /**
  * File ACL class file.

@@ -2,7 +2,7 @@
 
 namespace App\models;
 
-use Micro\db\Model;
+use Micro\mvc\models\Model;
 
 /**
  * Class User
