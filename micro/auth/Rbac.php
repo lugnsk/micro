@@ -2,9 +2,8 @@
 
 namespace Micro\auth;
 
-use Micro\base\Container;
-use Micro\db\Connection;
-use Micro\db\Query;
+use Micro\base\IContainer;
+use Micro\mvc\models\Query;
 
 /**
  * Abstract RBAC class file.
@@ -24,38 +23,30 @@ abstract class Rbac
     const TYPE_PERMISSION = 1;
     const TYPE_OPERATION = 2;
 
-    /** @var Connection $conn connection DB */
-    protected $conn;
+    /** @var IContainer $container */
+    protected $container;
+
 
     /**
      * Based constructor for RBAC rules
      *
      * @access public
+     *
+     * @param array $params
+     *
      * @result void
      */
-    public function __construct()
+    public function __construct(array $params = [])
     {
-        $this->getConnect();
+        $this->container = $params['container'];
 
-        if (!$this->conn->tableExists('`rbac_user`')) {
-            $this->conn->createTable('`rbac_user`', [
+        if (!$this->container->db->tableExists('`rbac_user`')) {
+            $this->container->db->createTable('`rbac_user`', [
                 '`role` varchar(127) NOT NULL',
                 '`user` int(10) unsigned NOT NULL',
                 'UNIQUE KEY `name` (`name`,`user`)'
             ], 'ENGINE=MyISAM DEFAULT CHARSET=utf8');
         }
-    }
-
-    /**
-     * Get current connection from Container
-     *
-     * @access public
-     * @global Container
-     * @result void
-     */
-    public function getConnect()
-    {
-        $this->conn = Container::get('db');
     }
 
     /**
@@ -95,6 +86,7 @@ abstract class Rbac
 
             $actionRole = $this->searchRoleRecursive($tree, $role['name']);
             if ($actionRole) {
+                /** @var array $trustRole */
                 $trustRole = $this->searchRoleRecursive($actionRole, $permission);
                 if ($trustRole) {
                     return $this->execute($trustRole[$permission], $data);
@@ -151,7 +143,7 @@ abstract class Rbac
      */
     public function assigned($userId)
     {
-        $query = new Query;
+        $query = new Query($this->container->db);
         $query->distinct = true;
         $query->select = '`role` AS `name`';
         $query->table = '`rbac_user`';
@@ -222,6 +214,7 @@ abstract class Rbac
      */
     public function revoke($userId, $name)
     {
-        return $this->conn->delete('rbac_user', 'name=:name AND user=:user', ['name' => $name, 'user' => $userId]);
+        return $this->container->db->delete('rbac_user', 'name=:name AND user=:user',
+            ['name' => $name, 'user' => $userId]);
     }
 }

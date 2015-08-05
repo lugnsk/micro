@@ -2,8 +2,7 @@
 
 namespace Micro\auth;
 
-use Micro\base\Container;
-use Micro\db\Connection;
+use Micro\base\IContainer;
 
 /**
  * Abstract ACL class file.
@@ -24,8 +23,8 @@ abstract class Acl implements IAuth
 {
     /** @var string $groupTable name of group table */
     protected $groupTable;
-    /** @var Connection $conn connection to DB */
-    protected $conn;
+    /** @var IContainer $container */
+    protected $container;
 
 
     /**
@@ -39,13 +38,13 @@ abstract class Acl implements IAuth
      */
     public function __construct(array $params = [])
     {
-        $this->getConnect();
+        $this->container = $params['container'];
 
         if (!empty($params['groupTable'])) {
             $this->groupTable = $params['groupTable'];
         }
-        if (!$this->conn->tableExists('acl_user')) {
-            $this->conn->createTable('acl_user', [
+        if (!$this->container->db->tableExists('acl_user')) {
+            $this->container->db->createTable('acl_user', [
                 '`id` int(10) unsigned NOT NULL AUTO_INCREMENT',
                 '`user` int(11) unsigned NOT NULL',
                 '`role` int(11) unsigned DEFAULT NULL',
@@ -54,32 +53,6 @@ abstract class Acl implements IAuth
             ], 'ENGINE=MyISAM DEFAULT CHARSET=utf8');
         }
     }
-
-    /**
-     * Get current connection from Container
-     *
-     * @access public
-     * @global Container
-     * @return void
-     */
-    public function getConnect()
-    {
-        $this->conn = Container::get('db');
-    }
-
-    /**
-     * Check user access to permission
-     *
-     * @access public
-     *
-     * @param integer $userId user id
-     * @param string $permission checked permission
-     * @param array $data for compatible, not used!
-     *
-     * @return bool
-     * @abstract
-     */
-    abstract public function check($userId, $permission, array $data = []);
 
     /**
      * Get permissions in role

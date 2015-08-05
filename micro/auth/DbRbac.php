@@ -30,8 +30,8 @@ class DbRbac extends Rbac
     {
         parent::__construct();
 
-        if (!$this->conn->tableExists('`rbac_role`')) {
-            $this->conn->createTable('`rbac_role`', [
+        if (!$this->container->db->tableExists('`rbac_role`')) {
+            $this->container->db->createTable('`rbac_role`', [
                 '`name` varchar(127) NOT NULL',
                 '`type` int(11) NOT NULL DEFAULT \'0\'',
                 '`based` varchar(127)',
@@ -53,10 +53,10 @@ class DbRbac extends Rbac
      */
     public function assign($userId, $name)
     {
-        if ($this->conn->exists('rbac_role', ['name' => $name]) AND $this->conn->exists('user',
+        if ($this->container->db->exists('rbac_role', ['name' => $name]) AND $this->container->db->exists('user',
                 ['id' => $userId])
         ) {
-            return $this->conn->insert('rbac_user', ['role' => $name, 'user' => $userId]);
+            return $this->container->db->insert('rbac_user', ['role' => $name, 'user' => $userId]);
         }
 
         return false;
@@ -75,7 +75,7 @@ class DbRbac extends Rbac
      */
     public function check($userId, $action, array $data = [])
     {
-        if (!$this->conn->exists('rbac_role', ['name' => $action])) {
+        if (!$this->container->db->exists('rbac_role', ['name' => $action])) {
             return false;
         }
 
@@ -96,11 +96,11 @@ class DbRbac extends Rbac
      */
     public function create($name, $type = self::TYPE_ROLE, $based = null, $data = null)
     {
-        if ($this->conn->exists('rbac_role', ['name' => $name])) {
+        if ($this->container->db->exists('rbac_role', ['name' => $name])) {
             return false;
         }
 
-        if ($based AND !$this->conn->exists('rbac_role', ['name' => $based])) {
+        if ($based AND !$this->container->db->exists('rbac_role', ['name' => $based])) {
             return false;
         }
 
@@ -114,7 +114,7 @@ class DbRbac extends Rbac
                 break;
         }
 
-        return $this->conn->insert('rbac_role',
+        return $this->container->db->insert('rbac_role',
             ['name' => $name, 'type' => $type, 'based' => $based, 'data' => $data]);
     }
 
@@ -146,7 +146,7 @@ class DbRbac extends Rbac
      */
     public function rawRoles($pdo = \PDO::FETCH_ASSOC)
     {
-        $query = new Query;
+        $query = new Query($this->container->db);
         $query->table = 'rbac_role';
         $query->order = '`type` ASC';
         $query->single = false;
@@ -166,8 +166,8 @@ class DbRbac extends Rbac
     public function recursiveDelete(&$tree)
     {
         foreach ($tree AS $key => $element) {
-            $this->conn->delete('rbac_user', 'role=:name', ['name' => $element['name']]);
-            $this->conn->delete('rbac_role', 'name=:name', ['name' => $element['name']]);
+            $this->container->db->delete('rbac_user', 'role=:name', ['name' => $element['name']]);
+            $this->container->db->delete('rbac_role', 'name=:name', ['name' => $element['name']]);
 
             if (!empty($tree['childs'])) {
                 $this->recursiveDelete($element['childs']);

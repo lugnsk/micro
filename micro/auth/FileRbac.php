@@ -52,9 +52,9 @@ class FileRbac extends Rbac
     public function assign($userId, $name)
     {
         if ($this->searchRoleRecursive($this->roles, $name)) {
-            $exists = $this->conn->exists('rbac_user', ['user' => $userId, 'role' => $name]);
+            $exists = $this->container->db->exists('rbac_user', ['user' => $userId, 'role' => $name]);
             if (!$exists) {
-                return $this->conn->insert('rbac_user', ['role' => $name, 'user' => $userId]);
+                return $this->container->db->insert('rbac_user', ['role' => $name, 'user' => $userId]);
             }
         }
 
