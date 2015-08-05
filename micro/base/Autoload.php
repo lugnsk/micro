@@ -46,24 +46,19 @@ class Autoload
      */
     public static function loader($className)
     {
-        // Patch prev backslash
         $className = ltrim($className, '\\');
-        // Define result path
+
         $path = '';
-        // if use namespace
         if ($lastNsPos = strrpos($className, '\\')) {
-            // Get alias
             $firstNsPos = strpos($className, '\\');
-            // Add alias in path
             if ($alias = substr($className, 0, $firstNsPos)) {
                 $path .= !empty(self::$aliases[$alias]) ? self::$aliases[$alias] : '';
+
                 $className = substr($className, $firstNsPos);
                 $lastNsPos -= $firstNsPos;
             }
-            // Add in path
             $path .= str_replace('\\', DIRECTORY_SEPARATOR, substr($className, 0, $lastNsPos)) . DIRECTORY_SEPARATOR;
         }
-        // result path
         $path .= str_replace('_', DIRECTORY_SEPARATOR, substr($className, $lastNsPos + 1)) . '.php';
 
         if (is_file($path)) {
