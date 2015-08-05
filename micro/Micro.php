@@ -66,7 +66,7 @@ class Micro
     {
         $this->appDir = realpath($appDir);
         $this->microDir = realpath($microDir);
-        $this->webDir = $_SERVER['DOCUMENT_ROOT'];
+        $this->webDir = getenv('DOCUMENT_ROOT');
         $this->environment = $environment;
         $this->debug = (bool)$debug;
         $this->loaded = false;

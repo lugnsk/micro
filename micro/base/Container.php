@@ -81,7 +81,7 @@ class Container extends \stdClass implements IContainer
             return $this->config[$name];
         }
 
-        if (empty($this->data[$name]) AND !$this->configure($name)) {
+        if (empty($this->data[$name]) && !$this->configure($name)) {
             return false;
         }
 
@@ -114,7 +114,7 @@ class Container extends \stdClass implements IContainer
      */
     public function configure($name = null)
     {
-        if (empty($this->components)) {
+        if (0 === count($this->components)) {
             return false;
         }
 
@@ -151,7 +151,7 @@ class Container extends \stdClass implements IContainer
      */
     public function loadComponent($name, $options)
     {
-        if (empty($options['class']) OR !class_exists($options['class'])) {
+        if (empty($options['class']) || !class_exists($options['class'])) {
             return false;
         }
         $className = $options['class'];
@@ -164,7 +164,7 @@ class Container extends \stdClass implements IContainer
 
         /** @noinspection AlterInForeachInspection */
         foreach ($options['arguments'] AS $key => &$val) {
-            if (is_string($options['arguments'][$key]) AND $val{0} === '@') {
+            if ($val[0] === '@' && is_string($options['arguments'][$key])) {
                 if ($val === '@this') {
                     $val = $this;
                 } else {
