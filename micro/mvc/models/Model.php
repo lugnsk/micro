@@ -4,7 +4,7 @@ namespace Micro\mvc\models;
 
 use Micro\base\Exception;
 use Micro\base\IContainer;
-use Micro\base\Type;
+use Micro\file\Type;
 use Micro\form\FormModel;
 
 /**

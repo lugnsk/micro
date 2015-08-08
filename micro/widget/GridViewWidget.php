@@ -3,7 +3,7 @@
 namespace Micro\widget;
 
 use Micro\base\Exception;
-use Micro\base\Type;
+use Micro\file\Type;
 use Micro\mvc\models\IModel;
 use Micro\mvc\models\IQuery;
 use Micro\mvc\models\Query;

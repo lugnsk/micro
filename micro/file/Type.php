@@ -1,6 +1,6 @@
 <?php /** MicroType */
 
-namespace Micro\base;
+namespace Micro\file;
 
 /**
  * Class Type

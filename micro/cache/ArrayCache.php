@@ -2,7 +2,7 @@
 
 namespace Micro\cache;
 
-use Micro\base\Type;
+use Micro\file\Type;
 
 /**
  * Class ArrayCache
