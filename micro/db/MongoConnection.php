@@ -115,7 +115,7 @@ class MongoConnection extends Connection
      */
     public function createTable($name, array $elements = [], $params = '')
     {
-        // TODO: Implement createTable() method.
+        $this->conn->{$this->dbName}->createCollection($name, $params);
     }
 
     /**

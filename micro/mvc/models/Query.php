@@ -12,7 +12,7 @@ use Micro\db\IConnection;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package micro
- * @subpackage db
+ * @subpackage mvc\models
  * @version 1.0
  * @since 1.0
  */

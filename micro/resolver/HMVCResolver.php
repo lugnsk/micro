@@ -42,7 +42,7 @@ class HMVCResolver extends Resolver
     public function getApplication()
     {
         $query = $this->container->request->getQueryVar('r') ?: '/default';
-        $query = (substr($query, -1) === '/') ? '/default' : $query;
+        $query = (substr($query, -1) === '/') ? substr($query, 0, -1) : $query;
 
         $this->uri = $this->container->router->parse($query, $this->container->request->getMethod());
 
