@@ -54,6 +54,7 @@ class HMVCResolver extends Resolver
         if (!class_exists($cls)) {
             throw new Exception($this->container, 'Controller ' . $cls . ' not found');
         }
+
         return new $cls ($this->container, $this->getModules());
     }
 

@@ -112,6 +112,7 @@ abstract class RichController extends Controller
                 break;
             }
         }
+
         return $data;
     }
 }

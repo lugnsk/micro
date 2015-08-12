@@ -85,6 +85,7 @@ class Validator
                         $model->$element = call_user_func($name, $model->$element);
                     }
                 }
+
                 return true;
             } else {
                 throw new Exception($this->container, 'Validator ' . $name . ' not defined.');
