@@ -5,6 +5,7 @@ namespace Micro;
 use Micro\base\Autoload;
 use Micro\base\Container;
 use Micro\base\Dispatcher;
+use Micro\base\Exception;
 use Micro\base\IContainer;
 use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
@@ -161,6 +162,7 @@ class Micro
      * @param string $configPath Path to config file
      *
      * @return Response
+     * @throws Exception
      */
     public function run(IRequest $request, $configPath = '/configs/index.php')
     {
@@ -169,26 +171,17 @@ class Micro
         }
         $this->container->request = $request;
 
-        $resolver = $request->isCli() ? new ConsoleResolver($this->container) : new HMVCResolver($this->container);
-        /** @FIXME: native logic , move into container */
+        try {
+            return $this->doRun();
+        } catch (Exception $e) {
+            if ($this->debug) {
+                $this->container->dispatcher->signal('kernel.stopped', ['exception' => $e]);
+                throw $e;
+            }
 
-        $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
-
-        $app = $resolver->getApplication();
-        $this->container->dispatcher->signal('kernel.controller', ['application' => $app]);
-
-        $output = $app->action($resolver->getAction());
-        if (!$output instanceof IOutput) {
-            $response = $this->container->response ?: new Response;
-            $response->setBody($output);
-            $output = $response;
+            return $this->doException($e);
         }
-        $this->container->dispatcher->signal('kernel.response', ['output' => $output]);
-
-        return $output;
     }
-
-    // Methods for components
 
     /**
      * Boot Loader
@@ -229,6 +222,41 @@ class Micro
         if (false === $this->container->dispatcher) {
             $this->container->dispatcher = new Dispatcher($this->container);
         }
+    }
+
+    // Methods for components
+
+    /**
+     * Starting ...
+     *
+     * @access public
+     *
+     * @return \Micro\web\IResponse
+     */
+    private function doRun()
+    {
+        $resolver = $this->container->request->isCli() ? new ConsoleResolver($this->container) : new HMVCResolver($this->container);
+        /** @FIXME: native logic , move into container */
+
+        $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
+
+        $app = $resolver->getApplication();
+        $this->container->dispatcher->signal('kernel.controller', ['application' => $app]);
+
+        $output = $app->action($resolver->getAction());
+        if (!$output instanceof IOutput) {
+            $response = $this->container->response ?: new Response;
+            $response->setBody($output);
+            $output = $response;
+        }
+        $this->container->dispatcher->signal('kernel.response', ['output' => $output]);
+
+        return $output;
+    }
+
+    private function doException(Exception $e)
+    {
+        return new Response();
     }
 
     /**
