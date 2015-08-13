@@ -80,11 +80,11 @@ class DefaultController extends Controller
     public function actionError()
     {
         $result = null;
-        /** @var array $errors */
-        if ($errors = $this->container->request->getPostVar('errors')) {
-            foreach ($errors AS $err) {
-                $result .= Html::heading(3, $err, ['class' => 'text-danger bg-danger']);
-            }
+        /** @var \Micro\base\Exception $error */
+        if ($error = $this->container->request->getPostVar('error')) {
+            $result .= Html::heading(3, $error->getMessage(), ['class' => 'text-danger bg-danger']);
+            $result .= '<p>' . $error->getFile() . ':' . $error->getLine() . '</p>';
+            $result .= '<p>' . $error->getTraceAsString() . '</p>';
         }
         $v = new View($this->container);
         $v->data = $result ?: 'undefined error';

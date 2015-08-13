@@ -6,6 +6,7 @@ use Micro\base\Autoload;
 use Micro\base\Container;
 use Micro\base\Dispatcher;
 use Micro\base\IContainer;
+use Micro\cli\DefaultConsoleCommand;
 use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
 use Micro\web\IOutput;
@@ -249,6 +250,15 @@ class Micro
         return $output;
     }
 
+    /**
+     * Get resolver
+     *
+     * @access public
+     *
+     * @param bool|false $isCli CLI or Web
+     *
+     * @return ConsoleResolver|HMVCResolver
+     */
     public function getResolver($isCli = false)
     {
         if ($isCli) {
@@ -258,25 +268,43 @@ class Micro
         return new HMVCResolver($this->container);
     }
 
-    // Methods for components
-
+    /**
+     * Do exception
+     *
+     * @access private
+     *
+     * @param \Exception $e Exception
+     *
+     * @return IOutput
+     */
     private function doException(\Exception $e)
     {
         $this->container->dispatcher->signal('kernel.exception', ['exception' => $e]);
 
+        $output = $this->container->request->isCli() ? new DefaultConsoleCommand([]) : new Response();
+
         if (php_sapi_name() === 'cli') {
-            return '"Error #' . $e->getCode() . ' - ' . $e->getMessage() . '"';
+            $output->data = '"Error #' . $e->getCode() . ' - ' . $e->getMessage() . '"';
+            $output->execute();
+
+            return $output;
         }
 
         if (!$this->container->errorController) {
-            return 'Option `errorController` not configured';
+            $output->setBody('Option `errorController` not configured');
+
+            return $output;
         }
         if (!$this->container->errorAction) {
-            return 'Option `errorAction` not configured';
+            $output->setBody('Option `errorAction` not configured');
+
+            return $output;
         }
 
         $controller = $this->container->errorController;
         $action = $this->container->errorAction;
+
+        $this->container->request->setPostVar('error', $e);
 
         /** @var \Micro\mvc\controllers\IController $result */
         $result = new $controller($this->container);
@@ -286,11 +314,12 @@ class Micro
             return $result;
         }
 
-        $response = new Response();
-        $response->setBody($result);
+        $output->setBody($result);
 
-        return $response;
+        return $output;
     }
+
+    // Methods for components
 
     /**
      * Terminate application

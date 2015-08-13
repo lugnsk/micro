@@ -2,6 +2,8 @@
 
 namespace Micro\base;
 
+use Micro\web\Response;
+
 /**
  * Exception specific exception
  *
@@ -34,40 +36,13 @@ class Exception extends \Exception
 
         parent::__construct($message, $code, $previous);
     }
-
-    /**
-     * Magic convert object to string
-     *
-     * @access public
-     *
-     * @return string
-     * @throws Exception
-     */
     public function __toString()
     {
-        if (!defined('DEBUG_MICRO') || DEBUG_MICRO === false) {
-            /** @noinspection NestedPositiveIfStatementsInspection */
-            if (ob_get_level()) {
-                ob_end_clean();
-            }
-        }
-        $this->makeErrors();
+        $resp = new Response();
+        $resp->setBody('<h1>' . $this->message . '</h1>' . '<p>In ' . $this->file . ':' . $this->line . '</p>');
+        $resp->send();
 
-
-
-        $response->send();
         error_reporting(0);
-
         return '';
-    }
-
-    protected function makeErrors()
-    {
-        $errors = array_merge(
-            $this->container->request->getPostVar('errors') ?: [],
-            ['Error - ' . $this->getMessage()]
-        );
-
-        $this->container->request->setPostVar('errors', $errors);
     }
 }
