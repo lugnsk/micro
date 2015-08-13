@@ -224,8 +224,6 @@ class Micro
         }
     }
 
-    // Methods for components
-
     /**
      * Starting ...
      *
@@ -235,9 +233,7 @@ class Micro
      */
     private function doRun()
     {
-        $resolver = $this->container->request->isCli() ? new ConsoleResolver($this->container) : new HMVCResolver($this->container);
-        /** @FIXME: native logic , move into container */
-
+        $resolver = $this->getResolver($this->container->request->isCli());
         $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
 
         $app = $resolver->getApplication();
@@ -252,6 +248,17 @@ class Micro
         $this->container->dispatcher->signal('kernel.response', ['output' => $output]);
 
         return $output;
+    }
+
+    // Methods for components
+
+    public function getResolver($isCli = false)
+    {
+        if ($isCli) {
+            return new ConsoleResolver($this->container);
+        }
+
+        return new HMVCResolver($this->container);
     }
 
     private function doException(Exception $e)
