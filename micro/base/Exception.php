@@ -2,8 +2,6 @@
 
 namespace Micro\base;
 
-use Micro\web\Response;
-
 /**
  * Exception specific exception
  *
@@ -56,31 +54,6 @@ class Exception extends \Exception
         $this->makeErrors();
 
 
-        if (php_sapi_name() === 'cli') {
-            return '"Error #' . $this->getCode() . ' - ' . $this->getMessage() . '"';
-        }
-
-        if (!$this->container->errorController) {
-            return 'Option `errorController` not configured';
-        }
-        if (!$this->container->errorAction) {
-            return 'Option `errorAction` not configured';
-        }
-
-        $controller = $this->container->errorController;
-        $action = $this->container->errorAction;
-
-        /** @var \Micro\mvc\controllers\Controller $mvc controller */
-        $mvc = new $controller($this->container);
-
-        $response = null;
-        $result = $mvc->action($action);
-        if ($result instanceof Response) {
-            $response = $result;
-        } else {
-            $response = new Response;
-            $response->setBody($result);
-        }
 
         $response->send();
         error_reporting(0);

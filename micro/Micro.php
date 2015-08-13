@@ -5,7 +5,6 @@ namespace Micro;
 use Micro\base\Autoload;
 use Micro\base\Container;
 use Micro\base\Dispatcher;
-use Micro\base\Exception;
 use Micro\base\IContainer;
 use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
@@ -162,7 +161,7 @@ class Micro
      * @param string $configPath Path to config file
      *
      * @return Response
-     * @throws Exception
+     * @throws \Exception
      */
     public function run(IRequest $request, $configPath = '/configs/index.php')
     {
@@ -173,7 +172,7 @@ class Micro
 
         try {
             return $this->doRun();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if ($this->debug) {
                 $this->container->dispatcher->signal('kernel.stopped', ['exception' => $e]);
                 throw $e;
@@ -250,8 +249,6 @@ class Micro
         return $output;
     }
 
-    // Methods for components
-
     public function getResolver($isCli = false)
     {
         if ($isCli) {
@@ -261,9 +258,38 @@ class Micro
         return new HMVCResolver($this->container);
     }
 
-    private function doException(Exception $e)
+    // Methods for components
+
+    private function doException(\Exception $e)
     {
-        return new Response();
+        $this->container->dispatcher->signal('kernel.exception', ['exception' => $e]);
+
+        if (php_sapi_name() === 'cli') {
+            return '"Error #' . $e->getCode() . ' - ' . $e->getMessage() . '"';
+        }
+
+        if (!$this->container->errorController) {
+            return 'Option `errorController` not configured';
+        }
+        if (!$this->container->errorAction) {
+            return 'Option `errorAction` not configured';
+        }
+
+        $controller = $this->container->errorController;
+        $action = $this->container->errorAction;
+
+        /** @var \Micro\mvc\controllers\IController $result */
+        $result = new $controller($this->container);
+        $result = $result->action($action);
+
+        if ($result instanceof IOutput) {
+            return $result;
+        }
+
+        $response = new Response();
+        $response->setBody($result);
+
+        return $response;
     }
 
     /**
