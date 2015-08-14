@@ -60,8 +60,8 @@ abstract class ViewController extends Controller
 
         if (is_object($view)) {
             $view->module = get_class($this->module);
-            $view->layout = (!$view->layout) ? $this->layout : $view->layout;
-            $view->view = (!$view->view) ? $name : $view->name;
+            $view->layout = $view->layout ?: $this->layout;
+            $view->view = $view->view ?: $name;
             $view->path = get_called_class();
             $view = (string)$view;
         }

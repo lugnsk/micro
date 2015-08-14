@@ -102,20 +102,25 @@ class PhpView extends View
      *
      * @access protected
      *
-     * @param string $baseDir path to base dir
+     * @param string $appDir path to base dir
      * @param string $module module name
      *
      * @return string
      * @throws Exception
      */
-    protected function getLayoutFile($baseDir, $module)
+    protected function getLayoutFile($appDir, $module)
     {
-        $layout = $baseDir . '/' . (($module) ? $module . '/' : $module);
+        if ($module) {
+            $module = str_replace('\\', '/', substr($module, 4));
+            $module = substr($module, 0, strrpos($module, '/'));
+        }
+
+        $layout = $appDir . '/' . (($module) ? $module . '/' : $module);
         $afterPath = 'views/layouts/' . ucfirst($this->layout) . '.php';
 
         if (!file_exists($layout . $afterPath)) {
-            if (file_exists($baseDir . '/' . $afterPath)) {
-                return $baseDir . '/' . $afterPath;
+            if (file_exists($appDir . '/' . $afterPath)) {
+                return $appDir . '/' . $afterPath;
             }
             throw new Exception($this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
         }
