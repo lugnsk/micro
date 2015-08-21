@@ -2,8 +2,8 @@
 
 namespace Micro\web;
 
-use Micro\base\Container;
-use Micro\file\Filehelper;
+use Micro\file\FileHelper;
+use Micro\mvc\views\IView;
 
 /**
  * Assets class file.
@@ -19,92 +19,73 @@ use Micro\file\Filehelper;
  */
 class Assets
 {
-    protected $container;
+    /** @var string $sourcePath Full-path to source asset dir */
+    public $sourcePath;
 
-    /** @var string $assetDir directory for assets */
-    private $assetDir = 'assets';
-    /** @var string $hash hash for asset path */
-    private $hash = '';
-    /** @var string $directory asset directory */
-    private $directory = '';
-    /** @var string $sourceDir source asset dir */
-    private $sourceDir = '';
-    /** @var string $publishDir public of project dir */
-    private $publishDir = '';
+    /** @var bool $isHead Is a publish into head block */
+    public $isHead = true;
+    /** @var array $js JavaScript files links */
+    public $js = [];
+    /** @var array $css CSS files links */
+    public $css = [];
+
+    /** @var IView $view View for install current asset */
+    protected $view;
+    /** @var string $hash Unique directory to publish into assets dir */
+    protected $hash;
+    /** @var string $publishPath Published path */
+    protected $publishPath;
 
 
     /**
-     * Constructor for class
+     * Constructor asset
      *
      * @access public
      *
-     * @param Container $Container
-     * @param string $directory directory of assets
+     * @param IView $view
      *
      * @result void
      */
-    public function __construct(Container $Container, $directory = '')
+    public function __construct(IView $view)
     {
-        $this->container = $Container;
-        $this->directory = rtrim($directory, '/') . '/assets';
-        $this->hash = md5($this->directory);
+        $this->view = $view;
 
-        $tmp = '/' . $this->assetDir . '/' . $this->hash;
-        $this->publishDir = $this->container->kernel->getAppDir() . $tmp;
-        $this->sourceDir = $this->container->kernel->getWebDir() . $tmp;
+        $this->hash = md5($this->sourcePath);
+
+        $this->publishPath = '/' . (($dir = $view->container->assetsDirName) ? $dir : 'assets') . '/' . $this->hash;
+
+        $web = $this->view->container->kernel->getWebDir();
+
+        if (!file_exists($web . $this->publishPath)) {
+            mkdir($web . $this->publishPath, 0x777);
+        }
+
+        FileHelper::recurseCopyIfEdited($this->sourcePath, $web . $this->publishPath);
     }
 
     /**
-     * Publication directory or files
+     * Send asset into view
      *
      * @access public
-     *
-     * @param string $exclude exclude files
-     *
      * @return void
      */
-    public function publish($exclude = '.php')
+    public function publish()
     {
-        $hashDir = $this->getSourceDir();
-
-        if (!file_exists($hashDir)) {
-            mkdir($hashDir, 0777);
-        }
-
-        if (is_dir($this->directory)) {
-            FileHelper::recurseCopyIfEdited($this->directory, $this->sourceDir);
-        } else {
-            if (substr($hashDir, strlen($hashDir) - strlen($exclude)) !== $exclude) {
-                if (!file_exists($hashDir)) {
-                    copy($this->directory, $hashDir);
-                    chmod($hashDir, 0666);
-                } elseif (filemtime($this->directory) !== filemtime($hashDir)) {
-                    copy($this->directory, $hashDir);
-                    chmod($hashDir, 0666);
-                }
+        if ($this->js) {
+            if (is_string($this->js)) {
+                $this->js = [$this->js];
+            }
+            foreach ($this->js AS $script) {
+                $this->view->registerScriptFile($script, $this->isHead);
             }
         }
-    }
-
-    /**
-     * Get source directory
-     *
-     * @access public
-     * @return string
-     */
-    public function getSourceDir()
-    {
-        return $this->sourceDir;
-    }
-
-    /**
-     * Get publish directory
-     *
-     * @access public
-     * @return string
-     */
-    public function getPublishDir()
-    {
-        return $this->publishDir;
+        if ($this->css) {
+            if (is_string($this->css)) {
+                $this->css = [$this->css];
+            }
+            foreach ($this->css AS $style) {
+                $this->view->registerCssFile($style, $this->isHead);
+            }
+        }
     }
 }

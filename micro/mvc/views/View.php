@@ -19,7 +19,7 @@ use Micro\web\Html;
  * @version 1.0
  * @since 1.0
  */
-abstract class View
+abstract class View implements IView
 {
     /** @var array $styleScripts */
     public $styleScripts = [];
@@ -32,7 +32,7 @@ abstract class View
     /** @var Module $module */
     public $module;
     /** @var IContainer $container */
-    protected $container;
+    public $container;
 
     /**
      * @param IContainer $container
@@ -43,14 +43,7 @@ abstract class View
     }
 
     /**
-     * Add parameter into view
-     *
-     * @access public
-     *
-     * @param string $name parameter name
-     * @param mixed $value parameter value
-     *
-     * @return void
+     * @inheritDoc
      */
     public function addParameter($name, $value)
     {
@@ -58,16 +51,7 @@ abstract class View
     }
 
     /**
-     * Widget
-     *
-     * @access public
-     *
-     * @param string $name widget name
-     * @param array $options options array
-     * @param bool $capture capture output
-     *
-     * @return string
-     * @throws Exception
+     * @inheritDoc
      */
     public function widget($name, array $options = [], $capture = false)
     {
@@ -108,15 +92,7 @@ abstract class View
     }
 
     /**
-     * Begin widget
-     *
-     * @access public
-     *
-     * @param string $name widget name
-     * @param array $options options array
-     *
-     * @return mixed
-     * @throws Exception
+     * @inheritDoc
      */
     public function beginWidget($name, array $options = [])
     {
@@ -138,13 +114,7 @@ abstract class View
     }
 
     /**
-     * Ending widget
-     *
-     * @access public
-     *
-     * @param string $name widget name
-     *
-     * @throws Exception
+     * @inheritDoc
      */
     public function endWidget($name = '')
     {
@@ -172,9 +142,6 @@ abstract class View
     }
 
     /**
-     * Convert object to string
-     *
-     * @access public
      * @return string
      */
     public function __toString()
@@ -183,23 +150,7 @@ abstract class View
     }
 
     /**
-     * Render
-     *
-     * @access public
-     * @return mixed
-     * @abstract
-     */
-    abstract public function render();
-
-    /**
-     * Register JS script
-     *
-     * @access public
-     *
-     * @param string $source file name
-     * @param bool $isHead is head block
-     *
-     * @return void
+     * @inheritDoc
      */
     public function registerScript($source, $isHead = true)
     {
@@ -210,14 +161,7 @@ abstract class View
     }
 
     /**
-     * Register JS file
-     *
-     * @access public
-     *
-     * @param string $source file name
-     * @param bool $isHead is head block
-     *
-     * @return void
+     * @inheritDoc
      */
     public function registerScriptFile($source, $isHead = true)
     {
@@ -228,14 +172,7 @@ abstract class View
     }
 
     /**
-     * Register CSS code
-     *
-     * @access public
-     *
-     * @param string $source file name
-     * @param bool $isHead is head block
-     *
-     * @return void
+     * @inheritDoc
      */
     public function registerCss($source, $isHead = true)
     {
@@ -246,14 +183,7 @@ abstract class View
     }
 
     /**
-     * Register CSS file
-     *
-     * @access public
-     *
-     * @param string $source file name
-     * @param bool $isHead is head block
-     *
-     * @return void
+     * @inheritDoc
      */
     public function registerCssFile($source, $isHead = true)
     {
