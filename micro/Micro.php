@@ -85,8 +85,8 @@ class Micro
             'callable' => ['\Micro\base\Autoload', 'loader']
         ]);
 
-        Autoload::setAlias('Micro', $microDir);
-        Autoload::setAlias('App', $appDir);
+        Autoload::setAlias('Micro', $this->getMicroDir());
+        Autoload::setAlias('App', $this->getAppDir());
     }
 
     /**
@@ -134,6 +134,18 @@ class Micro
     public function getMicroDir()
     {
         return $this->microDir;
+    }
+
+    /**
+     * Get application dir
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getAppDir()
+    {
+        return $this->appDir;
     }
 
     /**
@@ -268,6 +280,8 @@ class Micro
         return new HMVCResolver($this->container);
     }
 
+    // Methods for components
+
     /**
      * Do exception
      *
@@ -319,8 +333,6 @@ class Micro
         return $output;
     }
 
-    // Methods for components
-
     /**
      * Terminate application
      *
@@ -369,6 +381,8 @@ class Micro
         $this->loaded = false;
     }
 
+    // Methods helpers
+
     /**
      * Get status of debug
      *
@@ -380,8 +394,6 @@ class Micro
     {
         return $this->debug;
     }
-
-    // Methods helpers
 
     /**
      * Get character set
@@ -417,18 +429,6 @@ class Micro
     public function getContainer()
     {
         return $this->container;
-    }
-
-    /**
-     * Get application dir
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getAppDir()
-    {
-        return $this->appDir;
     }
 
     /**
