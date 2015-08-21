@@ -88,7 +88,7 @@ class Validator
 
                 return true;
             } else {
-                throw new Exception($this->container, 'Validator ' . $name . ' not defined.');
+                throw new Exception('Validator ' . $name . ' not defined.');
             }
         }
 

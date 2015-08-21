@@ -36,7 +36,7 @@ class RedisCache extends BaseCache
         parent::__construct($config);
 
         if (!$this->check()) {
-            throw new Exception($this->container, 'Redis not installed on system');
+            throw new Exception('Redis not installed on system');
         }
         $this->driver = new \Redis;
 
@@ -47,11 +47,11 @@ class RedisCache extends BaseCache
                 $result = $this->driver->connect($config['host'], $config['port'], $config['duration']);
             }
         } catch (\RedisException $e) {
-            throw new Exception($this->container, (string)$e);
+            throw new Exception((string)$e);
         }
 
         if (!$result) {
-            throw new Exception($this->container, 'Redis configuration failed');
+            throw new Exception('Redis configuration failed');
         }
     }
 

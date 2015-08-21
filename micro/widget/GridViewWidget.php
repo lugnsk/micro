@@ -82,7 +82,7 @@ class GridViewWidget extends Widget
         parent::__construct($args);
 
         if (empty($args['data'])) {
-            throw new Exception($this->container, 'Argument "data" not initialized into GridViewWidget');
+            throw new Exception('Argument "data" not initialized into GridViewWidget');
         }
 
         $this->limit = ($this->limit < 10) ? 10 : $this->limit;
@@ -94,7 +94,7 @@ class GridViewWidget extends Widget
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
-                throw new Exception($this->container, 'Data query not set table or objectName');
+                throw new Exception('Data query not set table or objectName');
             }
 
             if ($args['data']->having || $args['data']->group) {

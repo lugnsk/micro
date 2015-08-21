@@ -13,6 +13,8 @@ namespace Micro\filter;
  * @subpackage filter
  * @version 1.0
  * @since 1.0
+ *
+ * @property array|string $result
  */
 interface IFilter
 {

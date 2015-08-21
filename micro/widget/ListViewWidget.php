@@ -68,10 +68,10 @@ class ListViewWidget extends Widget
         parent::__construct($args);
 
         if (empty($args['data'])) {
-            throw new Exception($this->container, 'Argument "data" not initialized into ListViewWidget');
+            throw new Exception('Argument "data" not initialized into ListViewWidget');
         }
         if (empty($args['pathView'])) {
-            throw new Exception($this->container, 'Argument "pathView" not initialized into ListViewWidget');
+            throw new Exception('Argument "pathView" not initialized into ListViewWidget');
         }
 
         if (!is_int($this->page)) {
@@ -91,7 +91,7 @@ class ListViewWidget extends Widget
                 $cls = $args['data']->objectName;
                 $args['data']->table = $cls::tableName();
             } elseif (!$args['data']->table) {
-                throw new Exception($this->container, 'Data query not set table or objectName');
+                throw new Exception('Data query not set table or objectName');
             }
 
             $select = $args['data']->select;
@@ -127,7 +127,7 @@ class ListViewWidget extends Widget
     public function init()
     {
         if (!file_exists($this->pathView)) {
-            throw new Exception($this->container, 'View path not valid: ' . $this->pathView);
+            throw new Exception('View path not valid: ' . $this->pathView);
         }
 
         $this->rowsCount = count($this->rows);

@@ -30,7 +30,7 @@ class Language extends \stdClass
      *
      * @access public
      *
-     * @param Container $container
+     * @param IContainer $container
      * @param string $viewNameFile path to view
      *
      * @result void
@@ -66,7 +66,7 @@ class Language extends \stdClass
         if (!empty($this->language[$name])) {
             return $this->language[$name];
         } else {
-            throw new Exception($this->container, $name . ' not defined into lang file');
+            throw new Exception($name . ' not defined into lang file');
         }
     }
 }

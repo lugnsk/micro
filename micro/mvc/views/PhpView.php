@@ -122,7 +122,7 @@ class PhpView extends View
             if (file_exists($appDir . '/' . $afterPath)) {
                 return $appDir . '/' . $afterPath;
             }
-            throw new Exception($this->container, 'Layout ' . ucfirst($this->layout) . ' not found.');
+            throw new Exception('Layout ' . ucfirst($this->layout) . ' not found.');
         }
 
         return $layout . $afterPath;
@@ -151,7 +151,7 @@ class PhpView extends View
         include str_replace('\\', '/', $fileName);
 
         if ($GLOBALS['widgetStack']) {
-            throw new Exception($this->container, count($GLOBALS['widgetStack']) . ' widgets not endings.');
+            throw new Exception(count($GLOBALS['widgetStack']) . ' widgets not endings.');
         }
 
         return ob_get_clean();
@@ -192,7 +192,7 @@ class PhpView extends View
         $path = str_replace('//', '/', $path);
 
         if (!file_exists($path)) {
-            throw new Exception($this->container, 'View path `' . $path . '` not exists.');
+            throw new Exception('View path `' . $path . '` not exists.');
         }
 
         return $path;

@@ -33,7 +33,7 @@ class ApcCache extends BaseCache
         parent::__construct($config);
 
         if (!$this->check()) {
-            throw new Exception($this->container, 'APC cache not installed');
+            throw new Exception('APC cache not installed');
         }
     }
 

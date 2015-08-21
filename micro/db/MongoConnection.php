@@ -43,7 +43,7 @@ class MongoConnection extends Connection
         if (!empty($config['dbname'])) {
             $this->dbName = $config['dbname'];
         } else {
-            throw new Exception($this->container, 'MongoDB database name not defined!');
+            throw new Exception('MongoDB database name not defined!');
         }
 
         try {
@@ -54,7 +54,7 @@ class MongoConnection extends Connection
             }
         } catch (Exception $e) {
             if (!$config['ignoreFail']) {
-                throw new Exception($this->container, 'MongoDB error connect to database');
+                throw new Exception('MongoDB error connect to database');
             }
         }
     }

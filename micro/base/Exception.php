@@ -17,28 +17,10 @@ use Micro\web\Response;
  */
 class Exception extends \Exception
 {
-    /** @var IContainer $container Container config */
-    protected $container;
-
-    /**
-     * @access public
-     *
-     * @param Container $container
-     * @param string $message
-     * @param int $code
-     * @param \Exception $previous
-     *
-     * @result void
-     */
-    public function __construct(IContainer $container, $message = '', $code = 0, \Exception $previous = null)
-    {
-        $this->container = $container;
-
-        parent::__construct($message, $code, $previous);
-    }
     public function __toString()
     {
         $resp = new Response();
+        $resp->setStatus(500);
         $resp->setBody('<h1>' . $this->message . '</h1>' . '<p>In ' . $this->file . ':' . $this->line . '</p>');
         $resp->send();
 

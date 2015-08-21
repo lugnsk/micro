@@ -33,7 +33,7 @@ class WincacheCache extends BaseCache
         parent::__construct($config);
 
         if (!$this->check()) {
-            throw new Exception($this->container, 'Extension WinCache not installed');
+            throw new Exception('Extension WinCache not installed');
         }
     }
 

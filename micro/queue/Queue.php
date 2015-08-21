@@ -72,7 +72,7 @@ class Queue
                 break;
             }
             default: {
-                throw new Exception($this->container, 'Service type `' . $type . '` wrong name.');
+                throw new Exception('Service type `' . $type . '` wrong name.');
             }
         }
     }
@@ -103,7 +103,7 @@ class Queue
             }
         }
         if (!$server) {
-            throw new Exception($this->container, 'Message not send, random servers is down into `' . $uri . '`');
+            throw new Exception('Message not send, random servers is down into `' . $uri . '`');
         }
 
         return $this->brokers[$server];
@@ -137,7 +137,7 @@ class Queue
             $servers += $route['*'];
         }
         if (!$servers) {
-            throw new Exception($this->container, 'Type `' . $type . '` not found into route');
+            throw new Exception('Type `' . $type . '` not found into route');
         }
 
         return $servers;
@@ -167,6 +167,6 @@ class Queue
                 return $this->routes[$keys[$a]]; // роут найден
             }
         }
-        throw new Exception($this->container, 'Route `' . $uri . '` not found');
+        throw new Exception('Route `' . $uri . '` not found');
     }
 }

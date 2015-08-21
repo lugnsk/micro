@@ -36,7 +36,7 @@ class MemcachedCache extends BaseCache
         parent::__construct($config);
 
         if (!$this->check() OR empty($config['type'])) {
-            throw new Exception($this->container, 'Memcache(d) not installed or not select type');
+            throw new Exception('Memcache(d) not installed or not select type');
         }
 
         switch (strtolower($config['type'])) {
@@ -49,7 +49,7 @@ class MemcachedCache extends BaseCache
                 break;
             }
             default: {
-                throw new Exception($this->container, 'Selected type not valid in the driver');
+                throw new Exception('Selected type not valid in the driver');
             }
         }
 
@@ -69,7 +69,7 @@ class MemcachedCache extends BaseCache
                 $this->driver->addServer($server['hostname'], $server['port'], true, $server['weight']);
             }
         } else {
-            throw new Exception($this->container, 'Server(s) not configured');
+            throw new Exception('Server(s) not configured');
         }
     }
 

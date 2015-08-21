@@ -49,7 +49,7 @@ class DbConnection extends Connection
             );
         } catch (Exception $e) {
             if (!array_key_exists('ignoreFail', $config) || !$config['ignoreFail']) {
-                throw new Exception($this->container, 'Connect to DB failed: ' . $e->getMessage());
+                throw new Exception('Connect to DB failed: ' . $e->getMessage());
             }
         }
     }

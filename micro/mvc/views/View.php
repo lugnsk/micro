@@ -72,13 +72,13 @@ abstract class View
     public function widget($name, array $options = [], $capture = false)
     {
         if (!class_exists($name)) {
-            throw new Exception($this->container, 'Widget ' . $name . ' not found.');
+            throw new Exception('Widget ' . $name . ' not found.');
         }
 
         $options = array_merge($options, ['container' => $this->container]);
 
         /** @var \Micro\mvc\Widget $widget widget */
-        $widget = new $name($options, $this->container);
+        $widget = new $name($options);
         $widget->init();
 
         if ($capture) {
@@ -121,12 +121,14 @@ abstract class View
     public function beginWidget($name, array $options = [])
     {
         if (!class_exists($name)) {
-            throw new Exception($this->container, 'Widget ' . $name . ' not found.');
+            throw new Exception('Widget ' . $name . ' not found.');
         }
 
         if (!empty($GLOBALS['widgetStack'][$name])) {
-            throw new Exception($this->container, 'This widget (' . $name . ') already started!');
+            throw new Exception('This widget (' . $name . ') already started!');
         }
+
+        $options = array_merge($options, ['container' => $this->container]);
 
         $GLOBALS['widgetStack'][$name] = new $name($options, $this->container);
 
@@ -157,7 +159,7 @@ abstract class View
         }
 
         if (!class_exists($name) OR empty($GLOBALS['widgetStack'][$name])) {
-            throw new Exception($this->container, 'Widget ' . $name . ' not started.');
+            throw new Exception('Widget ' . $name . ' not started.');
         }
 
         /** @var \Micro\mvc\Widget $widget widget */

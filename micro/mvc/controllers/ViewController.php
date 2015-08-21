@@ -42,7 +42,7 @@ abstract class ViewController extends Controller
         if (!method_exists($this, 'action' . ucfirst($name))) {
             $actionClass = $this->getActionClassByName($name);
             if (!$actionClass) {
-                throw new Exception($this->container, 'Action "' . $name . '" not found into ' . get_class($this));
+                throw new Exception('Action "' . $name . '" not found into ' . get_class($this));
             }
         }
 

@@ -33,7 +33,7 @@ class XcacheCache extends BaseCache
         parent::__construct($config);
 
         if (!$this->check()) {
-            throw new Exception($this->container, 'Extension XCache not installed');
+            throw new Exception('Extension XCache not installed');
         }
     }
 

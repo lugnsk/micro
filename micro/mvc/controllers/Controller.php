@@ -87,7 +87,7 @@ abstract class Controller implements IController
                     header('Location: ' . $_filter->result['redirect']);
                     die();
                 }
-                throw new Exception($this->container, $_filter->result['message']);
+                throw new Exception($_filter->result['message']);
             }
             $data = $res;
         }

@@ -409,9 +409,7 @@ abstract class Model extends FormModel implements IModel
         }
         if ($this->beforeDelete()) {
             if (!self::$primaryKey) {
-                throw new Exception($this->container,
-                    'In table ' . static::tableName() . ' option `id` not defined/not use.'
-                );
+                throw new Exception('In table ' . static::tableName() . ' option `id` not defined/not use.');
             }
 
             if (
