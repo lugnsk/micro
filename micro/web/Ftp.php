@@ -80,19 +80,19 @@ final class Ftp
     /**
      * Initialize connection params
      *
-     * @param string $host
-     * @param string $user
-     * @param string $password
-     * @param int $port
-     * @param int $timeout (seconds)
+     * @access public
+     *
+     * @param array $params
+     *
+     * @result void
      */
-    public function  __construct($host = null, $user = null, $password = null, $port = 21, $timeout = 90)
+    public function  __construct(array $params = [])
     {
-        $this->_host = $host;
-        $this->_user = $user;
-        $this->_pwd = $password;
-        $this->_port = (int)$port;
-        $this->_timeout = (int)$timeout;
+        $this->_host = $params['host'] ?: null;
+        $this->_user = $params['user'] ?: null;
+        $this->_pwd = $params['password'] ?: null;
+        $this->_port = (int)$params['port'] ?: 21;
+        $this->_timeout = (int)$params['timeout'] ?: 90;
     }
 
     /**
@@ -127,16 +127,13 @@ final class Ftp
      */
     public function cd($directory = null)
     {
-        // attempt to change directory
         if (ftp_chdir($this->_stream, $directory)) {
-            // success
             return true;
-            // fail
-        } else {
-            $this->error = "Failed to change directory to \"{$directory}\"";
-
-            return false;
         }
+
+        $this->error = "Failed to change directory to \"{$directory}\"";
+
+        return false;
     }
 
     /**
@@ -149,16 +146,13 @@ final class Ftp
      */
     public function chmod($permissions = 0, $remote_file = null)
     {
-        // attempt chmod
         if (ftp_chmod($this->_stream, $permissions, $remote_file)) {
-            // success
             return true;
-            // failed
-        } else {
-            $this->error = 'Failed to set file permissions for "' . $remote_file . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to set file permissions for "' . $remote_file . '"';
+
+        return false;
     }
 
     /**
@@ -168,47 +162,25 @@ final class Ftp
      */
     public function connect()
     {
-        // check if non-SSL connection
-        if (!$this->ssl) {
-            // attempt connection
-            if (!$this->_stream = ftp_connect($this->_host, $this->_port, $this->_timeout)) {
-                // set last error
-                $this->error = 'Failed to connect to ' . $this->_host;
+        $func = $this->ssl ? 'ftp_ssl_connect' : 'ftp_connect';
+        $this->_stream = $func($this->_host, $this->_port, $this->_timeout);
 
-                return false;
-            }
-            // SSL connection
-        } elseif (function_exists('ftp_ssl_connect')) {
-            // attempt SSL connection
-            if (!$this->_stream = ftp_ssl_connect($this->_host, $this->_port, $this->_timeout)) {
-                // set last error
-                $this->error = 'Failed to connect to ' . $this->_host . ' (SSL connection)';
-
-                return false;
-            }
-            // invalid connection type
-        } else {
-            $this->error = 'Failed to connect to ' . $this->_host . ' (invalid connection type)';
-
+        if (!$this->_stream) {
+            $this->error = 'Failed to connect ' . $this->_host . '.';
             return false;
         }
 
-        // attempt login
         if (ftp_login($this->_stream, $this->_user, $this->_pwd)) {
-            // set passive mode
             ftp_pasv($this->_stream, (bool)$this->passive);
 
-            // set system type
             $this->system_type = ftp_systype($this->_stream);
 
-            // connection successful
             return true;
-            // login failed
-        } else {
-            $this->error = 'Failed to connect to ' . $this->_host . ' (login failed)';
-
-            return false;
         }
+
+        $this->error = 'Failed to connect to ' . $this->_host . ' (login failed)';
+
+        return false;
     }
 
     /**
@@ -220,16 +192,13 @@ final class Ftp
      */
     public function delete($remote_file = null)
     {
-        // attempt to delete file
         if (ftp_delete($this->_stream, $remote_file)) {
-            // success
             return true;
-            // fail
-        } else {
-            $this->error = 'Failed to delete file "' . $remote_file . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to delete file "' . $remote_file . '"';
+
+        return false;
     }
 
     /**
@@ -243,16 +212,13 @@ final class Ftp
      */
     public function get($remote_file = null, $local_file = null, $mode = FTP_ASCII)
     {
-        // attempt download
         if (ftp_get($this->_stream, $local_file, $remote_file, $mode)) {
-            // success
             return true;
-            // download failed
-        } else {
-            $this->error = 'Failed to download file "' . $remote_file . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to download file "' . $remote_file . '"';
+
+        return false;
     }
 
     /**
@@ -264,16 +230,13 @@ final class Ftp
      */
     public function ls($directory = null)
     {
-        // attempt to get list
         if ($list = ftp_nlist($this->_stream, $directory)) {
-            // success
             return $list;
-            // fail
-        } else {
-            $this->error = 'Failed to get directory list';
-
-            return [];
         }
+
+        $this->error = 'Failed to get directory list';
+
+        return [];
     }
 
     /**
@@ -285,16 +248,13 @@ final class Ftp
      */
     public function mkdir($directory = null)
     {
-        // attempt to create dir
         if (ftp_mkdir($this->_stream, $directory)) {
-            // success
             return true;
-            // fail
-        } else {
-            $this->error = 'Failed to create directory "' . $directory . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to create directory "' . $directory . '"';
+
+        return false;
     }
 
     /**
@@ -308,16 +268,13 @@ final class Ftp
      */
     public function put($local_file = null, $remote_file = null, $mode = FTP_ASCII)
     {
-        // attempt to upload file
         if (ftp_put($this->_stream, $remote_file, $local_file, $mode)) {
-            // success
             return true;
-            // upload failed
-        } else {
-            $this->error = 'Failed to upload file "' . $local_file . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to upload file "' . $local_file . '"';
+
+        return false;
     }
 
     /**
@@ -340,16 +297,13 @@ final class Ftp
      */
     public function rename($old_name = null, $new_name = null)
     {
-        // attempt rename
         if (ftp_rename($this->_stream, $old_name, $new_name)) {
-            // success
             return true;
-            // fail
-        } else {
-            $this->error = 'Failed to rename file "' . $old_name . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to rename file "' . $old_name . '"';
+
+        return false;
     }
 
     /**
@@ -361,15 +315,12 @@ final class Ftp
      */
     public function rmdir($directory = null)
     {
-        // attempt remove dir
         if (ftp_rmdir($this->_stream, $directory)) {
-            // success
             return true;
-            // fail
-        } else {
-            $this->error = 'Failed to remove directory "' . $directory . '"';
-
-            return false;
         }
+
+        $this->error = 'Failed to remove directory "' . $directory . '"';
+
+        return false;
     }
 }

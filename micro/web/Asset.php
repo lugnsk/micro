@@ -1,4 +1,4 @@
-<?php /** MicroAssets */
+<?php /** MicroAsset */
 
 namespace Micro\web;
 
@@ -6,7 +6,7 @@ use Micro\file\FileHelper;
 use Micro\mvc\views\IView;
 
 /**
- * Assets class file.
+ * Asset class file.
  *
  * @author Oleg Lunegov <testuser@mail.linpax.org>
  * @link https://github.com/lugnsk/micro
@@ -17,7 +17,7 @@ use Micro\mvc\views\IView;
  * @version 1.0
  * @since 1.0
  */
-class Assets
+class Asset
 {
     /** @var string $sourcePath Full-path to source asset dir */
     public $sourcePath;
