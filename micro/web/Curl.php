@@ -32,7 +32,7 @@ class Curl
     const AUTH_ANYSAFE = CURLAUTH_ANYSAFE;
 
     /** @var string USER_AGENT user agent identity */
-    const USER_AGENT = 'Links (2.6; Linux 3.13.10-200.fc20.x86_64 x86_64; GNU C 4.8.1; text)';
+    const USER_AGENT = 'My User Agent';
     /** @var resource $curl cURL resource */
     public $curl;
     /** @var bool $error is error */

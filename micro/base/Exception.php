@@ -21,7 +21,11 @@ class Exception extends \Exception
     {
         $resp = new Response();
         $resp->setStatus(500);
-        $resp->setBody('<h1>' . $this->message . '</h1>' . '<p>In ' . $this->file . ':' . $this->line . '</p>');
+        $resp->setBody(
+            '<h1>' . $this->message . '</h1>' .
+            '<p>In ' . $this->file . ':' . $this->line . '</p>' .
+            '<pre>' . $this->getTraceAsString() . '</pre>'
+        );
         $resp->send();
 
         error_reporting(0);
