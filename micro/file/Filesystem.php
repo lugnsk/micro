@@ -1,6 +1,6 @@
 <?php /** MicroFilesystem */
 
-namespace Micro\files;
+namespace Micro\file;
 
 use Micro\base\Exception;
 
@@ -22,7 +22,7 @@ use Micro\base\Exception;
  */
 class Filesystem
 {
-    /** @var \Micro\files\File $driver Current file driver */
+    /** @var \Micro\file\drivers\File $driver Current file driver */
     protected $driver;
 
     /**
