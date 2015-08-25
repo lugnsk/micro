@@ -18,4 +18,44 @@ abstract class File implements IFile
 {
     /** @var mixed $stream File stream */
     protected $stream;
+
+    /**
+     * @inheritDoc
+     */
+    public function exists($filePath)
+    {
+        return $this->file_exists($filePath);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function has($filePath)
+    {
+        return $this->file_exists($filePath);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function read($filePath)
+    {
+        return $this->file_get_contents($filePath);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSize($filePath)
+    {
+        return $this->size($filePath);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete($filePath)
+    {
+        return $this->unlink($filePath);
+    }
 }

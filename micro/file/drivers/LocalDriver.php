@@ -51,25 +51,9 @@ class LocalDriver extends File
     /**
      * @inheritDoc
      */
-    public function exists($filePath)
-    {
-        return $this->file_exists($filePath);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function file_exists($filePath)
     {
         return \file_exists($filePath);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function has($filePath)
-    {
-        return $this->file_exists($filePath);
     }
 
     /**
@@ -83,25 +67,9 @@ class LocalDriver extends File
     /**
      * @inheritDoc
      */
-    public function delete($filePath)
-    {
-        return $this->unlink($filePath);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function unlink($filePath)
     {
         return \unlink($filePath);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function read($filePath)
-    {
-        return $this->file_get_contents($filePath);
     }
 
     /**
@@ -115,6 +83,14 @@ class LocalDriver extends File
     /**
      * @inheritDoc
      */
+    public function file_put_contents($filePath, $data)
+    {
+        return \file_put_contents($filePath, $data);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function mtime($filePath)
     {
         return \filemtime($filePath);
@@ -123,41 +99,9 @@ class LocalDriver extends File
     /**
      * @inheritDoc
      */
-    public function getSize($filePath)
-    {
-        return $this->size($filePath);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function size($filePath)
     {
         return \filesize($filePath);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readStream()
-    {
-        return $this->stream;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function updateStream()
-    {
-        $this->stream = true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function file_put_contents($filePath, $data)
-    {
-        return \file_put_contents($filePath, $data);
     }
 
     /**
@@ -174,5 +118,21 @@ class LocalDriver extends File
     public function disk_total_space($directory)
     {
         return \disk_total_space($directory);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readStream()
+    {
+        return $this->stream;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateStream()
+    {
+        $this->stream = true;
     }
 }
