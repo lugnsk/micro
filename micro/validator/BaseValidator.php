@@ -8,6 +8,8 @@ abstract class BaseValidator extends \stdClass implements IValidator
 {
     /** @var string[] $elements */
     public $elements = [];
+    /** @var array $errors */
+    public $errors = [];
     /** @var IContainer $container */
     protected $container;
 

@@ -9,7 +9,6 @@ use Micro\form\IFormModel;
  *
  * @package Micro\validator
  *
- * @property array $errors
  * @property array $elements
  */
 interface IValidator
