@@ -63,9 +63,6 @@ class Asset
 
         if (!file_exists($web . $this->publishPath)) {
             mkdir($web . $this->publishPath, 0777);
-            FileHelper::recurseCopy($this->sourcePath, $web . $this->publishPath);
-
-            return;
         }
 
         FileHelper::recurseCopyIfEdited($this->sourcePath, $web . $this->publishPath);
