@@ -46,6 +46,30 @@ class Autoload
      */
     public static function loader($className)
     {
+        $path = self::getClassPath($className);
+
+        if (is_file($path)) {
+            /** @noinspection PhpIncludeInspection */
+            require_once $path;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get class path
+     *
+     * @access public
+     *
+     * @param string $className search class name
+     *
+     * @return string
+     * @static
+     */
+    public static function getClassPath($className)
+    {
         $className = ltrim($className, '\\');
 
         $path = '';
@@ -59,7 +83,23 @@ class Autoload
             }
             $path .= str_replace('\\', DIRECTORY_SEPARATOR, substr($className, 0, $lastNsPos)) . DIRECTORY_SEPARATOR;
         }
-        $path .= str_replace('_', DIRECTORY_SEPARATOR, substr($className, $lastNsPos + 1)) . '.php';
+
+        return $path . str_replace('_', DIRECTORY_SEPARATOR, substr($className, $lastNsPos + 1)) . '.php';
+    }
+
+    /**
+     * Loader classes
+     *
+     * @access public
+     *
+     * @param string $className search class name
+     *
+     * @return bool
+     * @static
+     */
+    public static function loader($className)
+    {
+        $path = self::getClassPath($className);
 
         if (is_file($path)) {
             /** @noinspection PhpIncludeInspection */

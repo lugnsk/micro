@@ -2,6 +2,7 @@
 
 namespace Micro\web;
 
+use Micro\base\Autoload;
 use Micro\file\FileHelper;
 use Micro\mvc\views\IView;
 
@@ -50,6 +51,10 @@ class Asset
     {
         $this->view = $view;
 
+        if (!$this->sourcePath) {
+            $this->sourcePath = dirname(Autoload::getClassPath(get_class($this)));
+        }
+
         $this->hash = md5($this->sourcePath);
 
         $this->publishPath = '/' . (($dir = $view->container->assetsDirName) ? $dir : 'assets') . '/' . $this->hash;
@@ -57,7 +62,10 @@ class Asset
         $web = $this->view->container->kernel->getWebDir();
 
         if (!file_exists($web . $this->publishPath)) {
-            mkdir($web . $this->publishPath, 0x777);
+            mkdir($web . $this->publishPath, 0777);
+            FileHelper::recurseCopy($this->sourcePath, $web . $this->publishPath);
+
+            return;
         }
 
         FileHelper::recurseCopyIfEdited($this->sourcePath, $web . $this->publishPath);
@@ -76,7 +84,7 @@ class Asset
                 $this->js = [$this->js];
             }
             foreach ($this->js AS $script) {
-                $this->view->registerScriptFile($script, $this->isHead);
+                $this->view->registerScriptFile($this->publishPath . $script, $this->isHead);
             }
         }
         if ($this->css) {
@@ -84,7 +92,7 @@ class Asset
                 $this->css = [$this->css];
             }
             foreach ($this->css AS $style) {
-                $this->view->registerCssFile($style, $this->isHead);
+                $this->view->registerCssFile($this->publishPath . $style, $this->isHead);
             }
         }
     }

@@ -9,7 +9,6 @@ namespace Micro\file;
  */
 class Type
 {
-
     /**
      * Return concrete object type
      *
