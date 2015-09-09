@@ -2,7 +2,7 @@
 
 namespace Micro\web;
 
-use Micro\base\Container;
+use Micro\base\IContainer;
 
 /**
  * Identity class file.
@@ -38,7 +38,7 @@ abstract class Identity
      *
      * @result void
      */
-    public function __construct(Container $container, $username, $password)
+    public function __construct(IContainer $container, $username, $password)
     {
         $this->container = $container;
         $this->username = $username;
