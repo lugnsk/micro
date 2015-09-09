@@ -19,6 +19,8 @@ namespace Micro\base;
  * @property string $errorController
  * @property string $errorAction
  *
+ * @property \Micro\web\FlashMessage $flash
+ *
  * @property \Micro\Micro $kernel
  * @property \Micro\auth\IAuth $auth
  * @property \Micro\base\IDispatcher $dispatcher
