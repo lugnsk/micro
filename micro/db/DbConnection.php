@@ -130,7 +130,7 @@ class DbConnection extends Connection
      */
     public function tableExists($table)
     {
-        return in_array($table, $this->listTables(), true);
+        return in_array($table, $this->listTables(), false);
     }
 
     /**
@@ -147,7 +147,7 @@ class DbConnection extends Connection
     public function createTable($name, array $elements = [], $params = '')
     {
         return $this->conn->exec(
-            "CREATE TABLE IF NOT EXISTS {$name} ({implode(',', $elements)}) {$params};"
+            'CREATE TABLE IF NOT EXISTS `' . $name . '` (`' . implode('`,`', $elements) . '`) ' . $params . ';'
         );
     }
 
@@ -299,7 +299,7 @@ class DbConnection extends Connection
         }
 
         $sth = $this->conn->prepare(
-            "SELECT * FROM {$table} WHERE {implode(' AND ', $keys)} LIMIT 1;"
+            'SELECT * FROM `' . $table . '` WHERE ' . implode(' AND ', $keys) . ' LIMIT 1;'
         );
         $sth->execute();
 

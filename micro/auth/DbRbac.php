@@ -23,15 +23,14 @@ class DbRbac extends Rbac
     /**
      * Constructor file RBAC
      *
-     * @access public
-     * @result void
+     * @inheritDoc
      */
-    public function __construct()
+    public function __construct(array $params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
-        if (!$this->container->db->tableExists('`rbac_role`')) {
-            $this->container->db->createTable('`rbac_role`', [
+        if (!$this->container->db->tableExists('rbac_role')) {
+            $this->container->db->createTable('rbac_role', [
                 '`name` varchar(127) NOT NULL',
                 '`type` int(11) NOT NULL DEFAULT \'0\'',
                 '`based` varchar(127)',

@@ -40,8 +40,8 @@ abstract class Rbac
     {
         $this->container = $params['container'];
 
-        if (!$this->container->db->tableExists('`rbac_user`')) {
-            $this->container->db->createTable('`rbac_user`', [
+        if (!$this->container->db->tableExists('rbac_user')) {
+            $this->container->db->createTable('rbac_user', [
                 '`role` varchar(127) NOT NULL',
                 '`user` int(10) unsigned NOT NULL',
                 'UNIQUE KEY `name` (`name`,`user`)'

@@ -38,6 +38,9 @@ abstract class Command implements ICommand
     public function __construct(array $params)
     {
         $this->container = $params['container'];
-        $this->args = $params['args'];
+
+        unset($params['container']);
+
+        $this->args = $params;
     }
 }
