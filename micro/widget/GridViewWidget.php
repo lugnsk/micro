@@ -313,7 +313,7 @@ class GridViewWidget extends Widget
             foreach ($this->tableConfig AS $key => $row) {
                 $result .= Html::openTag('td', $row['attributes']);
 
-                if (!empty($row['class']) && is_subclass_of($row['class'], 'Micro\widgets\GridColumn')) {
+                if (!empty($row['class']) && is_subclass_of($row['class'], '\Micro\widget\GridColumn')) {
                     $primaryKey = $data->{!empty($row['key']) ? $row['key'] : 'id'};
                     $result .= (string)(new $row['class'](
                         $row + ['str' => (null === $data) ?: $data, 'pKey' => $primaryKey]
