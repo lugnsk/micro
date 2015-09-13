@@ -2,6 +2,7 @@
 
 namespace Micro\validator;
 
+use Micro\base\Exception;
 use Micro\form\IFormModel;
 
 /**
@@ -20,11 +21,16 @@ class CompareValidator extends BaseValidator
 {
     /**
      * @inheritdoc
+     * @throws Exception
      */
     public function validate(IFormModel $model)
     {
-        if (!$this->params['attribute'] AND !$this->params['value']) {
+        if (empty($this->params['attribute']) AND empty($this->params['value'])) {
             return false;
+        }
+
+        if (!$model->checkAttributeExists($this->params['attribute'])) {
+            throw new Exception('Attribute `' . $this->params['attribute'] . '` not found into ' . get_class($model));
         }
 
         foreach ($this->elements AS $element) {
@@ -33,6 +39,7 @@ class CompareValidator extends BaseValidator
 
                 return false;
             }
+
             $elementValue = $model->$element;
             if (!empty($this->params['value']) AND ($this->params['value'] !== $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $this->params['value'];

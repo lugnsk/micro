@@ -63,7 +63,7 @@ class ActionsGridColumn extends GridColumn
             ]
         ];
 
-        $this->buttons = array_merge($this->buttons,
+        $this->buttons = array_merge_recursive($this->buttons,
             (!empty($this->params['buttons']) ? $this->params['buttons'] : []));
     }
 

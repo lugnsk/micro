@@ -321,7 +321,7 @@ class Micro
         $this->container->request->setPostVar('error', $e);
 
         /** @var \Micro\mvc\controllers\IController $result */
-        $result = new $controller($this->container);
+        $result = new $controller($this->container, false);
         $result = $result->action($action);
 
         if ($result instanceof IOutput) {

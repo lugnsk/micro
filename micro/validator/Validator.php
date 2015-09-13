@@ -93,7 +93,7 @@ class Validator
         }
 
         /** @var IValidator $valid */
-        $valid = new $className(['container' => $this->container, 'rule' => $this->rule]);
+        $valid = new $className(['container' => $this->container, 'params' => $this->rule]);
         $valid->elements = $elements;
 
         if ($client && method_exists($valid, 'client')) {

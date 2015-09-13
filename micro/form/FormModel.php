@@ -32,7 +32,7 @@ abstract class FormModel implements IFormModel
         foreach ($this->rules() AS $rule) {
             $validator = new Validator(['container' => $this->container, 'rule' => $rule]);
 
-            if (!$validator->run($this) AND $validator->errors) {
+            if (!$validator->run($this) && (0 < count($validator->errors))) {
                 $this->errors[] = $validator->errors;
             }
         }
