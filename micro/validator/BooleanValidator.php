@@ -18,9 +18,6 @@ use Micro\form\IFormModel;
  */
 class BooleanValidator extends BaseValidator
 {
-    /** @var array $params */
-    public $params = [];
-
     /**
      * Initial validator
      *
@@ -32,9 +29,7 @@ class BooleanValidator extends BaseValidator
      */
     public function __construct(array $params)
     {
-        $this->params['true'] = true;
-        $this->params['false'] = false;
-
+        $this->params = array_merge($this->params, ['true' => true, 'false' => false]);
         parent::__construct($params);
     }
 

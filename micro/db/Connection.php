@@ -18,7 +18,7 @@ abstract class Connection implements IConnection
      * @param array $config configuration array
      *
      * @result void
-     * @throws Exception
+     * @throws \Micro\base\Exception
      */
     public function __construct(array $config = [])
     {

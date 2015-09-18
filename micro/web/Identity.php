@@ -32,7 +32,7 @@ abstract class Identity
      *
      * @access public
      *
-     * @param Container $container
+     * @param IContainer $container
      * @param string $username
      * @param string $password
      *

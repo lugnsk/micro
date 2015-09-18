@@ -31,7 +31,7 @@ abstract class Log implements ILogger
      *
      * @access public
      *
-     * @param Container $container Container
+     * @param IContainer $container Container
      * @param array $params configuration params
      *
      * @throws Exception

@@ -20,7 +20,7 @@ abstract class File implements IFile
     protected $stream;
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function exists($filePath)
     {
@@ -28,7 +28,7 @@ abstract class File implements IFile
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function has($filePath)
     {
@@ -36,7 +36,7 @@ abstract class File implements IFile
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function read($filePath)
     {
@@ -44,7 +44,7 @@ abstract class File implements IFile
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getSize($filePath)
     {
@@ -52,7 +52,7 @@ abstract class File implements IFile
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function delete($filePath)
     {

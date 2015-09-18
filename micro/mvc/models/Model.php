@@ -50,9 +50,12 @@ abstract class Model extends FormModel implements IModel
      * Finder by primary key
      *
      * @access public
+     *
      * @param int|string $value unique value
      * @param IContainer $container
+     *
      * @return mixed
+     * @throws \Micro\base\Exception
      * @static
      */
     public static function findByPk($value, IContainer $container)
@@ -64,10 +67,13 @@ abstract class Model extends FormModel implements IModel
      * Find models by attributes
      *
      * @access public
+     *
      * @param array $attributes attributes and data for search
      * @param bool $single single or more
      * @param IContainer $container
+     *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public static function findByAttributes(array $attributes = [], $single = false, IContainer $container)
     {
@@ -90,6 +96,7 @@ abstract class Model extends FormModel implements IModel
      * @param IContainer $container
      *
      * @return mixed One or more data
+     * @throws \Micro\base\Exception
      * @static
      */
     public static function finder(IQuery $query = null, $single = false, IContainer $container = null)
@@ -110,6 +117,7 @@ abstract class Model extends FormModel implements IModel
      * @param bool $single Is a single?
      *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public function find($single = false)
     {

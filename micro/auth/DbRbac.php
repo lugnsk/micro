@@ -23,7 +23,7 @@ class DbRbac extends Rbac
     /**
      * Constructor file RBAC
      *
-     * @inheritDoc
+     * @inheritdoc
      */
     public function __construct(array $params = [])
     {
@@ -71,6 +71,7 @@ class DbRbac extends Rbac
      * @param array $data action params
      *
      * @return boolean
+     * @throws \Micro\base\Exception
      */
     public function check($userId, $action, array $data = [])
     {
@@ -125,6 +126,7 @@ class DbRbac extends Rbac
      * @param string $name element name
      *
      * @result void
+     * @throws \Micro\base\Exception
      */
     public function delete($name)
     {
@@ -142,6 +144,7 @@ class DbRbac extends Rbac
      * @param int $pdo PHPDataObject fetch key
      *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public function rawRoles($pdo = \PDO::FETCH_ASSOC)
     {

@@ -76,7 +76,7 @@ class Session extends \stdClass implements ISession
      */
     public function __get($name)
     {
-        return $this->request->getSessionVar($name);
+        return $this->request->session($name);
     }
 
     /**
@@ -91,7 +91,7 @@ class Session extends \stdClass implements ISession
      */
     public function __set($name, $value)
     {
-        $this->request->setSessionVar($name, $value);
+        $this->request->setSession($name, $value);
     }
 
     /**
@@ -105,7 +105,7 @@ class Session extends \stdClass implements ISession
      */
     public function __isset($name)
     {
-        return (bool)$this->request->getSessionVar($name);
+        return (bool)$this->request->session($name);
     }
 
     /**
@@ -119,6 +119,6 @@ class Session extends \stdClass implements ISession
      */
     public function __unset($name)
     {
-        $this->request->unsetSessionVar($name);
+        $this->request->unsetSession($name);
     }
 }

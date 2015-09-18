@@ -64,6 +64,7 @@ class Logger
      * @param string $message message to write
      *
      * @result void
+     * @throws \Micro\base\Exception
      */
     public function send($level, $message)
     {

@@ -34,7 +34,8 @@ class MongoConnection extends Connection
      * @param array $config configuration array
      *
      * @result void
-     * @throws Exception
+     * @throws \MongoConnectionException
+     * @throws \Micro\base\Exception
      */
     public function __construct(array $config = [])
     {
@@ -71,7 +72,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function rawQuery($query = '', array $params = [], $fetchType = \PDO::FETCH_ASSOC, $fetchClass = 'Model')
     {
@@ -79,7 +80,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function listDatabases()
     {
@@ -87,7 +88,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function infoDatabase($dbName)
     {
@@ -95,7 +96,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function tableExists($table)
     {
@@ -103,7 +104,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function listTables()
     {
@@ -111,7 +112,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function createTable($name, array $elements = [], $params = '')
     {
@@ -119,7 +120,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function clearTable($name)
     {
@@ -127,7 +128,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function removeTable($name)
     {
@@ -135,7 +136,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function fieldExists($field, $table)
     {
@@ -143,7 +144,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function listFields($table)
     {
@@ -151,7 +152,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function fieldInfo($field, $table)
     {
@@ -159,7 +160,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function switchDatabase($dbName)
     {
@@ -168,7 +169,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function insert($table, array $line = [], $multi = false)
     {
@@ -176,7 +177,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function update($table, array $elements = [], $conditions = '')
     {
@@ -184,7 +185,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function delete($table, $conditions, array $ph = [])
     {
@@ -192,7 +193,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function exists($table, array $params = [])
     {
@@ -200,7 +201,7 @@ class MongoConnection extends Connection
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function count($subQuery = '', $table = '')
     {

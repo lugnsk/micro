@@ -43,7 +43,7 @@ class ProfileController extends Controller
         }
 
         /** @var array $setup */
-        if ($setup = $this->container->request->getPostVar('Setup')) {
+        if ($setup = $this->container->request->post('Setup')) {
             if (!empty($setup['pass'])) {
                 $user->pass = md5($setup['pass']);
             }

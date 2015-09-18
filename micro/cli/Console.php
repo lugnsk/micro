@@ -31,7 +31,7 @@ class Console
      *
      * @access public
      *
-     * @param Container $container
+     * @param IContainer $container
      *
      * @result void
      */

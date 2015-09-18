@@ -2,6 +2,8 @@
 
 namespace Micro\cli;
 
+use Micro\base\Exception;
+
 /**
  * Threads class file.
  *
@@ -170,6 +172,7 @@ abstract class Threads
      *
      * @access public
      * @return void
+     * @throws \Micro\base\Exception
      */
     public function setAlive()
     {
@@ -185,6 +188,7 @@ abstract class Threads
      * @param mixed $value
      *
      * @return void
+     * @throws \Micro\base\Exception
      */
     public function setVariable($name, $value)
     {
@@ -221,6 +225,7 @@ abstract class Threads
      *
      * @access public
      * @return int
+     * @throws \Micro\base\Exception
      */
     public function getLastAlive()
     {
@@ -240,6 +245,7 @@ abstract class Threads
      * @param string $name
      *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public function getVariable($name)
     {
@@ -288,6 +294,7 @@ abstract class Threads
      * @param string $methodName
      *
      * @return mixed|void
+     * @throws \Micro\base\Exception
      */
     public function register_callback_func($argList, $methodName)
     {
@@ -457,6 +464,7 @@ abstract class Threads
      * @param $sigNo
      *
      * @return void
+     * @throws \Micro\base\Exception
      */
     protected function sigHandler($sigNo)
     {

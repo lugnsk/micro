@@ -53,7 +53,7 @@ class Query implements IQuery
      *
      * @access public
      *
-     * @param IDbConnection $db
+     * @param IConnection $db
      *
      * @result void
      */

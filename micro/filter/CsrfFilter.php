@@ -21,11 +21,11 @@ class CsrfFilter extends Filter
      */
     public function pre(array $params)
     {
-        if ($this->container->request->getServerVar('REQUEST_METHOD') !== 'POST') {
+        if ($this->container->request->server('REQUEST_METHOD') !== 'POST') {
             return true;
         }
 
-        $postCSRF = $this->container->request->getPostVar('csrf');
+        $postCSRF = $this->container->request->post('csrf');
         if (!$postCSRF) {
             $this->result = [
                 'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,

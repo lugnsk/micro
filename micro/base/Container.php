@@ -164,7 +164,7 @@ class Container extends \stdClass implements IContainer
 
         /** @noinspection AlterInForeachInspection */
         foreach ($options['arguments'] AS $key => &$val) {
-            if (is_string($options['arguments'][$key]) && $val[0] === '@') {
+            if (is_string($options['arguments'][$key]) && (substr($val, 0, 1) === '@')) {
                 if ($val === '@this') {
                     $val = $this;
                 } else {

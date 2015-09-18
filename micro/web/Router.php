@@ -131,8 +131,7 @@ class Router implements IRouter
     {
         $attr = [];
 
-        $countUriBlocks = count($uriBlocks);
-        for ($i = 0; $i < $countUriBlocks; $i++) {
+        foreach (range(0, count($uriBlocks)) AS $i) {
             if (substr($patBlocks[$i], 0, 1) === '<') {
                 $cut = strpos($patBlocks[$i], ':');
 

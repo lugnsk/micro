@@ -41,7 +41,7 @@ class HMVCResolver extends Resolver
      */
     public function getApplication()
     {
-        $query = $this->container->request->getQueryVar('r') ?: '/default';
+        $query = $this->container->request->query('r') ?: '/default';
         $query = (substr($query, -1) === '/') ? substr($query, 0, -1) : $query;
 
         $this->uri = $this->container->router->parse($query, $this->container->request->getMethod());
@@ -85,7 +85,7 @@ class HMVCResolver extends Resolver
 
             foreach ($paramBlocks AS $param) {
                 $val = explode('=', $param);
-                $this->container->request->setQueryVar($val[0], $val[1]);
+                $this->container->request->setQuery($val[0], $val[1]);
             }
         }
     }

@@ -139,6 +139,7 @@ interface IConnection
      * @param string $dbName database name
      *
      * @return boolean
+     * @throws \InvalidArgumentException
      */
     public function switchDatabase($dbName);
 

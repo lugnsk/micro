@@ -173,7 +173,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getQueryVar($name)
+    public function query($name)
     {
         return $this->getVar($name, '_GET');
     }
@@ -202,7 +202,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getPostVar($name)
+    public function post($name)
     {
         return $this->getVar($name, '_POST');
     }
@@ -216,7 +216,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getCookieVar($name)
+    public function cookie($name)
     {
         return $this->getVar($name, '_COOKIE');
     }
@@ -230,7 +230,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getSessionVar($name)
+    public function session($name)
     {
         return $this->getVar($name, '_SESSION');
     }
@@ -244,7 +244,7 @@ class Request implements IRequest
      *
      * @return bool
      */
-    public function getServerVar($name)
+    public function server($name)
     {
         return $this->getVar($name, '_SERVER');
     }
@@ -261,7 +261,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setQueryVar($name, $value)
+    public function setQuery($name, $value)
     {
         $this->setVar($name, $value, '_GET');
     }
@@ -292,7 +292,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setPostVar($name, $value)
+    public function setPost($name, $value)
     {
         $this->setVar($name, $value, '_POST');
     }
@@ -307,7 +307,7 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setCookieVar($name, $value)
+    public function setCookie($name, $value)
     {
         $this->setVar($name, $value, '_COOKIE');
     }
@@ -322,14 +322,14 @@ class Request implements IRequest
      *
      * @return void
      */
-    public function setSessionVar($name, $value)
+    public function setSession($name, $value)
     {
         $this->setVar($name, $value, '_SESSION');
     }
 
     // Unset's
 
-    public function unsetQueryVar($name)
+    public function unsetQuery($name)
     {
         $this->unsetVar($name, '_GET');
     }
@@ -339,12 +339,12 @@ class Request implements IRequest
         unset($GLOBALS[$storage][$name]);
     }
 
-    public function unsetPostVar($name)
+    public function unsetPost($name)
     {
         $this->unsetVar($name, '_POST');
     }
 
-    public function unsetSessionVar($name)
+    public function unsetSession($name)
     {
         $this->unsetVar($name, '_SESSION');
     }

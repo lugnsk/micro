@@ -119,6 +119,7 @@ interface IQuery
      * @param integer $as result as?
      *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public function run($as = \PDO::FETCH_CLASS);
 

@@ -27,6 +27,7 @@ abstract class ViewController extends Controller
 
     /**
      * @inheritdoc
+     * @throws Exception
      */
     public function action($name = 'index')
     {

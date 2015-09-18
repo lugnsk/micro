@@ -26,7 +26,7 @@ abstract class Migration
      * Constructor for model
      *
      * @access public
-     * @param Container $container
+     * @param IContainer $container
      * @result void
      */
     public function __construct(IContainer $container)

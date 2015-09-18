@@ -7,7 +7,7 @@ class DefaultConsoleCommand extends ConsoleCommand
     public $data;
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function execute()
     {

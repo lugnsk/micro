@@ -45,7 +45,7 @@ class Cookie implements ICookie
      */
     public function get($name)
     {
-        return $this->request->getCookieVar($name);
+        return $this->request->cookie($name);
     }
 
     /**
@@ -88,7 +88,7 @@ class Cookie implements ICookie
      */
     public function exists($name)
     {
-        return (bool)$this->request->getCookieVar($name);
+        return (bool)$this->request->cookie($name);
     }
 
     /**

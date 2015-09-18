@@ -22,6 +22,7 @@ interface IValidator
      * @param IFormModel $model checked model
      *
      * @return bool
+     * @throws \Micro\base\Exception
      */
     public function validate(IFormModel $model);
 

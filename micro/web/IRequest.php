@@ -119,7 +119,7 @@ interface IRequest
      *
      * @return bool
      */
-    public function getQueryVar($name);
+    public function query($name);
 
     /**
      * Get value by key from post storage
@@ -130,7 +130,7 @@ interface IRequest
      *
      * @return bool
      */
-    public function getPostVar($name);
+    public function post($name);
 
     /**
      * Get value by key from cookie storage
@@ -141,7 +141,7 @@ interface IRequest
      *
      * @return bool
      */
-    public function getCookieVar($name);
+    public function cookie($name);
 
     /**
      * Get value by key from session storage
@@ -152,7 +152,7 @@ interface IRequest
      *
      * @return bool
      */
-    public function getSessionVar($name);
+    public function session($name);
 
     /**
      * Get value by key from server storage
@@ -163,7 +163,7 @@ interface IRequest
      *
      * @return bool
      */
-    public function getServerVar($name);
+    public function server($name);
 
     // Setters
 
@@ -190,7 +190,7 @@ interface IRequest
      *
      * @return void
      */
-    public function setQueryVar($name, $value);
+    public function setQuery($name, $value);
 
     /**
      * Set value into post storage
@@ -202,7 +202,7 @@ interface IRequest
      *
      * @return void
      */
-    public function setPostVar($name, $value);
+    public function setPost($name, $value);
 
     /**
      * Set value into cookie storage
@@ -214,7 +214,7 @@ interface IRequest
      *
      * @return void
      */
-    public function setCookieVar($name, $value);
+    public function setCookie($name, $value);
 
     /**
      * Set value into session storage
@@ -226,7 +226,7 @@ interface IRequest
      *
      * @return void
      */
-    public function setSessionVar($name, $value);
+    public function setSession($name, $value);
 
     // Unset's
 
@@ -251,7 +251,7 @@ interface IRequest
      *
      * @return void
      */
-    public function unsetQueryVar($name);
+    public function unsetQuery($name);
 
     /**
      * Unset var into post storage
@@ -262,7 +262,7 @@ interface IRequest
      *
      * @return void
      */
-    public function unsetPostVar($name);
+    public function unsetPost($name);
 
     /**
      * Unset var into session storage
@@ -273,5 +273,5 @@ interface IRequest
      *
      * @return void
      */
-    public function unsetSessionVar($name);
+    public function unsetSession($name);
 }

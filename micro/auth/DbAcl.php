@@ -68,6 +68,7 @@ class DbAcl extends Acl
      * @param array $data for compatible, not used!
      *
      * @return bool
+     * @throws \Micro\base\Exception
      */
     public function check($userId, $permission, array $data = [])
     {
@@ -144,6 +145,7 @@ class DbAcl extends Acl
      * @param string $name role name
      *
      * @return void
+     * @throws \Micro\base\Exception
      */
     public function deleteRole($name)
     {
@@ -161,6 +163,7 @@ class DbAcl extends Acl
      * @param string $role role name
      *
      * @return array
+     * @throws \Micro\base\Exception
      */
     protected function rolePerms($role)
     {

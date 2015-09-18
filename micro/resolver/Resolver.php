@@ -28,7 +28,7 @@ abstract class Resolver implements IResolver
      *
      * @access public
      *
-     * @param Container $container Container is a container for components and options
+     * @param IContainer $container Container is a container for components and options
      *
      * @result void
      */

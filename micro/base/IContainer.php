@@ -18,11 +18,12 @@ namespace Micro\base;
  * @property string $lang
  * @property string $errorController
  * @property string $errorAction
+ * @property string $assetsDirName
  *
  * @property \Micro\web\FlashMessage $flash
  *
  * @property \Micro\Micro $kernel
- * @property \Micro\auth\IAuth $auth
+ * @property \Micro\auth\IAuth $permission
  * @property \Micro\base\IDispatcher $dispatcher
  * @property \Micro\db\IConnection $db
  * @property \Micro\web\IRouter $router

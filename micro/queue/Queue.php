@@ -156,15 +156,14 @@ class Queue
     protected function getRoute($uri)
     {
         $keys = array_keys($this->routes);
-        $countRoutes = count($keys);
 
-        for ($a = 0; $a < $countRoutes; $a++) {
-            if (preg_match('/' . $keys[$a] . '/', $uri)) {
-                if (!is_array($this->routes[$keys[$a]])) {
-                    $this->routes[$keys[$a]] = ['*' => $this->routes[$keys[$a]]];
+        foreach (range(0, count($keys)) AS $i) {
+            if (preg_match('/' . $keys[$i] . '/', $uri)) {
+                if (!is_array($this->routes[$keys[$i]])) {
+                    $this->routes[$keys[$i]] = ['*' => $this->routes[$keys[$i]]];
                 }
 
-                return $this->routes[$keys[$a]]; // роут найден
+                return $this->routes[$keys[$i]];
             }
         }
         throw new Exception('Route `' . $uri . '` not found');

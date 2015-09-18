@@ -71,6 +71,7 @@ abstract class Rbac
      * @param array $data action params
      *
      * @return boolean
+     * @throws \Micro\base\Exception
      */
     public function check($userId, $permission, array $data = [])
     {
@@ -140,6 +141,7 @@ abstract class Rbac
      * @param integer $userId user ID
      *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public function assigned($userId)
     {

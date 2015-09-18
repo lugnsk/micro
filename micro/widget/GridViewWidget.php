@@ -103,13 +103,15 @@ class GridViewWidget extends Widget
                 $res->table = '(' . $args['data']->getQuery() . ') micro_count';
                 $res->single = true;
             } else {
+                /** @var Query $res */
                 $res = clone $args['data'];
                 $res->objectName = null;
                 $res->select = 'COUNT(*)';
                 $res->single = true;
             }
 
-            $this->totalCount = $res->run()[0];
+            /** @var array $a */
+            $this->totalCount = ($a = $res->run()) ? $a[0] : 0;
             $this->filterPrefix = $args['data']->table;
 
             $args['data']->ofset = $this->page * $this->limit;
@@ -265,7 +267,8 @@ class GridViewWidget extends Widget
         if (!$this->filters) {
             return null;
         }
-        $filtersData = $this->container->request->getQueryVar($this->filterPrefix);
+        /** @var array $filtersData */
+        $filtersData = $this->container->request->query($this->filterPrefix);
 
         $result = Html::beginForm(null, 'get', $this->attributesFilterForm);
         $result .= Html::openTag('tr', $this->attributesFilter);

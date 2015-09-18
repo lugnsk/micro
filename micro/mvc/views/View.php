@@ -43,7 +43,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function addParameter($name, $value)
     {
@@ -51,7 +51,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function widget($name, array $options = [], $capture = false)
     {
@@ -92,7 +92,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function beginWidget($name, array $options = [])
     {
@@ -114,7 +114,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function endWidget($name = '')
     {
@@ -150,7 +150,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerScript($source, $isHead = true)
     {
@@ -161,7 +161,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerScriptFile($source, $isHead = true)
     {
@@ -172,7 +172,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerCss($source, $isHead = true)
     {
@@ -183,7 +183,7 @@ abstract class View implements IView
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerCssFile($source, $isHead = true)
     {

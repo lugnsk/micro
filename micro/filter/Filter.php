@@ -27,11 +27,11 @@ abstract class Filter implements IFilter
 
     /**
      * @param string $action current action
-     * @param Container $Container
+     * @param IContainer $container
      */
-    public function __construct($action, IContainer $Container)
+    public function __construct($action, IContainer $container)
     {
         $this->action = $action;
-        $this->container = $Container;
+        $this->container = $container;
     }
 }

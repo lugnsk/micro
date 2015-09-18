@@ -55,7 +55,7 @@ class RegisterController extends Controller
 
     public function actionPost()
     {
-        if ($userData = $this->container->request->getPostVar('User')) {
+        if ($userData = $this->container->request->post('User')) {
             $user = new User($this->container);
             $user->setModelData($userData);
             $user->pass = md5($user->pass);

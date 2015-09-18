@@ -51,8 +51,7 @@ class Uploader
         }
 
         if (!empty($rawData['name'])) {
-            $sumFiles = count($rawData['name']);
-            for ($i = 0; $i < $sumFiles; $i++) {
+            foreach (range(0, count($rawData['name'])) AS $i) {
                 if (empty($rawData['name'][$i])) {
                     continue;
                 }

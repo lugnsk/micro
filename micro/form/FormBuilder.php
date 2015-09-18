@@ -2,6 +2,7 @@
 
 namespace Micro\form;
 
+use Micro\base\Exception;
 use Micro\web\Html;
 use Micro\widget\FormWidget;
 
@@ -96,7 +97,7 @@ class FormBuilder
      * Getting model
      *
      * @access public
-     * @return \Micro\db\Model
+     * @return \Micro\mvc\models\Model
      */
     public function getModel()
     {
@@ -108,6 +109,7 @@ class FormBuilder
      *
      * @access public
      * @return string
+     * @throws \Micro\base\Exception
      */
     public function __toString()
     {
@@ -125,7 +127,11 @@ class FormBuilder
         ob_start();
 
         $this->beginRender();
-        $this->contentRender();
+        try {
+            $this->contentRender();
+        } catch (Exception $e) {
+            //
+        }
         $this->endRender();
 
         return ob_get_clean();
@@ -179,6 +185,7 @@ class FormBuilder
      * @param null|array $conf configuration array
      *
      * @return void
+     * @throws \Micro\base\Exception
      */
     public function contentRender($conf = null)
     {

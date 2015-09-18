@@ -17,7 +17,7 @@ namespace Micro\file\drivers;
 class LocalDriver extends File
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function __construct(array $params = [])
     {
@@ -25,7 +25,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function createStream()
     {
@@ -33,7 +33,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function __destruct()
     {
@@ -41,7 +41,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function deleteStream()
     {
@@ -49,7 +49,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function file_exists($filePath)
     {
@@ -57,7 +57,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function copy($sourcePath, $destinationPath)
     {
@@ -65,7 +65,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function unlink($filePath)
     {
@@ -73,7 +73,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function file_get_contents($filePath)
     {
@@ -81,7 +81,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function file_put_contents($filePath, $data)
     {
@@ -89,7 +89,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function mtime($filePath)
     {
@@ -97,7 +97,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function size($filePath)
     {
@@ -105,7 +105,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function disk_free_space($directory)
     {
@@ -113,7 +113,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function disk_total_space($directory)
     {
@@ -121,7 +121,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function readStream()
     {
@@ -129,7 +129,7 @@ class LocalDriver extends File
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function updateStream()
     {

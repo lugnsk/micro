@@ -57,6 +57,7 @@ class FileAcl extends Acl
      * @param array $data not used, added for compatible!
      *
      * @return bool
+     * @throws \Micro\base\Exception
      */
     public function check($userId, $permission, array $data = [])
     {
@@ -86,6 +87,7 @@ class FileAcl extends Acl
      * @param integer $userId user ID
      *
      * @return mixed
+     * @throws \Micro\base\Exception
      */
     public function assigned($userId)
     {

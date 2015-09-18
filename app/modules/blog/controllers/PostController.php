@@ -50,14 +50,14 @@ class PostController extends Controller
 
         $v = new View($this->container);
         $v->addParameter('blogs', $crt);
-        $v->addParameter('page', $this->container->request->getQueryVar('page') ?: 0);
+        $v->addParameter('page', $this->container->request->query('page') ?: 0);
 
         return $v;
     }
 
     public function actionView()
     {
-        $blog = Blog::findByPk($this->container->request->getQueryVar('id'), $this->container);
+        $blog = Blog::findByPk($this->container->request->query('id'), $this->container);
         $v = new View($this->container);
         $v->addParameter('model', $blog);
 
@@ -69,7 +69,7 @@ class PostController extends Controller
         $blog = new Blog($this->container);
 
         /** @var array $blogData */
-        if ($blogData = $this->container->request->getPostVar('Blog')) {
+        if ($blogData = $this->container->request->post('Blog')) {
             $blog->name = $blogData['name'];
             $blog->content = $blogData['content'];
 
@@ -86,7 +86,7 @@ class PostController extends Controller
 
     public function actionUpdate()
     {
-        $blog = Blog::findByPk($this->container->request->getQueryVar('id'), $this->container);
+        $blog = Blog::findByPk($this->container->request->query('id'), $this->container);
 
         $blog->name = 'setup-er';
 
@@ -96,7 +96,7 @@ class PostController extends Controller
     public function actionDelete()
     {
         $blog = Blog::findByPk(
-            $this->container->request->getQueryVar('id'),
+            $this->container->request->query('id'),
             $this->container
         );
 

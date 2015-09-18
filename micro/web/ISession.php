@@ -13,6 +13,9 @@ namespace Micro\web;
  * @package Micro\web
  *
  * @property array $flash FlashMessages
+ * @property array $csrf
+ * @property integer $UserID
+ * @property string $captchaCode
  */
 interface ISession
 {

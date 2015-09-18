@@ -62,7 +62,7 @@ abstract class Controller implements IController
      * @param string $data data to parse
      *
      * @return null|string
-     * @throws Exception error on filter
+     * @throws Exception
      */
     public function applyFilters($action, $isPre = true, array $filters = [], $data = null)
     {

@@ -63,7 +63,7 @@ class DefaultController extends Controller
             'POST'
         );
 
-        if ($post = $this->container->request->getPostVar('LoginFormModel')) {
+        if ($post = $this->container->request->post('LoginFormModel')) {
             $form->setModelData($post);
             /** @noinspection PhpUndefinedMethodInspection */
             if ($form->validateModel() && $form->getModel()->logined()) {
@@ -81,7 +81,7 @@ class DefaultController extends Controller
     {
         $result = null;
         /** @var \Micro\base\Exception $error */
-        if ($error = $this->container->request->getPostVar('error')) {
+        if ($error = $this->container->request->post('error')) {
             $result .= Html::heading(3, $error->getMessage(), ['class' => 'text-danger bg-danger']);
         }
         $v = new View($this->container);

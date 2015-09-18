@@ -17,7 +17,7 @@ interface IController
      * @param string $data data to parse
      *
      * @return null|string
-     * @throws Exception error on filter
+     * @throws \Micro\base\Exception error on filter
      */
     public function applyFilters($action, $isPre = true, array $filters = [], $data = null);
 
@@ -29,6 +29,7 @@ interface IController
      * @param string $name Called action name
      *
      * @return string|IResponse
+     * @throws \Micro\base\Exception
      */
     public function action($name = 'index');
 

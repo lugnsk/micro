@@ -65,6 +65,7 @@ class DbCache extends BaseCache
 
     /**
      * @inheritdoc
+     * @throws \Micro\base\Exception
      */
     public function get($name)
     {
@@ -78,6 +79,7 @@ class DbCache extends BaseCache
 
     /**
      * @inheritdoc
+     * @throws \Micro\base\Exception
      */
     protected function getElement($name)
     {
@@ -125,6 +127,7 @@ class DbCache extends BaseCache
 
     /**
      * @inheritdoc
+     * @throws \Micro\base\Exception
      */
     public function getMeta($id)
     {

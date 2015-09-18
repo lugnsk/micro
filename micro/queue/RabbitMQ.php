@@ -61,6 +61,8 @@ class RabbitMQ
      * @param string $chat name chat room
      *
      * @return bool
+     * @throws \AMQPConnectionException
+     * @throws \AMQPChannelException
      * @throws \AMQPExchangeException
      */
     public function send($message, $route, $chat)
@@ -81,11 +83,15 @@ class RabbitMQ
      * @param string $nameReader name queue
      *
      * @return \AMQPEnvelope|bool
+     * @throws \AMQPConnectionException
+     * @throws \AMQPChannelException
+     * @throws \AMQPQueueException
      */
     public function read($chat, $route, $nameReader = 'random')
     {
         $queue = new \AMQPQueue($this->channel);
         $queue->setName($nameReader);
+        /** @noinspection PhpUndefinedMethodInspection */
         $queue->declare();
         $queue->bind($chat, $route);
 
@@ -109,11 +115,15 @@ class RabbitMQ
      * @param string $nameReader name queue
      *
      * @return array
+     * @throws \AMQPConnectionException
+     * @throws \AMQPQueueException
+     * @throws \AMQPChannelException
      */
     public function readAll($chat, $route, $nameReader)
     {
         $queue = new \AMQPQueue($this->channel);
         $queue->setName($nameReader);
+        /** @noinspection PhpUndefinedMethodInspection */
         $queue->declare();
         $queue->bind($chat, $route);
 

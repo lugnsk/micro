@@ -1,6 +1,6 @@
 <?php
 
-/** @var \Micro\db\Model $model */
+/** @var \Micro\mvc\models\Model $model */
 
 echo \Micro\web\Html::heading(1, 'Создание статьи');
 

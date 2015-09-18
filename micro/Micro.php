@@ -242,6 +242,7 @@ class Micro
      * @access public
      *
      * @return \Micro\web\IResponse
+     * @throws \Micro\base\Exception
      */
     private function doRun()
     {
@@ -290,6 +291,7 @@ class Micro
      * @param \Exception $e Exception
      *
      * @return IOutput
+     * @throws \Micro\base\Exception
      */
     private function doException(\Exception $e)
     {
@@ -318,7 +320,7 @@ class Micro
         $controller = $this->container->errorController;
         $action = $this->container->errorAction;
 
-        $this->container->request->setPostVar('error', $e);
+        $this->container->request->setPost('error', $e);
 
         /** @var \Micro\mvc\controllers\IController $result */
         $result = new $controller($this->container, false);
