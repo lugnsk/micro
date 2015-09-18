@@ -7,6 +7,7 @@ Micro реализует [паттерн](http://wiki.micro.linpax.org/Шабл�
 [![Author](http://img.shields.io/badge/author-@microcmf-blue.svg?style=flat-square)](https://twitter.com/microcmf)
 [![Join the chat at https://gitter.im/lugnsk/micro](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lugnsk/micro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Code Climate](https://codeclimate.com/github/lugnsk/micro/badges/gpa.svg)](https://codeclimate.com/github/lugnsk/micro)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lugnsk/micro/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lugnsk/micro/?branch=master)
 [![Build Status](https://secure.travis-ci.org/lugnsk/micro.png)](http://travis-ci.org/lugnsk/micro)
 [![HHVM Status](http://hhvm.h4cc.de/badge/lugnsk/microphp.svg)](http://hhvm.h4cc.de/package/lugnsk/microphp)
 [![Dependency Status](https://www.versioneye.com/user/projects/55066a5d66e561bb9b000142/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55066a5d66e561bb9b000142)
