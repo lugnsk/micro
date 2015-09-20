@@ -51,7 +51,7 @@ class Uploader
         }
 
         if (!empty($rawData['name'])) {
-            foreach (range(0, count($rawData['name'])) AS $i) {
+            foreach (range(0, count($rawData['name']) - 1) AS $i) {
                 if (empty($rawData['name'][$i])) {
                     continue;
                 }

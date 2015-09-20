@@ -157,7 +157,7 @@ class Queue
     {
         $keys = array_keys($this->routes);
 
-        foreach (range(0, count($keys)) AS $i) {
+        foreach (range(0, count($keys) - 1) AS $i) {
             if (preg_match('/' . $keys[$i] . '/', $uri)) {
                 if (!is_array($this->routes[$keys[$i]])) {
                     $this->routes[$keys[$i]] = ['*' => $this->routes[$keys[$i]]];
