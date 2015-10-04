@@ -2,6 +2,8 @@
 
 namespace Micro\file;
 
+use Micro\base\Exception;
+
 /**
  * MFile io class
  *
@@ -109,34 +111,44 @@ class FileHelper
      *
      * @param string $src source path
      * @param string $dst destination path
-     * @param string $exc exception name
+     * @param array $excludes excludes extensions
      *
      * @return void
+     * @throws Exception
      * @static
      */
-    public static function recurseCopyIfEdited($src = '', $dst = '', $exc = '.php')
+    public static function recurseCopyIfEdited($src = '', $dst = '', array $excludes = ['php'])
     {
-        $dir = opendir($src);
         if (!file_exists($dst)) {
             @mkdir($dst, 0777);
         }
 
-        while (false !== ($file = @readdir($dir))) {
-            if (($file !== '.') && ($file !== '..')) {
-                if (is_dir($src . '/' . $file)) {
-                    self::recurseCopyIfEdited($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    if (substr($src . '/' . $file, 0 - strlen($exc)) !== $exc) {
-                        if (!file_exists($dst . '/' . $file)) {
-                            @copy($src . '/' . $file, $dst . '/' . $file);
-                            @chmod($dst . '/' . $file, 0666);
-                        } elseif (@filemtime($src . '/' . $file) !== @filemtime($dst . '/' . $file)) {
-                            @copy($src . '/' . $file, $dst . '/' . $file);
-                            @chmod($dst . '/' . $file, 0666);
-                        }
-                    }
-                }
+        $dir = opendir($src);
+        if (!$dir) {
+            throw new Exception('Unable to read dir: '. $src);
+        }
+
+        while (false !== ($file = readdir($dir))) {
+            if ($file === '.' || $file === '..') {
+                continue;
             }
+
+            if (is_dir($src . '/' . $file)) {
+                self::recurseCopyIfEdited($src . '/' . $file, $dst . '/' . $file);
+                continue;
+            }
+
+            if (in_array(substr($file, strrpos($file, '.') + 1), $excludes, true)) {
+                continue;
+            }
+
+
+            if (file_exists($dst . '/' . $file) && (filemtime($src . '/' . $file) === filemtime($dst . '/' . $file))) {
+                continue;
+            }
+
+            copy($src . '/' . $file, $dst . '/' . $file);
+            chmod($dst . '/' . $file, 0666);
         }
         closedir($dir);
     }
