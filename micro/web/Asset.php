@@ -3,6 +3,7 @@
 namespace Micro\web;
 
 use Micro\base\Autoload;
+use Micro\base\Exception;
 use Micro\file\FileHelper;
 use Micro\mvc\views\IView;
 
@@ -46,6 +47,7 @@ class Asset
      * @param IView $view
      *
      * @result void
+     * @throws \Micro\base\Exception
      */
     public function __construct(IView $view)
     {
@@ -60,6 +62,10 @@ class Asset
         $this->publishPath = '/' . (($dir = $view->container->assetsDirName) ? $dir : 'assets') . '/' . $this->hash;
 
         $web = $this->view->container->kernel->getWebDir();
+
+        if (!file_exists($this->sourcePath)) {
+            throw new Exception('Asset dir not exists: ' . $this->sourcePath);
+        }
 
         if (!file_exists($web . $this->publishPath)) {
             mkdir($web . $this->publishPath, 0777);
