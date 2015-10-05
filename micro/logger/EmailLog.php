@@ -3,7 +3,7 @@
 namespace Micro\logger;
 
 use Micro\base\IContainer;
-use Micro\web\Mail;
+use Micro\mail\Message;
 
 /**
  * Email logger class file.
@@ -55,8 +55,11 @@ class EmailLog extends Log
      */
     public function sendMessage($level, $message)
     {
-        $mail = new Mail($this->from);
-        $mail->setType($this->type);
-        $mail->send($this->to, $this->subject, ucfirst($level) . ': ' . $message);
+        $mail = new Message($this->from);
+
+        $mail->setTo($this->to);
+        $mail->setText(ucfirst($level) . ': ' . $message, $this->type);
+
+        $this->container->mail->send($message);
     }
 }
