@@ -74,4 +74,29 @@ class Type
 
         return $data;
     }
+
+    /**
+     * Get SubArray from array by keys
+     *
+     * @access public
+     *
+     * @param array     $array
+     * @param array     $keys
+     * @param bool|null $strict
+     *
+     * @return array
+     * @static
+     */
+    public static function getSubArrayFromArrayByKeys(array $array, array $keys, $strict = null)
+    {
+        $result = [];
+
+        foreach ($array AS $key=>$val) {
+            if (in_array($key, $keys, $strict)) {
+                $result[$key] = $val;
+            }
+        }
+
+        return $result;
+    }
 }

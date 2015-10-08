@@ -60,6 +60,6 @@ class EmailLog extends Log
         $mail->setTo($this->to);
         $mail->setText(ucfirst($level) . ': ' . $message, $this->type);
 
-        $this->container->mail->send($message);
+        $this->container->mail->send($mail);
     }
 }

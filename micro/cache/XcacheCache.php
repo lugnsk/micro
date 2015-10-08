@@ -58,7 +58,9 @@ class XcacheCache extends BaseCache
      */
     public function clean()
     {
+        /** @noinspection PhpUndefinedConstantInspection */
         for ($i = 0, $cnt = xcache_count(XC_TYPE_VAR); $i < $cnt; $i++) {
+            /** @noinspection PhpUndefinedConstantInspection */
             if (xcache_clear_cache(XC_TYPE_VAR, $i) === false) {
                 return false;
             }
@@ -72,6 +74,7 @@ class XcacheCache extends BaseCache
      */
     public function info()
     {
+        /** @noinspection PhpUndefinedConstantInspection */
         return xcache_count(XC_TYPE_VAR);
     }
 
