@@ -19,6 +19,8 @@ engines:
     enabled: true
   csslint:
     enabled: true
+  phpmd:
+    enabled: true
 
 # Engines can analyze files and report issues on them, but you can separately
 # decide which files will receive ratings based on those issues. This is
@@ -27,12 +29,10 @@ engines:
 # For more details see here:
 # http://docs.codeclimate.com/article/289-configuring-your-repository-via-codeclimate-yml#platform
 
-# ratings:
-#   paths:
-#   - app/**
-#   - lib/**
-#   - "**.rb"
-#   - "**.go"
+ratings:
+  paths:
+  - "**.css"
+  - "**.php"
 
 # You can globally exclude files from being analyzed by any engine using the
 # exclude_paths key.
@@ -42,5 +42,6 @@ languages:
    JavaScript: true
 
 exclude_paths:
+- "micro/tests/**/*"
 - "micro/tests/*"
-- "vendor/*"
+- "vendor/**/*"
