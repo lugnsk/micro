@@ -17,15 +17,19 @@ use Micro\web\Response;
  */
 class Exception extends \Exception
 {
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $resp = new Response();
         $resp->setStatus(500);
-        $resp->setBody(
-            '<h1>' . $this->message . '</h1>' .
-            '<p>In ' . $this->file . ':' . $this->line . '</p>' .
-            '<pre>' . $this->getTraceAsString() . '</pre>'
-        );
+        $resp->setBody(sprintf('<h1>%s</h1><p>In %s: %s</p><pre>%s</pre>',
+            $this->message,
+            $this->file,
+            $this->line,
+            $this->getTraceAsString()
+        ));
         $resp->send();
 
         error_reporting(0);
