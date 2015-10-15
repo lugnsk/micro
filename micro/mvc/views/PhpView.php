@@ -150,7 +150,7 @@ class PhpView extends View
         /** @noinspection PhpIncludeInspection */
         include str_replace('\\', '/', $fileName);
 
-        if ($GLOBALS['widgetStack']) {
+        if (!empty($GLOBALS['widgetStack'])) {
             throw new Exception(count($GLOBALS['widgetStack']) . ' widgets not endings.');
         }
 
