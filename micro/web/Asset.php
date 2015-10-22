@@ -89,7 +89,7 @@ class Asset
     public function publish()
     {
         foreach ($this->required AS $require) {
-            if (!in_array($require, $this->published, true)) {
+            if (!in_array($require, $this->published, true) && class_exists($require)) {
                 $this->published[] = $require;
                 /** @var Asset $require */
                 $require = new $require($this->view);
