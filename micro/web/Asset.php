@@ -30,13 +30,19 @@ class Asset
     public $js = [];
     /** @var array $css CSS files links */
     public $css = [];
+    /** @var array $required Required assets */
+    public $required = [];
+    /** @var array $excludes Excludes extensions */
+    public $excludes = [];
 
     /** @var IView $view View for install current asset */
     protected $view;
     /** @var string $hash Unique directory to publish into assets dir */
     protected $hash;
-    /** @var string $publishPath Published path */
+    /** @var string $publishPath Publish path */
     protected $publishPath;
+    /** @var array $published Published required extends */
+    private $published;
 
 
     /**
@@ -71,7 +77,7 @@ class Asset
             mkdir($web . $this->publishPath, 0777);
         }
 
-        FileHelper::recurseCopyIfEdited($this->sourcePath, $web . $this->publishPath);
+        FileHelper::recurseCopyIfEdited($this->sourcePath, $web . $this->publishPath, $this->excludes);
     }
 
     /**
@@ -82,6 +88,15 @@ class Asset
      */
     public function publish()
     {
+        foreach ($this->required AS $require) {
+            if (!in_array($require, $this->published, true)) {
+                $this->published[] = $require;
+                /** @var Asset $require */
+                $require = new $require($this->view);
+                $require->publish();
+            }
+        }
+
         if ($this->js) {
             if (is_string($this->js)) {
                 $this->js = [$this->js];

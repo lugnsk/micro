@@ -80,8 +80,8 @@ class Type
      *
      * @access public
      *
-     * @param array     $array
-     * @param array     $keys
+     * @param array $array
+     * @param array $keys
      * @param bool|null $strict
      *
      * @return array
@@ -91,9 +91,9 @@ class Type
     {
         $result = [];
 
-        foreach ($array AS $key=>$val) {
-            if (in_array($key, $keys, $strict)) {
-                $result[$key] = $val;
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $array)) {
+                $result[$key] = $array[$key];
             }
         }
 
