@@ -58,23 +58,18 @@ class Queue
      */
     public function send($route, array $data = [], $type = 'sync', $retry = 5)
     {
+        $broker = $this->getBroker($route, $type, $retry);
+
         switch ($type) {
-            case 'sync': {
-                return $this->getBroker($route, $type, $retry)->sync($route, $data);
+            case 'sync':
+            case 'async':
+            case 'stream':
                 break;
-            }
-            case 'async': {
-                return $this->getBroker($route, $type, $retry)->async($route, $data);
-                break;
-            }
-            case 'stream': {
-                return $this->getBroker($route, $type, $retry)->stream($route, $data);
-                break;
-            }
-            default: {
+            default:
                 throw new Exception('Service type `' . $type . '` wrong name.');
-            }
         }
+
+        return $broker->{$type}($route, $data);
     }
 
     /**

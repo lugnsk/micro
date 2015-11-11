@@ -61,16 +61,16 @@ class FileHelper
     public static function removeDir($path)
     {
         if (is_file($path)) {
-            @unlink($path);
+            unlink($path);
         } else {
             foreach (scandir($path) as $dir) {
                 if ($dir !== '.' AND $dir !== '..') {
                     self::removeDir($path . '/' . $dir);
                 }
             }
-            @unlink($path);
+            unlink($path);
         }
-        @rmdir($path);
+        rmdir($path);
     }
 
     /**
@@ -88,7 +88,7 @@ class FileHelper
     {
         $dir = opendir($src);
         if (!file_exists($dst)) {
-            @mkdir($dst, 0777);
+            mkdir($dst, 0777);
         }
 
         while (false !== ($file = readdir($dir))) {
@@ -96,8 +96,8 @@ class FileHelper
                 if (is_dir($src . '/' . $file)) {
                     self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {
-                    @copy($src . '/' . $file, $dst . '/' . $file);
-                    @chmod($dst . '/' . $file, 0666);
+                    copy($src . '/' . $file, $dst . '/' . $file);
+                    chmod($dst . '/' . $file, 0666);
                 }
             }
         }
@@ -120,7 +120,7 @@ class FileHelper
     public static function recurseCopyIfEdited($src = '', $dst = '', array $excludes = ['php'])
     {
         if (!file_exists($dst)) {
-            @mkdir($dst, 0777);
+            mkdir($dst, 0777);
         }
 
         $dir = opendir($src);
@@ -134,11 +134,11 @@ class FileHelper
             }
 
             if (is_dir($src . '/' . $file)) {
-                self::recurseCopyIfEdited($src . '/' . $file, $dst . '/' . $file);
+                self::recurseCopyIfEdited($src . '/' . $file, $dst . '/' . $file, $excludes);
                 continue;
             }
 
-            if (in_array(substr($file, strrpos($file, '.') + 1), $excludes, true)) {
+            if (in_array(substr($file, strrpos($file, '.') + 1), $excludes, null)) {
                 continue;
             }
 
