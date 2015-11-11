@@ -15,9 +15,11 @@
 engines:
 # to turn on an engine, add it here and set enabled to `true`
 # to turn off an engine, set enabled to `false` or remove it
-  phpcodesniffer:
-    enabled: true
   csslint:
+    enabled: true
+  fixme:
+    enabled: true
+  phpcodesniffer:
     enabled: true
   phpmd:
     enabled: true
@@ -33,6 +35,8 @@ ratings:
   paths:
   - "**.css"
   - "**.php"
+  - "**.module"
+  - "**.inc"
 
 # You can globally exclude files from being analyzed by any engine using the
 # exclude_paths key.
@@ -42,6 +46,6 @@ languages:
    JavaScript: true
 
 exclude_paths:
+- "vendor/**/*"
 - "micro/tests/**/*"
 - "micro/tests/*"
-- "vendor/**/*"
