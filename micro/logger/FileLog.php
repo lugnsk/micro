@@ -40,7 +40,7 @@ class FileLog extends Log
     {
         parent::__construct($container, $params);
 
-        if (is_writable($params['filename']) OR is_writable(dirname($params['filename']))) {
+        if (is_writable($params['filename']) || is_writable(dirname($params['filename']))) {
             $this->connect = fopen($params['filename'], 'a+');
         } else {
             throw new Exception('Directory or file "' . $params['filename'] . '" is read-only');

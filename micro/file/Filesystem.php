@@ -1,4 +1,4 @@
-<?php /** MicroFilesystem */
+<?php /** MicroFileSystem */
 
 namespace Micro\file;
 
@@ -75,6 +75,3 @@ class Filesystem
         return call_user_func_array([$this->driver, $methodName], $arguments);
     }
 }
-
-?>
-

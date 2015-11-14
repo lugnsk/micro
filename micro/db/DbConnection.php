@@ -260,7 +260,7 @@ class DbConnection extends Connection
     public function update($table, array $elements = [], $conditions = '')
     {
         $keys = array_keys($elements);
-        if (!$keys) {
+        if (0 === count($keys)) {
             return false;
         }
 

@@ -36,7 +36,7 @@ abstract class FormModel implements IFormModel
                 $this->errors[] = $validator->errors;
             }
         }
-        if ($this->errors) {
+        if (count($this->errors)) {
             return false;
         }
 

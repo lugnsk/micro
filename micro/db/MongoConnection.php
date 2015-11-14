@@ -100,7 +100,7 @@ class MongoConnection extends Connection
      */
     public function tableExists($table)
     {
-        return array_search($table, $this->listTables(), true);
+        return (bool)array_search($table, $this->listTables(), true);
     }
 
     /**
