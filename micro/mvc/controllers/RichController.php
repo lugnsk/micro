@@ -103,17 +103,16 @@ abstract class RichController extends Controller
     protected function switchContentType($data)
     {
         switch ($this->format) {
-            case 'application/json': {
+            case 'application/json':
                 $data = json_encode(is_object($data) ? (array)$data : $data);
                 break;
-            }
-            case 'application/xml': {
+
+            case 'application/xml':
                 $data = is_object($data) ? (string)$data : $data;
                 break;
-            }
-            default: {
+
+            default:
                 $data = (string)$data;
-            }
         }
 
         return $data;

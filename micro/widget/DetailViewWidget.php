@@ -56,12 +56,12 @@ class DetailViewWidget extends Widget
         }
 
         switch (gettype($args['data'])) {
-            case 'array': {
+            case 'array':
                 $this->data = (object)$args['data'];
                 $this->keys = array_keys($args['data']);
                 break;
-            }
-            case 'object': {
+
+            case 'object':
                 if ($args['data'] instanceof IQuery) {
                     if ($args['data']->objectName) {
                         /** @var IModel $cls */
@@ -78,10 +78,9 @@ class DetailViewWidget extends Widget
                 }
                 $this->keys = $this->data->getAttributes();
                 break;
-            }
-            default: {
+
+            default:
                 throw new Exception('Argument "model" not supported type into DetailViewWidget');
-            }
         }
         if (empty($args['columns'])) {
             $this->columns = $this->keys;
@@ -145,20 +144,19 @@ class DetailViewWidget extends Widget
             $buffer = '';
             /** @noinspection DegradedSwitchInspection */
             switch ($val['type']) {
-                case 'raw': {
+                case 'raw':
                     /** @noinspection OnlyWritesOnParameterInspection */
                     /** @noinspection PhpUnusedLocalVariableInspection */
                     $data = $this->data; // for eval
                     $buffer .= eval('return ' . $val['value']);
                     break;
-                }
-                default: {
+
+                default:
                     if (property_exists($this->data, $val['value'])) {
                         $buffer .= htmlspecialchars($this->data->{$val['value']});
                     } else {
                         $buffer .= htmlspecialchars($val['value']);
                     }
-                }
             }
 
             $result .= (strlen($buffer) ? $buffer : '&nbsp;') . Html::closeTag('dd');

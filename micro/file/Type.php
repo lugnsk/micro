@@ -23,17 +23,16 @@ class Type
     {
         $type = gettype($var);
         switch ($type) {
-            case 'object': {
+            case 'object':
                 return get_class($var);
                 break;
-            }
-            case 'double': {
+
+            case 'double':
                 return is_float($var) ? 'float' : 'double';
                 break;
-            }
-            default: {
+
+            default:
                 return strtolower($type);
-            }
         }
     }
 

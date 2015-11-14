@@ -314,11 +314,11 @@ abstract class Threads
         $this->writeToIPCSegment();
 
         switch ($this->internalIPCArray['_call_type']) {
-            case -1: {
+            case -1:
                 $this->sendSigUsr1();
                 break;
-            }
-            case -2: {
+
+            case -2:
                 shmop_write($this->internalSemaphoreKey, 1, 0);
 
                 $this->sendSigUsr1();
@@ -329,7 +329,6 @@ abstract class Threads
 
                 return $this->internalIPCArray['_call_output'];
                 break;
-            }
         }
 
         return false;
@@ -469,25 +468,25 @@ abstract class Threads
     protected function sigHandler($sigNo)
     {
         switch ($sigNo) {
-            case SIGTERM: {
+            case SIGTERM:
                 exit;
                 break;
-            }
-            case SIGHUP: {
+
+            case SIGHUP:
                 break;
-            }
-            case SIGUSR1: {
+
+            case SIGUSR1:
                 $this->readFromIPCSegment();
 
                 $method = $this->internalIPCArray['_call_method'];
                 $params = $this->internalIPCArray['_call_input'];
 
                 switch ($this->internalIPCArray['_call_type']) {
-                    case -1: {
+                    case -1:
                         $this->$method($params);
                         break;
-                    }
-                    case -2: {
+
+                    case -2:
                         $this->internalIPCArray['_call_output'] = $this->$method($params);
 
                         $this->writeToIPCSegment();
@@ -496,13 +495,11 @@ abstract class Threads
                         shmop_write($this->internalSemaphoreKey, 1, 1);
 
                         break;
-                    }
                 }
                 break;
-            }
-            default: {
+
+            default:
                 // handle all other signals
-            }
         }
     }
 }

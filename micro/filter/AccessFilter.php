@@ -111,16 +111,19 @@ class AccessFilter extends Filter
             switch ($u) {
                 case '*':
                     return true;
+
                 case '?':
                     if ($this->container->user->isGuest()) {
                         return true;
                     }
                     break;
+
                 case '@':
                     if (!$this->container->user->isGuest()) {
                         return true;
                     }
                     break;
+
                 default:
                     if ($this->container->user->getID() === $u) {
                         return true;

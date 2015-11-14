@@ -65,6 +65,7 @@ class Queue
             case 'async':
             case 'stream':
                 break;
+
             default:
                 throw new Exception('Service type `' . $type . '` wrong name.');
         }
