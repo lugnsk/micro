@@ -35,7 +35,7 @@ class MemcachedCache extends BaseCache
     {
         parent::__construct($config);
 
-        if (!$this->check() OR empty($config['type'])) {
+        if (empty($config['type']) || !$this->check()) {
             throw new Exception('Memcache(d) not installed or not select type');
         }
 

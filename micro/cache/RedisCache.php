@@ -41,7 +41,7 @@ class RedisCache extends BaseCache
         $this->driver = new \Redis;
 
         try {
-            if (!empty($config['socket_type']) AND $config['socket_type'] === 'unix') {
+            if (!empty($config['socket_type']) && $config['socket_type'] === 'unix') {
                 $result = $this->driver->connect($config['socket']);
             } else {
                 $result = $this->driver->connect($config['host'], $config['port'], $config['duration']);

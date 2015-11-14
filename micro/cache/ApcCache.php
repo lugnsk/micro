@@ -107,7 +107,7 @@ class ApcCache extends BaseCache
         $success = false;
 
         $stored = apc_fetch($id, $success);
-        if ($success === false OR count($stored) !== 3) {
+        if ($success === false || count($stored) !== 3) {
             return false;
         }
 
