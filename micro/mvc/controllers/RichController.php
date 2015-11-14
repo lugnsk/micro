@@ -111,6 +111,9 @@ abstract class RichController extends Controller
                 $data = is_object($data) ? (string)$data : $data;
                 break;
             }
+            default: {
+                $data = (string)$data;
+            }
         }
 
         return $data;
