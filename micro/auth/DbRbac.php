@@ -52,7 +52,7 @@ class DbRbac extends Rbac
      */
     public function assign($userId, $name)
     {
-        if ($this->container->db->exists('rbac_role', ['name' => $name]) AND $this->container->db->exists('user',
+        if ($this->container->db->exists('rbac_role', ['name' => $name]) && $this->container->db->exists('user',
                 ['id' => $userId])
         ) {
             return $this->container->db->insert('rbac_user', ['role' => $name, 'user' => $userId]);
@@ -100,7 +100,7 @@ class DbRbac extends Rbac
             return false;
         }
 
-        if ($based AND !$this->container->db->exists('rbac_role', ['name' => $based])) {
+        if ($based && !$this->container->db->exists('rbac_role', ['name' => $based])) {
             return false;
         }
 

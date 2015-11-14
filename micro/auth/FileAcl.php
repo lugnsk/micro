@@ -69,9 +69,9 @@ class FileAcl extends Acl
         }
 
         foreach ($assigned AS $assign) {
-            if ($assign['perm'] AND $assign['perm'] === $permissionId) {
+            if ($assign['perm'] && $assign['perm'] === $permissionId) {
                 return true;
-            } elseif ($assign['role'] AND in_array($permissionId, $this->rolePerms($assign['role']), true)) {
+            } elseif ($assign['role'] && in_array($permissionId, $this->rolePerms($assign['role']), true)) {
                 return true;
             }
         }

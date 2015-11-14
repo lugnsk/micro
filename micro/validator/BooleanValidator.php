@@ -46,7 +46,7 @@ class BooleanValidator extends BaseValidator
             }
             $elementValue = $model->$element;
 
-            if (($elementValue !== $this->params['true']) AND ($elementValue !== $this->params['false'])) {
+            if (($elementValue !== $this->params['true']) && ($elementValue !== $this->params['false'])) {
                 $this->errors[] = $element . ' error: required element is empty.';
 
                 return false;
@@ -61,7 +61,7 @@ class BooleanValidator extends BaseValidator
      */
     public function client(IFormModel $model)
     {
-        return 'if (this.value != ' . $this->params['true'] . ' AND this.value != ' . $this->params['false'] . ') {' .
+        return 'if (this.value != ' . $this->params['true'] . ' && this.value != ' . $this->params['false'] . ') {' .
         ' e.preventDefault(); this.focus(); alert(\'Value not compatible\'); }';
     }
 }

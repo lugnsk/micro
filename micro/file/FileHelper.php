@@ -64,7 +64,7 @@ class FileHelper
             unlink($path);
         } else {
             foreach (scandir($path) as $dir) {
-                if ($dir !== '.' AND $dir !== '..') {
+                if ($dir !== '.' && $dir !== '..') {
                     self::removeDir($path . '/' . $dir);
                 }
             }

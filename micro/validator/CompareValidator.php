@@ -25,7 +25,7 @@ class CompareValidator extends BaseValidator
      */
     public function validate(IFormModel $model)
     {
-        if (empty($this->params['attribute']) AND empty($this->params['value'])) {
+        if (empty($this->params['attribute']) && empty($this->params['value'])) {
             return false;
         }
 
@@ -41,11 +41,11 @@ class CompareValidator extends BaseValidator
             }
 
             $elementValue = $model->$element;
-            if (!empty($this->params['value']) AND ($this->params['value'] !== $elementValue)) {
+            if (!empty($this->params['value']) && ($this->params['value'] !== $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $this->params['value'];
 
                 return false;
-            } elseif (!empty($this->params['attribute']) AND ($model->{$this->params['attribute']} !== $elementValue)) {
+            } elseif (!empty($this->params['attribute']) && ($model->{$this->params['attribute']} !== $elementValue)) {
                 $this->errors[] = 'Parameter ' . $element . ' not equal ' . $model->{$this->params['attribute']};
 
                 return false;
