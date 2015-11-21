@@ -88,7 +88,13 @@ class Validator
 
                 return true;
             } elseif (method_exists($model, $name)) {
-                return call_user_func([$model,$name], $this);
+                foreach ($elements AS $element) {
+                    if (property_exists($model, $element) && !call_user_func([$model, $name], $element)) {
+                        return false;
+                    }
+                }
+
+                return true;
             } else {
                 throw new Exception('Validator ' . $name . ' not defined.');
             }
