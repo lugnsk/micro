@@ -23,17 +23,17 @@ class Validator
     /** @var array $validators supported validations */
     protected static $validators = [
         'required' => 'RequiredValidator',
-        'captcha'  => 'CaptchaValidator',
-        'boolean'  => 'BooleanValidator',
-        'compare'  => 'CompareValidator',
-        'string'   => 'StringValidator',
-        'regexp'   => 'RegexpValidator',
-        'number'   => 'NumberValidator',
-        'unique'   => 'UniqueValidator',
-        'range'    => 'RangeValidator',
-        'email'    => 'EmailValidator',
-        'url'      => 'UrlValidator',
-        'file'     => 'FileValidator'
+        'captcha' => 'CaptchaValidator',
+        'boolean' => 'BooleanValidator',
+        'compare' => 'CompareValidator',
+        'string' => 'StringValidator',
+        'regexp' => 'RegexpValidator',
+        'number' => 'NumberValidator',
+        'unique' => 'UniqueValidator',
+        'range' => 'RangeValidator',
+        'email' => 'EmailValidator',
+        'url' => 'UrlValidator',
+        'file' => 'FileValidator'
     ];
     /** @var array $errors errors summary */
     public $errors = [];
@@ -88,13 +88,7 @@ class Validator
 
                 return true;
             } elseif (method_exists($model, $name)) {
-                foreach ($elements AS $element) {
-                    if (property_exists($model, $element)) {
-                        $model->$element = call_user_func([$model, $name], $model->$element);
-                    }
-                }
-
-                return true;
+                return call_user_func([$model,$name], $this);
             } else {
                 throw new Exception('Validator ' . $name . ' not defined.');
             }
