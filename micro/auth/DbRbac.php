@@ -100,7 +100,7 @@ class DbRbac extends Rbac
             return false;
         }
 
-        if ($based && !$this->container->db->exists('rbac_role', ['name' => $based])) {
+        if (null !== $based && !$this->container->db->exists('rbac_role', ['name' => $based])) {
             return false;
         }
 
