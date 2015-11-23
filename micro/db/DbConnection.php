@@ -268,13 +268,14 @@ class DbConnection extends Connection
         foreach ($keys as $key) {
             $valStr[] = '`' . $key . '` = :' . $key;
         }
+        $valStr = implode(',', $valStr);
 
         if ($conditions) {
             $conditions = 'WHERE ' . $conditions;
         }
 
         return $this->conn->prepare(
-            "UPDATE {$table} SET {implode(', ', $valStr)} {$conditions};"
+            "UPDATE {$table} SET {$valStr} {$conditions};"
         )->execute($elements);
     }
 
