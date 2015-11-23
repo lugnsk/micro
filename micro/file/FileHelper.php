@@ -64,13 +64,15 @@ class FileHelper
             unlink($path);
         } else {
             foreach (scandir($path) as $dir) {
-                if ($dir !== '.' && $dir !== '..') {
-                    self::removeDir($path . '/' . $dir);
+                if ($dir === '.' || $dir === '..') {
+                    continue;
                 }
+
+                static::removeDir($path . '/' . $dir);
             }
-            unlink($path);
+
+            rmdir($path);
         }
-        rmdir($path);
     }
 
     /**
