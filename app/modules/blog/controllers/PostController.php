@@ -1,6 +1,6 @@
 <?php
 
-namespace App\modules\blog\controllers;
+namespace App\Modules\Blog\Controllers;
 
 use App\components\Controller;
 use App\components\View;
