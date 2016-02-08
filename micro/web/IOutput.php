@@ -1,6 +1,6 @@
 <?php /** MicroInterfaceOutput */
 
-namespace Micro\web;
+namespace Micro\Web;
 
 /**
  * Interface IOutput
@@ -9,10 +9,11 @@ namespace Micro\web;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage web
+ * @package Micro
+ * @subpackage Web
  * @version 1.0
  * @since 1.0
+ * @interface
  */
 interface IOutput
 {

@@ -1,6 +1,6 @@
 <?php /** MicroSession */
 
-namespace Micro\web;
+namespace Micro\Web;
 
 /**
  * Session is a Session manager
@@ -9,7 +9,8 @@ namespace Micro\web;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
+ * @package Micro
+ * @subpackage Web
  * @version 1.0
  * @since 1.0
  *

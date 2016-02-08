@@ -1,9 +1,9 @@
 <?php /** MicroPaginationWidget */
 
-namespace Micro\widget;
+namespace Micro\Widget;
 
-use Micro\mvc\Widget;
-use Micro\web\Html;
+use Micro\Mvc\Widget;
+use Micro\Web\Html;
 
 /**
  * PaginationWidget class file.
@@ -12,8 +12,8 @@ use Micro\web\Html;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage widget
+ * @package Micro
+ * @subpackage Widget
  * @version 1.0
  * @since 1.0
  */

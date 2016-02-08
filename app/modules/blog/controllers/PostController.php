@@ -2,10 +2,10 @@
 
 namespace App\Modules\Blog\Controllers;
 
-use App\components\Controller;
-use App\components\View;
-use App\modules\blog\models\Blog;
-use Micro\mvc\models\Query;
+use App\Components\Controller;
+use App\Components\View;
+use App\Modules\Blog\Models\Blog;
+use Micro\Mvc\Models\Query;
 
 class PostController extends Controller
 {
@@ -13,7 +13,7 @@ class PostController extends Controller
     {
         return [
             [
-                'class' => '\Micro\filter\AccessFilter',
+                'class' => '\Micro\Filter\AccessFilter',
                 'actions' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
@@ -31,11 +31,11 @@ class PostController extends Controller
                 ]
             ],
             [
-                'class' => '\Micro\filter\CsrfFilter',
+                'class' => '\Micro\Filter\CsrfFilter',
                 'actions' => ['login']
             ],
             [
-                'class' => '\Micro\filter\XssFilter',
+                'class' => '\Micro\Filter\XssFilter',
                 'actions' => ['index', 'login', 'logout'],
                 'clean' => '*'
             ]

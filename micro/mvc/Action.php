@@ -1,8 +1,8 @@
 <?php /** MicroAction */
 
-namespace Micro\mvc;
+namespace Micro\Mvc;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
 /**
  * Class Action
@@ -11,10 +11,11 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mvc
+ * @package Micro
+ * @subpackage Mvc
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class Action
 {

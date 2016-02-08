@@ -1,6 +1,6 @@
 <?php /** MicroInterfaceLogger */
 
-namespace Micro\logger;
+namespace Micro\Logger;
 
 /**
  * Interface ILogger
@@ -9,8 +9,8 @@ namespace Micro\logger;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage logger
+ * @package Micro
+ * @subpackage Logger
  * @version 1.0
  * @since 1.0
  */
@@ -25,7 +25,7 @@ interface ILogger
      * @param string $message message to write
      *
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function sendMessage($level, $message);
 

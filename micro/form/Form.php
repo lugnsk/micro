@@ -1,8 +1,8 @@
 <?php /** MicroForm */
 
-namespace Micro\form;
+namespace Micro\Form;
 
-use Micro\web\Html;
+use Micro\Web\Html;
 
 /**
  * Form class file.
@@ -11,8 +11,8 @@ use Micro\web\Html;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage web
+ * @package Micro
+ * @subpackage Form
  * @version 1.0
  * @since 1.0
  */

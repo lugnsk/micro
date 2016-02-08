@@ -1,13 +1,13 @@
 <?php
 
-namespace App\components;
+namespace App\Components;
 
-use Micro\base\Container;
-use Micro\mvc\controllers\ViewController as BaseController;
+use Micro\Base\Container;
+use Micro\Mvc\Controllers\ViewController as BaseController;
 
 /**
  * Class Controller
- * @package App\components
+ * @package App\Components
  */
 class Controller extends BaseController
 {

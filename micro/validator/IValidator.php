@@ -1,14 +1,21 @@
 <?php /** MicroInterfaceValidator */
 
-namespace Micro\validator;
+namespace Micro\Validator;
 
-use Micro\form\IFormModel;
+use Micro\Form\IFormModel;
 
 /**
  * Interface IValidator
  *
- * @package Micro\validator
- *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Validator
+ * @version 1.0
+ * @since 1.0
+ * @interface
  * @property array $elements
  * @property array $errors
  */
@@ -22,7 +29,7 @@ interface IValidator
      * @param IFormModel $model checked model
      *
      * @return bool
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function validate(IFormModel $model);
 

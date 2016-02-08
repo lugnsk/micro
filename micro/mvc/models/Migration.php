@@ -1,8 +1,8 @@
 <?php /** MicroMigration */
 
-namespace Micro\mvc\models;
+namespace Micro\Mvc\Models;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
 /**
  * Migration class file.
@@ -11,10 +11,11 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage db
+ * @package Micro
+ * @subpackage Mvc\Models
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class Migration
 {

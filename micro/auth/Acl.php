@@ -1,8 +1,8 @@
 <?php /** MicroACL */
 
-namespace Micro\auth;
+namespace Micro\Auth;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
 /**
  * Abstract ACL class file.
@@ -13,8 +13,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage auth
+ * @package Micro
+ * @subpackage Auth
  * @version 1.0
  * @since 1.0
  * @abstract

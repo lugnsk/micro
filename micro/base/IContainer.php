@@ -1,6 +1,6 @@
 <?php /** MicroInterfaceContainer */
 
-namespace Micro\base;
+namespace Micro\Base;
 
 /**
  * Interface IContainer
@@ -20,19 +20,19 @@ namespace Micro\base;
  * @property string $errorAction
  * @property string $assetsDirName
  *
- * @property \Micro\web\FlashMessage $flash
+ * @property \Micro\Web\FlashMessage $flash
  *
  * @property \Micro\Micro $kernel
- * @property \Micro\auth\IAuth $permission
- * @property \Micro\base\IDispatcher $dispatcher
- * @property \Micro\mail\transport\ITransport $mail
- * @property \Micro\db\IConnection $db
- * @property \Micro\web\IRouter $router
- * @property \Micro\web\IRequest $request
- * @property \Micro\web\IResponse $response
- * @property \Micro\web\ICookie $cookie
- * @property \Micro\web\ISession $session
- * @property \Micro\web\IUser $user
+ * @property \Micro\Auth\IAuth $permission
+ * @property \Micro\Base\IDispatcher $dispatcher
+ * @property \Micro\Mail\Transport\ITransport $mail
+ * @property \Micro\Db\IConnection $db
+ * @property \Micro\Web\IRouter $router
+ * @property \Micro\Web\IRequest $request
+ * @property \Micro\Web\IResponse $response
+ * @property \Micro\Web\ICookie $cookie
+ * @property \Micro\Web\ISession $session
+ * @property \Micro\Web\IUser $user
  */
 interface IContainer
 {

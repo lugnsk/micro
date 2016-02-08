@@ -2,5 +2,5 @@
 
 // Messages
 return [
-    'class' => '\Micro\mail\transport\Sendmail'
+    'class' => '\Micro\Mail\Transport\Sendmail'
 ];

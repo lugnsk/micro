@@ -2,7 +2,7 @@
 
 // Cookie's
 return [
-    'class' => '\Micro\web\Cookie',
+    'class' => '\Micro\Web\Cookie',
     'arguments' => [
         'request' => '@request'
     ]

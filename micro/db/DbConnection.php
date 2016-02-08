@@ -1,8 +1,8 @@
 <?php /** MicroDataBaseConnection */
 
-namespace Micro\db;
+namespace Micro\Db;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * Connection class file.
@@ -11,8 +11,8 @@ use Micro\base\Exception;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage db
+ * @package Micro
+ * @subpackage Db
  * @version 1.0
  * @since 1.0
  */
@@ -47,7 +47,7 @@ class DbConnection extends Connection
                 $config['password'],
                 $config['options']
             );
-        } catch (Exception $e) {
+        } catch (\PDOException $e) {
             if (!array_key_exists('ignoreFail', $config) || !$config['ignoreFail']) {
                 throw new Exception('Connect to DB failed: ' . $e->getMessage());
             }
@@ -147,7 +147,7 @@ class DbConnection extends Connection
     public function createTable($name, array $elements = [], $params = '')
     {
         return $this->conn->exec(
-            'CREATE TABLE IF NOT EXISTS `' . $name . '` (`' . implode('`,`', $elements) . '`) ' . $params . ';'
+            "CREATE TABLE IF NOT EXISTS `{$name}` (`".implode('`,`', $elements)."`) {$params};"
         );
     }
 

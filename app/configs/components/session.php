@@ -2,7 +2,7 @@
 
 // Default session
 return [
-    'class' => '\Micro\web\Session',
+    'class' => '\Micro\Web\Session',
     'arguments' => [
         'request' => '@request',
         'autoStart' => true

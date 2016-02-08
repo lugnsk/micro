@@ -1,9 +1,9 @@
 <?php /** MicroConsoleCommand */
 
-namespace Micro\cli;
+namespace Micro\Cli;
 
-use Micro\base\Command;
-use Micro\web\IOutput;
+use Micro\Base\Command;
+use Micro\Web\IOutput;
 
 /**
  * Class ConsoleCommand
@@ -12,8 +12,8 @@ use Micro\web\IOutput;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cli
+ * @package Micro
+ * @subpackage Cli
  * @version 1.0
  * @since 1.0
  * @abstract

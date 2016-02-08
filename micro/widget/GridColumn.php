@@ -1,6 +1,6 @@
 <?php /** MicroGridColumn */
 
-namespace Micro\widget;
+namespace Micro\Widget;
 
 /**
  * Abstract grid column class file.
@@ -9,10 +9,11 @@ namespace Micro\widget;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage widget
+ * @package Micro
+ * @subpackage Widget
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class GridColumn
 {

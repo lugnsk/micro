@@ -1,9 +1,9 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
-use Micro\form\FormModel;
-use Micro\mvc\models\Query;
+use Micro\Form\FormModel;
+use Micro\Mvc\Models\Query;
 
 class LoginFormModel extends FormModel
 {

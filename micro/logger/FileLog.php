@@ -1,9 +1,9 @@
 <?php /** MicroFileLogger */
 
-namespace Micro\logger;
+namespace Micro\Logger;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
 
 /**
  * File logger class file.
@@ -14,8 +14,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage logger
+ * @package Micro
+ * @subpackage Logger
  * @version 1.0
  * @since 1.0
  */

@@ -1,11 +1,11 @@
 <?php /** MicroDetailViewWidget */
-namespace Micro\widget;
+namespace Micro\Widget;
 
-use Micro\base\Exception;
-use Micro\mvc\models\IModel;
-use Micro\mvc\models\IQuery;
-use Micro\mvc\Widget;
-use Micro\web\Html;
+use Micro\Base\Exception;
+use Micro\Mvc\Models\IModel;
+use Micro\Mvc\Models\IQuery;
+use Micro\Mvc\Widget;
+use Micro\Web\Html;
 
 /**
  * DetailViewWidget class file.
@@ -14,8 +14,8 @@ use Micro\web\Html;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage widget
+ * @package Micro
+ * @subpackage Widget
  * @version 1.0
  * @since 1.0
  */
@@ -71,7 +71,7 @@ class DetailViewWidget extends Widget
                         throw new Exception('Data query not set table or objectName');
                     }
                     $this->data = $args['data']->run();
-                } elseif (is_subclass_of($args['data'], 'Micro\mvc\models\IModel')) {
+                } elseif (is_subclass_of($args['data'], 'Micro\\Mvc\\Models\\Model')) {
                     $this->data = $args['data'];
                 } else {
                     throw new Exception('Argument "model" not supported type into DetailViewWidget');

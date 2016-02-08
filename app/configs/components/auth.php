@@ -2,7 +2,7 @@
 
 // Roles
 return [
-    'class' => '\Micro\auth\DbAcl',
+    'class' => '\Micro\Auth\DbAcl',
     'arguments' => [
         'container' => '@this',
         'roles' => [ // Permission roles

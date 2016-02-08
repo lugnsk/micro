@@ -1,8 +1,8 @@
 <?php /** MicroConsoleResolver */
 
-namespace Micro\resolver;
+namespace Micro\Resolver;
 
-use Micro\cli\Console;
+use Micro\Cli\Console;
 
 /**
  * CLI Resolver class file.
@@ -11,8 +11,8 @@ use Micro\cli\Console;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage resolver
+ * @package Micro
+ * @subpackage Resolver
  * @version 1.0
  * @since 1.0
  */
@@ -23,7 +23,7 @@ class ConsoleResolver extends Resolver
      *
      * @access public
      *
-     * @return \Micro\base\Command
+     * @return \Micro\Base\Command
      */
     public function getApplication()
     {

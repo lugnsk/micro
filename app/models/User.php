@@ -1,8 +1,8 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
-use Micro\mvc\models\Model;
+use Micro\Mvc\Models\Model;
 
 /**
  * Class User
@@ -11,7 +11,7 @@ use Micro\mvc\models\Model;
  * @property string pass
  *
  * @package App
- * @subpackage models
+ * @subpackage Models
  */
 class User extends Model
 {

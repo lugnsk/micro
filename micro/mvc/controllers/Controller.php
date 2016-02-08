@@ -1,14 +1,26 @@
-<?php
+<?php /** MicroController */
 
-namespace Micro\mvc\controllers;
+namespace Micro\Mvc\Controllers;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
-use Micro\mvc\Module;
-use Micro\web\IResponse;
-use Micro\web\Response;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
+use Micro\Mvc\Module;
+use Micro\Web\IResponse;
+use Micro\Web\Response;
 
-
+/**
+ * Class Controller
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Mvc\Controllers
+ * @version 1.0
+ * @since 1.0
+ * @abstract
+ */
 abstract class Controller implements IController
 {
     /** @var Module $module */
@@ -57,8 +69,8 @@ abstract class Controller implements IController
      * @access public
      *
      * @param string $action current action name
-     * @param bool $isPre is pre or post
-     * @param array $filters defined filters
+     * @param bool   $isPre is pre or post
+     * @param array  $filters defined filters
      * @param string $data data to parse
      *
      * @return null|string
@@ -74,17 +86,19 @@ abstract class Controller implements IController
             if (empty($filter['class']) || !class_exists($filter['class'])) {
                 continue;
             }
+
             if (empty($filter['actions']) || !in_array($action, $filter['actions'], true)) {
                 continue;
             }
 
-            /** @var \Micro\filter\IFilter $_filter */
+            /** @var \Micro\Filter\IFilter $_filter */
             $_filter = new $filter['class']($action, $this->container);
 
             $res = $isPre ? $_filter->pre($filter) : $_filter->post($filter + ['data' => $data]);
             if (!$res) {
                 if (!empty($_filter->result['redirect'])) {
                     header('Location: ' . $_filter->result['redirect']);
+
                     die();
                 }
                 throw new Exception($_filter->result['message']);
@@ -108,6 +122,7 @@ abstract class Controller implements IController
     {
         if (method_exists($this, 'actions')) {
             $actions = $this->actions();
+
             if (!empty($actions[$name]) && class_exists($actions[$name])) {
                 return $actions[$name];
             }

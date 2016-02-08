@@ -1,9 +1,9 @@
 <?php
 
-namespace App\modules\blog\widgets;
+namespace App\Modules\Blog\Widgets;
 
-use App\components\View;
-use Micro\mvc\Widget;
+use App\Components\View;
+use Micro\Mvc\Widget;
 
 class TopblogsWidget extends Widget
 {

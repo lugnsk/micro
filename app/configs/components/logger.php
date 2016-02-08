@@ -2,11 +2,11 @@
 
 // Logging
 return [
-    'class' => '\Micro\base\Logger',
+    'class' => '\Micro\Base\Logger',
     'arguments' => [
         'loggers' => [
             'file' => [
-                'class' => '\Micro\loggers\DbLogger',
+                'class' => '\Micro\Loggers\DbLogger',
                 'levels' => 'notice, error, emergency, critical, alert, warning, info, debug',
                 'table' => 'logs'
             ]

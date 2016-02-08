@@ -1,6 +1,6 @@
 <?php /** AccessFilterMicro */
 
-namespace Micro\filter;
+namespace Micro\Filter;
 
 /**
  * Class AccessFilter
@@ -9,8 +9,8 @@ namespace Micro\filter;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage filter
+ * @package Micro
+ * @subpackage Filter
  * @version 1.0
  * @since 1.0
  */
@@ -91,7 +91,7 @@ class AccessFilter extends Filter
      * Match user
      *
      * @access protected
-     * @global      Container
+     * @global Container
      *
      * @param array $rule rule definition
      *
@@ -138,7 +138,7 @@ class AccessFilter extends Filter
      * Match role
      *
      * @access protected
-     * @global      Container
+     * @global Container
      *
      * @param array $rule rule definition
      *
@@ -167,7 +167,7 @@ class AccessFilter extends Filter
      * Match IP
      *
      * @access protected
-     * @global      Container
+     * @global Container
      *
      * @param array $rule rule definition
      *
@@ -198,7 +198,7 @@ class AccessFilter extends Filter
      * Match verbose
      *
      * @access protected
-     * @global      Container
+     * @global Container
      *
      * @param array $rule rule definition
      *
@@ -215,6 +215,7 @@ class AccessFilter extends Filter
         }
 
         $verb = $this->container->request->getMethod();
+
         foreach ($rule['verb'] AS $v) {
             if ($v === $verb) {
                 return true;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\consoles;
+namespace App\Consoles;
 
-use Micro\cli\ConsoleCommand;
+use Micro\Cli\ConsoleCommand;
 
 class UserCleanerConsoleCommand extends ConsoleCommand
 {

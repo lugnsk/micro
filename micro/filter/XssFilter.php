@@ -1,13 +1,15 @@
 <?php /** XssFilterMicro */
 
-namespace Micro\filter;
+namespace Micro\Filter;
 
 /**
  * Class XssFilter
- * @author  Opeykin A. <andrey.opeykin.ru> &; <aopeykin@gmail.com>
- * @package micro
- * @subpackage filter
- * @version 0.0.1
+ *
+ * @author Opeykin A. <andrey.opeykin.ru> &; <aopeykin@gmail.com>
+ * @package Micro
+ * @subpackage Filter
+ * @version 1.0
+ * @since 1.0
  */
 class XssFilter extends Filter
 {

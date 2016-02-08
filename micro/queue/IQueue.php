@@ -1,6 +1,6 @@
-<?php
+<?php /** MicroInterfaceQueue */
 
-namespace Micro\queue;
+namespace Micro\Queue;
 
 /**
  * IQueue interface file.
@@ -9,10 +9,11 @@ namespace Micro\queue;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage queue
+ * @package Micro
+ * @subpackage Queue
  * @version 1.0
  * @since 1.0
+ * @interface
  */
 interface IQueue
 {

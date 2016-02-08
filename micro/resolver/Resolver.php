@@ -1,8 +1,8 @@
 <?php /** MicroResolver */
 
-namespace Micro\resolver;
+namespace Micro\Resolver;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
 /**
  * Resolver class file.
@@ -11,8 +11,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage resolver
+ * @package Micro
+ * @subpackage Resolver
  * @version 1.0
  * @since 1.0
  * @abstract

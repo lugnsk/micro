@@ -1,6 +1,6 @@
 <?php /** WebTestCaseMicro */
 
-namespace Micro\tests;
+namespace Micro\Tests;
 
 /**
  * Class WebTestCase
@@ -9,8 +9,8 @@ namespace Micro\tests;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage tests
+ * @package Micro
+ * @subpackage Tests
  * @version 1.0
  * @since 1.0
  */

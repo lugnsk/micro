@@ -1,6 +1,6 @@
 <?php
 
-namespace Micro\resolver;
+namespace Micro\Resolver;
 
 /**
  * Interface IResolver
@@ -9,8 +9,8 @@ namespace Micro\resolver;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage resolver
+ * @package Micro
+ * @subpackage Resolver
  * @version 1.0
  * @since 1.0
  */

@@ -2,8 +2,8 @@
 
 namespace Micro\cache;
 
-use Micro\db\IConnection;
-use Micro\mvc\models\Query;
+use Micro\Db\IConnection;
+use Micro\Mvc\Models\Query;
 
 /**
  * Class DbCache
@@ -12,8 +12,8 @@ use Micro\mvc\models\Query;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cache
+ * @package Micro
+ * @subpackage Cache
  * @version 1.0
  * @since 1.0
  */
@@ -65,7 +65,7 @@ class DbCache extends BaseCache
 
     /**
      * @inheritdoc
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function get($name)
     {
@@ -79,7 +79,7 @@ class DbCache extends BaseCache
 
     /**
      * @inheritdoc
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     protected function getElement($name)
     {
@@ -127,7 +127,7 @@ class DbCache extends BaseCache
 
     /**
      * @inheritdoc
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function getMeta($id)
     {

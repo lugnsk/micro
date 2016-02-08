@@ -1,6 +1,6 @@
 <?php /** MicroLanguage */
 
-namespace Micro\web;
+namespace Micro\Web;
 
 use Micro\base\Exception;
 use Micro\base\IContainer;
@@ -12,7 +12,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
+ * @package Micro
+ * @subpackage Web
  * @version 1.0
  * @since 1.0
  */

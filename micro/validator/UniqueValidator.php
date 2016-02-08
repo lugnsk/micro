@@ -1,9 +1,9 @@
 <?php /** MicroUniqueValidator */
 
-namespace Micro\validator;
+namespace Micro\Validator;
 
-use Micro\form\IFormModel;
-use Micro\mvc\models\Query;
+use Micro\Form\IFormModel;
+use Micro\Mvc\Models\Query;
 
 /**
  * UniqueValidator class file.
@@ -12,8 +12,8 @@ use Micro\mvc\models\Query;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage validator
+ * @package Micro
+ * @subpackage Validator
  * @version 1.0
  * @since 1.0
  */

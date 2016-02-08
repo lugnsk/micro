@@ -1,8 +1,8 @@
 <?php /** MicroException */
 
-namespace Micro\base;
+namespace Micro\Base;
 
-use Micro\web\Response;
+use Micro\Web\Response;
 
 /**
  * Exception specific exception
@@ -11,7 +11,8 @@ use Micro\web\Response;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
+ * @package Micro
+ * @subpackage Base
  * @version 1.0
  * @since 1.0
  */

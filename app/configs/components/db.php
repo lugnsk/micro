@@ -2,7 +2,7 @@
 
 // DataBase
 return [
-    'class' => '\Micro\db\DbConnection',
+    'class' => '\Micro\Db\DbConnection',
     'arguments' => [
         'connectionString' => 'mysql:host=localhost;dbname=micro',
         'username' => 'micro',

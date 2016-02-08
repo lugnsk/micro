@@ -1,8 +1,8 @@
 <?php /** MicroTransportSendmail */
 
-namespace Micro\mail\transport;
+namespace Micro\Mail\Transport;
 
-use Micro\mail\IMessage;
+use Micro\Mail\IMessage;
 
 /**
  * Class Sendmail
@@ -11,21 +11,15 @@ use Micro\mail\IMessage;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mail\transport
+ * @package Micro
+ * @subpackage Mail\Transport
  * @version 1.0
  * @since 1.0
  */
 class Sendmail extends Transport
 {
     /**
-     * Send message
-     *
-     * @access public
-     *
-     * @param IMessage $message
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function send(IMessage $message)
     {

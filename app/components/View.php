@@ -1,10 +1,15 @@
 <?php
 
-namespace App\components;
+namespace App\Components;
 
-use Micro\base\IContainer;
-use Micro\mvc\views\PhpView;
+use Micro\Base\IContainer;
+use Micro\Mvc\Views\PhpView;
 
+/**
+ * Class View
+ *
+ * @package App\Components
+ */
 class View extends PhpView
 {
     public $title = 'Micro';

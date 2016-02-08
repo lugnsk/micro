@@ -1,8 +1,8 @@
 <?php /** MicroFileHelper */
 
-namespace Micro\file;
+namespace Micro\File;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * MFile io class
@@ -11,8 +11,8 @@ use Micro\base\Exception;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage file
+ * @package Micro
+ * @subpackage File
  * @version 1.0
  * @since 1.0
  */
@@ -37,12 +37,14 @@ class FileHelper
                     if (is_file($dirName . '/' . $fileName)) {
                         $totalSize += filesize($dirName . '/' . $fileName);
                     }
+
                     if (is_dir($dirName . '/' . $fileName)) {
                         $totalSize += self::dirSize($dirName . '/' . $fileName);
                     }
                 }
             }
         }
+
         closedir($dirStream);
 
         return $totalSize;
@@ -84,13 +86,14 @@ class FileHelper
      * @param string $dst destination path
      *
      * @return void
+     * @throws Exception
      * @static
      */
     public static function recurseCopy($src, $dst)
     {
         $dir = opendir($src);
-        if (!file_exists($dst)) {
-            mkdir($dst, 0777);
+        if (!@mkdir($dst, 0777) && !is_dir($dst)) {
+            throw new Exception('Copy dir error, access denied for path: ' . $dst);
         }
 
         while (false !== ($file = readdir($dir))) {
@@ -121,8 +124,8 @@ class FileHelper
      */
     public static function recurseCopyIfEdited($src = '', $dst = '', array $excludes = ['php'])
     {
-        if (!file_exists($dst)) {
-            mkdir($dst, 0777);
+        if (!@mkdir($dst, 0777) && !is_dir($dst)) {
+            throw new Exception('Copy dir error, access denied for path: ' . $dst);
         }
 
         $dir = opendir($src);

@@ -1,9 +1,9 @@
 <?php /** MicroPhpView */
 
-namespace Micro\mvc\views;
+namespace Micro\Mvc\Views;
 
-use Micro\base\Exception;
-use Micro\web\Language;
+use Micro\Base\Exception;
+use Micro\Web\Language;
 
 /**
  * Class PhpView
@@ -12,8 +12,8 @@ use Micro\web\Language;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mvc/views
+ * @package Micro
+ * @subpackage Mvc/Views
  * @version 1.0
  * @since 1.0
  */
@@ -36,18 +36,18 @@ class PhpView extends View
      * @param string $view view name
      *
      * @return string
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function renderPartial($view)
     {
         $lay = $this->layout;
-        $wi = $this->view;
+        $wi  = $this->view;
 
         $this->layout = null;
-        $this->view = $view;
-        $output = $this->render();
+        $this->view   = $view;
+        $output       = $this->render();
         $this->layout = $lay;
-        $this->view = $wi;
+        $this->view   = $wi;
 
         return $output;
     }
@@ -58,7 +58,7 @@ class PhpView extends View
      * @access protected
      *
      * @return string
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function render()
     {
@@ -81,7 +81,7 @@ class PhpView extends View
      * @param string $data arguments array
      *
      * @return string
-     * @throws \Micro\base\Exception
+     * @throws Exception
      */
     public function renderRawData($data = '')
     {

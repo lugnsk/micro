@@ -1,9 +1,22 @@
 <?php /** MicroInterfaceModel */
 
-namespace Micro\mvc\models;
+namespace Micro\Mvc\Models;
 
-use Micro\form\IFormModel;
+use Micro\Form\IFormModel;
 
+/**
+ * IModel interface file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Mvc\Models
+ * @version 1.0
+ * @since 1.0
+ * @interface
+ */
 interface IModel extends IFormModel
 {
     /**

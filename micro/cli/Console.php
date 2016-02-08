@@ -1,8 +1,8 @@
 <?php /** MicroConsole */
 
-namespace Micro\cli;
+namespace Micro\Cli;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
 /**
  * Console class file.
@@ -11,8 +11,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cli
+ * @package Micro
+ * @subpackage Cli
  * @version 1.0
  * @since 1.0
  * @abstract
@@ -57,14 +57,14 @@ class Console
      */
     public function action($name)
     {
-        $command = '\\Micro\\consoles\\' . $name . 'ConsoleCommand';
-        $command = class_exists($command) ? $command : '\\App\\consoles\\' . $name . 'ConsoleCommand';
+        $command = '\\Micro\\Cli\\Consoles\\' . $name . 'ConsoleCommand';
+        $command = class_exists($command) ? $command : '\\App\\Consoles\\' . $name . 'ConsoleCommand';
 
         if (!class_exists($command)) {
             return false;
         }
 
-        /** @var \Micro\cli\ConsoleCommand $command */
+        /** @var ConsoleCommand $command */
         $command = new $command (['container' => $this->container, 'args' => $this->args]);
         $command->execute();
 

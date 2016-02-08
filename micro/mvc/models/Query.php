@@ -1,8 +1,8 @@
 <?php /** MicroQuery */
 
-namespace Micro\mvc\models;
+namespace Micro\Mvc\Models;
 
-use Micro\db\IConnection;
+use Micro\Db\IConnection;
 
 /**
  * Query class file.
@@ -11,8 +11,8 @@ use Micro\db\IConnection;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mvc\models
+ * @package Micro
+ * @subpackage Mvc\Models
  * @version 1.0
  * @since 1.0
  */

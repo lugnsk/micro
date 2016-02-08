@@ -1,7 +1,19 @@
 <?php /** MicroInterfaceAuth */
 
-namespace Micro\auth;
+namespace Micro\Auth;
 
+/**
+ * Interface IAuth
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Auth
+ * @version 1.0
+ * @since 1.0
+ */
 interface IAuth
 {
     /**

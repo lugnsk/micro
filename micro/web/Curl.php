@@ -1,8 +1,8 @@
 <?php /** MicroCurl */
 
-namespace Micro\web;
+namespace Micro\Web;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * Class cURL
@@ -11,8 +11,8 @@ use Micro\base\Exception;
  * @link https://github.com/php-mod/curl
  * @copyright Copyright &copy; 2013 php-mod
  * @license https://github.com/php-mod/curl/blob/master/LICENSE
- * @package micro
- * @subpackage wrappers
+ * @package Micro
+ * @subpackage Web
  * @version 1.1.5
  * @since 1.0
  */

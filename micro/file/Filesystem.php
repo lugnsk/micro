@@ -1,8 +1,8 @@
 <?php /** MicroFileSystem */
 
-namespace Micro\file;
+namespace Micro\File;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * Class Filesystem is a abstraction access for filesystems
@@ -15,14 +15,14 @@ use Micro\base\Exception;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage files
+ * @package Micro
+ * @subpackage File
  * @version 1.0
  * @since 1.0
  */
 class Filesystem
 {
-    /** @var \Micro\file\drivers\File $driver Current file driver */
+    /** @var \Micro\File\Drivers\File $driver Current file driver */
     protected $driver;
 
     /**
@@ -64,7 +64,7 @@ class Filesystem
      * @param array $arguments Arguments for method
      *
      * @return mixed
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function __call($methodName, array $arguments = [])
     {

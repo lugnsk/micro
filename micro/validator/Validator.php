@@ -1,10 +1,10 @@
 <?php /** MicroValidator */
 
-namespace Micro\validator;
+namespace Micro\Validator;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
-use Micro\form\IFormModel;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
+use Micro\Form\IFormModel;
 
 /**
  * Validator is a runner validation process
@@ -13,8 +13,8 @@ use Micro\form\IFormModel;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage
+ * @package Micro
+ * @subpackage Validator
  * @version 1.0
  * @since 1.0
  */
@@ -23,17 +23,17 @@ class Validator
     /** @var array $validators supported validations */
     protected static $validators = [
         'required' => 'RequiredValidator',
-        'captcha' => 'CaptchaValidator',
-        'boolean' => 'BooleanValidator',
-        'compare' => 'CompareValidator',
-        'string' => 'StringValidator',
-        'regexp' => 'RegexpValidator',
-        'number' => 'NumberValidator',
-        'unique' => 'UniqueValidator',
-        'range' => 'RangeValidator',
-        'email' => 'EmailValidator',
-        'url' => 'UrlValidator',
-        'file' => 'FileValidator'
+        'captcha'  => 'CaptchaValidator',
+        'boolean'  => 'BooleanValidator',
+        'compare'  => 'CompareValidator',
+        'string'   => 'StringValidator',
+        'regexp'   => 'RegexpValidator',
+        'number'   => 'NumberValidator',
+        'unique'   => 'UniqueValidator',
+        'range'    => 'RangeValidator',
+        'email'    => 'EmailValidator',
+        'file'     => 'FileValidator',
+        'url'      => 'UrlValidator'
     ];
     /** @var array $errors errors summary */
     public $errors = [];
@@ -45,6 +45,7 @@ class Validator
     protected $container;
     /** @var array $rule current rule */
     protected $rule = [];
+
 
     /**
      * Constructor validator object
@@ -124,11 +125,11 @@ class Validator
     protected function getValidatorClass($name)
     {
         if (!empty(self::$validators[$name])) {
-            return '\\Micro\\validator\\' . self::$validators[$name];
-        } elseif (class_exists($name) && is_subclass_of($name, '\Micro\validator\IValidator')) {
+            return '\\Micro\\Validator\\' . self::$validators[$name];
+        } elseif (class_exists($name) && is_subclass_of($name, '\Micro\Validator\IValidator')) {
             return $name;
         } elseif (file_exists($this->container->kernel->getAppDir() . '/validator/' . $name . '.php')) {
-            return '\\App\\validator\\' . $name;
+            return '\\App\\Validator\\' . $name;
         }
 
         return false;

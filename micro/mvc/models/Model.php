@@ -1,11 +1,11 @@
 <?php /** MicroModel */
 
-namespace Micro\mvc\models;
+namespace Micro\Mvc\Models;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
-use Micro\file\Type;
-use Micro\form\FormModel;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
+use Micro\File\Type;
+use Micro\Form\FormModel;
 
 /**
  * Model class file.
@@ -14,10 +14,11 @@ use Micro\form\FormModel;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage db
+ * @package Micro
+ * @subpackage Mvc\Models
  * @version 1.0
  * @since 1.0
+ * @abstract
  */
 abstract class Model extends FormModel implements IModel
 {
@@ -188,10 +189,7 @@ abstract class Model extends FormModel implements IModel
      */
     public function relations()
     {
-        $keys = new Relations;
-
-        // add any keys
-        return $keys;
+        return  new Relations;
     }
 
     /**

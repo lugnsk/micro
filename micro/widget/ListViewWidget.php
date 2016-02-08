@@ -1,12 +1,12 @@
 <?php /** MicroListViewWidget */
 
-namespace Micro\widget;
+namespace Micro\Widget;
 
-use Micro\base\Exception;
-use Micro\mvc\models\IModel;
-use Micro\mvc\models\IQuery;
-use Micro\mvc\Widget;
-use Micro\web\Html;
+use Micro\Base\Exception;
+use Micro\Mvc\Models\IModel;
+use Micro\Mvc\Models\IQuery;
+use Micro\Mvc\Widget;
+use Micro\Web\Html;
 
 /**
  * ListViewWidget class file.
@@ -15,8 +15,8 @@ use Micro\web\Html;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage widget
+ * @package Micro
+ * @subpackage Widget
  * @version 1.0
  * @since 1.0
  */
@@ -112,7 +112,7 @@ class ListViewWidget extends Widget
         }
 
         foreach ($args['data'] AS $model) {
-            $this->rows[] = is_subclass_of($model, 'Micro\mvc\models\IModel') ? $model : (object)$model;
+            $this->rows[] = is_subclass_of($model, 'Micro\\Mvc\\Models\\IModel') ? $model : (object)$model;
         }
     }
 

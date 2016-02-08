@@ -1,8 +1,8 @@
 <?php
 
-use Micro\web\Html;
+use Micro\Web\Html;
 
-/** @var \App\modules\Blog\models\Blog $model */
+/** @var \App\Modules\Blog\Models\Blog $model */
 ?>
 <?= Html::beginForm(''); ?>
 

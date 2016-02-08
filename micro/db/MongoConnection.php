@@ -1,8 +1,8 @@
 <?php /** MongoDbConnectionMicro */
 
-namespace Micro\db;
+namespace Micro\Db;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * MongoDB Connection class file.
@@ -11,8 +11,8 @@ use Micro\base\Exception;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage db
+ * @package Micro
+ * @subpackage Db
  * @version 1.0
  * @since 1.0
  */
@@ -35,7 +35,7 @@ class MongoConnection extends Connection
      *
      * @result void
      * @throws \MongoConnectionException
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function __construct(array $config = [])
     {

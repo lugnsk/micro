@@ -1,8 +1,8 @@
 <?php
 
-namespace App\modules\blog;
+namespace App\Modules\Blog;
 
-use Micro\mvc\Module;
+use Micro\Mvc\Module;
 
 class BlogModule extends Module
 {

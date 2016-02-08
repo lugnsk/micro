@@ -1,21 +1,23 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: casper
- * Date: 19.07.15
- * Time: 14:28
- */
+<?php /** MicroInterfaceSession */
 
-namespace Micro\web;
+namespace Micro\Web;
 
 /**
  * Interface ISession
- * @package Micro\web
  *
- * @property array $flash FlashMessages
- * @property array $csrf
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Web
+ * @version 1.0
+ * @since 1.0
+ * @interface
+ * @property array   $flash FlashMessages
+ * @property array   $csrf
  * @property integer $UserID
- * @property string $captchaCode
+ * @property string  $captchaCode
  */
 interface ISession
 {

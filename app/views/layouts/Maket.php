@@ -1,9 +1,9 @@
 <?php
 
-use Micro\web\Html;
+use Micro\Web\Html;
 
 /** @var string $content */
-/** @var \App\components\View $this */
+/** @var \App\Components\View $this */
 
 $this->registerScriptFile('/css/jquery.js');
 $this->registerCssFile('/css/main.css');
@@ -23,7 +23,7 @@ $this->registerCssFile('/css/main.css');
         <span><?= $this->container->company ?></span> <?= $this->container->slogan ?>
     </div>
     <div id="content">
-        <?= $this->widget('\App\widgets\MenubarWidget', ['links' => $this->menu]); ?>
+        <?= $this->widget('\App\Widgets\MenubarWidget', ['links' => $this->menu]); ?>
         <?= $content ?>
     </div>
     <div id="footer">

@@ -1,10 +1,22 @@
 <?php /** MicroFormModel */
 
-namespace Micro\form;
+namespace Micro\Form;
 
-use Micro\base\IContainer;
-use Micro\validator\Validator;
+use Micro\Base\IContainer;
+use Micro\Validator\Validator;
 
+/**
+ * Class FormModel.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Form
+ * @version 1.0
+ * @since 1.0
+ */
 abstract class FormModel implements IFormModel
 {
     /** @var IContainer $container */
@@ -27,6 +39,9 @@ abstract class FormModel implements IFormModel
         $this->container = $container;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function validate()
     {
         foreach ($this->rules() AS $rule) {
@@ -43,11 +58,17 @@ abstract class FormModel implements IFormModel
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getClient()
     {
         $result = 'jQuery(document).ready(function(){';
@@ -62,6 +83,9 @@ abstract class FormModel implements IFormModel
         return $result . '});';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setModelData(array $data = [])
     {
         foreach ($data AS $key => $value) {
@@ -69,11 +93,17 @@ abstract class FormModel implements IFormModel
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function addError($description)
     {
         $this->errors[] = $description;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getErrors()
     {
         return $this->convertMultiArrayToArray($this->errors);
@@ -102,6 +132,9 @@ abstract class FormModel implements IFormModel
         return $result;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLabel($property)
     {
         $elements = $this->attributeLabels();
@@ -109,11 +142,17 @@ abstract class FormModel implements IFormModel
         return !empty($elements[$property]) ? $elements[$property] : $property;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function checkAttributeExists($name)
     {
         return property_exists($this, $name);

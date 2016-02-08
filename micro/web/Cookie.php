@@ -1,6 +1,6 @@
 <?php /** MicroCookie */
 
-namespace Micro\web;
+namespace Micro\Web;
 
 /**
  * Cookie class file.
@@ -9,8 +9,8 @@ namespace Micro\web;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage web
+ * @package Micro
+ * @subpackage Web
  * @version 1.0
  * @since 1.0
  */

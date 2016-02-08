@@ -1,8 +1,8 @@
 <?php /** MicroBooleanValidator */
 
-namespace Micro\validator;
+namespace Micro\Validator;
 
-use Micro\form\IFormModel;
+use Micro\Form\IFormModel;
 
 /**
  * BooleanValidator class file.
@@ -11,8 +11,8 @@ use Micro\form\IFormModel;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage validator
+ * @package Micro
+ * @subpackage Validator
  * @version 1.0
  * @since 1.0
  */

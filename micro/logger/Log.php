@@ -1,9 +1,9 @@
 <?php /** MicroLogInterface */
 
-namespace Micro\logger;
+namespace Micro\Logger;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
 
 /**
  * Base logger class file.
@@ -14,8 +14,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage logger
+ * @package Micro
+ * @subpackage Logger
  * @version 1.0
  * @since 1.0
  */
@@ -25,6 +25,7 @@ abstract class Log implements ILogger
     protected $supportedLevels = [];
     /** @var IContainer $container */
     protected $container;
+
 
     /**
      * Constructor is a initialize logger

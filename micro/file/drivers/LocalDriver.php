@@ -1,6 +1,6 @@
 <?php /** MicroLocalDriver */
 
-namespace Micro\file\drivers;
+namespace Micro\File\Drivers;
 
 /**
  * Class LocalDriver is a driver for local filesystem
@@ -10,7 +10,7 @@ namespace Micro\file\drivers;
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
  * @package Micro
- * @subpackage files
+ * @subpackage File\Drivers
  * @version 1.0
  * @since 1.0
  */

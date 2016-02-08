@@ -1,7 +1,19 @@
 <?php
 
-namespace Micro\file\drivers;
+namespace Micro\File\Drivers;
 
+/**
+ * IFile interface for filesystem drivers
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage File\Drivers
+ * @version 1.0
+ * @since 1.0
+ */
 interface IFile
 {
     /**

@@ -1,6 +1,6 @@
 <?php /** MicroRabbitMQ */
 
-namespace Micro\queue;
+namespace Micro\Queue;
 
 /**
  * RabbitMQ class file.
@@ -9,8 +9,8 @@ namespace Micro\queue;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage wrappers
+ * @package Micro
+ * @subpackage Queue
  * @version 1.0
  * @since 1.0
  */

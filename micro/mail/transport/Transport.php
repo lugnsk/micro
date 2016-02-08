@@ -1,6 +1,6 @@
 <?php /** MicroMailTransport */
 
-namespace Micro\mail\transport;
+namespace Micro\Mail\Transport;
 
 /**
  * Class Transport
@@ -9,8 +9,8 @@ namespace Micro\mail\transport;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mail\transport
+ * @package Micro
+ * @subpackage Mail\Transport
  * @version 1.0
  * @since 1.0
  * @abstract

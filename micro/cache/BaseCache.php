@@ -1,8 +1,8 @@
 <?php /** MicroBaseCache */
 
-namespace Micro\cache;
+namespace Micro\Cache;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
 /**
  * Abstract class Base Cache
@@ -11,8 +11,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cache
+ * @package Micro
+ * @subpackage Cache
  * @version 1.0
  * @since 1.0
  * @abstract

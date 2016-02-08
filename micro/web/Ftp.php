@@ -1,6 +1,6 @@
 <?php /** MicroFTP */
 
-namespace Micro\web;
+namespace Micro\Web;
 
 /**
  * Simple FTP Class
@@ -8,8 +8,8 @@ namespace Micro\web;
  * @author Shay Anderson 05.11
  * @link shayanderson.com
  * @license http://www.gnu.org/licenses/gpl.html GPL License
- * @package micro
- * @subpackage wrappers
+ * @package Micro
+ * @subpackage Web
  * @version 1.0
  * @since 1.0
  * @final

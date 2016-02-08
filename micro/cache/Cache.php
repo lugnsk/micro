@@ -1,9 +1,9 @@
 <?php /** MicroCache */
 
-namespace Micro\cache;
+namespace Micro\Cache;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
 
 /**
  * Cache class file.
@@ -12,8 +12,8 @@ use Micro\base\IContainer;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage wrappers
+ * @package Micro
+ * @subpackage Cache
  * @version 1.0
  * @since 1.0
  */
@@ -21,14 +21,14 @@ class Cache
 {
     /** @var array $drivers Supported drivers */
     protected static $drivers = [
-        'array' => '\\Micro\\cache\\ArrayCache',
-        'apc' => '\\Micro\\cache\\ApcCache',
-        'file' => '\\Micro\\cache\\FileCache',
-        'memcache' => '\\Micro\\cache\\MemcacheCache',
-        'memcached' => '\\Micro\\cache\\MemcacheCache',
-        'redis' => '\\Micro\\cache\\RedisCache',
-        'wincache' => '\\Micro\\cache\\WincacheCache',
-        'xcache' => '\\Micro\\cache\\XcacheCache'
+        'array'     => '\\Micro\\Cache\\ArrayCache',
+        'apc'       => '\\Micro\\Cache\\ApcCache',
+        'file'      => '\\Micro\\Cache\\FileCache',
+        'memcache'  => '\\Micro\\Cache\\MemcacheCache',
+        'memcached' => '\\Micro\\Cache\\MemcacheCache',
+        'redis'     => '\\Micro\\Cache\\RedisCache',
+        'wincache'  => '\\Micro\\Cache\\WincacheCache',
+        'xcache'    => '\\Micro\\Cache\\XcacheCache'
     ];
     /** @var array $servers Activated servers */
     protected $servers = [];

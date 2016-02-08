@@ -1,9 +1,22 @@
-<?php
+<?php /** MicroInterfaceController */
 
-namespace Micro\mvc\controllers;
+namespace Micro\Mvc\Controllers;
 
-use Micro\web\IResponse;
+use Micro\Web\IResponse;
 
+/**
+ * Class IController
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Mvc\Controllers
+ * @version 1.0
+ * @since 1.0
+ * @interface
+ */
 interface IController
 {
     /**
@@ -17,7 +30,7 @@ interface IController
      * @param string $data data to parse
      *
      * @return null|string
-     * @throws \Micro\base\Exception error on filter
+     * @throws \Micro\Base\Exception error on filter
      */
     public function applyFilters($action, $isPre = true, array $filters = [], $data = null);
 
@@ -29,7 +42,7 @@ interface IController
      * @param string $name Called action name
      *
      * @return string|IResponse
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function action($name = 'index');
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers;
 
-use App\components\Controller;
-use App\components\View;
-use App\models\User;
+use App\Components\Controller;
+use App\Components\View;
+use App\Models\User;
 
 class RegisterController extends Controller
 {
@@ -12,7 +12,7 @@ class RegisterController extends Controller
     {
         return [
             [
-                'class' => '\Micro\filter\AccessFilter',
+                'class' => '\Micro\Filter\AccessFilter',
                 'actions' => ['success', 'error', 'index', 'post'],
                 'rules' => [
                     [
@@ -24,11 +24,11 @@ class RegisterController extends Controller
                 ]
             ],
             [
-                'class' => '\Micro\filter\CsrfFilter',
+                'class' => '\Micro\Filter\CsrfFilter',
                 'actions' => ['index']
             ],
             [
-                'class' => '\Micro\filter\XssFilter',
+                'class' => '\Micro\Filter\XssFilter',
                 'actions' => ['post'],
                 'clean' => '*'
             ]

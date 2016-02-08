@@ -1,6 +1,6 @@
 <?php /** CsrfFilterMicro */
 
-namespace Micro\filter;
+namespace Micro\Filter;
 
 /**
  * Class CsrfFilter
@@ -9,8 +9,8 @@ namespace Micro\filter;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage filter
+ * @package Micro
+ * @subpackage Filter
  * @version 1.0
  * @since 1.0
  */
@@ -26,6 +26,7 @@ class CsrfFilter extends Filter
         }
 
         $postCSRF = $this->container->request->post('csrf');
+
         if (!$postCSRF) {
             $this->result = [
                 'redirect' => !empty($rule['redirect']) ? $rule['redirect'] : null,
@@ -36,6 +37,7 @@ class CsrfFilter extends Filter
         }
 
         $csrf = $this->container->session->csrf;
+
         if (($key = in_array(md5($postCSRF), $csrf, true)) !== null) {
             unset($csrf[$key]);
 
@@ -76,7 +78,7 @@ class CsrfFilter extends Filter
     public function insertProtect(array $matches = [])
     {
         $gen = md5(mt_rand());
-        $s = $this->container->session;
+        $s   = $this->container->session;
 
         $s->csrf = array_merge(is_array($s->csrf) ? $s->csrf : [], [md5($gen)]);
 

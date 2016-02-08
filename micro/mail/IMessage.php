@@ -1,6 +1,6 @@
 <?php /** MicroIMessage */
 
-namespace Micro\mail;
+namespace Micro\Mail;
 
 /**
  * Interface IMessage
@@ -9,8 +9,8 @@ namespace Micro\mail;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mail
+ * @package Micro
+ * @subpackage Mail
  * @version 1.0
  * @since 1.0
  */

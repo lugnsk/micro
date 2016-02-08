@@ -1,6 +1,6 @@
-<?php
+<?php /** MicroInterfaceFormModel */
 
-namespace Micro\form;
+namespace Micro\Form;
 
 /**
  * Class FormModel.
@@ -9,8 +9,8 @@ namespace Micro\form;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage web
+ * @package Micro
+ * @subpackage Form
  * @version 1.0
  * @since 1.0
  */
@@ -22,7 +22,7 @@ interface IFormModel
      * @access public
      *
      * @return bool
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function validate();
 
@@ -40,7 +40,7 @@ interface IFormModel
      * @access public
      *
      * @return string
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function getClient();
 

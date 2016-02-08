@@ -2,7 +2,7 @@
 
 // Flash messages
 return [
-    'class' => '\Micro\web\FlashMessage',
+    'class' => '\Micro\Web\FlashMessage',
     'arguments' => [
         'session' => '@session'
     ]

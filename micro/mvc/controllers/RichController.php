@@ -1,13 +1,29 @@
-<?php
+<?php /** MicroRichController */
 
-namespace Micro\mvc\controllers;
+namespace Micro\Mvc\Controllers;
 
-use Micro\base\IContainer;
+use Micro\Base\IContainer;
 
+/**
+ * Class RichController
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Mvc\Controllers
+ * @version 1.0
+ * @since 1.0
+ * @abstract
+ */
 abstract class RichController extends Controller
 {
     /** @var string $format Format for response */
     public $format = 'application/json';
+    /** @var string $methodType */
+    protected $methodType = 'get';
+
 
     /**
      * Construct RICH controller
@@ -39,6 +55,7 @@ abstract class RichController extends Controller
         }
 
         $types = $this->actionsTypes();
+
         if (!empty($types[$name]) && $this->methodType !== $types[$name]) {
             $this->response->setStatus(500,
                 'Action "' . $name . '" not run with method "' . $this->methodType . '" into ' . get_class($this)
@@ -53,7 +70,7 @@ abstract class RichController extends Controller
 
         $view = null;
         if ($actionClass) {
-            /** @var \Micro\mvc\Action $cl */
+            /** @var \Micro\Mvc\Action $cl */
             $cl = new $actionClass ($this->container);
             $view = $cl->run();
         } else {

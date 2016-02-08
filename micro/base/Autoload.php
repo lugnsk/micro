@@ -1,6 +1,6 @@
 <?php /** MicroAutoloader */
 
-namespace Micro\base;
+namespace Micro\Base;
 
 /**
  * Autoload class file.
@@ -9,14 +9,16 @@ namespace Micro\base;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
+ * @package Micro
+ * @subpackage Base
  * @version 1.0
  * @since 1.0
  */
 class Autoload
 {
-    /** @var array $aliases aliases for base dirs */
+    /** @var array $aliases Autoload aliases maps */
     private static $aliases = [];
+
 
     /**
      * Setting or installing new alias
@@ -31,7 +33,7 @@ class Autoload
      */
     public static function setAlias($alias, $realPath)
     {
-        self::$aliases[$alias] = $realPath;
+        static::$aliases[strtolower($alias)][] = $realPath;
     }
 
     /**
@@ -46,9 +48,7 @@ class Autoload
      */
     public static function loader($className)
     {
-        $path = self::getClassPath($className);
-
-        if (is_file($path)) {
+        if ($path = static::getClassPath(ltrim($className, '\\'))) {
             /** @noinspection PhpIncludeInspection */
             require_once $path;
 
@@ -64,26 +64,53 @@ class Autoload
      * @access public
      *
      * @param string $className search class name
+     * @param string $extension extension of class
      *
      * @return string
      * @static
      */
-    public static function getClassPath($className)
+    public static function getClassPath($className, $extension = '.php')
     {
-        $className = ltrim($className, '\\');
+        $prefix = $className = static::CamelCaseToLowerNamespace(str_replace('_', '\\', $className));
 
-        $path = '';
-        if ($lastNsPos = strrpos($className, '\\')) {
-            $firstNsPos = strpos($className, '\\');
-            if ($alias = substr($className, 0, $firstNsPos)) {
-                $path .= !empty(self::$aliases[$alias]) ? self::$aliases[$alias] : '';
+        while (false !== $position = strrpos($prefix, '\\')) {
+            $prefix = substr($prefix, 0, $position);
 
-                $className = substr($className, $firstNsPos);
-                $lastNsPos -= $firstNsPos;
+            if (!array_key_exists($prefix, static::$aliases)) {
+                continue;
             }
-            $path .= str_replace('\\', DIRECTORY_SEPARATOR, substr($className, 0, $lastNsPos)) . DIRECTORY_SEPARATOR;
+
+            foreach (static::$aliases[$prefix] as $dir) {
+                $path         = $dir . '\\' . substr($className, mb_strlen($prefix) + 1);
+                $absolutePath = str_replace('\\', DIRECTORY_SEPARATOR, $path) . $extension;
+
+                if (is_readable($absolutePath)) {
+                    return $absolutePath;
+                }
+            }
         }
 
-        return $path . str_replace('_', DIRECTORY_SEPARATOR, substr($className, $lastNsPos + 1)) . '.php';
+        return false;
+    }
+
+    /**
+     * Convert first symbols of namespace to lowercase
+     *
+     * @access protected
+     *
+     * @param string $path
+     *
+     * @return string
+     * @static
+     */
+    private static function CamelCaseToLowerNamespace($path)
+    {
+        $classNameArr = array_map(function($val) {
+            return lcfirst($val);
+        }, explode('\\', $path));
+
+        $classNameArr[] = ucfirst(array_pop($classNameArr));
+
+        return implode('\\', $classNameArr);
     }
 }

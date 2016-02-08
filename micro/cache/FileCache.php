@@ -1,8 +1,9 @@
 <?php /** MicroFileCache */
 
-namespace Micro\cache;
+namespace Micro\Cache;
 
-use Micro\file\FileHelper;
+use Micro\Base\Exception;
+use Micro\File\FileHelper;
 
 /**
  * Class FileCache
@@ -11,8 +12,8 @@ use Micro\file\FileHelper;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cache
+ * @package Micro
+ * @subpackage Cache
  * @version 1.0
  * @since 1.0
  */
@@ -29,14 +30,15 @@ class FileCache extends BaseCache
      * @param array $config config array
      *
      * @result void
+     * @throws Exception
      */
     public function __construct(array $config = [])
     {
         parent::__construct($config);
 
         $path = !empty($config['path']) ? $config['path'] : sys_get_temp_dir() . '/cache';
-        if (!is_dir($path)) {
-            mkdir($path, 0600);
+        if (!@mkdir($path, 0600) && !is_dir($path)) {
+            throw new Exception('Can`not create/check access to directory: ' . $path);
         }
         $this->driver = $path;
     }
@@ -86,7 +88,7 @@ class FileCache extends BaseCache
      */
     public function increment($name, $offset = 1)
     {
-        $this->set($name, ((integer)$this->get($name) + $offset));
+        $this->set($name, ((int)$this->get($name) + $offset));
     }
 
     /**
@@ -110,6 +112,6 @@ class FileCache extends BaseCache
      */
     public function decrement($name, $offset = 1)
     {
-        $this->set($name, ((integer)$this->get($name) - $offset));
+        $this->set($name, ((int)$this->get($name) - $offset));
     }
 } 

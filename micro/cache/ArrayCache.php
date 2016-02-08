@@ -1,8 +1,8 @@
 <?php /** MicroArrayCache */
 
-namespace Micro\cache;
+namespace Micro\Cache;
 
-use Micro\file\Type;
+use Micro\File\Type;
 
 /**
  * Class ArrayCache
@@ -11,8 +11,8 @@ use Micro\file\Type;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cache
+ * @package Micro
+ * @subpackage Cache
  * @version 1.0
  * @since 1.0
  */

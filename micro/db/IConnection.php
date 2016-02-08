@@ -1,12 +1,20 @@
 <?php
 
-namespace Micro\db;
+namespace Micro\Db;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * Interface for a connections to data bases
- * @package Micro\db
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Db
+ * @version 1.0
+ * @since 1.0
  */
 interface IConnection
 {

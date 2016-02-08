@@ -1,8 +1,8 @@
 <?php /** MicroXcacheCache */
 
-namespace Micro\cache;
+namespace Micro\Cache;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * Class XcacheCache
@@ -11,8 +11,8 @@ use Micro\base\Exception;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cache
+ * @package Micro
+ * @subpackage Cache
  * @version 1.0
  * @since 1.0
  */

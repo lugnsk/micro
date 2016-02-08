@@ -1,11 +1,11 @@
 <?php /** MicroAsset */
 
-namespace Micro\web;
+namespace Micro\Web;
 
-use Micro\base\Autoload;
-use Micro\base\Exception;
-use Micro\file\FileHelper;
-use Micro\mvc\views\IView;
+use Micro\Base\Autoload;
+use Micro\Base\Exception;
+use Micro\File\FileHelper;
+use Micro\Mvc\Views\IView;
 
 /**
  * Asset class file.
@@ -14,8 +14,8 @@ use Micro\mvc\views\IView;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage web
+ * @package Micro
+ * @subpackage Web
  * @version 1.0
  * @since 1.0
  */
@@ -53,7 +53,7 @@ class Asset
      * @param IView $view
      *
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function __construct(IView $view)
     {
@@ -73,8 +73,8 @@ class Asset
             throw new Exception('Asset dir not exists: ' . $this->sourcePath);
         }
 
-        if (!file_exists($web . $this->publishPath)) {
-            mkdir($web . $this->publishPath, 0777);
+        if (!@mkdir($web . $this->publishPath, 0777) && !is_dir($web . $this->publishPath)) {
+            throw new Exception('Could not access to publish dir: ' . $this->publishPath);
         }
 
         FileHelper::recurseCopyIfEdited($this->sourcePath, $web . $this->publishPath, $this->excludes);

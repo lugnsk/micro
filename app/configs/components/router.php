@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'class' => '\Micro\web\Router',
+    'class' => '\Micro\Web\Router',
     'arguments' => [
         'routes' => [
             '/login' => '/default/login',

@@ -1,8 +1,8 @@
 <?php
 
-/** @var \App\modules\blog\models\Blog $model */
+/** @var \App\Modules\Blog\Models\Blog $model */
 
-use Micro\web\Html;
+use Micro\Web\Html;
 
 echo Html::href('Назад', '/blog/post');
 echo Html::heading(1, $model->name);

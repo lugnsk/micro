@@ -1,6 +1,6 @@
 <?php /** MicroLogger */
 
-namespace Micro\logger;
+namespace Micro\Logger;
 
 /**
  * Logger manager
@@ -9,15 +9,15 @@ namespace Micro\logger;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage logger
+ * @package Micro
+ * @subpackage Logger
  * @version 1.0
  * @since 1.0
  */
 class Logger
 {
     /** @var array $supportedLevels supported logger levels */
-    public static $supportedLevels = array(
+    public static $supportedLevels = [
         'emergency',
         'alert',
         'critical',
@@ -26,10 +26,11 @@ class Logger
         'notice',
         'info',
         'debug'
-    );
+    ];
 
     /** @var ILogger[] $loggers defined loggers */
     protected $loggers = array();
+
 
     /**
      * Export loggers
@@ -64,7 +65,7 @@ class Logger
      * @param string $message message to write
      *
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function send($level, $message)
     {

@@ -1,11 +1,18 @@
 <?php /** MicroType */
 
-namespace Micro\file;
+namespace Micro\File;
 
 /**
  * Class Type
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
  * @package Micro
- * @subpackage wrappers
+ * @subpackage File
+ * @version 1.0
+ * @since 1.0
  */
 class Type
 {
@@ -56,17 +63,18 @@ class Type
      *
      * @access public
      *
-     * @param $data array to walk
-     * @param $function callable function
+     * @param array $data array to walk
+     * @param callable $function callable function
      *
      * @return array|mixed
      * @static
      */
-    public static function arrayWalkRecursive($data, $function)
+    public static function arrayWalkRecursive(array $data, callable $function)
     {
         if (!is_array($data)) {
             return call_user_func($function, $data);
         }
+
         foreach ($data as $k => &$item) {
             $item = self::arrayWalkRecursive($data[$k], $function);
         }
@@ -81,12 +89,11 @@ class Type
      *
      * @param array $array
      * @param array $keys
-     * @param bool|null $strict
      *
      * @return array
      * @static
      */
-    public static function getSubArrayFromArrayByKeys(array $array, array $keys, $strict = null)
+    public static function getSubArrayFromArrayByKeys(array $array, array $keys)
     {
         $result = [];
 

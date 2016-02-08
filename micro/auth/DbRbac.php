@@ -1,8 +1,8 @@
 <?php /** MicroDbRBAC */
 
-namespace Micro\auth;
+namespace Micro\Auth;
 
-use Micro\mvc\models\Query;
+use Micro\Mvc\Models\Query;
 
 /**
  * Database RBAC class file.
@@ -13,8 +13,8 @@ use Micro\mvc\models\Query;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage auth
+ * @package Micro
+ * @subpackage Auth
  * @version 1.0
  * @since 1.0
  */
@@ -71,7 +71,7 @@ class DbRbac extends Rbac
      * @param array $data action params
      *
      * @return boolean
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function check($userId, $action, array $data = [])
     {
@@ -126,7 +126,7 @@ class DbRbac extends Rbac
      * @param string $name element name
      *
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function delete($name)
     {
@@ -144,7 +144,7 @@ class DbRbac extends Rbac
      * @param int $pdo PHPDataObject fetch key
      *
      * @return mixed
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function rawRoles($pdo = \PDO::FETCH_ASSOC)
     {

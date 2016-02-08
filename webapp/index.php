@@ -7,7 +7,7 @@ require __DIR__ . '/../micro/Micro.php';
 $app = new \Micro\Micro(__DIR__ . '/../app', __DIR__ . '/../micro');
 
 // Run framework
-$app->run(new \Micro\web\Request)->send();
+$app->run(new \Micro\Web\Request)->send();
 
 // Kill application
 $app->terminate();

@@ -1,8 +1,8 @@
 <?php /** MicroDbACL */
 
-namespace Micro\auth;
+namespace Micro\Auth;
 
-use Micro\mvc\models\Query;
+use Micro\Mvc\Models\Query;
 
 /**
  * Database ACL class file.
@@ -13,8 +13,8 @@ use Micro\mvc\models\Query;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage auth
+ * @package Micro
+ * @subpackage Auth
  * @version 1.0
  * @since 1.0
  */

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\modules\blog\models;
+namespace App\Modules\Blog\Models;
 
-use Micro\mvc\models\Model;
+use Micro\Mvc\Models\Model;
 
 /**
  * Class Blog
@@ -10,7 +10,7 @@ use Micro\mvc\models\Model;
  * @property int $id
  *
  * @package App
- * @subpackage modules\blog\models
+ * @subpackage Modules\Blog\Models
  */
 class Blog extends Model
 {

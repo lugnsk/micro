@@ -1,9 +1,9 @@
 <?php /** MicroController */
 
-namespace Micro\mvc\controllers;
+namespace Micro\Mvc\Controllers;
 
-use Micro\base\Exception;
-use Micro\web\Response;
+use Micro\Base\Exception;
+use Micro\Web\Response;
 
 /**
  * Class Controller
@@ -12,8 +12,8 @@ use Micro\web\Response;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mvc
+ * @package Micro
+ * @subpackage Mvc\Controllers
  * @version 1.0
  * @since 1.0
  */

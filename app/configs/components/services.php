@@ -1,28 +1,28 @@
 <?php
 return [
-    'class' => '\Micro\base\Services',
+    'class' => '\Micro\Base\Services',
     'arguments' => [
         'servers' => [
             'server1' => [
-                'class' => '\Micro\queues\RawQueue',
+                'class' => '\Micro\Queue\RawQueue',
                 'ip' => '192.168.10.1',
                 'user' => 'name',
                 'pass' => 'word'
             ],
             'server2' => [
-                'class' => '\Micro\queues\RedisQueue',
+                'class' => '\Micro\Queue\RedisQueue',
                 'ip' => '192.168.10.2',
                 'user' => 'name',
                 'pass' => 'word'
             ],
             'server3' => [
-                'class' => '\Micro\queues\RedisQueue',
+                'class' => '\Micro\Queue\RedisQueue',
                 'ip' => '192.168.10.3',
                 'user' => 'name',
                 'pass' => 'word'
             ],
             'server4' => [
-                'class' => '\Micro\queues\RabbitMqQueue',
+                'class' => '\Micro\Queue\RabbitMqQueue',
                 'ip' => '192.168.10.4',
                 'user' => 'name',
                 'pass' => 'word'

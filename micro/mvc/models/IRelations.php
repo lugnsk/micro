@@ -1,7 +1,20 @@
-<?php
+<?php /** MicroInterfaceRelations */
 
-namespace Micro\mvc\models;
+namespace Micro\Mvc\Models;
 
+/**
+ * IRelations interface file.
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Mvc\Models
+ * @version 1.0
+ * @since 1.0
+ * @interface
+ */
 interface IRelations
 {
     /**

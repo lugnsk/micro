@@ -1,9 +1,9 @@
 <?php /** MicroEmailLogger */
 
-namespace Micro\logger;
+namespace Micro\Logger;
 
-use Micro\base\IContainer;
-use Micro\mail\Message;
+use Micro\Base\IContainer;
+use Micro\Mail\Message;
 
 /**
  * Email logger class file.
@@ -14,8 +14,8 @@ use Micro\mail\Message;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage logger
+ * @package Micro
+ * @subpackage Logger
  * @version 1.0
  * @since 1.0
  */
@@ -31,22 +31,14 @@ class EmailLog extends Log
     private $subject;
 
     /**
-     * Constructor initialize logger
-     *
-     * @access public
-     *
-     * @param IContainer $container
-     * @param array $params configuration params
-     *
-     * @result void
-     * @throws \Micro\base\Exception
+     * @inheritdoc
      */
     public function __construct(IContainer $container, array $params = [])
     {
         parent::__construct($container, $params);
 
-        $this->from = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
-        $this->to = !empty($params['to']) ? $params['to'] : $this->from;
+        $this->from    = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
+        $this->to      = !empty($params['to']) ? $params['to'] : $this->from;
         $this->subject = $params['subject'] ?: getenv('SERVER_NAME') . ' log message';
     }
 

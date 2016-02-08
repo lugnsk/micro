@@ -1,8 +1,8 @@
 <?php /** MicroMailTransport */
 
-namespace Micro\mail\transport;
+namespace Micro\Mail\Transport;
 
-use Micro\mail\IMessage;
+use Micro\Mail\IMessage;
 
 /**
  * Interface ITransport
@@ -11,8 +11,8 @@ use Micro\mail\IMessage;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mail\transport
+ * @package Micro
+ * @subpackage Mail\Transport
  * @version 1.0
  * @since 1.0
  */

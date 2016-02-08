@@ -1,8 +1,8 @@
 <?php /** MicroFileACL */
 
-namespace Micro\auth;
+namespace Micro\Auth;
 
-use Micro\mvc\models\Query;
+use Micro\Mvc\Models\Query;
 
 /**
  * File ACL class file.
@@ -13,8 +13,8 @@ use Micro\mvc\models\Query;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage auth
+ * @package Micro
+ * @subpackage Auth
  * @version 1.0
  * @since 1.0
  */
@@ -57,7 +57,7 @@ class FileAcl extends Acl
      * @param array $data not used, added for compatible!
      *
      * @return bool
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function check($userId, $permission, array $data = [])
     {
@@ -87,7 +87,7 @@ class FileAcl extends Acl
      * @param integer $userId user ID
      *
      * @return mixed
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function assigned($userId)
     {

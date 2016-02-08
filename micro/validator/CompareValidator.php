@@ -1,9 +1,9 @@
 <?php /** MicroCompareValidator */
 
-namespace Micro\validator;
+namespace Micro\Validator;
 
-use Micro\base\Exception;
-use Micro\form\IFormModel;
+use Micro\Base\Exception;
+use Micro\Form\IFormModel;
 
 /**
  * CompareValidator class file.
@@ -12,8 +12,8 @@ use Micro\form\IFormModel;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage validator
+ * @package Micro
+ * @subpackage Validator
  * @version 1.0
  * @since 1.0
  */

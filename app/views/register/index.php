@@ -1,14 +1,14 @@
 <?php
 
-use Micro\web\Html;
+use Micro\Web\Html;
 
-/** @var App\components\View $this */
-/** @var App\models\User $model */
+/** @var App\Components\View $this */
+/** @var App\Models\User $model */
 
 echo Html::heading(2, 'Регистрация');
 
-/** @var \Micro\form\Form $form */
-$form = $this->beginWidget('\Micro\widget\FormWidget', [
+/** @var \Micro\Form\Form $form */
+$form = $this->beginWidget('\Micro\Widget\FormWidget', [
     'method' => 'post',
     'action' => '/register/post',
     'client' => $model->getClient()
@@ -20,4 +20,4 @@ echo $form->passwordFieldRow($model, 'pass');
 echo $form->textFieldRow($model, 'fio');
 echo Html::submitButton('Зарегистрироваться');
 
-$this->endWidget('\Micro\widget\FormWidget');
+$this->endWidget('\Micro\Widget\FormWidget');

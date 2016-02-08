@@ -1,11 +1,11 @@
 <?php /** MicroView */
 
-namespace Micro\mvc\views;
+namespace Micro\Mvc\Views;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
-use Micro\mvc\Module;
-use Micro\web\Html;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
+use Micro\Mvc\Module;
+use Micro\Web\Html;
 
 /**
  * Class View
@@ -14,8 +14,8 @@ use Micro\web\Html;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage mvc/views
+ * @package Micro
+ * @subpackage Mvc/Views
  * @version 1.0
  * @since 1.0
  */

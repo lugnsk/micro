@@ -1,6 +1,6 @@
 <?php /** MicroInterfaceFilter */
 
-namespace Micro\filter;
+namespace Micro\Filter;
 
 /**
  * Interface IFilter
@@ -9,8 +9,8 @@ namespace Micro\filter;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage filter
+ * @package Micro
+ * @subpackage Filter
  * @version 1.0
  * @since 1.0
  *

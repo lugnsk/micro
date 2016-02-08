@@ -1,13 +1,21 @@
-<?php
+<?php /** MicroInterfaceView */
 
-namespace Micro\mvc\views;
+namespace Micro\Mvc\Views;
 
-use Micro\base\Exception;
-use Micro\base\IContainer;
+use Micro\Base\Exception;
+use Micro\Base\IContainer;
 
 /**
  * Interface IView
- * @package Micro\mvc\views
+ *
+ * @author Oleg Lunegov <testuser@mail.linpax.org>
+ * @link https://github.com/lugnsk/micro
+ * @copyright Copyright &copy; 2013 Oleg Lunegov
+ * @license /LICENSE
+ * @package Micro
+ * @subpackage Mvc/Views
+ * @version 1.0
+ * @since 1.0
  *
  * @property IContainer $container
  */

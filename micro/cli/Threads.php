@@ -1,8 +1,8 @@
 <?php /** MicroThreads */
 
-namespace Micro\cli;
+namespace Micro\Cli;
 
-use Micro\base\Exception;
+use Micro\Base\Exception;
 
 /**
  * Threads class file.
@@ -11,8 +11,8 @@ use Micro\base\Exception;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage cli
+ * @package Micro
+ * @subpackage Cli
  * @version 1.0
  * @since 1.0
  */
@@ -49,10 +49,10 @@ abstract class Threads
      *
      * @access public
      *
-     * @param     $name
-     * @param int $puid
-     * @param int $guid
-     * @param int $umask
+     * @param string $name
+     * @param int    $puid
+     * @param int    $guid
+     * @param int    $umask
      *
      * @result void
      * @throws Exception
@@ -83,6 +83,7 @@ abstract class Threads
      * Create IPC segment
      *
      * @access protected
+     *
      * @return bool
      * @throws Exception
      */
@@ -134,6 +135,7 @@ abstract class Threads
      * Create IPC semaphore
      *
      * @access protected
+     *
      * @return bool
      * @throws Exception
      */
@@ -171,8 +173,9 @@ abstract class Threads
      * Set alive
      *
      * @access public
+     *
      * @return void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function setAlive()
     {
@@ -188,7 +191,7 @@ abstract class Threads
      * @param mixed $value
      *
      * @return void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function setVariable($name, $value)
     {
@@ -225,7 +228,7 @@ abstract class Threads
      *
      * @access public
      * @return int
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function getLastAlive()
     {
@@ -245,7 +248,7 @@ abstract class Threads
      * @param string $name
      *
      * @return mixed
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function getVariable($name)
     {
@@ -294,7 +297,7 @@ abstract class Threads
      * @param string $methodName
      *
      * @return mixed|void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function register_callback_func($argList, $methodName)
     {
@@ -370,6 +373,7 @@ abstract class Threads
      * Start
      *
      * @access public
+     *
      * @return void
      * @throws Exception
      */
@@ -460,10 +464,10 @@ abstract class Threads
      *
      * @access protected
      *
-     * @param $sigNo
+     * @param int $sigNo
      *
      * @return void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     protected function sigHandler($sigNo)
     {

@@ -1,10 +1,10 @@
 <?php /** MicroFormBuilder */
 
-namespace Micro\form;
+namespace Micro\Form;
 
-use Micro\base\Exception;
-use Micro\web\Html;
-use Micro\widget\FormWidget;
+use Micro\Base\Exception;
+use Micro\Web\Html;
+use Micro\Widget\FormWidget;
 
 /**
  * Class FormBuilder.
@@ -13,8 +13,8 @@ use Micro\widget\FormWidget;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage web
+ * @package Micro
+ * @subpackage Form
  * @version 1.0
  * @since 1.0
  */
@@ -43,7 +43,7 @@ class FormBuilder
      * @param array $attr attributes for form
      *
      * @result void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function __construct(
         array $config = [],
@@ -86,7 +86,7 @@ class FormBuilder
      * @access public
      *
      * @return bool
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function validateModel()
     {
@@ -97,7 +97,7 @@ class FormBuilder
      * Getting model
      *
      * @access public
-     * @return \Micro\mvc\models\Model
+     * @return \Micro\Mvc\Models\Model
      */
     public function getModel()
     {
@@ -109,7 +109,7 @@ class FormBuilder
      *
      * @access public
      * @return string
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function __toString()
     {
@@ -185,7 +185,7 @@ class FormBuilder
      * @param null|array $conf configuration array
      *
      * @return void
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function contentRender($conf = null)
     {

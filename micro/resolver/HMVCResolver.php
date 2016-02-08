@@ -1,9 +1,9 @@
 <?php /** MicroHMVCResolver */
 
-namespace Micro\resolver;
+namespace Micro\Resolver;
 
-use Micro\base\Exception;
-use Micro\mvc\controllers\IController;
+use Micro\Base\Exception;
+use Micro\Mvc\Controllers\IController;
 
 /**
  * hMVC Resolver class file.
@@ -12,8 +12,8 @@ use Micro\mvc\controllers\IController;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage resolver
+ * @package Micro
+ * @subpackage Resolver
  * @version 1.0
  * @since 1.0
  */
@@ -185,7 +185,7 @@ class HMVCResolver extends Resolver
      */
     public function getCalculatePath()
     {
-        return '\App' . $this->getExtensions() . $this->getModules() . '\\controllers\\' . $this->getController();
+        return '\\App' . $this->getExtensions() . $this->getModules() . '\\Controllers\\' . $this->getController();
     }
 
     /**

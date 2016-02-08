@@ -1,14 +1,14 @@
 <?php /** MicroGridViewWidget */
 
-namespace Micro\widget;
+namespace Micro\Widget;
 
-use Micro\base\Exception;
-use Micro\file\Type;
-use Micro\mvc\models\IModel;
-use Micro\mvc\models\IQuery;
-use Micro\mvc\models\Query;
-use Micro\mvc\Widget;
-use Micro\web\Html;
+use Micro\Base\Exception;
+use Micro\File\Type;
+use Micro\Mvc\Models\IModel;
+use Micro\Mvc\Models\IQuery;
+use Micro\Mvc\Models\Query;
+use Micro\Mvc\Widget;
+use Micro\Web\Html;
 
 /**
  * GridViewWidget class file.
@@ -17,8 +17,8 @@ use Micro\web\Html;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage widget
+ * @package Micro
+ * @subpackage Widget
  * @version 1.0
  * @since 1.0
  */
@@ -123,7 +123,7 @@ class GridViewWidget extends Widget
         }
 
         foreach ($args['data'] AS $model) {
-            $this->rows[] = is_subclass_of($model, 'Micro\db\Model') ? $model : (object)$model;
+            $this->rows[] = is_subclass_of($model, 'Micro\Mvc\Models\Model') ? $model : (object)$model;
         }
     }
 
@@ -246,7 +246,7 @@ class GridViewWidget extends Widget
                 if (is_string($key)) {
                     /** @noinspection PhpUndefinedMethodInspection */
                     $result .= is_subclass_of($this->rows[0],
-                        '\Micro\db\Model') ? $this->rows[0]->getLabel($key) : ucfirst($key);
+                        'Micro\\Mvc\\Models\\Model') ? $this->rows[0]->getLabel($key) : ucfirst($key);
                 }
             }
             $result .= Html::closeTag('th');
@@ -316,7 +316,7 @@ class GridViewWidget extends Widget
             foreach ($this->tableConfig AS $key => $row) {
                 $result .= Html::openTag('td', $row['attributes']);
 
-                if (!empty($row['class']) && is_subclass_of($row['class'], '\Micro\widget\GridColumn')) {
+                if (!empty($row['class']) && is_subclass_of($row['class'], 'Micro\\Widget\\GridColumn')) {
                     $primaryKey = $data->{!empty($row['key']) ? $row['key'] : 'id'};
                     $result .= (string)(new $row['class'](
                         $row + ['str' => (null === $data) ?: $data, 'pKey' => $primaryKey]

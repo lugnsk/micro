@@ -1,6 +1,6 @@
 <?php /** MicroRawQueue */
 
-namespace Micro\queue;
+namespace Micro\Queue;
 
 /**
  * RawQueue class file.
@@ -9,8 +9,8 @@ namespace Micro\queue;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage queue
+ * @package Micro
+ * @subpackage Queue
  * @version 1.0
  * @since 1.0
  */
@@ -31,11 +31,7 @@ class RawQueue implements IQueue
     }
 
     /**
-     * Test connection
-     *
-     * @access public
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function test()
     {
@@ -43,13 +39,7 @@ class RawQueue implements IQueue
     }
 
     /**
-     * Sync message
-     *
-     * @access public
-     *
-     * @param $name
-     * @param array $params
-     * @return mixed
+     * @inheritdoc
      */
     public function sync($name, array $params = [])
     {
@@ -57,13 +47,7 @@ class RawQueue implements IQueue
     }
 
     /**
-     * Async message
-     *
-     * @access public
-     *
-     * @param $name
-     * @param array $params
-     * @return mixed
+     * @inheritdoc
      */
     public function async($name, array $params = [])
     {
@@ -71,13 +55,7 @@ class RawQueue implements IQueue
     }
 
     /**
-     * Stream message
-     *
-     * @access public
-     *
-     * @param $name
-     * @param array $params
-     * @return mixed
+     * @inheritdoc
      */
     public function stream($name, array $params = [])
     {

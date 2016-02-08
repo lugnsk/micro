@@ -1,9 +1,9 @@
 <?php /** MicroRBAC */
 
-namespace Micro\auth;
+namespace Micro\Auth;
 
-use Micro\base\IContainer;
-use Micro\mvc\models\Query;
+use Micro\Base\IContainer;
+use Micro\Mvc\Models\Query;
 
 /**
  * Abstract RBAC class file.
@@ -12,8 +12,8 @@ use Micro\mvc\models\Query;
  * @link https://github.com/lugnsk/micro
  * @copyright Copyright &copy; 2013 Oleg Lunegov
  * @license /LICENSE
- * @package micro
- * @subpackage auth
+ * @package Micro
+ * @subpackage Auth
  * @version 1.0
  * @since 1.0
  */
@@ -71,7 +71,7 @@ abstract class Rbac
      * @param array $data action params
      *
      * @return boolean
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function check($userId, $permission, array $data = [])
     {
@@ -141,7 +141,7 @@ abstract class Rbac
      * @param integer $userId user ID
      *
      * @return mixed
-     * @throws \Micro\base\Exception
+     * @throws \Micro\Base\Exception
      */
     public function assigned($userId)
     {
