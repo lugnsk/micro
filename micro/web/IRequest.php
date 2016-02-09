@@ -287,4 +287,11 @@ interface IRequest
      * @return void
      */
     public function unsetSession($name);
+
+    /**
+     * Get RequestPayload (RAW DATA)
+     *
+     * @return string|bool
+     */
+    public function getRequestPayload();
 }
