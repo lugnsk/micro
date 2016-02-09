@@ -41,13 +41,13 @@ class PhpView extends View
     public function renderPartial($view)
     {
         $lay = $this->layout;
-        $wi  = $this->view;
+        $wi = $this->view;
 
         $this->layout = null;
-        $this->view   = $view;
-        $output       = $this->render();
+        $this->view = $view;
+        $output = $this->render();
         $this->layout = $lay;
-        $this->view   = $wi;
+        $this->view = $wi;
 
         return $output;
     }

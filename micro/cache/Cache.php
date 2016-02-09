@@ -21,14 +21,14 @@ class Cache
 {
     /** @var array $drivers Supported drivers */
     protected static $drivers = [
-        'array'     => '\\Micro\\Cache\\ArrayCache',
-        'apc'       => '\\Micro\\Cache\\ApcCache',
-        'file'      => '\\Micro\\Cache\\FileCache',
-        'memcache'  => '\\Micro\\Cache\\MemcacheCache',
+        'array' => '\\Micro\\Cache\\ArrayCache',
+        'apc' => '\\Micro\\Cache\\ApcCache',
+        'file' => '\\Micro\\Cache\\FileCache',
+        'memcache' => '\\Micro\\Cache\\MemcacheCache',
         'memcached' => '\\Micro\\Cache\\MemcacheCache',
-        'redis'     => '\\Micro\\Cache\\RedisCache',
-        'wincache'  => '\\Micro\\Cache\\WincacheCache',
-        'xcache'    => '\\Micro\\Cache\\XcacheCache'
+        'redis' => '\\Micro\\Cache\\RedisCache',
+        'wincache' => '\\Micro\\Cache\\WincacheCache',
+        'xcache' => '\\Micro\\Cache\\XcacheCache'
     ];
     /** @var array $servers Activated servers */
     protected $servers = [];

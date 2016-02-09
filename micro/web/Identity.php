@@ -79,12 +79,12 @@ abstract class Identity
      * @global Container
      *
      * @param string $name cookie name
-     * @param mixed  $value data value
-     * @param int    $expire life time
+     * @param mixed $value data value
+     * @param int $expire life time
      * @param string $path path access cookie
      * @param string $domain domain access cookie
-     * @param bool   $secure use SSL?
-     * @param bool   $httpOnly disable on JS?
+     * @param bool $secure use SSL?
+     * @param bool $httpOnly disable on JS?
      *
      * @return mixed
      */

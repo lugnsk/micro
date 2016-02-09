@@ -50,9 +50,9 @@ abstract class Threads
      * @access public
      *
      * @param string $name
-     * @param int    $puid
-     * @param int    $guid
-     * @param int    $umask
+     * @param int $puid
+     * @param int $guid
+     * @param int $umask
      *
      * @result void
      * @throws Exception

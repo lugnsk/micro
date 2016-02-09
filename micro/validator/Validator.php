@@ -23,17 +23,17 @@ class Validator
     /** @var array $validators supported validations */
     protected static $validators = [
         'required' => 'RequiredValidator',
-        'captcha'  => 'CaptchaValidator',
-        'boolean'  => 'BooleanValidator',
-        'compare'  => 'CompareValidator',
-        'string'   => 'StringValidator',
-        'regexp'   => 'RegexpValidator',
-        'number'   => 'NumberValidator',
-        'unique'   => 'UniqueValidator',
-        'range'    => 'RangeValidator',
-        'email'    => 'EmailValidator',
-        'file'     => 'FileValidator',
-        'url'      => 'UrlValidator'
+        'captcha' => 'CaptchaValidator',
+        'boolean' => 'BooleanValidator',
+        'compare' => 'CompareValidator',
+        'string' => 'StringValidator',
+        'regexp' => 'RegexpValidator',
+        'number' => 'NumberValidator',
+        'unique' => 'UniqueValidator',
+        'range' => 'RangeValidator',
+        'email' => 'EmailValidator',
+        'file' => 'FileValidator',
+        'url' => 'UrlValidator'
     ];
     /** @var array $errors errors summary */
     public $errors = [];
