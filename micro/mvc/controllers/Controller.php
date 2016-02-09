@@ -69,8 +69,8 @@ abstract class Controller implements IController
      * @access public
      *
      * @param string $action current action name
-     * @param bool   $isPre is pre or post
-     * @param array  $filters defined filters
+     * @param bool $isPre is pre or post
+     * @param array $filters defined filters
      * @param string $data data to parse
      *
      * @return null|string

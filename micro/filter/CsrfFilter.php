@@ -78,7 +78,7 @@ class CsrfFilter extends Filter
     public function insertProtect(array $matches = [])
     {
         $gen = md5(mt_rand());
-        $s   = $this->container->session;
+        $s = $this->container->session;
 
         $s->csrf = array_merge(is_array($s->csrf) ? $s->csrf : [], [md5($gen)]);
 

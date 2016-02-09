@@ -81,7 +81,7 @@ class Autoload
             }
 
             foreach (static::$aliases[$prefix] as $dir) {
-                $path         = $dir . '\\' . substr($className, mb_strlen($prefix) + 1);
+                $path = $dir . '\\' . substr($className, mb_strlen($prefix) + 1);
                 $absolutePath = str_replace('\\', DIRECTORY_SEPARATOR, $path) . $extension;
 
                 if (is_readable($absolutePath)) {
@@ -105,7 +105,7 @@ class Autoload
      */
     private static function CamelCaseToLowerNamespace($path)
     {
-        $classNameArr = array_map(function($val) {
+        $classNameArr = array_map(function ($val) {
             return lcfirst($val);
         }, explode('\\', $path));
 

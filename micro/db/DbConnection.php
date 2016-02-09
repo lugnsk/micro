@@ -147,7 +147,7 @@ class DbConnection extends Connection
     public function createTable($name, array $elements = [], $params = '')
     {
         return $this->conn->exec(
-            "CREATE TABLE IF NOT EXISTS `{$name}` (`".implode('`,`', $elements)."`) {$params};"
+            "CREATE TABLE IF NOT EXISTS `{$name}` (`" . implode('`,`', $elements) . "`) {$params};"
         );
     }
 

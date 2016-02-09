@@ -189,7 +189,7 @@ abstract class Model extends FormModel implements IModel
      */
     public function relations()
     {
-        return  new Relations;
+        return new Relations;
     }
 
     /**

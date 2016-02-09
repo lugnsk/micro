@@ -37,8 +37,8 @@ class EmailLog extends Log
     {
         parent::__construct($container, $params);
 
-        $this->from    = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
-        $this->to      = !empty($params['to']) ? $params['to'] : $this->from;
+        $this->from = !empty($params['from']) ? $params['from'] : getenv('SERVER_ADMIN');
+        $this->to = !empty($params['to']) ? $params['to'] : $this->from;
         $this->subject = $params['subject'] ?: getenv('SERVER_NAME') . ' log message';
     }
 

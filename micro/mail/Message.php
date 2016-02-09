@@ -95,8 +95,8 @@ class Message implements IMessage
      */
     public function setText($body, $type = 'text/plain', $encoding = 'utf-8')
     {
-        $this->text     = $body;
-        $this->type     = $type;
+        $this->text = $body;
+        $this->type = $type;
         $this->encoding = $encoding;
     }
 
