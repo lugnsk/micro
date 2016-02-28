@@ -1,10 +1,10 @@
 <?php
 
 // Get micro
-require __DIR__ . '/../micro/Micro.php';
+require __DIR__ . '/../app/Application.php';
 
 // Get kernel
-$app = new \Micro\Micro(__DIR__ . '/../app', __DIR__ . '/../micro');
+$app = new \App\Application();
 
 // Run framework
 $app->run(new \Micro\Web\Request)->send();

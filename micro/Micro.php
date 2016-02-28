@@ -55,18 +55,16 @@ class Micro
      *
      * @access public
      *
-     * @param string $appDir Application directory
-     * @param string $microDir Micro directory
      * @param string $environment Application environment: devel , prod , test
      * @param bool $debug Debug-mode flag
      * @param bool $registerLoader Register default autoloader
      *
      * @result void
      */
-    public function __construct($appDir, $microDir, $environment = 'devel', $debug = true, $registerLoader = true)
+    public function __construct($environment = 'devel', $debug = true, $registerLoader = true)
     {
-        $this->appDir = realpath($appDir);
-        $this->microDir = realpath($microDir);
+        //$this->appDir = realpath($appDir);
+        //$this->microDir = realpath($microDir);
         $this->webDir = getenv('DOCUMENT_ROOT');
         $this->environment = $environment;
         $this->debug = (bool)$debug;
@@ -176,10 +174,10 @@ class Micro
      * @return Response
      * @throws \Exception
      */
-    public function run(IRequest $request, $configPath = '/configs/index.php')
+    public function run(IRequest $request)
     {
         if (!$this->loaded) {
-            $this->loader($configPath);
+            $this->loader();
         }
         $this->container->request = $request;
 
@@ -196,6 +194,16 @@ class Micro
     }
 
     /**
+     * Default config path
+     *
+     * @return string
+     */
+    protected function getConfig()
+    {
+        return '/configs/index.php';
+    }
+
+    /**
      * Boot Loader
      *
      * @access public
@@ -204,13 +212,13 @@ class Micro
      *
      * @return void
      */
-    public function loader($configPath = '/configs/index.php')
+    public function loader()
     {
         if (true === $this->loaded) {
             return;
         }
 
-        $this->initContainer($configPath);
+        $this->initContainer($this->getConfig());
 
         $this->loaded = true;
     }

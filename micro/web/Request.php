@@ -93,7 +93,7 @@ class Request implements IRequest
             return false;
         }
 
-        return  new $className($_FILES);
+        return new $className($_FILES);
     }
 
     /**
