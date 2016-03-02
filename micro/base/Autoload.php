@@ -36,6 +36,13 @@ class Autoload
         static::$aliases[strtolower($alias)][] = $realPath;
     }
 
+    public static function getAlias($alias)
+    {
+        $alias = strtolower($alias);
+
+        return array_key_exists($alias, static::$aliases) ? static::$aliases[$alias] : [];
+    }
+
     /**
      * Loader classes
      *

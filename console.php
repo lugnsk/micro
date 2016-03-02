@@ -1,9 +1,13 @@
 <?php
 
-require __DIR__ . '/micro/Micro.php';
+// Get micro
+require __DIR__ . '/../app/Application.php';
 
-$app = new \Micro\Micro(__DIR__ . '/app', __DIR__ . '/micro');
+// Get kernel
+$app = new \App\Application;
 
+// Run framework
 $app->run(new \Micro\Web\Request)->send();
 
+// Kill application
 $app->terminate();

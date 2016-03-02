@@ -1,13 +1,17 @@
 <?php
 
-// Get micro
+// Run system and get app
+require __DIR__ . '/../app/__autoload.php';
 require __DIR__ . '/../app/Application.php';
 
 // Get kernel
-$app = new \App\Application();
+$app = new \App\Application;
 
 // Run framework
-$app->run(new \Micro\Web\Request)->send();
+$response = $app->run(new \Micro\Web\Request);
+
+// Send response
+$response->send();
 
 // Kill application
 $app->terminate();

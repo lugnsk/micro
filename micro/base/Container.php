@@ -35,7 +35,7 @@ class Container extends \stdClass implements IContainer
      */
     public function load($filename)
     {
-        if (file_exists($filename = $this->kernel->getAppDir() . $filename)) {
+        if (file_exists($filename)) {
             /** @noinspection PhpIncludeInspection */
             $this->config = array_merge_recursive($this->config, require $filename);
             $this->components = array_merge_recursive($this->components, $this->config['components']);

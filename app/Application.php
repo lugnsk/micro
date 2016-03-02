@@ -16,6 +16,6 @@ class Application extends Micro
      */
     protected function getConfig()
     {
-        return __DIR__ . 'configs/index.php';
+        return __DIR__ . '/configs/index.php';
     }
 }
