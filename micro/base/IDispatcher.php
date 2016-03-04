@@ -22,12 +22,12 @@ interface IDispatcher
      * @access public
      *
      * @param string $listener listener name
-     * @param array $event ['Object', 'method']
+     * @param mixed $event ['Object', 'method'] or callable
      * @param int|null $prior priority
      *
-     * @return void
+     * @return bool
      */
-    public function addListener($listener, array $event = [], $prior = null);
+    public function addListener($listener, $event, $prior = null);
 
     /**
      * Send signal to run event

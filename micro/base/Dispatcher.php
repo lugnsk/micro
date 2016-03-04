@@ -25,18 +25,24 @@ class Dispatcher implements IDispatcher
      * @access public
      *
      * @param string $listener listener name
-     * @param array $event ['Object', 'method']
+     * @param array $event ['Object', 'method'] or callable
      * @param int|null $prior priority
      *
-     * @return void
+     * @return bool
      */
-    public function addListener($listener, array $event = [], $prior = null)
+    public function addListener($listener, $event, $prior = null)
     {
+        if (!is_callable($event)) {
+            return false;
+        }
+
         if (!$prior) {
             $this->listeners[$listener][] = $event;
         } else {
             array_splice($this->listeners, $prior, 0, $event);
         }
+
+        return true;
     }
 
     /**
@@ -52,7 +58,9 @@ class Dispatcher implements IDispatcher
     public function signal($listener, array $params = [])
     {
         if ($this->listeners && array_key_exists($listener, $this->listeners)) {
-            return call_user_func($this->listeners[$listener], $params);
+            foreach ($this->listeners[$listener] as $listen) {
+                return call_user_func($listen, $params);
+            }
         }
 
         return false;

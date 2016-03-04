@@ -2,11 +2,10 @@
 
 namespace Micro;
 
-use Micro\base\Autoload;
 use Micro\base\Container;
 use Micro\base\Dispatcher;
 use Micro\base\IContainer;
-use Micro\cli\DefaultConsoleCommand;
+use Micro\cli\Consoles\DefaultConsoleCommand;
 use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
 use Micro\web\IOutput;
@@ -32,36 +31,42 @@ class Micro
     const VERSION = '1.1';
 
 
-    /** @var string $environment Application environment */
-    protected $environment = 'devel';
-    /** @var bool $debug Debug-mode flag */
-    protected $debug = true;
-    /** @var float $startTime Time of start framework */
-    protected $startTime;
     /** @var bool $loaded Micro loaded flag */
-    protected $loaded;
+    private $loaded;
+    /** @var bool $debug Debug-mode flag */
+    private $debug = true;
+    /** @var string $environment Application environment */
+    private $environment = 'devel';
+    /** @var float $startTime Time of start framework */
+    private $startTime;
+
     /** @var IContainer $container Container is a container for components and options */
     protected $container;
+    /** @var string $appDir */
+    protected $appDir;
 
 
     /**
-     * Initialize framework
+     * Initialize application
      *
      * @access public
      *
-     * @param string $environment Application environment: devel , prod , test
-     * @param bool $debug Debug-mode flag
+     * @param string $environment Application environment: devel , production , test, other
+     * @param bool   $debug       Debug-mode flag
      *
      * @result void
      */
     public function __construct($environment = 'devel', $debug = true)
     {
-        $this->environment = $environment;
+        $this->environment = (string)$environment;
         $this->debug = (bool)$debug;
-
         $this->loaded = false;
 
-          if ($this->debug) {
+        ini_set('display_errors', $this->debug);
+
+        /** @TODO: add handler for fatal errors... */
+
+        if ($this->debug) {
             $this->startTime = microtime(true);
         }
     }
@@ -75,22 +80,46 @@ class Micro
      */
     public function __clone()
     {
-        if ($this->debug) {
+        if ($this->debug) { // start new timer
             $this->startTime = microtime(true);
         }
 
-        $this->loaded = false;
-        $this->container = null;
+        $this->loaded = false; // deactivate loaded
+        $this->container = null; // remove configured container
     }
 
     /**
-     * Default config path
+     * Initialization container
      *
-     * @return string
+     * @access protected
+     * @return void
      */
-    protected function getConfig()
+    protected function initializeContainer()
     {
-        return false;
+        $class = $this->getContainerClass();
+
+        if ($class) {
+            $class = new $class;
+        }
+
+        $this->container = ($class instanceof IContainer) ? $class : new Container;
+
+        $this->container->kernel = $this;
+
+        $this->container->load($this->getConfig());
+
+        if (false === $this->container->dispatcher) {
+            $this->container->dispatcher = new Dispatcher;
+        }
+
+        $this->addListener('kernel.kill', function(array $params) {
+            if ($params['container']->kernel->isDebug() && !$params['container']->request->isCli()) {
+                // Add timer into page
+                echo '<div class=debug_timer>', (microtime(true) - $this->getStartTime()), '</div>';
+            }
+        });
+
+        $this->container->dispatcher->signal('kernel.boot', ['container' => $this->container]);
     }
 
     /**
@@ -99,7 +128,6 @@ class Micro
      * @access public
      *
      * @param IRequest $request Request object
-     * @param string $configPath Path to config file
      *
      * @return Response
      * @throws \Exception
@@ -107,66 +135,31 @@ class Micro
     public function run(IRequest $request)
     {
         if (!$this->loaded) {
-            $this->loader();
+            $this->initializeContainer();
+
+            $this->loaded = true;
         }
 
         $this->container->request = $request;
 
+        $this->container->dispatcher->signal('kernel.request', ['container' => $this->container]);
+
         try {
-            return $this->doRun();
-        } catch (\Exception $e) {
+            return $this->doRun(); // run application
+        } catch (\Exception $e) { // if not caught exception
             if ($this->debug) {
-                $this->container->dispatcher->signal('kernel.stopped', ['exception' => $e]);
+                $this->container->dispatcher->signal('kernel.exception', ['exception' => $e]);
                 throw $e;
             }
 
-            return $this->doException($e);
-        }
-    }
-
-    /**
-     * Boot Loader
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function loader()
-    {
-        if (true === $this->loaded) {
-            return;
-        }
-
-        $this->initContainer();
-
-        $this->loaded = true;
-    }
-
-    /**
-     * Initialize container
-     *
-     * @access public
-     *
-     * @param string $configPath Path to configure Container
-     *
-     * @return void
-     */
-    public function initContainer()
-    {
-        $this->container = new Container;
-        $this->container->kernel = $this;
-
-        $this->container->load($this->getConfig());
-
-        if (false === $this->container->dispatcher) {
-            $this->container->dispatcher = new Dispatcher($this->container);
+            return $this->doException($e); // run exception
         }
     }
 
     /**
      * Starting ...
      *
-     * @access public
+     * @access private
      *
      * @return \Micro\web\IResponse
      * @throws \Micro\base\Exception
@@ -191,26 +184,6 @@ class Micro
     }
 
     /**
-     * Get resolver
-     *
-     * @access public
-     *
-     * @param bool|false $isCli CLI or Web
-     *
-     * @return ConsoleResolver|HMVCResolver
-     */
-    public function getResolver()
-    {
-        if ($this->container->request->isCli()) {
-            return new ConsoleResolver($this->container);
-        }
-
-        return new HMVCResolver($this->container);
-    }
-
-    // Methods for components
-
-    /**
      * Do exception
      *
      * @access private
@@ -222,8 +195,6 @@ class Micro
      */
     private function doException(\Exception $e)
     {
-        $this->container->dispatcher->signal('kernel.exception', ['exception' => $e]);
-
         $output = $this->container->request->isCli() ? new DefaultConsoleCommand([]) : new Response();
 
         if ($this->container->request->isCli()) {
@@ -271,14 +242,82 @@ class Micro
      */
     public function terminate()
     {
-        $this->container->dispatcher->signal('kernel.terminate', []);
-
-        if ($this->isDebug() && !$this->container->request->isCli()) {
-            // Add timer into page
-            echo '<div class=debug_timer>', (microtime(true) - $this->getStartTime()), '</div>';
-        }
+        $this->container->dispatcher->signal('kernel.kill', ['container' => $this->container]);
 
         $this->unloader();
+    }
+
+    /**
+     * Add listener on event
+     *
+     * @access public
+     *
+     * @param string $listener listener name
+     * @param mixed $event ['Object', 'method'] or callable
+     * @param int|null $prior priority
+     *
+     * @return void
+     */
+    protected function addListener($listener, $event, $prior = null)
+    {
+        if (!is_string($listener) || !$this->container) {
+            return false;
+        }
+
+        $this->container->dispatcher->addListener($listener, $event, $prior);
+
+        return true;
+    }
+
+    // Methods for components
+
+    /**
+     * Default config path
+     *
+     * @return string
+     */
+    protected function getConfig()
+    {
+        return $this->getAppDir() . '/configs/main.php';
+    }
+
+    /**
+     * Get full class name
+     * @return string
+     */
+    protected function getContainerClass()
+    {
+        return '';
+    }
+
+    /**
+     * Get resolver
+     *
+     * @access protected
+     *
+     * @param bool|false $isCli CLI or Web
+     *
+     * @return ConsoleResolver|HMVCResolver
+     */
+    protected function getResolver()
+    {
+        if ($this->container->request->isCli()) {
+            return new ConsoleResolver($this->container);
+        }
+
+        return new HMVCResolver($this->container);
+    }
+
+    /**
+     * Get status of debug
+     *
+     * @access public
+     *
+     * @return bool
+     */
+    public function isDebug()
+    {
+        return $this->debug;
     }
 
     /**
@@ -290,8 +329,10 @@ class Micro
      */
     public function getStartTime()
     {
-        return $this->isDebug() ? $this->startTime : null;
+        return $this->startTime;
     }
+
+    // Methods helpers
 
     /**
      * Unloader subsystem
@@ -308,32 +349,6 @@ class Micro
 
         $this->container = null;
         $this->loaded = false;
-    }
-
-    // Methods helpers
-
-    /**
-     * Get status of debug
-     *
-     * @access public
-     *
-     * @return bool
-     */
-    public function isDebug()
-    {
-        return $this->debug;
-    }
-
-    /**
-     * Get character set
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function getCharset()
-    {
-        return 'UTF-8';
     }
 
     /**
@@ -360,8 +375,49 @@ class Micro
         return $this->container;
     }
 
+    /**
+     * Get character set
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getCharset()
+    {
+        return 'UTF-8';
+    }
+
+    /**
+     * Get application directory
+     *
+     * @return string
+     */
     public function getAppDir()
     {
-        return Autoload::getAlias('App')[0];
+        if (!$this->appDir) {
+            $this->appDir = dirname((new \ReflectionObject($this))->getFileName());
+        }
+
+        return $this->appDir;
+    }
+
+    /**
+     * Get logs directory
+     *
+     * @return string
+     */
+    public function getLogDir()
+    {
+        return $this->getAppDir() . '/logs';
+    }
+
+    /**
+     * Get cache directory
+     *
+     * @return string
+     */
+    public function getCacheDir()
+    {
+        return $this->getAppDir() . '/cache/' . $this->getEnvironment();
     }
 }
