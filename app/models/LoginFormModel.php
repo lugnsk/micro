@@ -5,11 +5,18 @@ namespace App\Models;
 use Micro\Form\FormModel;
 use Micro\Mvc\Models\Query;
 
+/**
+ * Class LoginFormModel
+ * @package App\Models
+ */
 class LoginFormModel extends FormModel
 {
     public $login;
     public $password;
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [
@@ -18,6 +25,9 @@ class LoginFormModel extends FormModel
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [

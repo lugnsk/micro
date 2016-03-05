@@ -18,12 +18,4 @@ class Application extends Micro
     {
         return __DIR__;
     }
-
-    /**
-     * @return string
-     */
-    protected function getConfig()
-    {
-        return $this->getAppDir() . '/configs/index.php';
-    }
 }

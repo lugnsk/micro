@@ -29,10 +29,12 @@ class Micro
 {
     /** @const string VERSION Version framework */
     const VERSION = '1.1';
+
     /** @var IContainer $container Container is a container for components and options */
     protected $container;
     /** @var string $appDir */
     protected $appDir;
+
     /** @var bool $loaded Micro loaded flag */
     private $loaded;
     /** @var bool $debug Debug-mode flag */
@@ -41,6 +43,7 @@ class Micro
     private $environment = 'devel';
     /** @var float $startTime Time of start framework */
     private $startTime;
+
 
     /**
      * Initialize application
@@ -168,7 +171,7 @@ class Micro
      */
     protected function getConfig()
     {
-        return $this->getAppDir() . '/configs/main.php';
+        return $this->getAppDir() . '/configs/index.php';
     }
 
     /**
@@ -206,8 +209,6 @@ class Micro
 
         return true;
     }
-
-    // Methods for components
 
     /**
      * Get start time
@@ -329,8 +330,6 @@ class Micro
 
         $this->unloader();
     }
-
-    // Methods helpers
 
     /**
      * Unloader subsystem

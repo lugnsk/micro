@@ -130,7 +130,7 @@ class FileHelper
 
         $dir = opendir($src);
         if (!$dir) {
-            throw new Exception('Unable to read dir: '. $src);
+            throw new Exception('Unable to read dir: ' . $src);
         }
 
         while (false !== ($file = readdir($dir))) {

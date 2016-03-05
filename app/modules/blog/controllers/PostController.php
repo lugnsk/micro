@@ -7,6 +7,10 @@ use App\Components\View;
 use App\Modules\Blog\Models\Blog;
 use Micro\Mvc\Models\Query;
 
+/**
+ * Class PostController
+ * @package App\Modules\Blog\Controllers
+ */
 class PostController extends Controller
 {
     public function filters()

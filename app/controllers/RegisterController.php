@@ -6,6 +6,10 @@ use App\Components\Controller;
 use App\Components\View;
 use App\Models\User;
 
+/**
+ * Class RegisterController
+ * @package App\Controllers
+ */
 class RegisterController extends Controller
 {
     public function filters()

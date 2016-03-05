@@ -8,6 +8,10 @@ use App\Models\LoginFormModel;
 use Micro\Form\FormBuilder;
 use Micro\Web\Html;
 
+/**
+ * Class DefaultController
+ * @package App\Controllers
+ */
 class DefaultController extends Controller
 {
     public function filters()

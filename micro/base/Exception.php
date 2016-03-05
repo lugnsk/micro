@@ -34,6 +34,7 @@ class Exception extends \Exception
         $resp->send();
 
         error_reporting(0);
+
         return '';
     }
 }

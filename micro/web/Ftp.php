@@ -86,7 +86,7 @@ final class Ftp
      *
      * @result void
      */
-    public function  __construct(array $params = [])
+    public function __construct(array $params = [])
     {
         $this->_host = $params['host'] ?: null;
         $this->_user = $params['user'] ?: null;
@@ -98,7 +98,7 @@ final class Ftp
     /**
      * Auto close connection
      */
-    public function  __destruct()
+    public function __destruct()
     {
         $this->close();
     }
@@ -167,6 +167,7 @@ final class Ftp
 
         if (!$this->_stream) {
             $this->error = 'Failed to connect ' . $this->_host . '.';
+
             return false;
         }
 

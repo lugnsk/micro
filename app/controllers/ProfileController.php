@@ -6,6 +6,10 @@ use App\Components\Controller;
 use App\Components\View;
 use App\Models\User;
 
+/**
+ * Class ProfileController
+ * @package App\Controllers
+ */
 class ProfileController extends Controller
 {
     public function filters()

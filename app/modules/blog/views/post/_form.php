@@ -17,7 +17,7 @@ use Micro\Web\Html;
     </div>
 
     <div class="row actions">
-        <?= Html::submitButton(($model->isNewRecord()) ? 'Создать' : 'Обновить'); ?>
+        <?= Html::submitButton($model->isNewRecord() ? 'Создать' : 'Обновить'); ?>
     </div>
 
 <?= Html::endForm();

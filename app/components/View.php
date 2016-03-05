@@ -15,6 +15,10 @@ class View extends PhpView
     public $title = 'Micro';
     public $menu = ['<a href="/">Главная</a>', '<a href="/blog/post">Блог</a>'];
 
+    /**
+     * View constructor.
+     * @param IContainer $container
+     */
     public function __construct(IContainer $container)
     {
         parent::__construct($container);

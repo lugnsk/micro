@@ -17,6 +17,9 @@ class Blog extends Model
     public $name;
     public $content;
 
+    /**
+     * @return string
+     */
     static public function tableName()
     {
         return 'blogs';

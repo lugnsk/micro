@@ -11,16 +11,16 @@ foreach (scandir(__DIR__ . '/components') AS $fileName) {
 
 return [
     // Site name
-    'company'         => 'Micro',
-    'slogan'          => 'simply hmvc php framework',
+    'company' => 'Micro',
+    'slogan' => 'simply hmvc php framework',
 
     // Language
-    'lang'            => 'en',
+    'lang' => 'en',
 
     // Errors
     'errorController' => '\App\Controllers\DefaultController',
-    'errorAction'     => 'error',
+    'errorAction' => 'error',
 
     // Setup components
-    'components'      => $components
+    'components' => $components
 ];
