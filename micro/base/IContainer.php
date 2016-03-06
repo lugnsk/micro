@@ -25,6 +25,8 @@ namespace Micro\Base;
  * @property \Micro\Micro $kernel
  * @property \Micro\Auth\IAuth $permission
  * @property \Micro\Base\IDispatcher $dispatcher
+ * @property \Micro\Resolver\IResolver $consoleResolver
+ * @property \Micro\Resolver\IResolver $resolver
  * @property \Micro\Mail\Transport\ITransport $mail
  * @property \Micro\Db\IConnection $db
  * @property \Micro\Web\IRouter $router

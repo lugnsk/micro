@@ -4,13 +4,15 @@ namespace Micro;
 
 use Micro\base\Container;
 use Micro\base\Dispatcher;
+use Micro\Base\Exception;
 use Micro\Base\FatalError;
 use Micro\base\IContainer;
 use Micro\cli\Consoles\DefaultConsoleCommand;
-use Micro\resolver\ConsoleResolver;
 use Micro\resolver\HMVCResolver;
+use Micro\Resolver\IResolver;
 use Micro\web\IOutput;
 use Micro\web\IRequest;
+use Micro\Web\IResponse;
 use Micro\web\Response;
 
 /**
@@ -201,6 +203,18 @@ class Micro
     }
 
     /**
+     * Send signal to dispatcher
+     *
+     * @param $signal
+     * @param $params
+     * @return mixed
+     */
+    protected function sendSignal($signal, $params)
+    {
+        return $this->container->dispatcher->signal($signal, $params);
+    }
+
+    /**
      * Get start time
      *
      * @access public
@@ -220,6 +234,7 @@ class Micro
      * @param IRequest $request
      *
      * @return Web\IResponse|Response|string
+     * @throws \Micro\Base\Exception
      */
     private function doRun(IRequest $request)
     {
@@ -228,14 +243,19 @@ class Micro
         }
 
         $this->container->request = $request;
-
-        $this->container->dispatcher->signal('kernel.request', ['container' => $this->container]);
+        if ($output = $this->sendSignal('kernel.request', ['container' => $this->container]) instanceof IResponse) {
+            return $output;
+        }
 
         $resolver = $this->getResolver();
-        $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
+        if ($output = $this->sendSignal('kernel.router', ['resolver' => $resolver]) instanceof IResponse) {
+            return $output;
+        }
 
         $app = $resolver->getApplication();
-        $this->container->dispatcher->signal('kernel.controller', ['application' => $app]);
+        if ($output = $this->sendSignal('kernel.controller', ['application' => $app]) instanceof IResponse) {
+            return $output;
+        }
 
         $output = $app->action($resolver->getAction());
         if (!$output instanceof IOutput) {
@@ -243,7 +263,8 @@ class Micro
             $response->setBody($output);
             $output = $response;
         }
-        $this->container->dispatcher->signal('kernel.response', ['output' => $output]);
+
+        $this->sendSignal('kernel.response', ['output' => $output]);
 
         return $output;
     }
@@ -253,17 +274,26 @@ class Micro
      *
      * @access protected
      *
-     * @param bool|false $isCli CLI or Web
-     *
-     * @return ConsoleResolver|HMVCResolver
+     * @return IResolver
+     * @throws \Micro\Base\Exception
      */
     protected function getResolver()
     {
         if ($this->container->request->isCli()) {
-            return new ConsoleResolver($this->container);
+            $resolver = $this->container->consoleResolver ?: '\Micro\resolver\ConsoleResolver';
+        } else {
+            $resolver = $this->container->resolver ?: '\Micro\Resolver\HMVCResolver';
         }
 
-        return new HMVCResolver($this->container);
+        if (is_string($resolver) && is_subclass_of($resolver, '\Micro\Resolver\IResolver')) {
+            $resolver = new $resolver($this->container);
+        }
+
+        if (!$resolver instanceof IResolver) {
+            throw new Exception('Resolver is not implement an IReslover');
+        }
+
+        return $resolver;
     }
 
     /**

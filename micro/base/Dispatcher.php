@@ -2,6 +2,8 @@
 
 namespace Micro\Base;
 
+use Micro\Web\IResponse;
+
 /**
  * Dispatcher class file.
  *
@@ -36,10 +38,14 @@ class Dispatcher implements IDispatcher
             return false;
         }
 
+        if (!array_key_exists($listener, $this->listeners)) {
+            $this->listeners[$listener] = [];
+        }
+
         if (!$prior) {
             $this->listeners[$listener][] = $event;
         } else {
-            array_splice($this->listeners, $prior, 0, $event);
+            array_splice($this->listeners[$listener], $prior, 0, $event);
         }
 
         return true;
@@ -57,12 +63,18 @@ class Dispatcher implements IDispatcher
      */
     public function signal($listener, array $params = [])
     {
+        $result = null;
+
         if ($this->listeners && array_key_exists($listener, $this->listeners)) {
             foreach ($this->listeners[$listener] as $listen) {
-                return call_user_func($listen, $params);
+                $result = call_user_func($listen, $params);
+
+                if ($result instanceof IResponse) {
+                    return $result;
+                }
             }
         }
 
-        return false;
+        return $result;
     }
 }
