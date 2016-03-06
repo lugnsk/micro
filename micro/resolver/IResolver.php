@@ -1,4 +1,4 @@
-<?php
+<?php /** MicroInterfaceResolver */
 
 namespace Micro\Resolver;
 
@@ -25,4 +25,13 @@ interface IResolver
      * @abstract
      */
     public function getApplication();
+
+    /**
+     * Get action from request
+     *
+     * @access public
+     *
+     * @return string
+     */
+    public function getAction();
 }

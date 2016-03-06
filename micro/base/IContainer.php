@@ -35,6 +35,7 @@ namespace Micro\Base;
  * @property \Micro\Web\ICookie $cookie
  * @property \Micro\Web\ISession $session
  * @property \Micro\Web\IUser $user
+ * @property \Micro\Logger\Logger $logger
  */
 interface IContainer
 {

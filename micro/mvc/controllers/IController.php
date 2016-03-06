@@ -45,5 +45,4 @@ interface IController
      * @throws \Micro\Base\Exception
      */
     public function action($name = 'index');
-
 }

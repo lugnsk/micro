@@ -6,9 +6,10 @@ use Micro\base\Container;
 use Micro\base\Dispatcher;
 use Micro\Base\Exception;
 use Micro\Base\FatalError;
+use Micro\Base\ICommand;
 use Micro\base\IContainer;
 use Micro\cli\Consoles\DefaultConsoleCommand;
-use Micro\resolver\HMVCResolver;
+use Micro\Mvc\Controllers\IController;
 use Micro\Resolver\IResolver;
 use Micro\web\IOutput;
 use Micro\web\IRequest;
@@ -64,7 +65,7 @@ class Micro
         $this->debug = (bool)$debug;
         $this->loaded = false;
 
-        ini_set('display_errors', $this->debug);
+        ini_set('display_errors', (integer)$this->debug);
 
         FatalError::register();
 
@@ -135,13 +136,6 @@ class Micro
             $this->container->dispatcher = new Dispatcher;
         }
 
-        $this->addListener('kernel.kill', function (array $params) {
-            if ($params['container']->kernel->isDebug() && !$params['container']->request->isCli()) {
-                // Add timer into page
-                echo '<div class=debug_timer>', (microtime(true) - $params['container']->kernel->getStartTime()), '</div>';
-            }
-        });
-
         $this->container->dispatcher->signal('kernel.boot', ['container' => $this->container]);
 
         $this->loaded = true;
@@ -174,7 +168,7 @@ class Micro
     public function getAppDir()
     {
         if (!$this->appDir) {
-            $this->appDir = dirname((new \ReflectionObject($this))->getFileName());
+            $this->appDir = realpath(dirname((new \ReflectionObject($this))->getFileName()));
         }
 
         return $this->appDir;
@@ -240,6 +234,20 @@ class Micro
     {
         if (!$this->loaded) {
             $this->initializeContainer();
+
+            $this->addListener('kernel.kill', function (array $params) {
+                if ($params['container']->kernel->isDebug() && !$params['container']->request->isCli()) {
+                    // Add timer into page
+                    echo '<div class=debug_timer>', (microtime(true) - $params['container']->kernel->getStartTime()), '</div>';
+                }
+
+                if (false === $params['container']->kernel->loaded) {
+                    return;
+                }
+
+                $params['container']->kernel->container = null;
+                $params['container']->kernel->loaded = false;
+            });
         }
 
         $this->container->request = $request;
@@ -247,11 +255,13 @@ class Micro
             return $output;
         }
 
+        /** @var IResolver $resolver */
         $resolver = $this->getResolver();
         if ($output = $this->sendSignal('kernel.router', ['resolver' => $resolver]) instanceof IResponse) {
             return $output;
         }
 
+        /** @var IController|ICommand $app */
         $app = $resolver->getApplication();
         if ($output = $this->sendSignal('kernel.controller', ['application' => $app]) instanceof IResponse) {
             return $output;
@@ -260,7 +270,7 @@ class Micro
         $output = $app->action($resolver->getAction());
         if (!$output instanceof IOutput) {
             $response = $this->container->response ?: new Response;
-            $response->setBody($output);
+            $response->setBody((string)$output);
             $output = $response;
         }
 
@@ -290,7 +300,7 @@ class Micro
         }
 
         if (!$resolver instanceof IResolver) {
-            throw new Exception('Resolver is not implement an IReslover');
+            throw new Exception('Resolver is not implement an IResolver');
         }
 
         return $resolver;
@@ -316,27 +326,18 @@ class Micro
 
             return $output;
         }
-
-        if (!$this->container->errorController) {
-            $output->setBody('Option `errorController` not configured');
-
-            return $output;
-        }
-        if (!$this->container->errorAction) {
-            $output->setBody('Option `errorAction` not configured');
+        if (!$this->container->errorController || !$this->container->errorAction) {
+            $output->setBody('Option `errorController` or `errorAction` not configured');
 
             return $output;
         }
+        $this->container->request->setPost('error', $e);
 
         $controller = $this->container->errorController;
-        $action = $this->container->errorAction;
-
-        $this->container->request->setPost('error', $e);
 
         /** @var \Micro\mvc\controllers\IController $result */
         $result = new $controller($this->container, false);
-        $result = $result->action($action);
-
+        $result = $result->action($this->container->errorAction);
         if ($result instanceof IOutput) {
             return $result;
         }
@@ -356,25 +357,6 @@ class Micro
     public function terminate()
     {
         $this->container->dispatcher->signal('kernel.kill', ['container' => $this->container]);
-
-        $this->unloader();
-    }
-
-    /**
-     * Unloader subsystem
-     *
-     * @access public
-     *
-     * @return void
-     */
-    public function unloader()
-    {
-        if (false === $this->loaded) {
-            return;
-        }
-
-        $this->container = null;
-        $this->loaded = false;
     }
 
     /**

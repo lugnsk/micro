@@ -16,7 +16,7 @@ class FatalError
     protected static $trace = [];
 
     /**
-     *
+     * Register FatalError handler
      */
     public static function register()
     {
@@ -24,6 +24,8 @@ class FatalError
     }
 
     /**
+     * Fatal error handle
+     *
      * @param int $number
      * @param string $message
      * @param string $file
@@ -39,7 +41,17 @@ class FatalError
         self::$file = $file;
         self::$line = $line;
 
-        die('cli' === php_sapi_name() ? static::doCli() : static::doRun());
+        $level = ob_get_level();
+        if ($level > 0) {
+            for ($i = ob_get_level(); $i >= 0; $i--) {
+                ob_clean();
+            }
+        }
+
+//        ob_clean();
+//        ob_end_clean();
+
+        print('cli' === php_sapi_name() ? static::doCli() : static::doRun());
     }
 
     /**

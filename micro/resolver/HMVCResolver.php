@@ -71,7 +71,7 @@ class HMVCResolver extends Resolver
         $params = $key ? substr($this->uri, $key + 2) : null;
         $uriBlocks = explode('/', substr($this->uri, 0, $key ?: strlen($this->uri)));
 
-        if (substr($this->uri, 0, 1) === '/') {
+        if (0 === strpos($this->uri, '/')) {
             array_shift($uriBlocks);
         }
 
