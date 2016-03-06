@@ -4,6 +4,7 @@ namespace Micro;
 
 use Micro\base\Container;
 use Micro\base\Dispatcher;
+use Micro\Base\FatalError;
 use Micro\base\IContainer;
 use Micro\cli\Consoles\DefaultConsoleCommand;
 use Micro\resolver\ConsoleResolver;
@@ -63,7 +64,7 @@ class Micro
 
         ini_set('display_errors', $this->debug);
 
-        /** @TODO: add handler for fatal errors... */
+        FatalError::register();
 
         if ($this->debug) {
             $this->startTime = microtime(true);
@@ -99,19 +100,9 @@ class Micro
      */
     public function run(IRequest $request)
     {
-        if (!$this->loaded) {
-            $this->initializeContainer();
-
-            $this->loaded = true;
-        }
-
-        $this->container->request = $request;
-
-        $this->container->dispatcher->signal('kernel.request', ['container' => $this->container]);
-
         try {
-            return $this->doRun(); // run application
-        } catch (\Exception $e) { // if not caught exception
+            return $this->doRun($request);
+        } catch (\Exception $e) {
             if ($this->debug) {
                 $this->container->dispatcher->signal('kernel.exception', ['exception' => $e]);
                 throw $e;
@@ -130,15 +121,12 @@ class Micro
     protected function initializeContainer()
     {
         $class = $this->getContainerClass();
-
         if ($class) {
             $class = new $class;
         }
 
         $this->container = ($class instanceof IContainer) ? $class : new Container;
-
         $this->container->kernel = $this;
-
         $this->container->load($this->getConfig());
 
         if (false === $this->container->dispatcher) {
@@ -148,11 +136,13 @@ class Micro
         $this->addListener('kernel.kill', function (array $params) {
             if ($params['container']->kernel->isDebug() && !$params['container']->request->isCli()) {
                 // Add timer into page
-                echo '<div class=debug_timer>', (microtime(true) - $this->getStartTime()), '</div>';
+                echo '<div class=debug_timer>', (microtime(true) - $params['container']->kernel->getStartTime()), '</div>';
             }
         });
 
         $this->container->dispatcher->signal('kernel.boot', ['container' => $this->container]);
+
+        $this->loaded = true;
     }
 
     /**
@@ -227,11 +217,20 @@ class Micro
      *
      * @access private
      *
-     * @return \Micro\web\IResponse
-     * @throws \Micro\base\Exception
+     * @param IRequest $request
+     *
+     * @return Web\IResponse|Response|string
      */
-    private function doRun()
+    private function doRun(IRequest $request)
     {
+        if (!$this->loaded) {
+            $this->initializeContainer();
+        }
+
+        $this->container->request = $request;
+
+        $this->container->dispatcher->signal('kernel.request', ['container' => $this->container]);
+
         $resolver = $this->getResolver();
         $this->container->dispatcher->signal('kernel.router', ['resolver' => $resolver]);
 
