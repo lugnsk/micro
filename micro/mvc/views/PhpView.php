@@ -86,11 +86,8 @@ class PhpView extends View
     public function renderRawData($data = '')
     {
         $layoutPath = null;
-        if ($this->layout) {
-            $layoutPath = $this->getLayoutFile($this->container->kernel->getAppDir(), $this->module);
-            if (!$layoutPath) {
-                $this->container->logger->send('error', 'Layout `' . $this->layout . '` not found');
-            }
+        if ($this->layout && (!$layoutPath = $this->getLayoutFile($this->container->kernel->getAppDir(), $this->module))) {
+            $this->container->logger->send('error', 'Layout `' . $this->layout . '` not found');
         }
 
         if ($layoutPath) {

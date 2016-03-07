@@ -48,6 +48,8 @@ abstract class RichController extends Controller
     public function action($name = 'index')
     {
         $actionClass = false;
+
+        // check action exists
         if (!method_exists($this, 'action' . ucfirst($name)) && !$actionClass = $this->getActionClassByName($name)) {
             $this->response->setStatus(500, 'Action "' . $name . '" not found into ' . get_class($this));
 

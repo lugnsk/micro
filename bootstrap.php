@@ -1,7 +1,8 @@
 <?php
 
 // Get micro
-require __DIR__ . '/../app/Application.php';
+require __DIR__ . '/app/__autoload.php';
+require __DIR__ . '/app/Application.php';
 
 // Get kernel
 $app = new \App\Application;

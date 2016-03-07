@@ -111,7 +111,7 @@ class Micro
                 throw $e;
             }
 
-            return $this->doException($e); // run exception
+            return $this->doException($e);
         }
     }
 
