@@ -342,7 +342,7 @@ class Micro
             return $result;
         }
 
-        $output->setBody($result);
+        $output->setBody((string)$result);
 
         return $output;
     }

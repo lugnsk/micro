@@ -51,11 +51,11 @@ class HMVCResolver extends Resolver
         /** @var string $cls */
         $cls = $this->getCalculatePath();
 
-        if (!class_exists($cls)) {
-            throw new Exception('Controller ' . $cls . ' not found');
+        if (!class_exists($cls) || !is_subclass_of($cls, '\Micro\Mvc\Controllers\IController')) {
+            throw new Exception('Controller ' . $cls . ' not found or not a valid');
         }
 
-        return new $cls ($this->container, $this->getModules());
+        return new $cls($this->container, $this->getModules());
     }
 
     /**

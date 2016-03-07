@@ -46,15 +46,14 @@ abstract class Controller implements IController
 
         // if module defined
         if ($modules) {
-            $app = $this->container->kernel->getAppDir();
-
-            $path = $app . str_replace('\\', '/', $modules) . '/' .
-                ucfirst(basename(str_replace('\\', '/', $modules))) . 'Module.php';
+            $modules   = str_replace('\\', '/', $modules);
+            $app       = $this->container->kernel->getAppDir();
+            $path      = $app . $modules . '/' . ucfirst(basename($modules)) . 'Module.php';
+            $className = substr(str_replace('/', '\\', str_replace($app, 'App', $path)), 0, -4);
 
             // search module class
-            if (file_exists($path)) {
-                $path = substr(str_replace('/', '\\', str_replace($app, 'App', $path)), 0, -4);
-                $this->module = new $path($this->container);
+            if (file_exists($path) && class_exists($className) && is_subclass_of($className, '\Micro\Mvc\Module')) {
+                $this->module = new $className($this->container);
             }
         }
 
@@ -82,7 +81,7 @@ abstract class Controller implements IController
             return $data;
         }
 
-        foreach ($filters AS $filter) {
+        foreach ($filters as $filter) {
             if (empty($filter['class']) || !class_exists($filter['class'])) {
                 continue;
             }
@@ -123,7 +122,11 @@ abstract class Controller implements IController
         if (method_exists($this, 'actions')) {
             $actions = $this->actions();
 
-            if (!empty($actions[$name]) && class_exists($actions[$name])) {
+            if (
+                !empty($actions[$name]) &&
+                class_exists($actions[$name]) &&
+                is_subclass_of($actions[$name], '\Micro\Mvc\Action')
+            ) {
                 return $actions[$name];
             }
         }
