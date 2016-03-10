@@ -66,10 +66,12 @@ class Micro
         $this->loaded = false;
 
         ini_set('display_errors', (integer)$this->debug);
+        ini_set('log_errors', (integer)$this->debug);
 
         FatalError::register();
 
         if ($this->debug) {
+            ini_set('error_reporting', -1);
             $this->startTime = microtime(true);
         }
     }
@@ -267,7 +269,7 @@ class Micro
             return $output;
         }
 
-        $output = $app->action($resolver->getAction());
+        $output = $app->action((string)$resolver->getAction());
         if (!$output instanceof IOutput) {
             $response = $this->container->response ?: new Response;
             $response->setBody((string)$output);
