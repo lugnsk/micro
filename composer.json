@@ -36,6 +36,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "*",
-    "codeclimate/php-test-reporter": "dev-master"
+    "codeclimate/php-test-reporter": "dev-master",
+    "linpax/microphp-framework": "dev-master"
   }
 }
