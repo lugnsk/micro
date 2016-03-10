@@ -46,9 +46,9 @@ abstract class Controller implements IController
 
         // if module defined
         if ($modules) {
-            $modules   = str_replace('\\', '/', $modules);
-            $app       = $this->container->kernel->getAppDir();
-            $path      = $app . $modules . '/' . ucfirst(basename($modules)) . 'Module.php';
+            $modules = str_replace('\\', '/', $modules);
+            $app = $this->container->kernel->getAppDir();
+            $path = $app . $modules . '/' . ucfirst(basename($modules)) . 'Module.php';
             $className = substr(str_replace('/', '\\', str_replace($app, 'App', $path)), 0, -4);
 
             // search module class

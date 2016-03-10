@@ -118,6 +118,65 @@ class Micro
     }
 
     /**
+     * Starting ...
+     *
+     * @access private
+     *
+     * @param IRequest $request
+     *
+     * @return Web\IResponse|Response|string
+     * @throws \Micro\Base\Exception
+     */
+    private function doRun(IRequest $request)
+    {
+        if (!$this->loaded) {
+            $this->initializeContainer();
+
+            $this->addListener('kernel.kill', function (array $params) {
+                if ($params['container']->kernel->isDebug() && !$params['container']->request->isCli()) {
+                    // Add timer into page
+                    echo '<div class=debug_timer>', (microtime(true) - $params['container']->kernel->getStartTime()), '</div>';
+                }
+
+                if (false === $params['container']->kernel->loaded) {
+                    return;
+                }
+
+                $params['container']->kernel->container = null;
+                $params['container']->kernel->loaded = false;
+            });
+        }
+
+        $this->container->request = $request;
+        if ($output = $this->sendSignal('kernel.request', ['container' => $this->container]) instanceof IResponse) {
+            return $output;
+        }
+
+        /** @var IResolver $resolver */
+        $resolver = $this->getResolver();
+        if ($output = $this->sendSignal('kernel.router', ['resolver' => $resolver]) instanceof IResponse) {
+            return $output;
+        }
+
+        /** @var IController|ICommand $app */
+        $app = $resolver->getApplication();
+        if ($output = $this->sendSignal('kernel.controller', ['application' => $app]) instanceof IResponse) {
+            return $output;
+        }
+
+        $output = $app->action((string)$resolver->getAction());
+        if (!$output instanceof IOutput) {
+            $response = $this->container->response ?: new Response;
+            $response->setBody((string)$output);
+            $output = $response;
+        }
+
+        $this->sendSignal('kernel.response', ['output' => $output]);
+
+        return $output;
+    }
+
+    /**
      * Initialization container
      *
      * @access protected
@@ -211,77 +270,6 @@ class Micro
     }
 
     /**
-     * Get start time
-     *
-     * @access public
-     *
-     * @return float|null
-     */
-    public function getStartTime()
-    {
-        return $this->startTime;
-    }
-
-    /**
-     * Starting ...
-     *
-     * @access private
-     *
-     * @param IRequest $request
-     *
-     * @return Web\IResponse|Response|string
-     * @throws \Micro\Base\Exception
-     */
-    private function doRun(IRequest $request)
-    {
-        if (!$this->loaded) {
-            $this->initializeContainer();
-
-            $this->addListener('kernel.kill', function (array $params) {
-                if ($params['container']->kernel->isDebug() && !$params['container']->request->isCli()) {
-                    // Add timer into page
-                    echo '<div class=debug_timer>', (microtime(true) - $params['container']->kernel->getStartTime()), '</div>';
-                }
-
-                if (false === $params['container']->kernel->loaded) {
-                    return;
-                }
-
-                $params['container']->kernel->container = null;
-                $params['container']->kernel->loaded = false;
-            });
-        }
-
-        $this->container->request = $request;
-        if ($output = $this->sendSignal('kernel.request', ['container' => $this->container]) instanceof IResponse) {
-            return $output;
-        }
-
-        /** @var IResolver $resolver */
-        $resolver = $this->getResolver();
-        if ($output = $this->sendSignal('kernel.router', ['resolver' => $resolver]) instanceof IResponse) {
-            return $output;
-        }
-
-        /** @var IController|ICommand $app */
-        $app = $resolver->getApplication();
-        if ($output = $this->sendSignal('kernel.controller', ['application' => $app]) instanceof IResponse) {
-            return $output;
-        }
-
-        $output = $app->action((string)$resolver->getAction());
-        if (!$output instanceof IOutput) {
-            $response = $this->container->response ?: new Response;
-            $response->setBody((string)$output);
-            $output = $response;
-        }
-
-        $this->sendSignal('kernel.response', ['output' => $output]);
-
-        return $output;
-    }
-
-    /**
      * Get resolver
      *
      * @access protected
@@ -347,6 +335,18 @@ class Micro
         $output->setBody((string)$result);
 
         return $output;
+    }
+
+    /**
+     * Get start time
+     *
+     * @access public
+     *
+     * @return float|null
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
     }
 
     /**
