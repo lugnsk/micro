@@ -11,8 +11,8 @@ foreach (scandir(__DIR__ . '/components') AS $fileName) {
 
 return [
     // Site name
-    'company' => 'Micro',
-    'slogan' => 'simply hmvc php framework',
+    'company' => 'Sample',
+    'slogan' => 'Demo blog written on MicroPHP framework',
 
     // Language
     'lang' => 'en',

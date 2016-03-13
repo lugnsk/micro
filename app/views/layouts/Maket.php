@@ -5,8 +5,7 @@ use Micro\Web\Html;
 /** @var string $content */
 /** @var \App\Components\View $this */
 
-$this->registerScriptFile('/css/jquery.js');
-$this->registerCssFile('/css/main.css');
+(new \App\Assets\AppAsset($this))->publish();
 ?>
 <?= Html::doctype('html5') ?>
 <html>
@@ -18,17 +17,58 @@ $this->registerCssFile('/css/main.css');
     <?= Html::title($this->title) ?>
 </head>
 <body>
-<div id="container">
-    <div id="top">
-        <span><?= $this->container->company ?></span> <?= $this->container->slogan ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <b><?= $this->container->slogan ?></b>
+        </div>
+        <div class="col-md-3 text-right">
+            <img src="/images/v-line.png"/>
+            <a href="https://vk.com/microphp" target="_blank"><img src="/images/vk.png"/></a>
+            <img src="/images/v-line.png"/>
+            <a href="https://www.facebook.com/groups/557836681014341/" target="_blank"><img src="/images/fb.png"/></a>
+            <img src="/images/v-line.png"/>
+            <a href="https://twitter.com/microcmf" target="_blank"><img src="/images/tw.png"/></a>
+            <img src="/images/v-line.png"/>
+        </div>
     </div>
-    <div id="content">
-        <?= $this->widget('\App\Widgets\MenubarWidget', ['links' => $this->menu]); ?>
-        <?= $content ?>
+    <div class="row top-menu">
+        <div class="brand col-md-2">
+            <a href="/"><?= $this->container->company ?></a>
+        </div>
+        <div class="col-md-7">
+            <?= $this->widget('\App\Widgets\MenubarWidget', ['links' => $this->menu]); ?>
+        </div>
+        <div class="col-md-3">
+            <?= $this->widget('\App\Widgets\MenubarWidget', ['links' => $this->user]); ?>
+        </div>
     </div>
-    <div id="footer">
-        &copy; <?= $this->container->company ?> <?= date('Y') ?>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a href="/"><?= $this->container->company ?></a></li>
+                <li class="active"><?= $this->title ?></li>
+            </ul>
+            <div class="content clearfix"><?= $content ?></div>
+        </div>
     </div>
-</div>
+    <div class="row top-menu">
+        <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            &copy; <?= $this->container->company ?> <?= date('Y') ?>
+        </div>
+        <div class="col-md-3 text-right">
+            <img src="/images/v-line.png"/>
+            <a href="https://vk.com/microphp" target="_blank"><img src="/images/vk.png"/></a>
+            <img src="/images/v-line.png"/>
+            <a href="https://www.facebook.com/groups/557836681014341/" target="_blank"><img src="/images/fb.png"/></a>
+            <img src="/images/v-line.png"/>
+            <a href="https://twitter.com/microcmf" target="_blank"><img src="/images/tw.png"/></a>
+            <img src="/images/v-line.png"/>
+        </div>
+    </div>
+    </div>
 </body>
 </html>

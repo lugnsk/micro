@@ -11,6 +11,8 @@ use Micro\Mvc\Widget;
  */
 class MenubarWidget extends Widget
 {
+    public $links = [];
+
     /**
      *
      */
@@ -24,7 +26,7 @@ class MenubarWidget extends Widget
     public function run()
     {
         $view = new View($this->container);
-        //$view->addParameter('menu', $this->links);
+        $view->addParameter('links', $this->links);
         $view->view = 'menubar';
         $view->asWidget = true;
 

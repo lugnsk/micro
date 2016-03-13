@@ -1,0 +1,52 @@
+header, section, footer, aside, nav, article {
+    display: block;
+}
+
+html, body, * {
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 14px;
+    color: #333366;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb {
+    margin-bottom: inherit;
+}
+
+.breadcrumb > li + li:before {
+    color: black;
+    content: '»';
+}
+
+.top-menu {
+    background: url(/images/menu.png) repeat-x;
+    height: 50px;
+    max-height: 50px;
+}
+
+.top-menu a {
+    color: #fff;
+}
+
+.top-menu .brand a {
+    font-size: 35px;
+}
+
+.top-menu .menu {
+    text-transform: uppercase;
+    line-height: 50px;
+    height: 50px;
+}
+
+.top-menu .menu a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.top-menu .menu a:hover {
+    height: 50px;
+    display: inline-block;
+    background-color: rgba(75, 75, 111, 0.5);
+    text-decoration: none;
+}

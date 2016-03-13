@@ -32,7 +32,9 @@
   "require": {
     "php": ">=5.4.0",
     "ext-mbstring": "*",
-    "lib-pcre": ">=8.31"
+    "lib-pcre": ">=8.31",
+    "twbs/bootstrap": "^3.3",
+    "components/jquery": "^2.2"
   },
   "require-dev": {
     "phpunit/phpunit": "*",

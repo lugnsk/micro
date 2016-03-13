@@ -4,5 +4,5 @@ RewriteEngine On
 RedirectMatch 403 /\..*$
 
 RewriteBase /
-RewriteCond $1 !^(favicon\.ico|js|css)
+RewriteCond $1 !^(favicon\.ico|.*\.(js|css|png))
 RewriteRule ^(.*)$ index.php?r=/$1 [L,QSA]
