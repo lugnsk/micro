@@ -34,11 +34,11 @@
     "ext-mbstring": "*",
     "lib-pcre": ">=8.31",
     "twbs/bootstrap": "^3.3",
-    "components/jquery": "^2.2"
+    "components/jquery": "^2.2",
+    "linpax/microphp-framework": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "*",
-    "codeclimate/php-test-reporter": "dev-master",
-    "linpax/microphp-framework": "dev-master"
+    "codeclimate/php-test-reporter": "dev-master"
   }
 }
