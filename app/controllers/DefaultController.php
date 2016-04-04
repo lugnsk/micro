@@ -6,7 +6,7 @@ use App\Components\Controller;
 use App\Components\View;
 use App\Models\LoginFormModel;
 use Micro\Form\FormBuilder;
-use Micro\Web\Html;
+use Micro\Web\Html\Html;
 
 /**
  * Class DefaultController

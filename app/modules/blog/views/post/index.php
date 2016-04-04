@@ -1,5 +1,5 @@
 <?php
-use Micro\web\Html;
+use Micro\web\Html\Html;
 use Micro\web\Language;
 
 /** @var App\Components\View $this */

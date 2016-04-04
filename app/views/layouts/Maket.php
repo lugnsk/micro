@@ -1,6 +1,6 @@
 <?php
 
-use Micro\Web\Html;
+use Micro\Web\Html\Html;
 
 /** @var string $content */
 /** @var \App\Components\View $this */
@@ -19,7 +19,7 @@ use Micro\Web\Html;
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9" style="line-height: 29px">
             <b><?= $this->container->slogan ?></b>
         </div>
         <div class="col-md-3 text-right">

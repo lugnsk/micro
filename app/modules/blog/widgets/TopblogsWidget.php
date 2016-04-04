@@ -24,6 +24,6 @@ class TopblogsWidget extends Widget
     public function run()
     {
         $v = new View($this->container);
-        echo $v;
+        echo $v->render();
     }
 }

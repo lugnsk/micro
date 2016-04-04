@@ -1,6 +1,6 @@
 <?php
 
-use Micro\Web\Html;
+use Micro\Web\Html\Html;
 
 /** @var \App\Modules\Blog\Models\Blog $model */
 ?>

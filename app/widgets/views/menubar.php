@@ -1,3 +1,3 @@
-<?= \Micro\Web\Html::openTag('div', ['class' => 'menu']) ?>
+<?= \Micro\Web\Html\Html::openTag('div', ['class' => 'menu']) ?>
 <?= implode(' ', $links) ?>
-<?= \Micro\Web\Html::closeTag('div');
+<?= \Micro\Web\Html\Html::closeTag('div');
