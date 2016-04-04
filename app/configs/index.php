@@ -3,7 +3,7 @@
 // read components
 $components = [];
 foreach (scandir(__DIR__ . '/components') AS $fileName) {
-    if ($fileName !== '.' AND $fileName !== '..') {
+    if ($fileName !== '.' && $fileName !== '..') {
         /** @noinspection PhpIncludeInspection */
         $components[substr($fileName, 0, -4)] = require __DIR__ . '/components/' . $fileName;
     }
