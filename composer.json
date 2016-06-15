@@ -1,9 +1,9 @@
 {
   "name": "lugnsk/microphp",
-  "type": "library",
+  "type": "project",
   "license": "MIT",
-  "homepage": "http://micro.linpax.org/",
-  "description": "Very small framework written on php to create HL-apps using hierarchical MVC pattern",
+  "homepage": "http://demo.micro.linpax.org/",
+  "description": "MicroPHP Sample blog",
   "keywords": [
     "microphp",
     "framework"
@@ -35,10 +35,11 @@
     "lib-pcre": ">=8.31",
     "twbs/bootstrap": "^3.3",
     "components/jquery": "^2.2",
-    "linpax/microphp-framework": "dev-master"
+    "linpax/microphp-framework": "^0.9.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "*",
-    "codeclimate/php-test-reporter": "dev-master"
+    "phpunit/phpunit": "dev-master",
+    "codeclimate/php-test-reporter": "dev-master",
+    "codeception/codeception": "*"
   }
 }
