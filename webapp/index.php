@@ -2,16 +2,19 @@
 
 // Run system and get app
 require __DIR__ . '/../app/__autoload.php';
-require __DIR__ . '/../app/Application.php';
+require __DIR__ . '/../app/Kernel.php';
 
 // Get kernel
-$app = new \App\Application('debug', false);
+$kernel = new \App\Kernel('debug', false);
+$request = \Zend\Diactoros\ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+
+$app = new \Micro\Mvc\MvcApplication($kernel);
 
 // Run framework
-$response = $app->run(new \Micro\Web\Request);
+$response = $app->run($request);
 
 // Send response
-$response->send();
+$app->send($response);
 
 // Kill application
 $app->terminate();

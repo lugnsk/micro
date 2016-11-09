@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Components\Controller;
 use App\Components\View;
 use App\Models\User;
+use Micro\Web\RequestInjector;
 
 /**
  * Class RegisterController
@@ -41,34 +42,36 @@ class RegisterController extends Controller
 
     public function actionIndex()
     {
-        $v = new View($this->container);
-        $v->addParameter('model', new User($this->container));
+        $v = new View;
+        $v->addParameter('model', new User);
 
         return $v;
     }
 
     public function actionSuccess()
     {
-        return new View($this->container);
+        return new View;
     }
 
     public function actionError()
     {
-        return new View($this->container);
+        return new View;
     }
 
     public function actionPost()
     {
-        if ($userData = $this->container->request->post('User')) {
-            $user = new User($this->container);
-            $user->setModelData($userData);
+        $body = (new RequestInjector)->build()->getParsedBody();
+
+        if (!empty($body['User'])) {
+            $user = new User();
+            $user->setModelData($body['User']);
             $user->pass = md5($user->pass);
 
             if ($user->validate() && $user->save()) {
-                $this->redirect('/register/success');
+                return $this->redirect('/register/success');
             }
-            $this->redirect('/register/error');
+            return $this->redirect('/register/error');
         }
-        $this->redirect('/register');
+        return $this->redirect('/register');
     }
 }

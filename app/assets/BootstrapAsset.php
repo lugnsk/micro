@@ -2,6 +2,7 @@
 
 namespace App\Assets;
 
+use Micro\Base\KernelInjector;
 use Micro\Mvc\Views\IView;
 use Micro\Web\Asset;
 
@@ -20,7 +21,7 @@ class BootstrapAsset extends Asset
      */
     public function __construct(IView $view)
     {
-        if ($view->container->kernel->isDebug()) {
+        if ((new KernelInjector())->build()->isDebug()) {
             $this->js[] = '/js/bootstrap.js';
             $this->css[] = '/css/bootstrap.css';
         } else {
@@ -28,7 +29,7 @@ class BootstrapAsset extends Asset
             $this->css[] = '/css/bootstrap.min.css';
         }
 
-        $this->sourcePath = $view->container->kernel->getAppDir() . '/../vendor/twbs/bootstrap/dist';
+        $this->sourcePath = (new KernelInjector)->build()->getAppDir() . '/../vendor/twbs/bootstrap/dist';
 
         parent::__construct($view);
     }

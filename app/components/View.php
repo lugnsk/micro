@@ -4,6 +4,7 @@ namespace App\Components;
 
 use Micro\Base\IContainer;
 use Micro\Mvc\Views\PhpView;
+use Micro\Web\UserInjector;
 
 /**
  * Class View
@@ -18,13 +19,12 @@ class View extends PhpView
 
     /**
      * View constructor.
-     * @param IContainer $container
      */
-    public function __construct(IContainer $container)
+    public function __construct()
     {
-        parent::__construct($container);
+        parent::__construct();
 
-        if (!$this->container->user->isGuest()) {
+        if (!(new UserInjector)->build()->isGuest()) {
             $this->user[] = '<a href="/profile">Профиль</a>';
             $this->user[] = ' (<a href="/logout">Выйти</a>)';
         } else {

@@ -5,7 +5,9 @@ namespace App\Modules\Blog\Controllers;
 use App\Components\Controller;
 use App\Components\View;
 use App\Modules\Blog\Models\Blog;
+use Micro\Db\Injector;
 use Micro\Mvc\Models\Query;
+use Micro\Web\RequestInjector;
 
 /**
  * Class PostController
@@ -48,21 +50,23 @@ class PostController extends Controller
 
     public function actionIndex()
     {
-        $crt = new Query($this->container->db);
+        $crt = new Query((new Injector)->getDriver());
         $crt->table = Blog::tableName();
         $crt->order = 'id DESC';
 
-        $v = new View($this->container);
+        $v = new View();
         $v->addParameter('blogs', $crt);
-        $v->addParameter('page', $this->container->request->query('page') ?: 0);
+        $query = (new RequestInjector)->build()->getQueryParams();
+        $v->addParameter('page', $query['page'] ?: 0);
 
         return $v;
     }
 
     public function actionView()
     {
-        $blog = Blog::findByPk($this->container->request->query('id'), $this->container);
-        $v = new View($this->container);
+        $query = (new RequestInjector)->build()->getQueryParams();
+        $blog = Blog::findByPk($query['id']);
+        $v = new View();
         $v->addParameter('model', $blog);
 
         return $v;
@@ -70,19 +74,20 @@ class PostController extends Controller
 
     public function actionCreate()
     {
-        $blog = new Blog($this->container);
+        $blog = new Blog();
 
+        $body = (new RequestInjector)->build()->getParsedBody();
         /** @var array $blogData */
-        if ($blogData = $this->container->request->post('Blog')) {
+        if ($blogData = $body['Blog']) {
             $blog->name = $blogData['name'];
             $blog->content = $blogData['content'];
 
             if ($blog->save()) {
-                $this->redirect('/blog/post/' . $blog->id);
+                return $this->redirect('/blog/post/' . $blog->id);
             }
         }
 
-        $v = new View($this->container);
+        $v = new View();
         $v->addParameter('model', $blog);
 
         return $v;
@@ -90,7 +95,8 @@ class PostController extends Controller
 
     public function actionUpdate()
     {
-        $blog = Blog::findByPk($this->container->request->query('id'), $this->container);
+        $query = (new RequestInjector)->build()->getQueryParams();
+        $blog = Blog::findByPk($query['id']);
 
         $blog->name = 'setup-er';
 
@@ -99,10 +105,8 @@ class PostController extends Controller
 
     public function actionDelete()
     {
-        $blog = Blog::findByPk(
-            $this->container->request->query('id'),
-            $this->container
-        );
+        $query = (new RequestInjector)->build()->getQueryParams();
+        $blog = Blog::findByPk($query['id']);
 
         return $blog->delete();
     }

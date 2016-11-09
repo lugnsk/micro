@@ -25,7 +25,7 @@ class MenubarWidget extends Widget
      */
     public function run()
     {
-        $view = new View($this->container);
+        $view = new View();
         $view->addParameter('links', $this->links);
         $view->view = 'menubar';
         $view->asWidget = true;

@@ -2,14 +2,12 @@
 
 namespace App;
 
-use Micro\Micro;
-
 
 /**
  * Class Application
  * @package App
  */
-class Application extends Micro
+class Kernel extends \Micro\base\Kernel
 {
     /**
      * @return string

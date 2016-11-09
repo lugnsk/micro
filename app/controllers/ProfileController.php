@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Components\Controller;
 use App\Components\View;
 use App\Models\User;
+use Micro\Web\RequestInjector;
+use Micro\Web\UserInjector;
 
 /**
  * Class ProfileController
@@ -41,13 +43,15 @@ class ProfileController extends Controller
 
     public function actionIndex()
     {
-        $user = User::findByPk($this->container->user->getID(), $this->container);
+        $user = User::findByPk((new UserInjector)->build()->getID());
         if (!$user) {
-            $this->redirect('/logout');
+            return $this->redirect('/logout');
         }
 
+        $body = (new RequestInjector)->build()->getParsedBody();
+
         /** @var array $setup */
-        if ($setup = $this->container->request->post('Setup')) {
+        if ($setup = $body['Setup']) {
             if (!empty($setup['pass'])) {
                 $user->pass = md5($setup['pass']);
             }
@@ -59,7 +63,7 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        $v = new View($this->container);
+        $v = new View();
         $v->addParameter('user', $user);
 
         return $v;

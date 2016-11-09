@@ -16,15 +16,14 @@ class Controller extends BaseController
      *
      * @access public
      *
-     * @param Container $container
      * @param string $modules
      *
      * @result void
      */
-    public function __construct(Container $container, $modules = '')
+    public function __construct($modules = '')
     {
         $this->layout = 'maket';
 
-        parent::__construct($container, $modules);
+        parent::__construct($modules);
     }
 }

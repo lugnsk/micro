@@ -5,8 +5,11 @@ namespace App\Controllers;
 use App\Components\Controller;
 use App\Components\View;
 use App\Models\LoginFormModel;
+use Micro\Base\KernelInjector;
 use Micro\Form\FormBuilder;
 use Micro\Web\Html\Html;
+use Micro\Web\RequestInjector;
+use Micro\Web\SessionInjector;
 
 /**
  * Class DefaultController
@@ -55,27 +58,28 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        return new View($this->container);
+        return new View;
     }
 
     public function actionLogin()
     {
         /** @noinspection PhpIncludeInspection */
         $form = new FormBuilder(
-            include $this->container->kernel->getAppDir() . '/views/default/loginform.php',
-            new LoginFormModel($this->container),
+            include (new KernelInjector)->build()->getAppDir() . '/views/default/loginform.php',
+            new LoginFormModel(),
             'POST'
         );
+        $body = (new RequestInjector)->build()->getParsedBody();
 
-        if ($post = $this->container->request->post('LoginFormModel')) {
-            $form->setModelData($post);
+        if (!empty($body['LoginFormModel'])) {
+            $form->setModelData($body['LoginFormModel']);
             /** @noinspection PhpUndefinedMethodInspection */
             if ($form->validateModel() && $form->getModel()->logined()) {
-                $this->redirect('/profile');
+                return $this->redirect('/profile');
             }
         }
 
-        $v = new View($this->container);
+        $v = new View();
         $v->addParameter('form', $form);
 
         return $v;
@@ -84,11 +88,12 @@ class DefaultController extends Controller
     public function actionError()
     {
         $result = null;
-        /** @var \Micro\Base\Exception $error */
-        if ($error = $this->container->request->post('error')) {
-            $result .= Html::heading(3, $error->getMessage(), ['class' => 'text-danger bg-danger']);
+        $body = (new RequestInjector())->build()->getParsedBody();
+
+        if (!empty($body['error'])) {
+            $result .= Html::heading(3, $body['error']->getMessage(), ['class' => 'text-danger bg-danger']);
         }
-        $v = new View($this->container);
+        $v = new View();
         $v->data = $result ?: 'undefined error';
 
         return $v;
@@ -96,7 +101,7 @@ class DefaultController extends Controller
 
     public function actionLogout()
     {
-        $this->container->session->destroy();
-        $this->redirect('/');
+        (new SessionInjector())->build()->destroy();
+        return $this->redirect('/');
     }
 }

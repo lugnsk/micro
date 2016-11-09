@@ -20,7 +20,7 @@ use Micro\Web\Html\Html;
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-9" style="line-height: 29px">
-            <b><?= $this->container->slogan ?></b>
+            <b><?= (new \Micro\Base\Injector)->param('slogan') ?></b>
         </div>
         <div class="col-md-3 text-right">
             <img src="/images/v-line.png"/>
@@ -34,7 +34,7 @@ use Micro\Web\Html\Html;
     </div>
     <div class="row top-menu">
         <div class="brand col-md-2">
-            <a href="/"><?= $this->container->company ?></a>
+            <a href="/"><?= (new \Micro\Base\Injector)->param('company') ?></a>
         </div>
         <div class="col-md-7">
             <?= $this->widget('\App\Widgets\MenubarWidget', ['links' => $this->menu]); ?>
@@ -46,7 +46,7 @@ use Micro\Web\Html\Html;
     <div class="row" style="margin-top: 10px;">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li><a href="/"><?= $this->container->company ?></a></li>
+                <li><a href="/"><?= (new \Micro\Base\Injector)->param('company') ?></a></li>
                 <li class="active"><?= $this->title ?></li>
             </ul>
             <div class="content clearfix"><?= $content ?></div>
@@ -57,7 +57,7 @@ use Micro\Web\Html\Html;
     </div>
     <div class="row">
         <div class="col-md-9">
-            &copy; <?= $this->container->company ?> <?= date('Y') ?>
+            &copy; <?= (new \Micro\Base\Injector)->param('company') ?> <?= date('Y') ?>
         </div>
         <div class="col-md-3 text-right">
             <img src="/images/v-line.png"/>
